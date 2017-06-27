@@ -5,6 +5,7 @@
 <%
 	String cp=request.getContextPath();
 %>
+
 <script type="text/javascript">
 //엔터 처리
 $(function(){
@@ -31,20 +32,14 @@ $(function(){
 <nav class="navbar navbar-inverse navbar-fixed-top">
 <div class="container">
     <div class="navbar-header">
-        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-        </button>
         <a class="navbar-brand" href="<%=cp%>/">배달행</a>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
-              <li class="list-menu"><a href="#">회원관리</a></li>
-              <li class="list-menu"><a href="#">업체관리</a></li>
-              <li class="list-menu"><a href="#">이벤트</a></li>
-              <li class="list-menu"><a href="#">고객센터</a></li>
+              <li class="list-menu"><a href="<%=cp%>/admin/member">회원관리</a></li>
+              <li class="list-menu"><a href="<%=cp%>/admin/giup">업체관리</a></li>
+              <li class="list-menu"><a href="<%=cp%>/admin/event">이벤트</a></li>
+              <li class="list-menu"><a href="<%=cp%>/admin/cscenter">고객센터</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
               <li><a href="<%=cp%>/member/logout">로그아웃</a></li>

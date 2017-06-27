@@ -47,15 +47,12 @@ body {
 	</div>
 </div>
  	
-<nav class="navbar navbar-default" style="width: 445px; margin: 0 auto 50px;">
-  <div class="container-fluid">
-   <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-2" style="padding: 0;" align="center">
-    <form class="navbar-form navbar-center" role="search" style="line-height: 50px;">
-        <div class="form-group">
-          <input type="text" class="form-control" placeholder="Search">
-        </div>
-        <button type="submit" class="btn btn-default">Submit</button>
-      </form>
-    </div>
+<div class="form-group" style="width: 300px; margin: 0 auto;">
+  <div class="input-group">
+    <span class="input-group-addon">검색</span>
+    <input type="text" class="form-control" placeholder="검색 할 위치를 입력해주세요">
+    <span class="input-group-btn">
+      <button class="btn btn-default" type="button" style="width: 34px; height: 38px; background: url('<%=cp%>/resource/img/search.png') no-repeat; background-size: contain;  background-color: white;"></button>
+    </span>
   </div>
-</nav>
+</div>

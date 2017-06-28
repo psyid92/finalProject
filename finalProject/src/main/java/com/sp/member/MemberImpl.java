@@ -18,7 +18,10 @@ public class MemberImpl implements MemberDAO{
 		int result = 0;
 		
 		try {
+			int seq = dao.getReadData("getMemberSeq");
+			dto.setM1_num(seq);
 			dao.insertData("insertMember1", dto);
+			dao.insertData("insertMember2", dto);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

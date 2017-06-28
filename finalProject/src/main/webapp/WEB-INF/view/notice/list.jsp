@@ -46,20 +46,17 @@ $('#myTab li:eq(2) a').tab('show')
 </script>
 
 <table class="table table-striped">
-  <!-- On rows -->
+  
 <tr class="active"></tr>
 <tr class="success"></tr>
 <tr class="warning"></tr>
 <tr class="danger"></tr>
-<tr class="info"></tr>
 
-<!-- On cells (`td` or `th`) -->
+
+
 <tr>
-  <td class="active">...</td>
-  <td class="success">...</td>
-  <td class="warning">...</td>
-  <td class="danger">...</td>
-  <td class="info">...</td>
+  <td class="active" style="height: 800px; width: 624px; padding: 50px;">탭 주제에 따라 달라짐</td>
+
 </tr>
 </table>
 

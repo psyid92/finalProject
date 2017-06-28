@@ -62,12 +62,13 @@ public class MemberController {
 	
 	//회원가입 하기
 	@RequestMapping(value="/member/member", method=RequestMethod.POST)
-	public String memberSignin(HttpServletRequest req, Model model,
+	public String memberSignin(HttpServletRequest req, Model model, @RequestParam String m1_nickname,
 			@RequestParam String m1_email, @RequestParam String m1_pwd) throws Exception{
 		
 		int checkId = dao.checkEmail(m1_email);
 		if(checkId >0){
 			model.addAttribute("msg", "아이디 중복으로 실패");
+			model.addAttribute("mode", "created");
 			return "/member/member";
 		} else {
 			
@@ -76,6 +77,10 @@ public class MemberController {
 		
 		dto.setM1_email(m1_email);
 		dto.setM1_pwd(m1_pwd);
+		dto.setM1_nickname(m1_nickname);
+		dto.setM2_birth(req.getParameter("m2_birth"));
+		dto.setM2_gender(req.getParameter("m2_gender"));
+		dto.setM2_tel(req.getParameter("m2_tel"));
 		
 		int result = dao.insertMember(dto);
 		if(result >0 ){
@@ -85,4 +90,7 @@ public class MemberController {
 		
 		return ".mainLayout";
 	}
+	
+	//마이페이지로 이동 /member/mypage
+	
 }

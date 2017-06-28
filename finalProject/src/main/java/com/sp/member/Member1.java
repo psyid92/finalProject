@@ -1,9 +1,31 @@
 package com.sp.member;
 
 public class Member1 {
-	private String m1_pwd, m1_created, m1_lastLogin, m1_email;
-	private int m1_sleep, m1_num;
+	private String m1_pwd, m1_created, m1_lastLogin, m1_email, m1_nickname;
 	
+	private String m2_birth, m2_gender, m2_tel;
+	
+	private int m1_enabled, m1_num;
+	
+	
+	public String getM2_birth() {
+		return m2_birth;
+	}
+	public void setM2_birth(String m2_birth) {
+		this.m2_birth = m2_birth;
+	}
+	public String getM2_gender() {
+		return m2_gender;
+	}
+	public void setM2_gender(String m2_gender) {
+		this.m2_gender = m2_gender;
+	}
+	public String getM2_tel() {
+		return m2_tel;
+	}
+	public void setM2_tel(String m2_tel) {
+		this.m2_tel = m2_tel;
+	}
 	public String getM1_pwd() {
 		return m1_pwd;
 	}
@@ -28,11 +50,17 @@ public class Member1 {
 	public void setM1_email(String m1_email) {
 		this.m1_email = m1_email;
 	}
-	public int getM1_sleep() {
-		return m1_sleep;
+	public String getM1_nickname() {
+		return m1_nickname;
 	}
-	public void setM1_sleep(int m1_sleep) {
-		this.m1_sleep = m1_sleep;
+	public void setM1_nickname(String m1_nickname) {
+		this.m1_nickname = m1_nickname;
+	}
+	public int getM1_enabled() {
+		return m1_enabled;
+	}
+	public void setM1_enabled(int m1_enabled) {
+		this.m1_enabled = m1_enabled;
 	}
 	public int getM1_num() {
 		return m1_num;

@@ -3,9 +3,18 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="member">
 
+<select id="getMemberSeq" resultType="Integer">
+	select m1_seq.nextval from dual
+</select>
+
 <insert id="insertMember1" parameterType="com.sp.member.Member1">
-	insert into member1(m1_num, m1_email, m1_pwd, m1_sleep)
-		values(m1_seq.nextVal, #{m1_email}, #{m1_pwd}, 0)
+	insert into member1(m1_num, m1_nickname, m1_email, m1_pwd)
+		values(#{m1_num}, #{m1_nickname}, #{m1_email}, #{m1_pwd})
+</insert>
+
+<insert id="insertMember2" parameterType="com.sp.member.Member1">
+	insert into member2(m1_num, m2_birth, m2_gender, m2_tel)
+		values(#{m1_num}, #{m2_birth}, #{m2_gender}, #{m2_tel})
 </insert>
 
 <update id="newLogin" parameterType="String">
@@ -13,7 +22,7 @@
 </update>
 
 <select id="login" parameterType="com.sp.member.Member1" resultType="com.sp.member.Member1">
-	select m1_email, m1_num, m1_pwd from member1 where m1_email=#{m1_email} and m1_pwd = '${m1_pwd}'
+	select m1_email, m1_num, m1_pwd, m1_nickname from member1 where m1_email=#{m1_email} and m1_pwd = '${m1_pwd}'
 </select>
 
 <select id="checkEmail" parameterType="String" resultType="Integer">

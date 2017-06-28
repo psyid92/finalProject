@@ -90,4 +90,7 @@ public class MemberController {
 		
 		return ".mainLayout";
 	}
+	
+	//마이페이지로 이동 /member/mypage
+	
 }

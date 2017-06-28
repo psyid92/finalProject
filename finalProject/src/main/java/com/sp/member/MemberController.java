@@ -25,7 +25,7 @@ public class MemberController {
 	//로그아웃
 	@RequestMapping(value="/member/logout")
 	public String logout(HttpServletRequest req){
-		req.setAttribute("login", null);
+		
 		return ".mainLayout";
 	}
 	
@@ -33,6 +33,11 @@ public class MemberController {
 	@RequestMapping(value="/member/login", method=RequestMethod.POST)
 	public String loginSubmit(Model model, @RequestParam String m1_email, @RequestParam String m1_pwd,
 			HttpSession session) throws Exception{
+		
+		//로그인 전페이지로 이동
+		String uri = (String)session.getAttribute("preLoginURI");
+		
+		
 		int member = dao.getLogin(m1_email, m1_pwd);
 
 		if(member == 1)	{
@@ -42,12 +47,21 @@ public class MemberController {
 			SessionInfo info = new SessionInfo();
 			info.setUserId(m1_email);
 			session.setAttribute("member", info);
-			return ".mainLayout";
+			
+			
+			if(uri==null){
+				uri="redirect:/";
+			} else {
+				uri = "redirect:"+uri; 
+			}
+			
+			
+			return uri;
 			
 		} else {
 			model.addAttribute("msg", "로그인 실패");
 			model.addAttribute("mode", "created");
-			return "/member/login";
+			return "redirect:/member/login";
 		}
 		
 //		return ".mainLayout";
@@ -92,5 +106,14 @@ public class MemberController {
 	}
 	
 	//마이페이지로 이동 /member/mypage
+	@RequestMapping("/member/mypage")
+	public String myPage(SessionInfo info){
+		SessionInfo session = new SessionInfo();
+		
+		if(info == null){
+			return "member/login";
+		}
+		return ".member.mypage";
+	}
 	
 }

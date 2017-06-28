@@ -57,7 +57,7 @@ html, body {
        				
 	</div>
 	<div style="float: right;">
-	<a href="#" style="size: 8px;">회원가입 하기</a>
+	<a href="<%=cp %>/member/member" style="size: 8px;">회원가입 하기</a>
 	</div>
 	
 	<div align="center">

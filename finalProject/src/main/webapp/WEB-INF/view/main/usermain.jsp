@@ -6,15 +6,21 @@
    String cp=request.getContextPath();
 %>
 <!DOCTYPE html>
-<html lang="ko"><head>
-   <meta charset="utf-8">
-   <title> 배달의민족 :: 대한민국 1등 배달앱</title>
-   <link rel="stylesheet" type="text/css" href="<%=cp%>/resource/css/css.css">
-   <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-   <script src="<%=cp%>/resource/jquery.min.js"></script>
-   <script src="<%=cp%>/resource/jquery.masonry.min.js"></script>
-      
-      </head>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title> 배달의민족 :: 대한민국 1등 배달앱</title>
+
+<script src="<%=cp%>/resource/jquery.min.js"></script>
+<script src="<%=cp%>/resource/jquery.masonry.min.js"></script>
+<script type="text/javascript">
+	function fn_sch_kw (menu) {
+	$(function(){
+		location.href = '<%=cp%>/pay/pay?menu=' + menu;				
+	});
+}
+</script>
+</head>
       
 <body>
 
@@ -86,7 +92,7 @@
             </div>
          </div>
 
-         <div class="boxm col1 masonry-brick" onclick="fn_sch_kw('돈까스,회,일식');" style="position: absolute; top: 1200px; left: 240px;">
+         <div class="boxm col1 masonry-brick" onclick="fn_sch_kw('돈까스');" style="position: absolute; top: 1200px; left: 240px;">
             <div class="cutter japanese">
                <div class="cover" style="background-position: 0px 0px;"></div>
                <div class="default">돈까스,회,일식</div>

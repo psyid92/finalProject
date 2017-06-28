@@ -19,7 +19,7 @@
 <link rel="stylesheet" type="text/css" href="<%=cp%>/resource/bootswatch/bootstrap.min.css">
 
 <script type="text/javascript" src="<%=cp%>/resource/jquery/js/jquery-1.12.4.min.js"></script>
-
+<link rel="stylesheet" type="text/css" href="<%=cp%>/resource/css/css.css">
 </head>
 
 <body>

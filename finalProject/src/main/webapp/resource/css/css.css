@@ -1,9 +1,7 @@
-
 body {
 	width: 1000px;
 	margin: 0 auto;
 }
-
 #gesipan table, #gesipan td, #gesipan a {
 	/* background-color: white; */
 }
@@ -224,201 +222,201 @@ body {
 
 /*치킨 디폴트*/
 .cutter.chicken .default:hover {
-	background-image: url('../resource/img/chicken.gif');
+	background-image: url('../img/chicken.gif');
 }
 
 @media only screen and (min-resolution:2dppx) {
 	.cutter.chicken .cover {
 		border-radius: 50%;
-		background-image: url('<%=cp%>/resource/img/chickenBase.png');
+		background-image: url('../img/chickenBase.png');
 		width: 200px; height: auto;
 		background-size: 200px 200px;
 	}
 	.cutter.chicken .default {
 		border-radius: 50%;
-		background-image: url('<%=cp%>/resource/img/chickenBase.png');
+		background-image: url('../img/chickenBase.png');
 		background-size: 200px 200px;
 	}
 }
 
 .cutter.chicken .default {
 	border-radius: 50%;
-	background-image: url('<%=cp%>/resource/img/chickenBase.png');
+	background-image: url('../img/chickenBase.png');
 	background-size: 200px 200px;
 }
 
 /*중국집 디폴트*/
 .cutter.chinese .default:hover {
-	background-image: url('<%=cp%>/resource/img/china.gif');
+	background-image: url('../img/china.gif');
 }
 
 @media only screen and (min-resolution:2dppx) {
 	.cutter.chinese .cover {
 		border-radius: 50%;
-		background-image: url('<%=cp%>/resource/img/china.jpg');
+		background-image: url('../img/chinaBase.png');
 		width: 200px; height: auto;
 		background-size: 200px 200px;
 	}
 	.cutter.chinese .default {
 		border-radius: 50%;
-		background-image: url('<%=cp%>/resource/img/china.jpg');
+		background-image: url('../img/chinaBase.png');
 		background-size: 200px 200px;
 	}
 }
 
 .cutter.chinese .default {
 	border-radius: 50%;
-	background-image: url('<%=cp%>/resource/img/china.jpg');
+	background-image: url('../img/chinaBase.png');
 	background-size: 200px 200px;
 }
 
 /*피자 디폴트*/
 .cutter.pizza .default:hover {
-	background-image: url('<%=cp%>/resource/img/pizza.gif');
+	background-image: url('../img/pizza.gif');
 }
 
 @media only screen and (min-resolution:2dppx) {
 	.cutter.pizza .cover {
 		border-radius: 50%;
-		background-image: url('<%=cp%>/resource/img/pizza.jpg');
+		background-image: url('../img/pizzaBase.png');
 		width: 200px; height: auto;
 		background-size: 200px 200px;
 	}
 	.cutter.pizza .default {
 		border-radius: 50%;
-		background-image: url('<%=cp%>/resource/img/pizza.jpg');
+		background-image: url('../img/pizzaBase.png');
 		background-size: 200px 200px;
 	}
 }
 
 .cutter.pizza .default {
 	border-radius: 50%;
-	background-image: url('<%=cp%>/resource/img/pizza.jpg');
+	background-image: url('../img/pizzaBase.png');
 	background-size: 200px 200px;
 }
 
 /*분식 디폴트*/
 .cutter.korean .default:hover {
-	background-image: url('<%=cp%>/resource/img/bunsic.gif')
+	background-image: url('../img/bunsic.gif')
 }
 
 @media only screen and (min-resolution:2dppx) {
 	.cutter.korean .cover {
 		border-radius: 50%;
-		background-image: url('<%=cp%>/resource/img/bunsic.jpg');
+		background-image: url('../img/bunsicBase.png');
 		width: 200px; height: auto;
 		background-size: 200px 200px;
 	}
 	.cutter.korean .default {
 		border-radius: 50%;
-		background-image: url('<%=cp%>/resource/img/bunsic.jpg');
+		background-image: url('../img/bunsicBase.png');
 		background-size: 200px 200px;
 	}
 }
 
 .cutter.korean .default {
 	border-radius: 50%;
-	background-image: url('<%=cp%>/resource/img/bunsic.jpg');
+	background-image: url('../img/bunsicBase.png');
 	background-size: 200px 200px;
 }
 
-/*족발 디폴트*/
+/*보쌈 디폴트*/
 .cutter.jokbal .default:hover {
-	background-image: url('<%=cp%>/resource/img/bossam.gif')
+	background-image: url('../img/bossam.gif')
 }
 
 @media only screen and (min-resolution:2dppx) {
 	.cutter.jokbal .cover {
 		border-radius: 50%;
-		background-image: url('<%=cp%>/resource/img/bossam.png');
+		background-image: url('../img/bossamBase.png');
 		width: 200px; height: auto;
 		background-size: 200px 200px;
 	}
 	.cutter.jokbal .default {
 		border-radius: 50%;
-		background-image: url('<%=cp%>/resource/img/bossam.png');
+		background-image: url('../img/bossamBase.png');
 		background-size: 200px 200px;
 	}
 }
 
 .cutter.jokbal .default {
 	border-radius: 50%;
-	background-image: url('<%=cp%>/resource/img/bossam.png');
+	background-image: url('../img/bossamBase.png');
 	background-size: 200px 200px;
 }
 
 /*야식 디폴트*/
 .cutter.night .default:hover {
-	background-image: url('<%=cp%>/resource/img/ya.gif');
+	background-image: url('../img/ya.gif');
 }
 
 @media only screen and (min-resolution:2dppx) {
 	.cutter.night .cover {
 		border-radius: 50%;
-		background-image: url('<%=cp%>/resource/img/ya.jpg');
+		background-image: url('../img/yaBase.png');
 		width: 200px; height: auto;
 		background-size: 200px 200px;
 	}
 	.cutter.night .default {
 		border-radius: 50%;
-		background-image: url('<%=cp%>/resource/img/ya.jpg');
+		background-image: url('../img/yaBase.png');
 		background-size: 200px 200px;
 	}
 }
 
 .cutter.night .default {
 	border-radius: 50%;
-	background-image: url('<%=cp%>/resource/img/ya.jpg');
+	background-image: url('../img/yaBase.png');
 	background-size: 200px 200px;
 }
 
 /*찜 탕*/
 .cutter.tang .default:hover {
-	background-image: url('<%=cp%>/resource/img/zzim.gif')
+	background-image: url('../img/zzim.gif')
 }
 
 @media only screen and (min-resolution:2dppx) {
 	.cutter.tang .cover {
 		border-radius: 50%;
-		background-image: url('<%=cp%>/resource/img/zzim.jpg');
+		background-image: url('../img/zzimBase.png');
 		width: 200px; height: auto;
 		background-size: 200px 200px;
 	}
 	.cutter.tang .default {
 		border-radius: 50%;
-		background-image: url('<%=cp%>/resource/img/zzim.jpg');
+		background-image: url('../img/zzimBase.png');
 		background-size: 200px 200px;
 	}
 }
 
 .cutter.tang .default {
 	border-radius: 50%;
-	background-image: url('<%=cp%>/resource/img/zzim.jpg');
+	background-image: url('../img/zzimBase.png');
 	background-size: 200px 200px;
 }
 
 /*일식*/
 .cutter.japanese .default:hover {
-	background-image: url('<%=cp%>/resource/img/don.gif')
+	background-image: url('../img/don.gif')
 }
 
 @media only screen and (min-resolution:2dppx) {
 	.cutter.japanese .cover {
 		border-radius: 50%;
-		background-image: url('<%=cp%>/resource/img/don.jpg');
+		background-image: url('../img/donBase.png');
 		width: 200px; height: auto;
 		background-size: 200px 200px;
 	}
 	.cutter.japanese .default {
 		border-radius: 50%;
-		background-image: url('<%=cp%>/resource/img/don.jpg');
+		background-image: url('../img/donBase.png');
 		background-size: 200px 200px;
 	}
 }
 
 .cutter.japanese .default {
 	border-radius: 50%;
-	background-image: url('<%=cp%>/resource/img/don.jpg');
+	background-image: url('../img/donBase.png');
 	background-size: 200px 200px;
 }
 

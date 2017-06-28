@@ -23,21 +23,21 @@
     <table style="width: 100%;">
        <tr style="height: 100px; ">
           <td width="10%;">포토</td>
-          <td width="20%;">업체명</td>
+          <td width="20%;">BBQ</td>
           <td width="20%;">품목</td>
           <td width="30%;">위치</td>
           <td width="20%;">별점</td>
        </tr>
        <tr style="height: 100px; ">
           <td width="10%;">포토</td>
-          <td width="20%;">업체명</td>
+          <td width="20%;">굽네치킨</td>
           <td width="20%;">품목</td>
           <td width="30%;">위치</td>
           <td width="20%;">별점</td>
        </tr>
        <tr style="height: 100px; ">
           <td width="10%;">포토</td>
-          <td width="20%;">업체명</td>
+          <td width="20%;">교촌치킨</td>
           <td width="20%;">품목</td>
           <td width="30%;">위치</td>
           <td width="20%;">별점</td>

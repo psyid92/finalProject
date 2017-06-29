@@ -52,7 +52,7 @@ $('#myTab li:eq(2) a').tab('show') // Select third tab (0-indexed)
 </script>
 
 <!-- 마크업 -->
-<div role="tabpanel" style="margin-top: 100px;">
+<div role="tabpanel">
 
   <!-- Nav tabs -->
   <ul class="nav nav-tabs" role="tablist">

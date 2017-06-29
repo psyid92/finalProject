@@ -15,7 +15,7 @@ $(function(){
 
 </script>
 <div id="payLayout">
-<table style="margin: 150px 0 100px; width: 1000px;">
+<table style="margin-bottom: 100px; width: 1000px;">
 	<tr id="giup">
 		<c:forEach var="dto" items="${list}">
 			<c:if test="${dto.giupAd_Num ne 0}">

@@ -1,5 +1,8 @@
 package com.sp.member;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -24,9 +27,10 @@ public class MemberController {
 	
 	//로그아웃
 	@RequestMapping(value="/member/logout")
-	public String logout(HttpServletRequest req, HttpSession session){
+	public String logout(HttpServletRequest req, HttpSession session, Model model){
 		
 		session.invalidate();
+		model.addAttribute("mode", "mainPage");
 		return ".mainLayout";
 	}
 	
@@ -104,7 +108,7 @@ public class MemberController {
 		}
 		*/
 		}
-		
+		model.addAttribute("mode", "mainPage");
 		return ".mainLayout";
 	}
 	
@@ -152,7 +156,6 @@ public class MemberController {
 				return ".mymem.member";
 			} else {
 				//넘어왔으면 업데이트 진행
-				System.out.println(Integer.parseInt(req.getParameter("m1_num")));
 				dto.setM1_nickname(req.getParameter("m1_nickname"));
 				dto.setM2_birth(req.getParameter("m2_birth"));
 				dto.setM2_gender(req.getParameter("m2_gender"));
@@ -165,11 +168,39 @@ public class MemberController {
 			e.printStackTrace();
 		}
 		
-			
-		
 		return ".mymem.mypage";
 	}
 	
+	
+	
+	/*
+	 * ----------------------------------------------------------------------------------------
+	 * ----------------------------------------------------------------------------------------
+	 * 				좋아요 버튼
+	 * 				
+	 */
+	
+	//페이지로 이동
+	@RequestMapping("/member/ilike")
+	public String goLikegiup(HttpSession session, Model model){
+		SessionInfo info = (SessionInfo)session.getAttribute("member");
+		String m1_email  = info.getUserId();
+		List<LikeGiup> list = new ArrayList<>();
+		
+		try {
+			list = dao.listLikeGiup(m1_email);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		model.addAttribute("list",list);
+		return ".mymem.likegiup";
+	}
+	
+	@RequestMapping("/member/mileage")
+	public String goMileage(){
+		return ".mymem.mileage";
+	}
 	
 	
 }

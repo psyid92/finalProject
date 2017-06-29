@@ -1,7 +1,8 @@
 package com.sp.member;
 
 
-import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -110,6 +111,59 @@ public class MemberImpl implements MemberDAO{
 		Member1 dto = dao.getReadData("getMember", m1_email);
 		return dto;
 	}
+
+	
+	
+	
+	
+	/*
+	 * ----------------------------------------------------------------------------------------
+	 * -----------------------------------------------------------------------------------------
+	 * 							기업 좋아요 버튼 / 찜하기 버튼
+	 */
+	
+	//좋아요 버튼
+	@Override
+	public int insertLikeGiup(LikeGiup giup) throws Exception {
+		int result = 0;
+		try {
+			result = dao.insertData("iLikegiup", giup);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+
+	
+	//좋아요 취소
+	@Override
+	public int deleteLikeGiup(LikeGiup giup) throws Exception {
+		int result = 0;
+		try {
+			result = dao.insertData("idontlikegiup", giup);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+
+	//좋아요 리스트
+	@Override
+	public List<LikeGiup> listLikeGiup(String m1_email) throws Exception {
+		List<LikeGiup> list = new ArrayList<>();
+		
+		try {
+			list = dao.getReadData("listLikegiup", m1_email);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return list;
+	}
+	
+	
 
 	
 

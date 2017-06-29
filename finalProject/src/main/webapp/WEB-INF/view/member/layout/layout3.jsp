@@ -32,10 +32,6 @@
 	 <tiles:insertAttribute name="body"/>
 	</div>
 	
-	<div id="footer">
-	 <tiles:insertAttribute name="footer"/>
-	</div>
-	
 	
 <script type="text/javascript" src="<%=cp%>/resource/jquery/js/jquery-ui.min.js"></script>
 <script type="text/javascript" src="<%=cp%>/resource/jquery/js/jquery.ui.datepicker-ko.js"></script>

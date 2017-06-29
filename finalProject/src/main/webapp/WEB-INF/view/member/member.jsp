@@ -115,6 +115,15 @@ function changeEmail() {
 
 
 </script>
+
+<style>
+.body-container {
+	width: 500px;
+	margin: auto;
+}
+</style>
+
+<div id="box">
 <div class="body-container" style="width: 700px;" align="center">
     <div class="body-title">
         <h3><span style="font-family: Webdings">2</span> ${mode=="created"?"회원 가입":"회원 정보 수정"} </h3>
@@ -281,4 +290,5 @@ function changeEmail() {
 			</form>
         </div>
     
+</div>
 </div>

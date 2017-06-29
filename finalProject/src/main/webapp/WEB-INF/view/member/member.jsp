@@ -34,18 +34,23 @@ function memberOk() {
 		f.m1_pwd.focus();
 		return;
 	}
+	
+
+	<c:if test="${mode eq 'created'}">
 	if(!/^(?=.*[a-z])(?=.*[!@#$%^*+=-]|.*[0-9]).{5,10}$/i.test(str)) { 
 		alert("패스워드는 5~10자이며 하나 이상의 숫자나 특수문자가 포함되어야 합니다.");
 		f.m1_pwd.focus();
 		return;
 	}
 	f.m1_pwd.value = str;
+	
 
 	if(str!= f.userPwdCheck.value) {
         alert("패스워드가 일치하지 않습니다. ");
         f.userPwdCheck.focus();
         return;
 	}
+	</c:if>
 	
     str = f.m1_nickname.value;
 	str = str.trim();
@@ -110,7 +115,16 @@ function changeEmail() {
 
 
 </script>
-<div class="body-container" style="width: 700px;">
+
+<style>
+.body-container {
+	width: 500px;
+	margin: auto;
+}
+</style>
+
+<div id="box">
+<div class="body-container" style="width: 700px;" align="center">
     <div class="body-title">
         <h3><span style="font-family: Webdings">2</span> ${mode=="created"?"회원 가입":"회원 정보 수정"} </h3>
     </div>
@@ -149,8 +163,9 @@ function changeEmail() {
 			  </tr>
 			  
 			  
-			
-			  <tr>
+			<c:choose>
+				<c:when test="${mode == 'created' }">
+				<tr>
 			      <td width="100" valign="top" style="text-align: right; padding-top: 5px;">
 			            <label style="font-weight: 900;">패스워드</label>
 			      </td>
@@ -175,6 +190,24 @@ function changeEmail() {
 			        <p class="help-block">패스워드를 한번 더 입력해주세요.</p>
 			      </td>
 			  </tr>
+				</c:when>
+				
+				<c:otherwise>
+				  <tr>
+				      <td width="100" valign="top" style="text-align: right; padding-top: 5px;">
+				            <label style="font-weight: 900;">패스워드</label>
+				      </td>
+				      <td style="padding: 0 0 15px 15px;">
+				        <p style="margin-top: 1px; margin-bottom: 5px;">
+				            <input type="password" name="m1_pwd" maxlength="15" class="boxTF"
+				                       style="width: 95%;" placeholder="">
+				        </p>
+				        <p class="help-block">비밀번호를 입력해 주세요.</p>
+				      </td>
+				  </tr>
+				</c:otherwise>
+			</c:choose>
+			  
 			
 			  <tr>
 			      <td width="100" valign="top" style="text-align: right; padding-top: 5px;">
@@ -218,6 +251,7 @@ function changeEmail() {
                          ${mode=="update" ? "readonly='readonly' ":""}
                          maxlength="15" class="boxTF" placeholder="전화번호">
 			        </p>
+				             <input type="hidden" name="m1_num" value="${dto.m1_num }">
 			        <p class="help-block"> - 를 빼고 입력해 주세요. 예) 00011119999</p>
 			      </td>
 			  </tr>
@@ -256,4 +290,5 @@ function changeEmail() {
 			</form>
         </div>
     
+</div>
 </div>

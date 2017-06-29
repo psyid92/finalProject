@@ -16,9 +16,8 @@ $(function(){
 </script>
 
 <div class="list-group">
-       <div class="list-group-item lefthead"><i></i> 업체관리</div>
-       <a href="#" class="list-group-item">업체정보관리</a>
-       <a href="#" class="list-group-item">리뷰관리</a>
-       <a href="#" class="list-group-item">고객센터관리</a>
-       <a href="#" class="list-group-item">메뉴관리</a>
+       <div class="list-group-item lefthead"><i></i> 이벤트 관리</div>
+       <a href="#" class="list-group-item">사장님 꿀팁</a>
+       <a href="#" class="list-group-item">배달행 아카데미</a>
+       <a href="#" class="list-group-item">배달행 활용백서</a>
 </div>

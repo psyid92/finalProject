@@ -28,7 +28,7 @@
 	</div>
 	
 	<div id="body">
-	 <tiles:insertAttribute name="body"/>
+	 <tiles:insertAttribute style="overflow:hidden;" name="body"/>
 	</div>
 	
 	<div id="footer">

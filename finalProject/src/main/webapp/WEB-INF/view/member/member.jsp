@@ -11,107 +11,82 @@ function memberOk() {
 	var f = document.memberForm;
 	var str;
 
-	/* str = f.userId.value;
+	 str = f.m1_email.value;
 	str = str.trim();
 	if(!str) {
 		alert("아이디를 입력하세요. ");
-		f.userId.focus();
+		f.m1_email.focus();
 		return;
 	}
 	if(!/^[a-z][a-z0-9_]{4,9}$/i.test(str)) { 
 		alert("아이디는 5~10자이며 첫글자는 영문자이어야 합니다.");
-		f.userId.focus();
+		f.m1_email.focus();
 		return;
 	}
-	f.userId.value = str;
+	f.m1_email.value = str;
 
-	str = f.userPwd.value;
+	
+	
+	str = f.m1_pwd.value;
 	str = str.trim();
 	if(!str) {
 		alert("패스워드를 입력하세요. ");
-		f.userPwd.focus();
+		f.m1_pwd.focus();
 		return;
 	}
+	
+
+	<c:if test="${mode eq 'created'}">
 	if(!/^(?=.*[a-z])(?=.*[!@#$%^*+=-]|.*[0-9]).{5,10}$/i.test(str)) { 
 		alert("패스워드는 5~10자이며 하나 이상의 숫자나 특수문자가 포함되어야 합니다.");
-		f.userPwd.focus();
+		f.m1_pwd.focus();
 		return;
 	}
-	f.userPwd.value = str;
+	f.m1_pwd.value = str;
+	
 
 	if(str!= f.userPwdCheck.value) {
         alert("패스워드가 일치하지 않습니다. ");
         f.userPwdCheck.focus();
         return;
 	}
+	</c:if>
 	
-    str = f.userName.value;
+    str = f.m1_nickname.value;
 	str = str.trim();
     if(!str) {
-        alert("이름을 입력하세요. ");
-        f.userName.focus();
+        alert("닉네임을 입력하세요. ");
+        f.m1_nickname.focus();
         return;
     }
-    f.userName.value = str;
+    f.m1_nickname.value = str;
 
-    str = f.birth.value;
+    /* 
+    str = f.m2_birth.value;
 	str = str.trim();
     if(!str || !isValidDateFormat(str)) {
         alert("생년월일를 입력하세요[YYYY-MM-DD]. ");
-        f.birth.focus();
+        f.m2_birth.focus();
         return;
     }
+ */
     
-    str = f.tel1.value;
+    str = f.m2_tel.value;
 	str = str.trim();
     if(!str) {
         alert("전화번호를 입력하세요. ");
-        f.tel1.focus();
-        return;
-    }
-
-    str = f.tel2.value;
-	str = str.trim();
-    if(!str) {
-        alert("전화번호를 입력하세요. ");
-        f.tel2.focus();
+        f.m2_tel.focus();
         return;
     }
     if(!/^(\d+)$/.test(str)) {
         alert("숫자만 가능합니다. ");
-        f.tel2.focus();
+        f.m2_tel.focus();
         return;
     }
-
-    str = f.tel3.value;
-	str = str.trim();
-    if(!str) {
-        alert("전화번호를 입력하세요. ");
-        f.tel3.focus();
-        return;
-    }
-    if(!/^(\d+)$/.test(str)) {
-        alert("숫자만 가능합니다. ");
-        f.tel3.focus();
-        return;
-    }
+ 
     
-    str = f.email1.value;
-	str = str.trim();
-    if(!str) {
-        alert("이메일을 입력하세요. ");
-        f.email1.focus();
-        return;
-    }
-
-    str = f.email2.value;
-	str = str.trim();
-    if(!str) {
-        alert("이메일을 입력하세요. ");
-        f.email2.focus();
-        return;
-    } */
-
+    
+    
     var mode="${mode}";
     if(mode=="created") {
     	f.action = "<%=cp%>/member/member";
@@ -138,40 +113,18 @@ function changeEmail() {
     }
 }
 
-function userIdCheck() {
-var userid = $("#userId").val();
-if(!/^[a-z][a-z0-9_]{4,9}$/i.test(str)) { 
-	alert("아이디는 5~10자이며 첫글자는 영문자이어야 합니다.");
-	$("#userId").focus();
-	$("#userId").parent().next(".help-block").html(s);
-	return;
-}
-
-var url = "<%=cp%>/member/usrIdCheck";
-var query = "userId"+userid;
-$.ajax({
-	type:"post"
-	, url : url
-	, data : query
-	, dataType : "json"
-	, success:function(data){
-		var passed = data.passed;
-		if(passsed = "true"){
-			var s = "<span style='color:blue; font-weight : bold;'>"+userid+"</span>아이디는 사용 가능합니다.";
-			$("#userId").parent().next(".help-block").html(s);
-		}else {
-			var s = "<span style='color:red; font-weight : bold;'>"+userid+"</span>아이디는 사용 불가합니다.";
-			$("#userId").parent().next(".help-block").html(s);
-		}
-	}
-	, error : function(e){
-		console.log(e.responseText);
-	}
-});
-}
 
 </script>
-<div class="body-container" style="width: 700px;">
+
+<style>
+.body-container {
+	width: 500px;
+	margin: auto;
+}
+</style>
+
+<div id="box">
+<div class="body-container" style="width: 700px;" align="center">
     <div class="body-title">
         <h3><span style="font-family: Webdings">2</span> ${mode=="created"?"회원 가입":"회원 정보 수정"} </h3>
     </div>
@@ -185,8 +138,8 @@ $.ajax({
 			      </td>
 			      <td style="padding: 0 0 15px 15px;">
 			        <p style="margin-top: 1px; margin-bottom: 5px;">
-			            <input type="text" name="m1_email" id="userId" value="${dto.m1_email}"
-                         onchange="userIdCheck();" style="width: 95%;"
+			            <input type="text" name="m1_email" id="m1_email" value="${dto.m1_email}"
+                         style="width: 95%;"
                          ${mode=="update" ? "readonly='readonly' ":""}
                          maxlength="15" class="boxTF" placeholder="아이디">
 			        </p>
@@ -210,8 +163,9 @@ $.ajax({
 			  </tr>
 			  
 			  
-			
-			  <tr>
+			<c:choose>
+				<c:when test="${mode == 'created' }">
+				<tr>
 			      <td width="100" valign="top" style="text-align: right; padding-top: 5px;">
 			            <label style="font-weight: 900;">패스워드</label>
 			      </td>
@@ -236,6 +190,24 @@ $.ajax({
 			        <p class="help-block">패스워드를 한번 더 입력해주세요.</p>
 			      </td>
 			  </tr>
+				</c:when>
+				
+				<c:otherwise>
+				  <tr>
+				      <td width="100" valign="top" style="text-align: right; padding-top: 5px;">
+				            <label style="font-weight: 900;">패스워드</label>
+				      </td>
+				      <td style="padding: 0 0 15px 15px;">
+				        <p style="margin-top: 1px; margin-bottom: 5px;">
+				            <input type="password" name="m1_pwd" maxlength="15" class="boxTF"
+				                       style="width: 95%;" placeholder="">
+				        </p>
+				        <p class="help-block">비밀번호를 입력해 주세요.</p>
+				      </td>
+				  </tr>
+				</c:otherwise>
+			</c:choose>
+			  
 			
 			  <tr>
 			      <td width="100" valign="top" style="text-align: right; padding-top: 5px;">
@@ -258,7 +230,7 @@ $.ajax({
 			      </td>
 			      <td style="padding: 0 0 15px 15px;">
 			        <p style="margin-top: 1px; margin-bottom: 5px;">
-			        	<input type="radio" name= "m2_gender" value="M">남&nbsp;&nbsp;&nbsp;&nbsp;
+			        	<input type="radio" name= "m2_gender" value="M" checked="checked">남&nbsp;&nbsp;&nbsp;&nbsp;
 			        	<input type="radio" name= "m2_gender" value="F">여
 			        
 			        </p>
@@ -279,6 +251,7 @@ $.ajax({
                          ${mode=="update" ? "readonly='readonly' ":""}
                          maxlength="15" class="boxTF" placeholder="전화번호">
 			        </p>
+				             <input type="hidden" name="m1_num" value="${dto.m1_num }">
 			        <p class="help-block"> - 를 빼고 입력해 주세요. 예) 00011119999</p>
 			      </td>
 			  </tr>
@@ -317,4 +290,5 @@ $.ajax({
 			</form>
         </div>
     
+</div>
 </div>

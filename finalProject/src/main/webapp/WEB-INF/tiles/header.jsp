@@ -77,7 +77,7 @@ body {
 	</div>
 </div>
  	
-<div class="form-group" style="width: 300px; margin: 0 auto 150px;">
+<div class="form-group" style="width: 300px; margin: 0 auto 50px; <c:if test="${mode ne 'mainPage'}">margin-bottom: 200px;</c:if>">
   <div class="input-group">
     <span class="input-group-addon">검색</span>
     <input type="text" class="form-control" placeholder="검색 할 위치를 입력해주세요">

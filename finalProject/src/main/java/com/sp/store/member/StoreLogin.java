@@ -22,6 +22,13 @@ public class StoreLogin {
 		return ".store4.menu1.mystore.list";
 	}
 	
+	@RequestMapping(value="/store/member", method=RequestMethod.GET)
+	public String memberForm(Model model){
+		
+		model.addAttribute("mode", "created");
+		return ".store.member";
+	}
+	
 	@RequestMapping(value="/store/mystore", method=RequestMethod.GET)
 	public String mystoreForm(Model model) {
 		

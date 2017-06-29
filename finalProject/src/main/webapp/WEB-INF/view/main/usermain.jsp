@@ -30,10 +30,10 @@
 </head>
       
 <body>
-
+	
    <input type="hidden" name="CurClass" id="CurClass" value="">
    <input type="hidden" name="kw" id="kw" value="">
-   <div class="container of-h" style="margin-bottom: 100px;">
+   <div class="container of-h" style="position:relative; margin-bottom: 100px;">
       <div class="cont" style="position: relative; height: 2400px; width: 480px;" id="category">
          <div class="boxm col1 masonry-brick" style="position: absolute; top: 0px; left: 0px;" id="chicken">
             <div class="cutter chicken">

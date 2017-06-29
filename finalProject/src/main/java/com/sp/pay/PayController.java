@@ -9,12 +9,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller("pay.payController")
 public class PayController {
 	@Autowired PayService service;
 	
-	@RequestMapping("/pay/payList")
+	@RequestMapping(value="/pay/payList", method=RequestMethod.GET)
 	public String payList(String category, Model model) throws Exception {
 		List<Pay> list = new ArrayList<>();
 		Map<String, Object> map = new HashMap<>();
@@ -32,8 +33,9 @@ public class PayController {
 		return ".jumun.menu";
 	}
 	
+	@RequestMapping(value="/pay/article", method=RequestMethod.GET)
 	public String article(int g1_Num, Model model) throws Exception {
-		
+		model.addAttribute("g1_Num", g1_Num);
 		return ".jumun.article";
 	}
 	

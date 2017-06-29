@@ -6,12 +6,12 @@
    String cp = request.getContextPath();
 %>
 
-<div class="storeBodyFrame2">
+<div class="adminBodyFrame2">
     <div class="body-title">
-          <h3><span class="glyphicon glyphicon-tower"></span> 이벤트 </h3>
+          <h3><span class="glyphicon glyphicon-tower"></span> 회원리뷰 </h3>
     </div>
     
     <div>
-         마이페이지
+        회원리뷰...
     </div>
 </div>

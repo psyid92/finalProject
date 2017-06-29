@@ -13,7 +13,7 @@
 <script type="text/javascript">
 	function sendLogin() {
 		var f = document.loginForm;
-		f.action = "<%=cp%>/admin/login_check";
+		f.action = "<%=cp%>/store/login";
 		f.submit();
 	}
 </script>
@@ -27,28 +27,31 @@ html, body {
 </head>
 <body>
 <div style="width:340px; height:300px; position: absolute; left: 50%; top: 50%; margin: -150px 0 0 -170px;">
-	<a href="<%=cp%>/">배달행페이지로</a>
 	<div style="width:340px; height:230px; position: absolute; left: 50%; top: 50%; margin: -120px 0 0 -170px;" class="progress">
 		<div style="width: 300px; height: 140px; position: absolute; left: 50%; top: 50%; margin: -90px 0 0 -150px;">
 			<form class="form-horizontal" name="loginForm" method="post">
   				<fieldset>
-    				<legend>관리자 로그인</legend>
-    				<div  class="form-group">
-      					<div style="width: 100%;" class="col-lg-10">
-        					<input type="text" class="form-control" id="userId" name="userId" placeholder="아이디">
+    				<legend>로그인</legend>
+    				<div class="form-group">
+      					<div class="col-lg-10">
+        					<input type="text" class="form-control" id="inputEmail" placeholder="아이디">
       					</div>
     				</div>
     				<div class="form-group">
-      					<div style="width: 100%;" class="col-lg-10">
-        					<input style="width: 100%;" type="password" class="form-control" id="userPwd" name="userPwd" placeholder="비밀번호">
+      					<div class="col-lg-10">
+        					<input type="password" class="form-control" id="inputPassword" placeholder="비밀번호">
         				</div>
         			</div>
        			</fieldset>
        			<nav style="width: 300px; height: 38px; display: inline-block;">
-       				<button style="width: 100%;" type="button" class="btn btn-default" onclick="sendLogin();" style="float: right;">로그인</button>
+       				<div style="line-height: 38px; float: left;"><a href="#">아이디 찾기</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#">비밀번호 찾기</a></div>
+       				<button type="button" class="btn btn-default" onclick="sendLogin();" style="float: right;">로그인</button>
        			</nav>
     		</form>
 		</div>
+	</div>
+	<div style="float: right;">
+	<a href="#" style="size: 8px;">회원가입 하기</a>
 	</div>
 </div>
 </body>

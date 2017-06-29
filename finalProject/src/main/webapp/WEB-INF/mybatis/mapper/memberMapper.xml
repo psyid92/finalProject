@@ -3,10 +3,13 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="member">
 
+
+<!-- 멤버 시퀸스 -->
 <select id="getMemberSeq" resultType="Integer">
 	select m1_seq.nextval from dual
 </select>
 
+<!-- 회원가입 -->
 <insert id="insertMember1" parameterType="com.sp.member.Member1">
 	insert into member1(m1_num, m1_nickname, m1_email, m1_pwd)
 		values(#{m1_num}, #{m1_nickname}, #{m1_email}, #{m1_pwd})
@@ -17,16 +20,67 @@
 		values(#{m1_num}, #{m2_birth}, #{m2_gender}, #{m2_tel})
 </insert>
 
+
+<!-- lastlogin 수정 -->
 <update id="newLogin" parameterType="String">
 	update member1 set m1_lastlogin = sysdate where m1_email= #{m1_email} 
 </update>
 
+<!-- 로그인하기 -->
 <select id="login" parameterType="com.sp.member.Member1" resultType="com.sp.member.Member1">
 	select m1_email, m1_num, m1_pwd, m1_nickname from member1 where m1_email=#{m1_email} and m1_pwd = '${m1_pwd}'
 </select>
 
+<!-- 멤버 읽어오기 -->
+<select id="getMember" parameterType="String" resultType="com.sp.member.Member1">
+	select m1_email, m1.m1_num, m1_nickname, to_char(m2_birth, 'YYYY-MM-DD') m2_birth, m2_tel, m2_gender from member1 m1
+		left outer join member2 m2 on m1.m1_num=m2.m1_num
+		where m1_email = #{m1_email} 
+</select>
+
+<!-- 아이디 중복 체크 -->
 <select id="checkEmail" parameterType="String" resultType="Integer">
 		select nvl(count(*), 0) from member1 where m1_email=#{m1_email}
 </select>
+
+<!-- 비밀번호 일치 확인 -->
+<select id="checkPwd" parameterType="com.sp.member.Member1" resultType="Integer">
+	select nvl(count(*), 0) from member1 where m1_email=#{m1_email} and m1_pwd = #{m1_pwd}
+</select>
+
+<update id="updateMember1" parameterType="com.sp.member.Member1">
+	update member1 set m1_nickname = #{m1_nickname} where m1_num = #{m1_num}
+</update>
+
+
+<update id="updateMember2" parameterType="com.sp.member.Member1">
+	update member2 set m2_birth=#{m2_birth} , m2_gender = #{m2_gender}, m2_tel = #{m2_tel} where m1_num = #{m1_num}
+</update>
+
+
+<!-- 찜한 가게 -->
+<insert id="iLikegiup" parameterType="com.sp.member.LikeGiup">
+	insert into likegiup values ( (
+  select g1_num from giup1 where g1_id = #{g1_id}), (
+  select m1_num from member1 where m1_email=#{m1_email}
+) );
+</insert>
+
+<delete id="idontlikegiup" parameterType="com.sp.member.LikeGiup">
+	delete likegiup
+		where g1_num=( select g1_num from giup1 where g1_id = #{g1_id})
+		 and 
+		m1_num = ( select m1_num from member1 where m1_email= #{m1_email});
+</delete>
+
+<select id="listLikegiup" parameterType="String" resultType="com.sp.member.LikeGiup">
+	
+	select g1.g1_id, g1_name, g1_sleep, cat_name
+	  from likegiup lg
+	  left outer join giup1 g1 on lg.g1_num = g1.g1_num
+	  left outer join category c on g1.CAT_CODE = c.CAT_CODE
+	  where m1_num=(select m1_num from member1 where m1_email = #{m1_email} );
+</select>
+
 
 </mapper>

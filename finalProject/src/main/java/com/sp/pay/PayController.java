@@ -10,6 +10,7 @@ public class PayController {
 	@RequestMapping("/pay/pay")
 	public String menuList(String menu, Model model) throws Exception {
 		model.addAttribute("menu", menu);
+		model.addAttribute("mode", null);
 		return ".jumun.menu";
 	}
 }

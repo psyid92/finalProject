@@ -6,6 +6,6 @@
 	String cp = request.getContextPath();
 %>
 
-<div align="center">
+<div align="center" style="margin-top: 150px;">
 	${menu} 메뉴입니다.
 </div>

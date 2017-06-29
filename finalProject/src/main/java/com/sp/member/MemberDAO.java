@@ -9,5 +9,6 @@ public interface MemberDAO {
 	public int checkEmail(String m1_email) throws Exception; 
 	
 	public int newLogin(String m1_email) throws Exception;
+	public Member1 getMember(String m1_email)  throws Exception;
 
 }

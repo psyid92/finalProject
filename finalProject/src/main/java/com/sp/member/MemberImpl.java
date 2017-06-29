@@ -41,9 +41,9 @@ public class MemberImpl implements MemberDAO{
 		// TODO Auto-generated method stub
 		return 0;
 	}
-
 	
 	
+	//lastlongin 수정
 	@Override
 	public int newLogin(String m1_email) throws Exception {
 		int result = 0;
@@ -56,17 +56,18 @@ public class MemberImpl implements MemberDAO{
 	}
 
 
+	//이메일 중복 체크
 	@Override
 	public int checkEmail(String m1_email) throws Exception {
 		int result = 0;
 		try {
 			result = dao.getReadData("checkEmail", m1_email);
-			System.out.println(result);
 		} catch (Exception e) {
 		}
 		return result;
 	}
 
+	//로그인 하기
 	@Override
 	public int getLogin(String userId, String userPWd) throws Exception {
 		int result = 0;
@@ -81,6 +82,13 @@ public class MemberImpl implements MemberDAO{
 		}
 		
 		return result;
+	}
+
+	//멤버 읽어오기
+	@Override
+	public Member1 getMember(String m1_email) throws Exception {
+		Member1 dto = dao.getReadData("getMember", m1_email);
+		return dto;
 	}
 
 

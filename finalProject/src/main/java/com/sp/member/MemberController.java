@@ -108,12 +108,25 @@ public class MemberController {
 	//마이페이지로 이동 /member/mypage
 	@RequestMapping("/member/mypage")
 	public String myPage(SessionInfo info){
-		SessionInfo session = new SessionInfo();
+		
 		
 		if(info == null){
 			return "member/login";
 		}
 		return ".member.mypage";
 	}
+	
+	//내 정보 수정
+	@RequestMapping(value="/member/update")
+	public String updateMember(SessionInfo info, HttpSession session){
+		String uri = ""; 
+			if(info == null){
+				session.setAttribute("preLoginURI", uri);
+				return "member/login";
+			}
+		return "";
+	}
+	
+	
 	
 }

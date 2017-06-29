@@ -19,16 +19,18 @@ body {
 	border : 1px solid black;
 	height: 100px;
 	text-align: center;
-	line-height: 20px;
-	vertical-align: middle;
+	line-height: 100px;
+	margin: 20px;
 }
 -->
 </style>
 
 
 <div style="" align="center">
-<div id="mypage_menu" onclick="javascript:location.href='#'">정보 수정</div>
+<div id="mypage_menu" onclick="javascript:location.href='<%=cp%>/member/update'">정보 수정</div>
 <div id="mypage_menu" onclick="javascript:location.href='#'">찜한 가게</div>
 <div id="mypage_menu" onclick="javascript:location.href='#'">결제 내역</div><br>
+<div id="mypage_menu" onclick="javascript:location.href='#'">마일리지</div>
+<div id="mypage_menu" onclick="javascript:location.href='#'">내 리뷰</div>
 
 </div>

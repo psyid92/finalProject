@@ -1,6 +1,8 @@
 package com.sp.member;
 
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -28,11 +30,29 @@ public class MemberImpl implements MemberDAO{
 		return result;
 	}
 
+	//비밀번호 체크
+	@Override
+	public int passCheck(Member1 dto) throws Exception {
+		int result = 0;
+		try {
+			result = dao.getReadData("checkPwd", dto);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+
+		
 	//회원정보 수정
 	@Override
 	public int updateMember(Member1 dto) throws Exception {
-		// TODO Auto-generated method stub
-		return 0;
+		int result = 0;
+		try {
+			dao.updateData("updateMember1", dto);
+			dao.updateData("updateMember2", dto);
+		} catch (Exception e) {
+		}
+		return result;
 	}
 
 	//회원 삭제
@@ -91,5 +111,6 @@ public class MemberImpl implements MemberDAO{
 		return dto;
 	}
 
+	
 
 }

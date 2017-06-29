@@ -7,6 +7,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-어드민 페이지 푸터
+사장님 페이지 푸터
 </body>
 </html>

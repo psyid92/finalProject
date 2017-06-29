@@ -33,7 +33,7 @@
 </div>
 
 <div class="container" role="main">
-    <div class="row row-offcanvas row-offcanvas-right  admin-body-2">
+    <div class="row row-offcanvas row-offcanvas-right  store-body-2">
         <div class="col-xs-6 col-sm-3 sidebar-offcanvas" style="max-width: 240px;" id="sidebar">
             <tiles:insertAttribute name="left"/>
         </div>

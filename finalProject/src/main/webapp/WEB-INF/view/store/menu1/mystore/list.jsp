@@ -6,7 +6,7 @@
    String cp = request.getContextPath();
 %>
 
-<div class="adminBodyFrame2">
+<div class="storeBodyFrame2">
     <div class="body-title">
           <h3><span class="glyphicon glyphicon-tower"></span> 마이 페이지 </h3>
     </div>

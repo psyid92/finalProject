@@ -48,7 +48,7 @@
 				<li><a href="<%=cp%>/admin/logout">·Î±×¾Æ¿ô</a></li>
 			</ul>
 			<p class="navbar-text navbar-right">
-				<span>${sessionScope.member.userName}</span> ´Ô
+				°ü¸®ÀÚ´Ô
 			</p>
 		</div>
 	</div>

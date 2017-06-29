@@ -49,10 +49,52 @@ $('#myTab li:eq(2) a').tab('show') // Select third tab (0-indexed)
 </div>
 
 <!-- 마크업 -->
-<div class="tab-content" >
-    <div role="tabpanel" class="tab-pane active" id="userFaq">
-      <div class="body-title">
-          <h3><span class="glyphicon glyphicon-book"></span> asdasdasd </h3>
-      </div>
-    </div>
-</div>    
+	<div class="tab-content" >
+	   <div role="tabpanel" class="tab-pane active" id="userFaq">
+	    <div class="bodyFrame2">
+	    <div class="body-title">
+	          <h3><span class="glyphicon glyphicon-exclamation-sign"></span> 자주하는 질문 </h3>
+	    </div>
+	    
+	    <div class="alert alert-info">
+	        <i class="glyphicon glyphicon-info-sign"></i> 궁금한 문의 사항을 확인 해 보세요.
+	    </div>
+	
+	    <div>
+		    <div role="tabpanel">
+				  <ul class="nav nav-tabs" role="tablist">
+				      <li role="presentation" class="active"><a href="#tabContent0" aria-controls="0" role="tab" data-toggle="tab">전체</a></li>
+			          <c:forEach var="dto" items="">
+				          <li role="presentation"><a href="#tabContent" aria-controls="" role="tab" data-toggle="tab"></a></li>
+				      </c:forEach>
+				  </ul>
+				
+				  <div class="tab-content" style="padding: 5px; margin-top: 15px;">
+				      <div role="tabpanel" class="tab-pane active" id="tabContent0"></div>
+				      <c:forEach var="dto" items="">
+				          <div role="tabpanel" class="tab-pane" id=""></div>
+				      </c:forEach>
+				  </div>
+		    </div>
+	        
+	        <div style="clear: both; margin-top: 20px;">
+	        		<div style="float: left; width: 20%; min-width: 85px;">&nbsp;</div>
+	        		<div style="float: left; width: 60%; text-align: center;">
+	        		     <form name="searchForm" method="post" class="form-inline">
+	        		         <div class="input-group col-xs-6">
+	        		             <input type="text" name="searchValue" id="searchValue" class="form-control input-sm input-search" placeholder="검색 단어">
+	        		             <span class="input-group-btn" >
+	          		                 <button type="button" class="btn btn-info btn-sm btn-search" onclick="#"><i class="glyphicon glyphicon-search"></i> 검색 </button>
+	        		             </span>
+	        		         </div>
+	        		     </form>
+	        		</div>
+	        		<div style="float: left; width: 20%; min-width: 85px; text-align: right;">
+	        		    <button type="button" class="btn btn-primary btn-sm bbtn" onclick="#"><span class="glyphicon glyphicon glyphicon-pencil"></span> 등록하기 </button>       		    
+	        		</div>
+	        </div>
+	    </div>
+	    
+	</div>
+	    </div>
+	</div>    

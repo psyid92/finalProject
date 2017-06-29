@@ -50,8 +50,16 @@ $('#myTab li:eq(2) a').tab('show') // Select third tab (0-indexed)
 <!-- 마크업 -->
 <div class="tab-content">
     <div role="tabpanel" class="tab-pane active" id="userEvent">
-      <div class="body-title">
-          <h3><span class="glyphicon glyphicon-book"></span> asdasdasd </h3>
-      </div>
+      <div class="bodyFrame2">
+    <div class="body-title">
+          <h3><span class="glyphicon glyphicon-tasks"></span> 이벤트 </h3>
+    </div>
+    
+    <div class="alert alert-info">
+        <i class="glyphicon glyphicon-info-sign"></i> 이벤트 날짜를 확인하고 참여하세요!! 대박이 뻥뻥!!!!
+    </div>
+     
+    
+    </div>
     </div>
 </div>    

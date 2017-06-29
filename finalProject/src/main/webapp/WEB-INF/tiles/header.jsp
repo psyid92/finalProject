@@ -36,6 +36,19 @@ body {
 	font-size: 12px;
 }
 
+#mainMenu ul li {
+	float: left; padding: 0 20px; height: 100%;
+}
+#mainMenu ul li a {
+	line-height: 100px;
+	color: black;
+	font-size: 20px;
+	text-decoration: none;
+}
+#mainMenu ul li a:HOVER {
+	color: #e36b0c;	
+}
+
 </style>
 <div style="padding-bottom: 30px;" id="header">
 	<div align="right" id="headerMember">
@@ -47,15 +60,28 @@ body {
 	</div>
 </div>
  	
-<nav class="navbar navbar-default" style="width: 445px; margin: 0 auto 50px;">
-  <div class="container-fluid">
-   <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-2" style="padding: 0;" align="center">
-    <form class="navbar-form navbar-center" role="search" style="line-height: 50px;">
-        <div class="form-group">
-          <input type="text" class="form-control" placeholder="Search">
-        </div>
-        <button type="submit" class="btn btn-default">Submit</button>
-      </form>
-    </div>
+<div class="form-group" style="width: 300px; margin: 0 auto 50px;">
+  <div class="input-group">
+    <span class="input-group-addon">검색</span>
+    <input type="text" class="form-control" placeholder="검색 할 위치를 입력해주세요">
+    <span class="input-group-btn">
+      <button class="btn btn-default" type="button" style="width: 34px; height: 38px; background: url('<%=cp%>/resource/img/search.png') no-repeat; background-size: contain;  background-color: white;"></button>
+    </span>
   </div>
-</nav>
+</div>
+<c:if test="${mode ne 'mainPage'}">
+	<div style="position: absolute; top: 200px; left: 0; width: 100%; height: 100px; background-color: #cccccc;">
+		<div align="center" style="text-align: center; height: 100%;" id="mainMenu">
+			<ul style="list-style: none; display: inline-block; height: 100%;">
+				<li><a onclick="fn_sch_kw('치킨');">치킨</a></li>
+				<li><a onclick="fn_sch_kw('중국집');">중국집</a></li>
+				<li><a onclick="fn_sch_kw('피자');">피자</a></li>
+				<li><a onclick="fn_sch_kw('분식');">분식</a></li>
+				<li><a onclick="fn_sch_kw('족발,보쌈');">족발,보쌈</a></li>
+				<li><a onclick="fn_sch_kw('야식');">야식</a></li>
+				<li><a onclick="fn_sch_kw('찜,탕');">찜,탕</a></li>
+				<li><a onclick="fn_sch_kw('돈까스');">돈까스</a></li>
+			</ul>
+		</div>
+	</div>
+</c:if>

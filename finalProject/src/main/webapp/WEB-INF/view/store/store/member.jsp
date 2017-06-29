@@ -1,11 +1,10 @@
-ï»¿<%@ page contentType="text/html; charset=UTF-8"%>
+<%@ page contentType="text/html; charset=EUC-KR"%>
 <%@ page trimDirectiveWhitespaces="true"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%
 	String cp = request.getContextPath();
 %>
-
 <script type="text/javascript">
 function memberOk() {
 	var f = document.memberForm;
@@ -14,12 +13,12 @@ function memberOk() {
 	 str = f.m1_email.value;
 	str = str.trim();
 	if(!str) {
-		alert("ì•„ì´ë””ë¥¼ ì…ë ¥í•˜ì„¸ìš”. ");
+		alert("¾ÆÀÌµğ¸¦ ÀÔ·ÂÇÏ¼¼¿ä. ");
 		f.m1_email.focus();
 		return;
 	}
 	if(!/^[a-z][a-z0-9_]{4,9}$/i.test(str)) { 
-		alert("ì•„ì´ë””ëŠ” 5~10ìì´ë©° ì²«ê¸€ìëŠ” ì˜ë¬¸ìì´ì–´ì•¼ í•©ë‹ˆë‹¤.");
+		alert("¾ÆÀÌµğ´Â 5~10ÀÚÀÌ¸ç Ã¹±ÛÀÚ´Â ¿µ¹®ÀÚÀÌ¾î¾ß ÇÕ´Ï´Ù.");
 		f.m1_email.focus();
 		return;
 	}
@@ -30,19 +29,19 @@ function memberOk() {
 	str = f.m1_pwd.value;
 	str = str.trim();
 	if(!str) {
-		alert("íŒ¨ìŠ¤ì›Œë“œë¥¼ ì…ë ¥í•˜ì„¸ìš”. ");
+		alert("ÆĞ½º¿öµå¸¦ ÀÔ·ÂÇÏ¼¼¿ä. ");
 		f.m1_pwd.focus();
 		return;
 	}
 	if(!/^(?=.*[a-z])(?=.*[!@#$%^*+=-]|.*[0-9]).{5,10}$/i.test(str)) { 
-		alert("íŒ¨ìŠ¤ì›Œë“œëŠ” 5~10ìì´ë©° í•˜ë‚˜ ì´ìƒì˜ ìˆ«ìë‚˜ íŠ¹ìˆ˜ë¬¸ìê°€ í¬í•¨ë˜ì–´ì•¼ í•©ë‹ˆë‹¤.");
+		alert("ÆĞ½º¿öµå´Â 5~10ÀÚÀÌ¸ç ÇÏ³ª ÀÌ»óÀÇ ¼ıÀÚ³ª Æ¯¼ö¹®ÀÚ°¡ Æ÷ÇÔµÇ¾î¾ß ÇÕ´Ï´Ù.");
 		f.m1_pwd.focus();
 		return;
 	}
 	f.m1_pwd.value = str;
 
 	if(str!= f.userPwdCheck.value) {
-        alert("íŒ¨ìŠ¤ì›Œë“œê°€ ì¼ì¹˜í•˜ì§€ ì•ŠìŠµë‹ˆë‹¤. ");
+        alert("ÆĞ½º¿öµå°¡ ÀÏÄ¡ÇÏÁö ¾Ê½À´Ï´Ù. ");
         f.userPwdCheck.focus();
         return;
 	}
@@ -50,7 +49,7 @@ function memberOk() {
     str = f.m1_nickname.value;
 	str = str.trim();
     if(!str) {
-        alert("ë‹‰ë„¤ì„ì„ ì…ë ¥í•˜ì„¸ìš”. ");
+        alert("´Ğ³×ÀÓÀ» ÀÔ·ÂÇÏ¼¼¿ä. ");
         f.m1_nickname.focus();
         return;
     }
@@ -60,7 +59,7 @@ function memberOk() {
     str = f.m2_birth.value;
 	str = str.trim();
     if(!str || !isValidDateFormat(str)) {
-        alert("ìƒë…„ì›”ì¼ë¥¼ ì…ë ¥í•˜ì„¸ìš”[YYYY-MM-DD]. ");
+        alert("»ı³â¿ùÀÏ¸¦ ÀÔ·ÂÇÏ¼¼¿ä[YYYY-MM-DD]. ");
         f.m2_birth.focus();
         return;
     }
@@ -69,12 +68,12 @@ function memberOk() {
     str = f.m2_tel.value;
 	str = str.trim();
     if(!str) {
-        alert("ì „í™”ë²ˆí˜¸ë¥¼ ì…ë ¥í•˜ì„¸ìš”. ");
+        alert("ÀüÈ­¹øÈ£¸¦ ÀÔ·ÂÇÏ¼¼¿ä. ");
         f.m2_tel.focus();
         return;
     }
     if(!/^(\d+)$/.test(str)) {
-        alert("ìˆ«ìë§Œ ê°€ëŠ¥í•©ë‹ˆë‹¤. ");
+        alert("¼ıÀÚ¸¸ °¡´ÉÇÕ´Ï´Ù. ");
         f.m2_tel.focus();
         return;
     }
@@ -86,8 +85,7 @@ function memberOk() {
     if(mode=="created") {
     	f.action = "<%=cp%>/member/member";
     } else if(mode=="update") {
-    	f.action = "<%=cp%>
-	/member/update";
+    	f.action = "<%=cp%>/member/update";
 		}
 
 		f.submit();
@@ -108,10 +106,19 @@ function memberOk() {
 		}
 	}
 </script>
+
+<style type="text/css">
+
+.body-container {
+	width: 500px;
+	margin: auto;
+}
+
+</style>
 <div class="body-container" style="width: 700px;">
 	<div class="body-title">
 		<h3>
-			<span style="font-family: Webdings">4</span> ${mode=="created"?"íšŒì› ê°€ì…":"íšŒì› ì •ë³´ ìˆ˜ì •"}
+			<span style="font-family: Webdings">4</span> ${mode=="created"?"È¸¿ø °¡ÀÔ":"È¸¿ø Á¤º¸ ¼öÁ¤"}
 		</h3>
 	</div>
 	<div>
@@ -121,45 +128,45 @@ function memberOk() {
 				<tr>
 					<td width="100" valign="top"
 						style="text-align: right; padding-top: 5px;"><label
-						style="font-weight: 900;">ì‚¬ì—…ì ë“±ë¡ë²ˆí˜¸</label></td>
+						style="font-weight: 900;">»ç¾÷ÀÚ µî·Ï¹øÈ£</label></td>
 					<td style="padding: 0 0 15px 15px;">
 						<p style="margin-top: 1px; margin-bottom: 5px;">
 							<input type="text" name="g2_giupNum" id="g2_giupNum"
 								value="${dto.g2_giupNum}" style="width: 95%;"
 								${mode=="update" ? "readonly='readonly' ":""} maxlength="15"
-								class="boxTF" placeholder="ì‚¬ì—…ì ë“±ë¡ë²ˆí˜¸ë¥¼ ì…ë ¥í•´ì£¼ì„¸ìš”">
+								class="boxTF" placeholder="»ç¾÷ÀÚ µî·Ï¹øÈ£¸¦ ÀÔ·ÂÇØÁÖ¼¼¿ä">
 						</p>
-						<p class="help-block">ë³¸ì¸ê°€ê²Œì˜ ì‚¬ì—…ì ë“±ë¡ë²ˆí˜¸ë¥¼ ì…ë ¥í•´ì£¼ì„¸ìš”</p>
+						<p class="help-block">º»ÀÎ°¡°ÔÀÇ »ç¾÷ÀÚ µî·Ï¹øÈ£¸¦ ÀÔ·ÂÇØÁÖ¼¼¿ä</p>
 					</td>
 				</tr>
 
 				<tr>
 					<td width="100" valign="top"
 						style="text-align: right; padding-top: 5px;"><label
-						style="font-weight: 900;">ë‚´ ê°€ê²Œ ì´ë¦„</label></td>
+						style="font-weight: 900;">³» °¡°Ô ÀÌ¸§</label></td>
 					<td style="padding: 0 0 15px 15px;">
 						<p style="margin-top: 1px; margin-bottom: 5px;">
 							<input type="text" name="giup1_name" id="giup1_name"
 								value="${dto.g1_name}" style="width: 95%;"
 								${mode=="update" ? "readonly='readonly' ":""} maxlength="15"
-								class="boxTF" placeholder="ê°€ê²Œì˜ ì´ë¦„ì„ ì ì–´ì£¼ì„¸ìš”">
+								class="boxTF" placeholder="°¡°ÔÀÇ ÀÌ¸§À» Àû¾îÁÖ¼¼¿ä">
 						</p>
-						<p class="help-block">ê°€ê²Œì´ë¦„ì„ ì…ë ¥í•´ì£¼ì„¸ìš”</p>
+						<p class="help-block">°¡°ÔÀÌ¸§À» ÀÔ·ÂÇØÁÖ¼¼¿ä</p>
 					</td>
 				</tr>
 
-				<!-- ë‹‰ë„¤ì„ -->
+				<!-- ´Ğ³×ÀÓ -->
 				<tr>
 					<td width="100" valign="top"
 						style="text-align: right; padding-top: 5px;"><label
-						style="font-weight: 900;">ì•„ì´ë””</label></td>
+						style="font-weight: 900;">¾ÆÀÌµğ</label></td>
 					<td style="padding: 0 0 15px 15px;">
 						<p style="margin-top: 1px; margin-bottom: 5px;">
 							<input type="text" name="g1_Id" id="g1_Id" value="${dto.g1_Id}"
 								style="width: 95%;" maxlength="15" class="boxTF"
-								placeholder="ì•„ì´ë””ëŠ” 5~10ìë¡œ ì…ë ¥í•´ì£¼ì„¸ìš”">
+								placeholder="¾ÆÀÌµğ´Â 5~10ÀÚ·Î ÀÔ·ÂÇØÁÖ¼¼¿ä">
 						</p>
-						<p class="help-block">ì•„ì´ë””ëŠ” 5~10ìë¡œ ì…ë ¥í•´ì£¼ì„¸ìš”</p>
+						<p class="help-block">¾ÆÀÌµğ´Â 5~10ÀÚ·Î ÀÔ·ÂÇØÁÖ¼¼¿ä</p>
 					</td>
 				</tr>
 
@@ -168,14 +175,14 @@ function memberOk() {
 				<tr>
 					<td width="100" valign="top"
 						style="text-align: right; padding-top: 5px;"><label
-						style="font-weight: 900;">ë¹„ë°€ë²ˆí˜¸</label></td>
+						style="font-weight: 900;">ºñ¹Ğ¹øÈ£</label></td>
 					<td style="padding: 0 0 15px 15px;">
 						<p style="margin-top: 1px; margin-bottom: 5px;">
 							<input type="password" name="g1_Pwd" maxlength="15" class="boxTF"
-								style="width: 95%;" placeholder="ë¹„ë°€ë²ˆí˜¸ëŠ” 5~10ì ì´ë‚´ë¡œ ì…ë ¥í•´ì£¼ì„¸ìš”">
+								style="width: 95%;" placeholder="ºñ¹Ğ¹øÈ£´Â 5~10ÀÚ ÀÌ³»·Î ÀÔ·ÂÇØÁÖ¼¼¿ä">
 						</p>
 						<p class="help-block">
-							íŒ¨ìŠ¤ì›Œë“œëŠ” 5~10ì ì´ë‚´ë¡œ ì…ë ¥í•´ì£¼ì„¸ìš”<br> í•˜ë‚˜ ì´ìƒì˜ ìˆ«ìë‚˜ íŠ¹ìˆ˜ë¬¸ìê°€ í¬í•¨ë˜ì–´ì•¼ í•©ë‹ˆë‹¤.
+							ÆĞ½º¿öµå´Â 5~10ÀÚ ÀÌ³»·Î ÀÔ·ÂÇØÁÖ¼¼¿ä<br> ÇÏ³ª ÀÌ»óÀÇ ¼ıÀÚ³ª Æ¯¼ö¹®ÀÚ°¡ Æ÷ÇÔµÇ¾î¾ß ÇÕ´Ï´Ù.
 						</p>
 					</td>
 				</tr>
@@ -183,43 +190,44 @@ function memberOk() {
 				<tr>
 					<td width="100" valign="top"
 						style="text-align: right; padding-top: 5px;"><label
-						style="font-weight: 900;">íŒ¨ìŠ¤ì›Œë“œ í™•ì¸</label></td>
+						style="font-weight: 900;">ÆĞ½º¿öµå È®ÀÎ</label></td>
 					<td style="padding: 0 0 15px 15px;">
 						<p style="margin-top: 1px; margin-bottom: 5px;">
 							<input type="password" name="g1PwdCheck" maxlength="15"
-								class="boxTF" style="width: 95%;" placeholder="ë‹¤ì‹œ í•œ ë²ˆ ë” ì…ë ¥í•´ì£¼ì„¸ìš”">
+								class="boxTF" style="width: 95%;" placeholder="´Ù½Ã ÇÑ ¹ø ´õ ÀÔ·ÂÇØÁÖ¼¼¿ä">
 						</p>
-						<p class="help-block">ê³„ì • í˜¹ì€ ì „í™”ë²ˆí˜¸ì™€ ê°™ê±°ë‚˜ ì—°ì†ëœ ë¬¸ìì—´ì„ ì‚¬ìš©í•œ ë¹„ë°€ë²ˆí˜¸ëŠ” ê¶Œì¥í•˜ì§€
-							ì•ŠìŠµë‹ˆë‹¤</p>
+						<p class="help-block">°èÁ¤ È¤Àº ÀüÈ­¹øÈ£¿Í °°°Å³ª ¿¬¼ÓµÈ ¹®ÀÚ¿­À» »ç¿ëÇÑ ºñ¹Ğ¹øÈ£´Â ±ÇÀåÇÏÁö
+							¾Ê½À´Ï´Ù</p>
 					</td>
 				</tr>
 
-				<tr align="left" height="40"
-					style="border-bottom: 1px solid #cccccc;">
-					<td width="100" bgcolor="#eeeeee" style="text-align: center;">ì¹´í…Œê³ ë¦¬</td>
+				<tr>
+					<td width="100" valign="top"
+						style="text-align: right; padding-top: 5px;"><label
+						style="font-weight: 900;">Ä«Å×°í¸®</label></td>
 					<td style="padding-left: 10px;"><select name="category"
 						class="selectField">
-							<option value="">:::ì„ íƒ:::</option>
-							<option value="chicken">ì¹˜í‚¨</option>
-							<option value="china">ì¤‘êµ­ì§‘</option>
-							<option value="pizza">í”¼ì</option>
-							<option value="bunsik">ë¶„ì‹</option>
-							<option value="bossam">ì¡±ë°œ,ë³´ìŒˆ</option>
-							<option value="ya">ì•¼ì‹</option>
-							<option value="zzim">ì°œ,íƒ•</option>
-							<option value="don">ëˆê¹ŒìŠ¤</option>
+							<option value="">:::¼±ÅÃ:::</option>
+							<option value="chicken">Ä¡Å²</option>
+							<option value="china">Áß±¹Áı</option>
+							<option value="pizza">ÇÇÀÚ</option>
+							<option value="bunsik">ºĞ½Ä</option>
+							<option value="bossam">Á·¹ß,º¸½Ó</option>
+							<option value="ya">¾ß½Ä</option>
+							<option value="zzim">Âò,ÅÁ</option>
+							<option value="don">µ·±î½º</option>
 
 					</select></td>
 				</tr>
 
 				<tr>
 		     <td width="100" valign="top" style="text-align: right; padding-top: 5px;">
-		           <label style="font-weight: 900;">ì „í™”ë²ˆí˜¸</label>
+		           <label style="font-weight: 900;">ÀüÈ­¹øÈ£</label>
 		     </td>
 		     <td style="padding: 0 0 15px 15px;">
 		       <p style="margin-bottom: 5px;">
 		           <select class="selectField" id="tel1" name="tel1" >
-		               <option value="">ì„  íƒ</option>
+		               <option value="">¼± ÅÃ</option>
 		               <option value="010" ${dto.tel1=="010" ? "selected='selected'" : ""}>010</option>
 		               <option value="011" ${dto.tel1=="011" ? "selected='selected'" : ""}>011</option>
 		               <option value="016" ${dto.tel1=="016" ? "selected='selected'" : ""}>016</option>
@@ -245,10 +253,10 @@ function memberOk() {
 				<tr height="45">
 					<td align="center">
 						<button type="button" name="sendButton" class="btn"
-							onclick="memberOk();">${mode=="created"?"íšŒì›ê°€ì…":"ì •ë³´ìˆ˜ì •"}</button>
-						<button type="reset" class="btn">ë‹¤ì‹œì…ë ¥</button>
+							onclick="memberOk();">${mode=="created"?"È¸¿ø°¡ÀÔ":"Á¤º¸¼öÁ¤"}</button>
+						<button type="reset" class="btn">´Ù½ÃÀÔ·Â</button>
 						<button type="button" class="btn"
-							onclick="javascript:location.href='<%=cp%>/store/login';">${mode=="created"?"ê°€ì…ì·¨ì†Œ":"ìˆ˜ì •ì·¨ì†Œ"}</button>
+							onclick="javascript:location.href='<%=cp%>/store/login';">${mode=="created"?"°¡ÀÔÃë¼Ò":"¼öÁ¤Ãë¼Ò"}</button>
 					</td>
 				</tr>
 				<tr height="30">

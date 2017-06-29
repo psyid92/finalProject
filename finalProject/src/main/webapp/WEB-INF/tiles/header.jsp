@@ -7,17 +7,31 @@
 %>
 <script>
 	$(function() {
-		$(".dropdown-toggle").click(function() {
-			if ($(".dropdown-menu").is(":visible") == false) { 
-				$(".dropdown-menu").show();
-			} else {
-				$(".dropdown-menu").hide();
-			};
+		$("#category").children().click(function(){
+			var category = $(this).attr("id");
+			location.href = '<%=cp%>/pay/payList?category=' + category;
 		});
-		$(".dropdown-toggle").change(function() {
-			$(".dropdown-menu").hide();
+		$("#category").children().mouseenter(function(){
+			
 		});
 	});
+	$(function(){
+		$("#${category}").attr("class", "cate on");
+		$(".cate").mouseenter(function(){
+			var category = $(this).attr("id");
+			if ($(this).attr("class") != "cate on")
+				$(this).css("background-image","url('<%=cp%>/resource/img/category/"+category+"CategoryHover.png')");
+		});
+		$(".cate").mouseleave(function(){
+			var category = $(this).attr("id");
+			if ($(this).attr("class") != "cate on")
+				$(this).css("background-image","url('<%=cp%>/resource/img/category/"+category+"Category.png')");
+		});
+		$(".cate.on").css("background-image","url('<%=cp%>/resource/img/category/${category}CategoryHover.png')");
+		$(".cate.on").css("background-color","#eaf1f1");
+	});
+	
+		
 </script>
 
 <style type="text/css">
@@ -36,18 +50,21 @@ body {
 	font-size: 12px;
 }
 
+#mainMenu ul {
+	padding: 0px;
+}
+
 #mainMenu ul li {
-	float: left; padding: 0 20px; height: 100%;
+	float: left;
+	width: 125px;
+	height: 100%;
 }
-#mainMenu ul li a {
-	line-height: 100px;
-	color: black;
-	font-size: 20px;
-	text-decoration: none;
+
+#mainMenu ul li:HOVER {
+	background-color: #eaf1f1;
+	cursor: pointer;
 }
-#mainMenu ul li a:HOVER {
-	color: #e36b0c;	
-}
+
 
 </style>
 <div style="padding-bottom: 30px;" id="header">
@@ -60,7 +77,7 @@ body {
 	</div>
 </div>
  	
-<div class="form-group" style="width: 300px; margin: 0 auto 50px;">
+<div class="form-group" style="width: 300px; margin: 0 auto 150px;">
   <div class="input-group">
     <span class="input-group-addon">검색</span>
     <input type="text" class="form-control" placeholder="검색 할 위치를 입력해주세요">
@@ -71,16 +88,16 @@ body {
 </div>
 <c:if test="${mode ne 'mainPage'}">
 	<div style="position: absolute; top: 200px; left: 0; width: 100%; height: 100px; background-color: #cccccc;">
-		<div align="center" style="text-align: center; height: 100%;" id="mainMenu">
-			<ul style="list-style: none; display: inline-block; height: 100%;">
-				<li><a onclick="fn_sch_kw('치킨');">치킨</a></li>
-				<li><a onclick="fn_sch_kw('중국집');">중국집</a></li>
-				<li><a onclick="fn_sch_kw('피자');">피자</a></li>
-				<li><a onclick="fn_sch_kw('분식');">분식</a></li>
-				<li><a onclick="fn_sch_kw('족발,보쌈');">족발,보쌈</a></li>
-				<li><a onclick="fn_sch_kw('야식');">야식</a></li>
-				<li><a onclick="fn_sch_kw('찜,탕');">찜,탕</a></li>
-				<li><a onclick="fn_sch_kw('돈까스');">돈까스</a></li>
+		<div style="margin: 0 auto; text-align: center; width: 1000px; height: 100%;" id="mainMenu">
+			<ul style="list-style: none; display: inline-block; height: 100%;" id="category">
+				<li id="chicken" class="cate" style="background-image: url('<%=cp%>/resource/img/category/chickenCategory.png')"></li>
+				<li id="china" class="cate" style="background-image: url('<%=cp%>/resource/img/category/chinaCategory.png')"></li>
+				<li id="pizza" class="cate" style="background-image: url('<%=cp%>/resource/img/category/pizzaCategory.png')"></li>
+				<li id="bunsik" class="cate" style="background-image: url('<%=cp%>/resource/img/category/bunsikCategory.png')"></li>
+				<li id="bossam" class="cate" style="background-image: url('<%=cp%>/resource/img/category/bossamCategory.png')"></li>
+				<li id="ya" class="cate" style="background-image: url('<%=cp%>/resource/img/category/yaCategory.png')"></li>
+				<li id="zzim" class="cate" style="background-image: url('<%=cp%>/resource/img/category/zzimCategory.png')"></li>
+				<li id="don" class="cate" style="background-image: url('<%=cp%>/resource/img/category/donCategory.png')"></li>
 			</ul>
 		</div>
 	</div>

@@ -49,7 +49,7 @@ $('#myTab li:eq(2) a').tab('show') // Select third tab (0-indexed)
 </div>
 
 <!-- 마크업 -->
-<div class="tab-content">
+<div class="tab-content" >
     <div role="tabpanel" class="tab-pane active" id="userFaq">
       <div class="body-title">
           <h3><span class="glyphicon glyphicon-book"></span> asdasdasd </h3>

@@ -31,7 +31,7 @@ html, body {
 		<div style="width: 300px; height: 140px; position: absolute; left: 50%; top: 50%; margin: -90px 0 0 -150px;">
 			<form class="form-horizontal" name="loginForm" method="post">
   				<fieldset>
-    				<legend>로그인</legend>
+    				<legend>사장님 로그인</legend>
     				<div class="form-group">
       					<div class="col-lg-10">
         					<input type="text" class="form-control" id="inputEmail" placeholder="아이디">

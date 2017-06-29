@@ -46,7 +46,7 @@
 	</definition>
 	<definition name=".store4.*" extends=".store4Layout">
 	  	<put-attribute name="left" value="/WEB-INF/view/store/{1}/left.jsp" />
-   	    <put-attribute name="body" value="/WEB-INF/view/admin/{1}.jsp" />
+   	    <put-attribute name="body" value="/WEB-INF/view/store/{1}.jsp" />
 	</definition>
 
 		<!-- 프론트페이지 -->

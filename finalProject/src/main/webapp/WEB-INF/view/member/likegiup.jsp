@@ -41,8 +41,15 @@
 </div>
 
 <br>
-	<div id="pack" onclick="">첫 번째</div>
-	<div id="pack" onclick="">첫 번째</div>
+	<div id="pack" onclick="">
+		첫 번째<br>
+		<img id="likeButton" src="<%=cp%>/resource/img/likeButton.png">
+	</div>
+	
+	<div id="pack" onclick="">
+		두 번째
+		<img id="likeButton" src="<%=cp%>/resource/img/likeButton.png">
+	</div>
 	<div id="pack" onclick="">첫 번째</div>
 	<div id="pack" onclick="">첫 번째</div>
 	<div id="pack" onclick="">첫 번째</div>

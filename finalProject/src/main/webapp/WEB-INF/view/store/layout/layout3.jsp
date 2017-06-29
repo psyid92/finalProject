@@ -18,18 +18,18 @@
 <link rel="stylesheet" href="<%=cp%>/resource/css/layout.css" type="text/css">
 <link rel="stylesheet" href="<%=cp%>/resource/jquery/css/smoothness/jquery-ui.min.css" type="text/css">
 <link rel="stylesheet" type="text/css" href="<%=cp%>/resource/bootswatch/bootstrap.css">
+<link rel="stylesheet" type="text/css" href="<%=cp%>/resource/bootstrap/css/none-bootstrap.css">
 
-<script type="text/javascript" src="<%=cp%>/resource/js/util.js"></script>
 <script type="text/javascript" src="<%=cp%>/resource/jquery/js/jquery-1.12.4.min.js"></script>
 </head>
 
 <body>
-<div id="header">
-	<tiles:insertAttribute name="header"/>
+	<div id="header">
+		<tiles:insertAttribute name="header"/>
 	</div>
 	
 	<div id="body">
-	 <tiles:insertAttribute name="body"/>
+		<tiles:insertAttribute name="body"/>
 	</div>
 	
 <script type="text/javascript" src="<%=cp%>/resource/jquery/js/jquery-ui.min.js"></script>

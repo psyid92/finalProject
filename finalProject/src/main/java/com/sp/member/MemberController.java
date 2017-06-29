@@ -107,13 +107,31 @@ public class MemberController {
 	
 	//마이페이지로 이동 /member/mypage
 	@RequestMapping("/member/mypage")
-	public String myPage(SessionInfo info){
-		SessionInfo session = new SessionInfo();
+	public String myPage(SessionInfo info, HttpSession session){
 		
+		session.setAttribute("preLoginURI", ".mainLayout");
 		if(info == null){
 			return "member/login";
 		}
 		return ".member.mypage";
 	}
+	
+	//내 정보 수정
+	@RequestMapping(value="/member/update")
+	public String updateMember(SessionInfo info, Model model, HttpSession session) throws Exception{
+		session.setAttribute("preLoginURI", "member/mypage");
+		
+		if(info == null){
+			return "member/login";
+		}
+		String m1_email = (String)info.getUserId();
+		Member1 dto = dao.getMember(m1_email);
+		
+		model.addAttribute("dto",dto);
+		model.addAttribute("mode", "update");
+		return "member/member";
+	}
+	
+	
 	
 }

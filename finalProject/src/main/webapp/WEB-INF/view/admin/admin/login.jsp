@@ -13,7 +13,7 @@
 <script type="text/javascript">
 	function sendLogin() {
 		var f = document.loginForm;
-		f.action = "<%=cp%>/admin/login";
+		f.action = "<%=cp%>/admin/login_check";
 		f.submit();
 	}
 </script>
@@ -34,12 +34,12 @@ html, body {
     				<legend>로그인</legend>
     				<div class="form-group">
       					<div class="col-lg-10">
-        					<input type="text" class="form-control" id="inputEmail" placeholder="아이디">
+        					<input type="text" class="form-control" id="userId" name="userId" placeholder="아이디">
       					</div>
     				</div>
     				<div class="form-group">
       					<div class="col-lg-10">
-        					<input type="password" class="form-control" id="inputPassword" placeholder="비밀번호">
+        					<input type="password" class="form-control" id="userPwd" name="userPwd" placeholder="비밀번호">
         				</div>
         			</div>
        			</fieldset>

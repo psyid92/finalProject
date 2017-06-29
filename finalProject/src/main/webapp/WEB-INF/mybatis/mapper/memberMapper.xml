@@ -25,6 +25,12 @@
 	select m1_email, m1_num, m1_pwd, m1_nickname from member1 where m1_email=#{m1_email} and m1_pwd = '${m1_pwd}'
 </select>
 
+<select id="getMember" parameterType="String" resultType="com.sp.member.Member1">
+	select m1_email, m1.m1_num, m1_nickname, m2_birth, m2_tel, m2_gender from member1 m1
+		left outer join member2 m2 on m1.m1_num=m2.m1_num
+		where m1_email = #{m1_email} 
+</select>
+
 <select id="checkEmail" parameterType="String" resultType="Integer">
 		select nvl(count(*), 0) from member1 where m1_email=#{m1_email}
 </select>

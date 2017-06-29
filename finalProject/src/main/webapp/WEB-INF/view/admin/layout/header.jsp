@@ -35,17 +35,17 @@
 <nav class="navbar navbar-inverse navbar-fixed-top">
 	<div class="container">
 		<div class="navbar-header">
-			<a class="navbar-brand" href="<%=cp%>/">배달행</a>
+			<a class="navbar-brand" href="<%=cp%>/">배달행페이지로</a>
 		</div>
 		<div id="navbar" class="navbar-collapse collapse">
 			<ul class="nav navbar-nav">
-				<li class="list-menu"><a href="<%=cp%>/admin/member">마이페이지</a></li>
-				<li class="list-menu"><a href="<%=cp%>/admin/giup">서비스 소개</a></li>
+				<li class="list-menu"><a href="<%=cp%>/admin/membercontroll">회원관리</a></li>
+				<li class="list-menu"><a href="<%=cp%>/admin/giupcontroll">업체관리</a></li>
 				<li class="list-menu"><a href="<%=cp%>/admin/event">이벤트</a></li>
 				<li class="list-menu"><a href="<%=cp%>/admin/cscenter">고객센터</a></li>
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
-				<li><a href="<%=cp%>/member/logout">로그아웃</a></li>
+				<li><a href="<%=cp%>/admin/logout">로그아웃</a></li>
 			</ul>
 			<p class="navbar-text navbar-right">
 				<span>${sessionScope.member.userName}</span> 님

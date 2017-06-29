@@ -39,12 +39,12 @@
 		</div>
 		<div id="navbar" class="navbar-collapse collapse">
 			<ul class="nav navbar-nav">
-				<li class="list-menu"><a href="<%=cp%>/store/myStore">마이페이지</a></li>
+				<li class="list-menu"><a href="<%=cp%>/store/mystore">마이페이지</a></li>
 				<li class="list-menu"><a href="<%=cp%>/store/event">이벤트</a></li>
 				<li class="list-menu"><a href="<%=cp%>/store/cscenter">고객센터</a></li>
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
-				<li><a href="<%=cp%>/member/logout">로그아웃</a></li>
+				<li><a href="<%=cp%>/store/logout">로그아웃</a></li>
 			</ul>
 			<p class="navbar-text navbar-right">
 				<span>${sessionScope.member.userName}</span> 님

@@ -5,6 +5,9 @@
 	request.setCharacterEncoding("utf-8");
 	String cp = request.getContextPath();
 %>
+
+<script type="text/javascript"
+	src="<%=cp%>/resource/jquery/js/jquery-1.12.4.min.js"></script>
 <script>
 	$(function() {
 		$(".dropdown-toggle").click(function() {
@@ -21,8 +24,9 @@
 </script>
 
 <style type="text/css">
-body {
-	background-color: #eaf1f1;
+html, body {
+	background-color: #f4efe1;
+	width: 100%; height: 100%;
 }
 #headerMenutr {
 	background-color: #f7f2e2;

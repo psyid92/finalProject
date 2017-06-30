@@ -15,14 +15,37 @@ public class PayServiceImpl implements PayService{
 	private CommonDAO dao;
 	
 	@Override
-	public List<Pay> listPay(Map<String, Object> map) throws Exception {
+	public List<Pay> listGiup(Map<String, Object> map) throws Exception {
 		List<Pay> list = new ArrayList<>();
 		try {
-			list = dao.getListData("pay.listPay", map);
+			list = dao.getListData("pay.listGiup", map);
 		} catch (Exception e) {
 			throw e;
 		}
 		return list;
 	}
+	
+	@Override
+	public List<Pay> readMenuCategory(int g1_Num) throws Exception {
+		List<Pay> list = new ArrayList<>();
+		try {
+			list = dao.getListData("pay.readMenuCategory", g1_Num);
+		} catch (Exception e) {
+			throw e;
+		}
+		return list;
+	}
+
+	@Override
+	public List<Pay> readMainMenu(int menuct_Num) throws Exception {
+		List<Pay> list = new ArrayList<>();
+		try {
+			list = dao.getListData("pay.readMainMenu", menuct_Num);
+		} catch (Exception e) {
+			throw e;
+		}
+		return list;
+	}
+
 
 }

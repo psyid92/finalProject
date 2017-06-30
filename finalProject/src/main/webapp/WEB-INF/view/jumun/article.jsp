@@ -5,14 +5,11 @@
 	request.setCharacterEncoding("utf-8");
 	String cp = request.getContextPath();
 %>
-<!DOCTYPE html>
-<html>
-<head>
-<title>Insert title here</title>
-</head>
-<body>
-
-	${g1_Num}기업의 페이지 입니다.
-
-</body>
-</html>
+<div>
+	<c:forEach var="cateDto" items="${cateList}">
+		<div style="width: 500px; height: 50px; background-color: #cccccc">${cateDto.menuct_Title}</div>
+		<c:forEach var="menuDto" items="${menuList}">
+			<div id="mainmenu" style="cursor: pointer;">${cateDto.mainmenu_Title}</div>
+		</c:forEach>
+	</c:forEach>
+</div>

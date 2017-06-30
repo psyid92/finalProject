@@ -51,7 +51,7 @@ html, body {
 		</div>
 	</div>
 	<div style="float: right;">
-	<a href="<%=cp%>/store/member" style="size: 8px;">회원가입</a>
+	<a href="<%=cp%>/store/join" style="size: 8px;">회원가입</a>
 	</div>
 </div>
 </body>

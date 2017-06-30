@@ -25,10 +25,13 @@ public class AdminMemberController {
 		return ".admin4.menu1.memberreviewcontroll.list";
 	}
 	
-	@RequestMapping(value="/admin/membercscentercontroller", method=RequestMethod.GET)
+	@RequestMapping(value="/admin/membercscentercontroll", method=RequestMethod.GET)
 	public String memberCsCenterControllerList(Model model) {
 		model.addAttribute("mainMenu", "0");
 		model.addAttribute("subMenu", "3");
-		return ".admin4.menu1.membercscentercontroller.list";
+		return ".admin4.menu1.membercscentercontroll.list";
 	}
+	
+	
+	
 }

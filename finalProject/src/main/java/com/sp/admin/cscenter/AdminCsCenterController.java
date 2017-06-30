@@ -9,19 +9,38 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller("admin.adminCsCenterController")
 public class AdminCsCenterController {
-	@RequestMapping(value="/admin/notice", method=RequestMethod.GET)
-	public String noticeList(Model model) {
+	@RequestMapping(value="/admin/membernotice", method=RequestMethod.GET)
+	public String memberNoticeList(Model model) {
 		
 		model.addAttribute("mainMenu", "3");
 		model.addAttribute("subMenu", "1");
-		return ".admin4.menu4.notice.list";
+		return ".admin4.menu4.membernotice.list";
 	}
 	
-	@RequestMapping(value="/admin/qna", method=RequestMethod.GET)
-	public String cscenterList(Model model) {
+	@RequestMapping(value="/admin/giupnotice", method=RequestMethod.GET)
+	public String giupNoticeList(Model model) {
 		
 		model.addAttribute("mainMenu", "3");
 		model.addAttribute("subMenu", "2");
-		return ".admin4.menu4.qna.list";
+		return ".admin4.menu4.giupnotice.list";
 	}
+	
+	
+	@RequestMapping(value="/admin/memberqna", method=RequestMethod.GET)
+	public String memberQnaList(Model model) {
+		
+		model.addAttribute("mainMenu", "3");
+		model.addAttribute("subMenu", "3");
+		return ".admin4.menu4.memberqna.list";
+	}
+	
+	@RequestMapping(value="/admin/giupqna", method=RequestMethod.GET)
+	public String gidupQnaList(Model model) {
+		
+		model.addAttribute("mainMenu", "3");
+		model.addAttribute("subMenu", "4");
+		return ".admin4.menu4.giupqna.list";
+	}
+	
+	
 }

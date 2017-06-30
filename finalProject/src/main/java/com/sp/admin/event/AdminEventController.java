@@ -9,10 +9,19 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller("admin.adminEventController")
 public class AdminEventController {
-	@RequestMapping(value="/admin/event", method=RequestMethod.GET)
-	public String eventList(Model model) {
-		
-		model.addAttribute("mainMenu", "2");
-		return ".admin4.menu3.event.list";
-	}
+   @RequestMapping(value="/admin/memberevent", method=RequestMethod.GET)
+   public String memberEventList(Model model) {
+      
+      model.addAttribute("mainMenu", "2");
+      model.addAttribute("subMenu", "1");
+      return ".admin4.menu3.memberevent.list";
+   }
+   
+   @RequestMapping(value="/admin/giupevent", method=RequestMethod.GET)
+   public String giupEventList(Model model) {
+      
+      model.addAttribute("mainMenu", "2");
+      model.addAttribute("subMenu", "2");
+      return ".admin4.menu3.giupevent.list";
+   }
 }

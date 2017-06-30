@@ -8,10 +8,10 @@
 
 <div class="adminBodyFrame2">
     <div class="body-title">
-          <h3><span class="glyphicon glyphicon-tower"></span> 공지사항 </h3>
+          <h3><span class="glyphicon glyphicon-tower"></span> 회원 이벤트 </h3>
     </div>
     
     <div>
-        공지사항
+       회원 이벤트...
     </div>
 </div>

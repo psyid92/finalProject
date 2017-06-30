@@ -8,10 +8,10 @@
 
 <div class="adminBodyFrame2">
     <div class="body-title">
-          <h3><span class="glyphicon glyphicon-tower"></span> 고객센터 </h3>
+          <h3><span class="glyphicon glyphicon-tower"></span> 기업메뉴관리 </h3>
     </div>
     
     <div>
-        고객센터...
+        기업메뉴관리
     </div>
 </div>

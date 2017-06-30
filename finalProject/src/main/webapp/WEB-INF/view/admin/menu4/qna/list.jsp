@@ -8,10 +8,10 @@
 
 <div class="adminBodyFrame2">
     <div class="body-title">
-          <h3><span class="glyphicon glyphicon-tower"></span> 회원1:1문의관리 </h3>
+          <h3><span class="glyphicon glyphicon-tower"></span> 자주하는질문 </h3>
     </div>
     
     <div>
-    회원1:1문의관리
+        자주하는질문
     </div>
 </div>

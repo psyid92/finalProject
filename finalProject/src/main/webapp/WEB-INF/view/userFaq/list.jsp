@@ -89,9 +89,7 @@ $('#myTab li:eq(2) a').tab('show') // Select third tab (0-indexed)
 	        		         </div>
 	        		     </form>
 	        		</div>
-	        		<div style="float: left; width: 20%; min-width: 85px; text-align: right;">
-	        		    <button type="button" class="btn btn-primary btn-sm bbtn" onclick="#"><span class="glyphicon glyphicon glyphicon-pencil"></span> 등록하기 </button>       		    
-	        		</div>
+	        	
 	        </div>
 	    </div>
 	    

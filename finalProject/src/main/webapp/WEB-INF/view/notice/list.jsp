@@ -126,9 +126,7 @@ $('#myTab li:eq(2) a').tab('show') // Select third tab (0-indexed)
 			<button type="button" class="btn btn-info btn-sm btn-search" onclick="searchList();"><span class="glyphicon glyphicon-search"></span> 검색</button>
           </form>
         </div>
-        <div style="float: left; width: 20%; min-width: 85px; text-align: right;">
-        		    <button type="button" class="btn btn-primary btn-sm bbtn" onclick="javascript:location.href='<%=cp%>/notice/created';"><span class="glyphicon glyphicon glyphicon-pencil"></span> 글쓰기</button>
-        </div>
+       
      
      </div>
     </div>

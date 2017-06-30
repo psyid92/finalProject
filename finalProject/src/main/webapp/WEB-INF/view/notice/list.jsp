@@ -67,12 +67,12 @@ $('#myTab li:eq(2) a').tab('show') // Select third tab (0-indexed)
 
 
   <!-- Tab panes -->
-  <div class="tab-content">
-    <div role="tabpanel" class="tab-pane active" id="notice">
+<div class="tab-content">
+  <div role="tabpanel" class="tab-pane active" id="notice">
     
     <div class="bodyFrame2">
     <div class="body-title">
-          <h3><span class="glyphicon glyphicon-book"></span> 공지사항 </h3>
+          <h3><span class="glyphicon glyphicon-tasks"></span> 공지사항 </h3>
     </div>
     
     <div class="alert alert-info">
@@ -131,7 +131,7 @@ $('#myTab li:eq(2) a').tab('show') // Select third tab (0-indexed)
         </div>
      
      </div>
-   </div>
+    </div>
    
   </div>
 </div>

@@ -1,7 +1,9 @@
 package com.sp.member;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -182,25 +184,38 @@ public class MemberController {
 	
 	//페이지로 이동
 	@RequestMapping("/member/ilike")
-	public String goLikegiup(HttpSession session, Model model){
-		SessionInfo info = (SessionInfo)session.getAttribute("member");
-		String m1_email  = info.getUserId();
-		List<LikeGiup> list = new ArrayList<>();
-		
-		try {
-			list = dao.listLikeGiup(m1_email);
-		} catch (Exception e) {
-			e.printStackTrace();
+	public String goLikegiup(HttpSession session, Model model) throws Exception{
+		if(session.getAttribute("member") == null){
+			return "member/login";
 		}
 		
+		 Map<String, Object> map = new HashMap<String, Object>();
+		 
+		SessionInfo info = (SessionInfo)session.getAttribute("member");
+		String m1_email  = info.getUserId();
+		
+		map.put("m1_email", m1_email);
+		
+		List<LikeGiup> list = dao.listLikeGiup(map);
+		int count = list.size();
+		
+		model.addAttribute("count", count);
 		model.addAttribute("list",list);
 		return ".mymem.likegiup";
 	}
+	
+//	@RequestMapping("/member/canclelike")
+//	public String deleteLike (Model model) {
+//		
+//	}
+	
+	
 	
 	@RequestMapping("/member/mileage")
 	public String goMileage(){
 		return ".mymem.mileage";
 	}
+	
 	
 	
 }

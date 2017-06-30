@@ -3,10 +3,20 @@ package com.sp.member;
 public class LikeGiup {
 
 	private int m1_num, g1_num;
-	private String m1_email, g1_id;
+	private String m1_email, g1_id, g1_name;
 
 	private String cat_name, cat_code;
 	private int g1_sleep;
+	
+	
+
+	public String getG1_name() {
+		return g1_name;
+	}
+
+	public void setG1_name(String g1_name) {
+		this.g1_name = g1_name;
+	}
 
 	public String getCat_name() {
 		return cat_name;

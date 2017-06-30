@@ -3,6 +3,7 @@ package com.sp.member;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -151,11 +152,11 @@ public class MemberImpl implements MemberDAO{
 
 	//좋아요 리스트
 	@Override
-	public List<LikeGiup> listLikeGiup(String m1_email) throws Exception {
-		List<LikeGiup> list = new ArrayList<>();
+	public List<LikeGiup> listLikeGiup(Map<String, Object> map) throws Exception {
+		List<LikeGiup> list = null;
 		
 		try {
-			list = dao.getReadData("listLikegiup", m1_email);
+			list = dao.getListData("listLikegiup", map);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

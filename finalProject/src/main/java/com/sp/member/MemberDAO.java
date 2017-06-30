@@ -1,6 +1,7 @@
 package com.sp.member;
 
 import java.util.List;
+import java.util.Map;
 
 public interface MemberDAO {
 	
@@ -20,6 +21,6 @@ public interface MemberDAO {
 //	찜한 기업
 	public int insertLikeGiup(LikeGiup giup) throws Exception;
 	public int deleteLikeGiup(LikeGiup giup) throws Exception;
-	public List<LikeGiup> listLikeGiup(String m1_email) throws Exception;
+	public List<LikeGiup> listLikeGiup(Map<String, Object> map) throws Exception;
 
 }

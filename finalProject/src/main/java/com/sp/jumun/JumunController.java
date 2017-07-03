@@ -1,4 +1,4 @@
-package com.sp.pay;
+package com.sp.jumun;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -12,13 +12,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-@Controller("pay.payController")
-public class PayController {
-	@Autowired PayService service;
+@Controller("jumun.jumunController")
+public class JumunController {
+	@Autowired JumunService service;
 	
-	@RequestMapping(value="/pay/payList", method=RequestMethod.GET)
+	@RequestMapping(value="/jumun/jumunList", method=RequestMethod.GET)
 	public String payList(String category, Model model) throws Exception {
-		List<Pay> list = new ArrayList<>();
+		List<Jumun> list = new ArrayList<>();
 		Map<String, Object> map = new HashMap<>();
 		int start = 1;
 		int end = 10;
@@ -34,9 +34,9 @@ public class PayController {
 		return ".jumun.menu";
 	}
 	
-	@RequestMapping(value="/pay/article", method=RequestMethod.GET)
+	@RequestMapping(value="/jumun/article", method=RequestMethod.GET)
 	public String article(int g1_Num, Model model) throws Exception {
-		List<Pay> cateList = new ArrayList<>();
+		List<Jumun> cateList = new ArrayList<>();
 		cateList = service.readMenuCategory(g1_Num);
 		model.addAttribute("cateList", cateList);
 		model.addAttribute("g1_Num", g1_Num);
@@ -44,14 +44,27 @@ public class PayController {
 		return ".jumun.article";
 	}
 	
-	@RequestMapping(value="/pay/menu", method=RequestMethod.POST)
+	@RequestMapping(value="/jumun/menu", method=RequestMethod.POST)
 	@ResponseBody
 	public Map<String, Object> menu(int menuct_Num) throws Exception {
 		Map<String, Object> model = new HashMap<>();
-		List<Pay> menuList = new ArrayList<>();
+		List<Jumun> menuList = new ArrayList<>();
 		menuList = service.readMainMenu(menuct_Num);
 		
+		menuList.get(1).getMainmenu_Title();
+		
 		model.put("menuList", menuList);
+		return model;
+	}
+	
+	@RequestMapping(value="/jumun/submenu", method=RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> sub(int mainmenu_Num) throws Exception {
+		
+		Map<String, Object> model = new HashMap<>();
+		List<Jumun> subList = new ArrayList<>();
+		subList = service.readSubMenu(mainmenu_Num);
+		model.put("subList", subList);
 		return model;
 	}
 	

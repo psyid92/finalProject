@@ -1,6 +1,6 @@
-package com.sp.pay;
+package com.sp.jumun;
 
-public class Pay {
+public class Jumun {
 	private int g1_Num, giupAd_Num, menuct_Num, mainmenu_Num;
 	private int mainmenu_Pay, mainmenu_Enabled, submenu_Num, submenu_Pay, submenu_Enabled, g1_Enabled;
 	private String g1_Id, g1_Pwd, g1_Name, g1_Sleep, cat_Code, menuct_Title, menuct_Info;

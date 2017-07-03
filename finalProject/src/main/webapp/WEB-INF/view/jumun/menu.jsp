@@ -9,7 +9,7 @@
 $(function(){
 	$("#giup").children().click(function(){
 		var g1_Num = $(this).attr("id").substring(4);
-		location.href = "<%=cp%>/pay/article?g1_Num=" + g1_Num;
+		location.href = "<%=cp%>/jumun/article?g1_Num=" + g1_Num;
 	});
 });
 

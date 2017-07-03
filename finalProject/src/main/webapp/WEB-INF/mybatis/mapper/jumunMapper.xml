@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="pay">
-	<select id="listGiup" parameterType="map" resultType="com.sp.pay.Pay">
+<mapper namespace="jumun">
+	<select id="listGiup" parameterType="map" resultType="com.sp.jumun.Jumun">
 		SELECT * FROM (
 			SELECT ROWNUM rnum, tb.* FROM (
 				SELECT g1.g1_Num, g1_Id, g1_Pwd, g1_Name, g1_Sleep, cat_Code,
@@ -17,16 +17,22 @@
 ]]>
 	</select>
 	
-	<select id="readMenuCategory" parameterType="Integer" resultType="com.sp.pay.Pay">
+	<select id="readMenuCategory" parameterType="Integer" resultType="com.sp.jumun.Jumun">
 		SELECT menuct_Num, menuct_Title, menuct_Info, g1_Num
 		FROM menuCate
 		WHERE g1_Num = #{g1_Num}
 	</select>
 	
-	<select id="readMainMenu" parameterType="Integer" resultType="com.sp.pay.Pay">
+	<select id="readMainMenu" parameterType="Integer" resultType="com.sp.jumun.Jumun">
 		SELECT mainmenu_Num, mainmenu_Title, mainmenu_Content, mainmenu_Photo,
 			mainmenu_Pay, mainmenu_Enabled, menuct_Num
 		FROM mainmenu
-		WHERE menuct_Num = #(menuct_Num)
+		WHERE menuct_Num = #{menuct_Num}
+	</select>
+	
+	<select id="readSubMenu" parameterType="Integer" resultType="com.sp.jumun.Jumun">
+		SELECT submenu_Num, submenu_Title, submenu_Pay, submenu_Enabled, mainmenu_Num
+		FROM submenu
+		WHERE mainmenu_Num = #{mainmenu_Num}
 	</select>
 </mapper>

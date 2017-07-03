@@ -9,7 +9,7 @@
 	$(function() {
 		$("#category").children().click(function(){
 			var category = $(this).attr("id");
-			location.href = '<%=cp%>/pay/payList?category=' + category;
+			location.href = '<%=cp%>/jumun/jumunList?category=' + category;
 		});
 		$("#category").children().mouseenter(function(){
 			

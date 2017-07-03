@@ -35,7 +35,8 @@
 			login-processing-url="/admin/login_check"
 			username-parameter="userId"
 			password-parameter="userPwd"
-			default-target-url="/admin/membercontroll"/>
+			default-target-url="/admin/membercontroll"
+			authentication-success-handler-ref="authSuccess"/>
 			
 			
 		<logout
@@ -60,6 +61,7 @@
 		 -->
 	</http>
 	
+	<beans:bean id="authSuccess" class="com.sp.admin.member.AuthSuccessHandler"/>
 
 	<authentication-manager>
 		<authentication-provider>

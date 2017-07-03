@@ -25,26 +25,50 @@ public class NoticeServiceImpl implements NoticeService{
 
 	@Override
 	public int dataCount(Map<String, Object> map) throws Exception {
-		// TODO Auto-generated method stub
-		return 0;
+		int result=0;
+		
+		try {
+			result=dao.getIntValue("notice.dataCount", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
 	}
 
 	@Override
 	public List<Notice> listNotice(Map<String, Object> map) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		List<Notice> list=null;
+		
+		try {
+			list=dao.getListData("notice.listNotice", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return list;
 	}
 
 	@Override
 	public List<Notice> listNoticeTop() throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		List<Notice> list = null;
+		
+		try {
+			list=dao.getListData("notice.listNoticeTop");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
 	}
 
 	@Override
 	public int updateCount(int noti_Num) throws Exception {
-		// TODO Auto-generated method stub
-		return 0;
+		int result=0;
+		try {
+			result=dao.updateData("notice.updateCount", noti_Num);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
 	}
 
 	@Override

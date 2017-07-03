@@ -3,8 +3,18 @@ package com.sp.notice;
 public class Notice {
     private int listNum, noti_Num;
     private String admin_Id;
-    private String noti_Title, noti_Content;
-    private int noti_Created, noti_Top, noti_Count;
+    private String noti_Title, noti_Content, noti_Created;
+    private int noti_Top, noti_Count;
+    
+    private long gap;
+    
+    
+	public long getGap() {
+		return gap;
+	}
+	public void setGap(long gap) {
+		this.gap = gap;
+	}
 	public int getListNum() {
 		return listNum;
 	}
@@ -35,10 +45,10 @@ public class Notice {
 	public void setNoti_Content(String noti_Content) {
 		this.noti_Content = noti_Content;
 	}
-	public int getNoti_Created() {
+	public String getNoti_Created() {
 		return noti_Created;
 	}
-	public void setNoti_Created(int noti_Created) {
+	public void setNoti_Created(String noti_Created) {
 		this.noti_Created = noti_Created;
 	}
 	public int getNoti_Top() {

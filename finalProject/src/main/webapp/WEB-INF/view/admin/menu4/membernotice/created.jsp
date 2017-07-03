@@ -7,40 +7,7 @@
 %>
 
 <style type="text/css">
-.bs-write table {
-    width: 100%;
-    border: 0;
-    border-spacing: 0;
-}
-.table tbody tr td {
-    border-top: none;
-    font-weight: normal;
-	font-family: NanumGothic, 나눔고딕, "Malgun Gothic", "맑은 고딕", 돋움, sans-serif;
-} 
-.bs-write table td {
-	padding: 3px 3px 3px 3px;
-}
 
-.bs-write .td1 {
-    min-width: 100px;
-    min-height: 30px;
-    color: #666;
-    vertical-align: middle;
-}
-
-.bs-write .td2 {
-}
-
-.bs-write .td3 {
-}
-
-.bs-write .td4 {
-}
-
-li{
-  width: 20%;  
-  text-align: center;
-  font-weight: 100;
   
 }
 </style>
@@ -63,9 +30,9 @@ li{
 
         var mode="${mode}";
     	if(mode=="created")
-    		f.action="<%=cp%>/notice/created";
+    		f.action="<%=cp%>/admin/membernotice/created";
     	else if(mode=="update")
-    		f.action="<%=cp%>/notice/update";
+    		f.action="<%=cp%>/admin/membernotice/update";
 
     	// <input type='submit' ..>,  <input type='image' ..>, <button>은 submit() 메소드 호출하면 두번전송
         return true;
@@ -75,23 +42,12 @@ li{
  
 
 //탭 스트립트
-$('#myTab a').click(function (e) {
-  e.preventDefault()
-  $(this).tab('show')
-})
+
 	
-$('#myTab a[href="#profile"]').tab('show') // Select tab by name
-$('#myTab a:first').tab('show') // Select first tab
-$('#myTab a:last').tab('show') // Select last tab
-$('#myTab li:eq(2) a').tab('show') // Select third tab (0-indexed)
+
 
 
 </script>
-
-
-
-<div class="tab-content">
- <div role="tabpanel" class="tab-pane active" id="notice">
 
   <div class="bodyFrame2">
     <div class="body-title">
@@ -125,7 +81,7 @@ $('#myTab li:eq(2) a').tab('show') // Select third tab (0-indexed)
                         <tr>
                             <td class="td1">제목</td>
                             <td colspan="3" class="td3">
-                                <input type="text" name="noti_Tilte" class="form-control input-sm" value="${dto.noti_Tilte}" required="required">
+                                <input type="text" name="noti_Title" class="form-control input-sm" value="${dto.noti_Title}" required="required">
                             </td>
                         </tr>
                         
@@ -145,7 +101,7 @@ $('#myTab li:eq(2) a').tab('show') // Select third tab (0-indexed)
                         <tr>
                             <td colspan="4" style="text-align: center; padding-top: 15px;">
                                   <button type="submit" class="btn btn-primary"> 확인 <span class="glyphicon glyphicon-ok"></span></button>
-                                  <button type="button" class="btn btn-danger" onclick="javascript:location.href='<%=cp%>/notice/list';"> 취소 </button>
+                                  <button type="button" class="btn btn-danger" onclick="javascript:location.href='<%=cp%>/anotice/list';"> 취소 </button>
                                   
                                   <c:if test="${mode=='update'}">
                                       <input type="hidden" name="page" value="${page}">
@@ -159,5 +115,4 @@ $('#myTab li:eq(2) a').tab('show') // Select third tab (0-indexed)
         </form>
     </div>
   </div>
- </div>
-</div>
+ 

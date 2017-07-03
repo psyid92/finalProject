@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller("admin.adminGiupCsController")
 public class AdminGiupCsController {
+	
+	
 	@RequestMapping(value="/admin/giupnotice", method=RequestMethod.GET)
 	public String giupNoticeList(Model model) {
 		

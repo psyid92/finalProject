@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 // 어드민 로그인 컨트롤러
 
-@Controller("adminLoginController")
+@Controller("admin.adminLoginController")
 public class AdminLoginController {
 	
 	@RequestMapping(value="/admin/login", method=RequestMethod.GET)

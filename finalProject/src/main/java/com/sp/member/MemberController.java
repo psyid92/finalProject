@@ -14,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller("member.memberController")
 public class MemberController {
@@ -103,12 +104,7 @@ public class MemberController {
 		dto.setM2_gender(req.getParameter("m2_gender"));
 		dto.setM2_tel(req.getParameter("m2_tel"));
 		
-		int result = dao.insertMember(dto);
-		/*
-		if(result >0 ){
-			model.addAttribute("msg", "가입 성공");
-		}
-		*/
+		dao.insertMember(dto);
 		}
 		model.addAttribute("mode", "mainPage");
 		return ".mainLayout";
@@ -204,13 +200,34 @@ public class MemberController {
 		return ".mymem.likegiup";
 	}
 	
-//	@RequestMapping("/member/canclelike")
-//	public String deleteLike (Model model) {
-//		
-//	}
+	@RequestMapping(value="/member/canclelike" , method=RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> deleteLike (
+			HttpSession session,
+			@RequestParam(value="mydata", defaultValue="") int mydata)  {
+		SessionInfo info = (SessionInfo)session.getAttribute("member");
+		try {
+				LikeGiup dto = new LikeGiup();
+				String m1_email = info.getUserId();
+				dto.setM1_email(m1_email);
+				dto.setG1_num(mydata);
+				dao.deleteLikeGiup(dto);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		Map<String, Object> model = new HashMap<>();
+		model.put("state", true);
+		return model;
+	}
 	
 	
-	
+	/*
+	 * ----------------------------------------------------------------------------------------
+	 * ----------------------------------------------------------------------------------------
+	 * 				마일리지
+	 * 				
+	 */
+	//마일리지 페이지
 	@RequestMapping("/member/mileage")
 	public String goMileage(){
 		return ".mymem.mileage";

@@ -49,6 +49,32 @@ position : relative;
 </style>
 
 
+<script type="text/javascript">
+	function sendcancle(data){
+		var msg = "찜한 것을 삭제하시겠습니까?";
+		if(! confirm(msg)){
+			return;
+		}
+		
+		var mydata = "mydata="+data;
+		var url = "<%=cp%>/member/canclelike";
+		
+		$.ajax ({
+			type:"post"
+			, url : url
+			, data : mydata
+			, dataType : "json"
+			, success : function(data){
+				location.reload();
+			}
+		, error :function(e){
+			console.log(e.responseText);
+		}
+		});
+		
+	}
+</script>
+
 <div id="packing_giup" align="center">
 <br><br>
 <div id="count">총 : ${count } 개
@@ -65,27 +91,5 @@ position : relative;
 
 
 
-<script type="text/javascript">
-	function sendcancle(data){
-		var msg = "찜한 것을 삭제하시겠습니까?";
-		if(! confirm(msg)){
-			return;
-		}
-		
-	var url = "<%=cp%>/member/canclelike";
-		$.ajax ({
-			type:"post"
-			, url : url
-			, data : data
-			, success(data){
-				
-			}
-		, error : function(data){
-			
-		}
-		});
-		
-	}
-</script>
 
 </div>

@@ -22,7 +22,7 @@ public class MemberImpl implements MemberDAO{
 		int result = 0;
 		
 		try {
-			int seq = dao.getReadData("getMemberSeq");
+			int seq = dao.getReadData("member.getMemberSeq");
 			dto.setM1_num(seq);
 			dao.insertData("insertMember1", dto);
 			dao.insertData("insertMember2", dto);
@@ -37,7 +37,7 @@ public class MemberImpl implements MemberDAO{
 	public int passCheck(Member1 dto) throws Exception {
 		int result = 0;
 		try {
-			result = dao.getReadData("checkPwd", dto);
+			result = dao.getReadData("member.checkPwd", dto);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -50,8 +50,8 @@ public class MemberImpl implements MemberDAO{
 	public int updateMember(Member1 dto) throws Exception {
 		int result = 0;
 		try {
-			dao.updateData("updateMember1", dto);
-			dao.updateData("updateMember2", dto);
+			dao.updateData("member.updateMember1", dto);
+			dao.updateData("member.updateMember2", dto);
 		} catch (Exception e) {
 		}
 		return result;
@@ -70,7 +70,7 @@ public class MemberImpl implements MemberDAO{
 	public int newLogin(String m1_email) throws Exception {
 		int result = 0;
 		try {
-			result = dao.updateData("newLogin", m1_email);
+			result = dao.updateData("member.newLogin", m1_email);
 		} catch (Exception e) {
 		}
 		
@@ -83,7 +83,7 @@ public class MemberImpl implements MemberDAO{
 	public int checkEmail(String m1_email) throws Exception {
 		int result = 0;
 		try {
-			result = dao.getReadData("checkEmail", m1_email);
+			result = dao.getReadData("member.checkEmail", m1_email);
 		} catch (Exception e) {
 		}
 		return result;
@@ -97,7 +97,7 @@ public class MemberImpl implements MemberDAO{
 		Member1 mymember = new Member1();
 		mymember.setM1_email(userId);
 		mymember.setM1_pwd(userPWd);
-		Member1 member = dao.getReadData("login", mymember);
+		Member1 member = dao.getReadData("member.login", mymember);
 		if(member != null) {
 			newLogin(member.getM1_email());
 			result = 1;
@@ -109,7 +109,7 @@ public class MemberImpl implements MemberDAO{
 	//멤버 읽어오기
 	@Override
 	public Member1 getMember(String m1_email) throws Exception {
-		Member1 dto = dao.getReadData("getMember", m1_email);
+		Member1 dto = dao.getReadData("member.getMember", m1_email);
 		return dto;
 	}
 
@@ -128,7 +128,7 @@ public class MemberImpl implements MemberDAO{
 	public int insertLikeGiup(LikeGiup giup) throws Exception {
 		int result = 0;
 		try {
-			result = dao.insertData("iLikegiup", giup);
+			result = dao.insertData("member.memberiLikegiup", giup);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -142,7 +142,7 @@ public class MemberImpl implements MemberDAO{
 	public int deleteLikeGiup(LikeGiup giup) throws Exception {
 		int result = 0;
 		try {
-			result = dao.insertData("idontlikegiup", giup);
+			result = dao.insertData("member.idontlikegiup", giup);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -156,7 +156,7 @@ public class MemberImpl implements MemberDAO{
 		List<LikeGiup> list = null;
 		
 		try {
-			list = dao.getListData("listLikegiup", map);
+			list = dao.getListData("member.listLikegiup", map);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

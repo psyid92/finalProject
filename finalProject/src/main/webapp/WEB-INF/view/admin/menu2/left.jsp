@@ -17,8 +17,8 @@ $(function(){
 
 <div class="list-group">
        <div class="list-group-item lefthead"><i></i> 업체관리</div>
-       <a href="#" class="list-group-item">업체정보관리</a>
-       <a href="#" class="list-group-item">리뷰관리</a>
-       <a href="#" class="list-group-item">고객센터관리</a>
-       <a href="#" class="list-group-item">메뉴관리</a>
+       <a href="<%=cp%>/admin/giupcontroll" class="list-group-item">업체정보관리</a>
+       <a href="<%=cp%>/admin/giupreviewcontroll" class="list-group-item">업체리뷰관리</a>
+       <a href="<%=cp%>/admin/giupcscentercontroll" class="list-group-item">기업1:1문의관리</a>
+       <a href="<%=cp%>/admin/giupmenucontroll" class="list-group-item">메뉴관리</a>
 </div>

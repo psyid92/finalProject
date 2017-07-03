@@ -17,7 +17,6 @@ $(function(){
 
 <div class="list-group">
        <div class="list-group-item lefthead"><i></i> 이벤트 관리</div>
-       <a href="#" class="list-group-item">사장님 꿀팁</a>
-       <a href="#" class="list-group-item">배달행 아카데미</a>
-       <a href="#" class="list-group-item">배달행 활용백서</a>
+       <a href="<%=cp%>/admin/memberevent" class="list-group-item">회원이벤트</a>
+       <a href="<%=cp%>/admin/giupevent" class="list-group-item">판매자이벤트</a>
 </div>

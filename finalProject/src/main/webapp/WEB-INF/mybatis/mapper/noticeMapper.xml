@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="notice">
+  <insert id="insertNotice" parameterType="com.sp.notice.Notice">
+    INSERT INTO userNotice(noti_Num, admin_Id, noti_Title, noti_Content, noti_Top) 
+         VALUES(userNotice_seq.NEXTVAL, #{admin_Id}, #{noti_Title}, #{noti_Content}, #{noti_Top})
+  </insert>
+  
+  <sql id="where-list">
+    <if test="searchKey=='m1_nickname'">
+      m1_nickname=#{searchvalue}
+    </if>
+    <if test="searchKey=='noti_Title'">
+      noti_Title LIKE '%' || #{searchValue} || '%'
+    </if>
+    <if test="searchKey=='noti_Content'">
+      DBMS_LOB.INSTR( noti_Content, #{searchValue}) &gt; 0 
+    </if>
+    <if test="searchKey=='noti_Created' ">
+	  TO_CHAR(noti_Created, 'YYYY-MM-DD') = #{searchValue}
+	</if>
+  </sql>
+  
+  <select id="listNoticeTop" resultType="com.sp.notice.Notice">
+    SELECT noti_Num, noti_Top, n.admin_Id, noti_Title, noti_Count, 
+           TO_CHAR(noti_Created, 'YYYY-MM-DD')noti_Created
+    FROM userNotice n
+    JOIN admin ad ON n.admin_Id=ad.admin_Id
+    WHERE noti_Top=1
+    ORDER BY noti_Num DESC       
+  </select>
+  
+  <select id="dataCount" parameterType="map" resultType="Integer">
+    SELECT NVL(COUNT(*), 0) FROM userNotice n
+           JOIN admin ad ON n.admin_Id=ad.admin_Id
+    <where>
+           <if test="searchValue != null and searchValue!=''  ">
+				<include refid="where-list"/>
+			</if>
+    </where>       
+  </select>
+  
+  <select id="listNotice" parameterType="map" resultType="com.sp.notice.Notice">
+    SELECT * FROM (
+      SELECT ROWNUM rnum, tb.* FROM(
+        SELECT noti_Num, noti_Top, n.admin_id, noti_Title, noti_Count, noti_Created
+        FROM userNotice n
+        JOIN admin ad ON n.admin_Id=ad.admin_Id
+        <where>
+          <if test="searchValue != null and searchValue != ''">
+			 <include refid="where-list"/>
+		  </if>
+	    </where>
+	    ORDER BY noti_Num DESC
+<![CDATA[
+	   ) tb WHERE ROWNUM <= #{end}
+	  ) WHERE rnum >= #{start}
+	]]>
+  </select>
+  
+</mapper>

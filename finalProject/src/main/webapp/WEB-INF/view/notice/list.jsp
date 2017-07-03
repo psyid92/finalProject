@@ -78,8 +78,9 @@ $('#myTab li:eq(2) a').tab('show') // Select third tab (0-indexed)
     <div class="alert alert-info">
         <i class="glyphicon glyphicon-info-sign"></i> 중요한 일정 및 알림 등은 공지사항 통해 고객님께 알려 드립니다.
     </div>
+<c:if test="${dataCount!=0}">   
       <div style="clear: both; height: 30px; line-height: 30px;">
-        <div style="float: left;">조회수/페이지</div>
+        <div style="float: left;">${dataCount}개(${page}/${total_page}페이지)</div>
         <div style="float: right;">/&nbsp;</div>
       </div>
     <div class="table-responsive" style="clear: both;">
@@ -94,20 +95,41 @@ $('#myTab li:eq(2) a').tab('show') // Select third tab (0-indexed)
            </tr>
          </thead> 
          <tbody>
+         <c:forEach var="dto" items="${noticeList}">
            <tr>
              <td class="text-center"><span style="display: inline-block;width: 28px;height:18px;line-height:18px; background: #ED4C00;color: #FFFFFF">공지</span></td>
-             <td><a href="#">제목</a></td>
-             <td class="text-center">이름</td>
-             <td class="text-center">생성일</td>
-             <td class="text-center">조회수</td>
+             <td><a href="${articleUrl}&noti_num=${dto.noti_Num}">${dto.noti_Title}</a></td>
+             <td class="text-center">관리자</td>
+             <td class="text-center">${dto.noti_Created}</td>
+             <td class="text-center">${dto.noti_Count}</td>
            </tr>   
+         </c:forEach>
+         <c:forEach var="dto" items="${list}">
+            <tr>
+             <td class="text-center">${dto.listNum}</td>
+             <td>
+                <a href="${articleUrl}&num=${dto.noti_Num}">${dto.noti_Title}</a>
+                <c:if test="${dto.gap < 1}">
+                 <img src='<%=cp%>/resource/images/new.gif'>
+                </c:if>
+             </td>
+             <td class="text-center">관리자</td>
+             <td class="text-center">${dto.noti_Created}</td>
+             <td class="text-center">${dto.noti_Count}</td>
+            </tr>
+           </c:forEach>
          </tbody>
       </table>
     </div>
-    
+</c:if>   
+  
      <div class="paging" style="text-align: center; min-height: 50px; line-height: 50px;">
-            
+        <c:if test="${dataCount==0 }">
                   등록된 게시물이 없습니다.
+        </c:if>
+        <c:if test="${dataCount!=0 }">
+         ${paging}
+        </c:if>
      </div>  
      
      <div style="clear: both;">
@@ -117,18 +139,15 @@ $('#myTab li:eq(2) a').tab('show') // Select third tab (0-indexed)
         <div style="float: left; width: 60%; text-align: center;">
           <form name="searchForm" method="post" class="form-inline">
 			<select class="form-control input-sm" name="searchKey" >
-				<option value="">제목</option>
-				<option value="">작성자</option>
-				<option value="">내용</option>
-				<option value="">등록일</option>
+				<option value="noti_Title">제목</option>
+				<option value="noti_Content">내용</option>
+				<option value="noti_Created">등록일</option>
 			</select>
 			<input type="text" class="form-control input-sm input-search" name="searchValue">
 			<button type="button" class="btn btn-info btn-sm btn-search" onclick="searchList();"><span class="glyphicon glyphicon-search"></span> 검색</button>
           </form>
         </div>
-        <div style="float: left; width: 20%; min-width: 85px; text-align: right;">
-        		    <button type="button" class="btn btn-primary btn-sm bbtn" onclick="javascript:location.href='<%=cp%>';"><span class="glyphicon glyphicon glyphicon-pencil"></span> 글쓰기</button>
-        </div>
+       
      
      </div>
     </div>

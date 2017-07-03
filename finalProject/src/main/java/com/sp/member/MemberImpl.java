@@ -113,7 +113,13 @@ public class MemberImpl implements MemberDAO{
 		return dto;
 	}
 
-	
+	//비밀번호 변경 하기
+		@Override
+		public int changePass(Member1 dto) throws Exception {
+			int result = 0;
+			result=dao.updateData("member.updatePwd", dto);
+			return result;
+		}
 	
 	
 	
@@ -163,8 +169,6 @@ public class MemberImpl implements MemberDAO{
 		
 		return list;
 	}
-	
-	
 
 	
 

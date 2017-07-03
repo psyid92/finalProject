@@ -31,6 +31,9 @@ body {
 <br>
 <div>
 <h3>내 마일리지 : 10000 점</h3>
+<c:if test="${not empty msg }">
+<p style="color: blue;">${msg }</p>
+</c:if>
 </div>
 <br>
 <br>
@@ -38,8 +41,9 @@ body {
 <div id="mypage_menu" onclick="javascript:location.href='<%=cp%>/member/update'">정보 수정</div>
 <div id="mypage_menu" onclick="javascript:location.href='<%=cp%>/member/ilike'">찜한 가게</div>
 <div id="mypage_menu" onclick="javascript:location.href='#'">결제 내역</div><br>
-<div id="mypage_menu" onclick="javascript:location.href='<%=cp%>/member/mileage'">마일리지</div>
+<div id="mypage_menu" onclick="javascript:location.href='<%=cp%>/member/mileage'">마일리지 내역</div>
 <div id="mypage_menu" onclick="javascript:location.href='#'">내 리뷰</div>
-<div id="mypage_menu" onclick="javascript:location.href='#'">비밀번호 변경/탈퇴</div>
+<div id="mypage_menu" onclick="javascript:location.href='<%=cp%>/member/memberAccount'">비밀번호 변경/탈퇴</div>
+<div id="mypage_menu" onclick="javascript:location.href='#'">1대1 문의</div>
 
 </div>

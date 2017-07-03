@@ -16,6 +16,7 @@ public interface MemberDAO {
 	public int newLogin(String m1_email) throws Exception;
 	public Member1 getMember(String m1_email)  throws Exception;
 	public int passCheck(Member1 dto) throws Exception;
+	public int changePass(Member1 dto) throws Exception;
 	
 	
 //	찜한 기업

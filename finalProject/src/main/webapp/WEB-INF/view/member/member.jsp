@@ -18,8 +18,8 @@ function memberOk() {
 		f.m1_email.focus();
 		return;
 	}
-	if(!/^[a-z][a-z0-9_]{4,9}$/i.test(str)) { 
-		alert("아이디는 5~10자이며 첫글자는 영문자이어야 합니다.");
+	if(str.indexOf('@') == -1 ) { 
+		alert("아이디는 이메일 형식이어야 합니다.");
 		f.m1_email.focus();
 		return;
 	}
@@ -141,7 +141,7 @@ function changeEmail() {
 			            <input type="text" name="m1_email" id="m1_email" value="${dto.m1_email}"
                          style="width: 95%;"
                          ${mode=="update" ? "readonly='readonly' ":""}
-                         maxlength="15" class="boxTF" placeholder="아이디">
+                         maxlength="30" class="boxTF" placeholder="아이디">
 			        </p>
 			        <p class="help-block">아이디는 이메일입니다. ooo@ppp.qq 형식을 지켜 주세요.</p>
 			      </td>

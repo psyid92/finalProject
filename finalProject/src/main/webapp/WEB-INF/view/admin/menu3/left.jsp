@@ -16,8 +16,7 @@ $(function(){
 </script>
 
 <div class="list-group">
-       <div class="list-group-item lefthead"><i></i> 고객센터</div>
-       <a href="#" class="list-group-item">공지사항</a>
-       <a href="#" class="list-group-item">문의하기</a>
-       <a href="#" class="list-group-item">자주하는 질문</a>
+       <div class="list-group-item lefthead"><i></i> 이벤트 관리</div>
+       <a href="<%=cp%>/admin/memberevent" class="list-group-item">회원이벤트</a>
+       <a href="<%=cp%>/admin/giupevent" class="list-group-item">판매자이벤트</a>
 </div>

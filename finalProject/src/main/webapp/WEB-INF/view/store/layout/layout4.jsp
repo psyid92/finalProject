@@ -19,6 +19,7 @@
 <link rel="stylesheet" href="<%=cp%>/resource/bootstrap/css/bootstrap.min.css" type="text/css"/>
 <link rel="stylesheet" href="<%=cp%>/resource/bootstrap/css/bootstrap-theme.min.css" type="text/css"/>
 <link rel="stylesheet" type="text/css" href="<%=cp%>/resource/bootswatch/bootstrap.css">
+<link rel="stylesheet" type="text/css" href="<%=cp%>/resource/bootstrap/css/none-bootstrap.css">
 
 <link rel="stylesheet" href="<%=cp%>/resource/css/style.css" type="text/css"/>
 <link rel="stylesheet" href="<%=cp%>/resource/css/layout.css" type="text/css"/>
@@ -33,7 +34,7 @@
 </div>
 
 <div class="container" role="main">
-    <div class="row row-offcanvas row-offcanvas-right  admin-body-2">
+    <div class="row row-offcanvas row-offcanvas-right  store-body-2">
         <div class="col-xs-6 col-sm-3 sidebar-offcanvas" style="max-width: 240px;" id="sidebar">
             <tiles:insertAttribute name="left"/>
         </div>

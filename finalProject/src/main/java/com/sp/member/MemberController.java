@@ -1,5 +1,10 @@
 package com.sp.member;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -19,13 +24,15 @@ public class MemberController {
 	//로그인 폼
 	@RequestMapping(value="/member/login", method=RequestMethod.GET)
 	public String loginForm(){
-		return "member/login";
+		return ".mymem.login";
 	}
 	
 	//로그아웃
 	@RequestMapping(value="/member/logout")
-	public String logout(HttpServletRequest req){
+	public String logout(HttpServletRequest req, HttpSession session, Model model){
 		
+		session.invalidate();
+		model.addAttribute("mode", "mainPage");
 		return ".mainLayout";
 	}
 	
@@ -61,7 +68,7 @@ public class MemberController {
 		} else {
 			model.addAttribute("msg", "로그인 실패");
 			model.addAttribute("mode", "created");
-			return "redirect:/member/login";
+			return "redirect:.mymem.login";
 		}
 		
 //		return ".mainLayout";
@@ -71,7 +78,7 @@ public class MemberController {
 	@RequestMapping(value="/member/member", method=RequestMethod.GET)
 	public String memberForm(Model model){
 		model.addAttribute("mode", "created");
-		return "member/member";
+		return ".mymem.member";
 	}
 	
 	//회원가입 하기
@@ -83,7 +90,7 @@ public class MemberController {
 		if(checkId >0){
 			model.addAttribute("msg", "아이디 중복으로 실패");
 			model.addAttribute("mode", "created");
-			return "/member/member";
+			return ".mymem.member";
 		} else {
 			
 		
@@ -97,39 +104,116 @@ public class MemberController {
 		dto.setM2_tel(req.getParameter("m2_tel"));
 		
 		int result = dao.insertMember(dto);
+		/*
 		if(result >0 ){
 			model.addAttribute("msg", "가입 성공");
 		}
+		*/
 		}
-		
+		model.addAttribute("mode", "mainPage");
 		return ".mainLayout";
 	}
 	
 	//마이페이지로 이동 /member/mypage
 	@RequestMapping("/member/mypage")
-	public String myPage(SessionInfo info, HttpSession session){
-		
-		session.setAttribute("preLoginURI", ".mainLayout");
-		if(info == null){
+	public String myPage(HttpSession session){
+		session.removeAttribute("preLoginURI");
+		if(session.getAttribute("member") == null){
 			return "member/login";
 		}
-		return ".member.mypage";
+		return ".mymem.mypage";
 	}
 	
-	//내 정보 수정
-	@RequestMapping(value="/member/update")
-	public String updateMember(SessionInfo info, Model model, HttpSession session) throws Exception{
-		session.setAttribute("preLoginURI", "member/mypage");
+	//내 정보 수정 폼
+	@RequestMapping(value="/member/update" , method=RequestMethod.GET)
+	public String updateMemberForm(SessionInfo info, Model model, HttpSession session) throws Exception{
+//		session.setAttribute("preLoginURI", ".mainLayout");
 		
-		if(info == null){
-			return "member/login";
+		if(session.getAttribute("member") == null){
+			return ".mymem.login";
 		}
-		String m1_email = (String)info.getUserId();
+		
+		info = (SessionInfo) session.getAttribute("member");
+		String m1_email = info.getUserId();
+		
 		Member1 dto = dao.getMember(m1_email);
+		
 		
 		model.addAttribute("dto",dto);
 		model.addAttribute("mode", "update");
-		return "member/member";
+		return ".mymem.member";
+	}
+
+	@RequestMapping(value="/member/update", method=RequestMethod.POST)
+	public String updateMemberDo(Member1 dto, HttpSession session, Model model, HttpServletRequest req) throws Exception {
+		
+		try {
+			System.out.println(dto.getM1_num());
+			//비밀번호가 틀리면 수정 취소
+			int check = dao.passCheck(dto);
+			if(check == 0){
+				model.addAttribute("mode", "update");
+				model.addAttribute("msg", "비밀번호가 틀렸습니다.");
+				model.addAttribute("dto", dto);
+				return ".mymem.member";
+			} else {
+				//넘어왔으면 업데이트 진행
+				dto.setM1_nickname(req.getParameter("m1_nickname"));
+				dto.setM2_birth(req.getParameter("m2_birth"));
+				dto.setM2_gender(req.getParameter("m2_gender"));
+				dto.setM2_tel(req.getParameter("m2_tel"));
+				System.out.println(dto.getM1_nickname());
+				dao.updateMember(dto);
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return ".mymem.mypage";
+	}
+	
+	
+	
+	/*
+	 * ----------------------------------------------------------------------------------------
+	 * ----------------------------------------------------------------------------------------
+	 * 				좋아요 버튼
+	 * 				
+	 */
+	
+	//페이지로 이동
+	@RequestMapping("/member/ilike")
+	public String goLikegiup(HttpSession session, Model model) throws Exception{
+		if(session.getAttribute("member") == null){
+			return "member/login";
+		}
+		
+		 Map<String, Object> map = new HashMap<String, Object>();
+		 
+		SessionInfo info = (SessionInfo)session.getAttribute("member");
+		String m1_email  = info.getUserId();
+		
+		map.put("m1_email", m1_email);
+		
+		List<LikeGiup> list = dao.listLikeGiup(map);
+		int count = list.size();
+		
+		model.addAttribute("count", count);
+		model.addAttribute("list",list);
+		return ".mymem.likegiup";
+	}
+	
+//	@RequestMapping("/member/canclelike")
+//	public String deleteLike (Model model) {
+//		
+//	}
+	
+	
+	
+	@RequestMapping("/member/mileage")
+	public String goMileage(){
+		return ".mymem.mileage";
 	}
 	
 	

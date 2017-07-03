@@ -1,6 +1,10 @@
 package com.sp.member;
 
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -28,11 +32,29 @@ public class MemberImpl implements MemberDAO{
 		return result;
 	}
 
+	//비밀번호 체크
+	@Override
+	public int passCheck(Member1 dto) throws Exception {
+		int result = 0;
+		try {
+			result = dao.getReadData("checkPwd", dto);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+
+		
 	//회원정보 수정
 	@Override
 	public int updateMember(Member1 dto) throws Exception {
-		// TODO Auto-generated method stub
-		return 0;
+		int result = 0;
+		try {
+			dao.updateData("updateMember1", dto);
+			dao.updateData("updateMember2", dto);
+		} catch (Exception e) {
+		}
+		return result;
 	}
 
 	//회원 삭제
@@ -91,5 +113,59 @@ public class MemberImpl implements MemberDAO{
 		return dto;
 	}
 
+	
+	
+	
+	
+	/*
+	 * ----------------------------------------------------------------------------------------
+	 * -----------------------------------------------------------------------------------------
+	 * 							기업 좋아요 버튼 / 찜하기 버튼
+	 */
+	
+	//좋아요 버튼
+	@Override
+	public int insertLikeGiup(LikeGiup giup) throws Exception {
+		int result = 0;
+		try {
+			result = dao.insertData("iLikegiup", giup);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+
+	
+	//좋아요 취소
+	@Override
+	public int deleteLikeGiup(LikeGiup giup) throws Exception {
+		int result = 0;
+		try {
+			result = dao.insertData("idontlikegiup", giup);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+
+	//좋아요 리스트
+	@Override
+	public List<LikeGiup> listLikeGiup(Map<String, Object> map) throws Exception {
+		List<LikeGiup> list = null;
+		
+		try {
+			list = dao.getListData("listLikegiup", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return list;
+	}
+	
+	
+
+	
 
 }

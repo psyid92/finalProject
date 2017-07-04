@@ -59,4 +59,58 @@
 	]]>
   </select>
   
+  
+  <!-- 글보기 -->
+  <select id="readNotice" resultType="com.sp.notice.Notice" parameterType="Integer">
+    SELECT noti_Num, n.admin_Id, noti_Top, noti_Title, noti_Content, noti_Created, noti_Count
+           FROM userNotice n JOIN admin ad ON n.admin_Id=ad.admin_Id
+           WHERE noti_Num = #{noti_Num}
+  </select>
+  
+  <!-- 조회수 증가 -->
+  <select id="updateCount" parameterType="Integer">
+    UPDATE userNotice SET noti_Count=noti_Count+1 WHERE noti_Num = #{noti_Num}
+  </select>
+  
+  <!-- 이전글 -->
+  <select id="preReadNotice" resultType="com.sp.notice.Notice" parameterType="map">
+    SELECT tb.* FROM(
+      SELECT noti_Num, noti_Title FROM userNotice n JOIN admin ad ON n.admin_Id=ad.admin_Id
+        <where>
+          <if test="searchValue != null and searchValue !='' ">
+            <include refid="where-list"/>
+          </if>
+          <![CDATA[
+            AND (noti_Num > #{noti_Num})
+	      ]]>
+        </where>
+        ORDER BY noti_Num ASC
+    ) tb WHERE ROWNUM=1
+  </select>
+
+  <!-- 다음글 -->
+  <select id="nextReadNotice" resultType="com.sp.notice.Notice" parameterType="map">
+     SELECT tb.* FROM(
+      SELECT noti_Num, noti_Title FROM userNotice n JOIN admin ad ON n.admin_Id=ad.admin_Id
+        <where>
+          <if test="searchValue != null and searchValue !='' ">
+            <include refid="where-list"/>
+          </if>
+          <![CDATA[
+            AND (noti_Num < #{noti_Num})
+	      ]]>
+        </where>
+        ORDER BY noti_Num DESC
+    ) tb WHERE ROWNUM=1
+  </select>
+  
+  <update id="updateNotice" parameterType="com.sp.notice.Notice">
+    UPDATE userNotice SET noti_Title=#{noti_Title}, noti_Content=#{noti_Content}, noti_Top=#{noti_Top}
+                          WHERE noti_Num=#{noti_Num}
+  </update>
+  
+  <delete id="deleteNotice" parameterType="Integer">
+    DELETE FROM userNotice WHERE noti_Num=#{noti_Num}
+  </delete>
+
 </mapper>

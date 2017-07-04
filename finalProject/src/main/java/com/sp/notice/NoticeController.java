@@ -103,7 +103,7 @@ public class NoticeController {
 			}
 			String query = "";
 			
-			//재영이형한테 물보자 ㅎㅎ.....
+			
 			//if(info.getUserId().equals("admin")){
 				String listUrl = cp+"/notice/list";
 			//}else{
@@ -160,6 +160,127 @@ public class NoticeController {
 		}
 		
 		return "redirect:/anotice/list";
+	}
+	
+	@RequestMapping(value={"/notice/article", "/anotice/article"})
+	public String article(
+			@RequestParam(value="noti_Num")int noti_Num,
+			@RequestParam(value="page")String page,
+			@RequestParam(value="searchKey", defaultValue="noti_Title")String searchKey,
+			@RequestParam(value="searchValue", defaultValue="")String searchValue,
+			HttpSession session,
+			Model model
+			){
+		try {
+			SessionInfo info=(SessionInfo)session.getAttribute("member");
+			
+			searchValue = URLDecoder.decode(searchValue, "UTF-8");
+			service.updateCount(noti_Num);
+			
+			Notice dto=service.readNotice(noti_Num);
+			if(dto==null && info.getUserId().equals("admin")){
+				return "redirect:/anotice/list?page="+page;
+			}else if(dto==null){
+				return "redirect:/notice/list?page="+page;
+			}
+			
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("searchKey", searchKey);
+			map.put("searchValue", searchValue);
+			map.put("noti_Num", noti_Num);
+			
+			Notice preReadDto = service.preReadNotice(map);
+			Notice nextReadDto = service.nextReadNotice(map);
+			
+			String query = "page="+page;
+			if(searchValue.length()!=0){
+				query += "&searchKey="+searchKey + "&searchValue=" + URLEncoder.encode(searchValue, "UTF-8");
+			}
+			
+			model.addAttribute("dto", dto);
+			model.addAttribute("preReadDto", preReadDto);
+			model.addAttribute("nextReadDto", nextReadDto);
+			
+			model.addAttribute("page", page);
+			model.addAttribute("query", query);
+			
+			if(info.getUserId().equals("admin")){
+				model.addAttribute("mainMenu", "3");
+				return ".admin4.menu4.membernotice.article";
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return ".notice.article";
+	}
+	
+	@RequestMapping(value="/admin/membernotice/update", method=RequestMethod.GET)
+	public String updateForm(
+			@RequestParam(value="noti_Num")int noti_Num,
+			@RequestParam(value="page")String page,
+			Model model,
+			HttpSession session
+			){
+		try {
+			SessionInfo info=(SessionInfo)session.getAttribute("member");
+			if(! info.getUserId().equals("admin")){
+				return "redirect:/admin/login";
+			}
+			
+			Notice dto=(Notice) service.readNotice(noti_Num);
+			if(dto==null){
+				return "redirect:/anotice/list?page="+page;
+			}
+			
+			model.addAttribute("mode", "update");
+			model.addAttribute("page", page);
+			model.addAttribute("dto", dto);
+			
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return ".admin4.menu4.membernotice.created";
+	}
+	
+	@RequestMapping(value="/admin/membernotice/update", method=RequestMethod.POST)
+	public String updateSubmit(
+			@RequestParam String page,
+			Notice dto,
+			HttpSession session
+			){
+		try {
+			SessionInfo info=(SessionInfo)session.getAttribute("member");
+			if(! info.getUserId().equals("admin")){
+				return "redirect:/admin/login";
+			}
+			service.updateNotice(dto);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "redirect:/anotice/list?page="+page;
+	}
+	
+	@RequestMapping(value="/anotice/delete", method=RequestMethod.GET)
+	public String delete(
+			@RequestParam String page,
+			@RequestParam int noti_Num,
+			HttpSession session
+			){
+		try {
+			SessionInfo info=(SessionInfo)session.getAttribute("member");
+			if(! info.getUserId().equals("admin")){
+				return "redirect:/admin/login";
+			}
+			service.deleteNotice(noti_Num);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "redirect:/anotice/list?page="+page;
 	}
 	
 }

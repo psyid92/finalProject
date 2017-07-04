@@ -10,6 +10,7 @@ public class StoreServiceImpl implements StoreService {
 	@Autowired
 	private CommonDAO dao;
 	
+	//회원가입하기
 	@Override
 	public void insertStore(Store dto) throws Exception {
 		try {
@@ -29,6 +30,7 @@ public class StoreServiceImpl implements StoreService {
 		}
 	}
 
+	//정보 읽어오기
 	@Override
 	public Store readStore(String g1_Id) {
 		Store dto = null;
@@ -50,5 +52,4 @@ public class StoreServiceImpl implements StoreService {
 		
 		return dto;
 	}
-
 }

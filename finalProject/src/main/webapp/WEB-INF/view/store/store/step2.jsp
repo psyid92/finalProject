@@ -5,6 +5,9 @@
 <%
 	String cp = request.getContextPath();
 %>
+<script type="text/javascript"
+   src="https://openapi.map.naver.com/openapi/v3/maps.js?clientId=WlJc9L4f0E6oaul2CL2b&submodules=geocoder"></script>
+
 <script type="text/javascript">
 function memberOk() {
 	var f = document.giupForm2;

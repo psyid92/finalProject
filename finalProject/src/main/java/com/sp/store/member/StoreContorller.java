@@ -1,12 +1,8 @@
 package com.sp.store.member;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.apache.tiles.request.Request;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,11 +10,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
-
-import com.sp.member.SessionInfo;
 
 //사장님 페이지 컨트롤러
 @SessionAttributes("dto")
@@ -54,8 +47,8 @@ public class StoreContorller {
 		
 		// 로그인 정보를 세션에 저장
 		SessionInfo info = new SessionInfo();
-		info.setUserId(dto.getG1_Id());
-		info.setUserName(dto.getG1_Name());
+		info.setG1_Id(dto.getG1_Id());
+		info.setG1_Name(dto.getG1_Name());
 		session.setAttribute("store", info);
 		
 		return ".store4.menu1.mystore.list";

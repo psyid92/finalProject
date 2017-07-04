@@ -77,6 +77,7 @@
 					s += "<div style='font-size: 10px;'>1개 까지 선택 가능</div>";
 				s += "<input type='checkbox' name='m"+main_Num+"' value='"+list[i].submenu_Pay+"'>"+list[i].submenu_Title + "(" + list[i].submenu_Pay + "원 추가)&nbsp;&nbsp;&nbsp;&nbsp;";
 				s += "<input type='hidden' name='m"+main_Num+"' value='"+list[i].submenu_Title+"'>"; 
+				s += "<input type='hidden' name='m"+main_Num+"' value='"+list[i].submenu_Num+"'>";
 				if (i == list.length-1)
 					s += "<br>";
 			}
@@ -90,6 +91,7 @@
 			var pay = $("#sub"+main_Num+" div[class=pay]").html();
 			var content = $("#sub"+main_Num+" div[class=content]").html();
 			var s = "";
+			var sub_Num = "";
 			if ($("#sub"+main_Num+" input:checkbox[name='m"+main_Num+"']:checked").length >= 2) {
 				alert("1개까지만 선택 가능합니다!");
 				return;
@@ -97,39 +99,46 @@
 			$("#sub"+main_Num+" input:checkbox[name='m"+main_Num+"']:checked").each(function(pi, po){
 				s = po.value;
 				content += " -> " + $("#sub"+main_Num+" input:checkbox[name='m"+main_Num+"']:checked").next().val();
+				sub_Num += $("#sub"+main_Num+" input:checkbox[name='m"+main_Num+"']:checked").next().next().val();
 			});
 			pay = Number(pay);
 			s = Number(s);
 			pay += s;
 			if($("#totalJumun").html() == ""){
-				jumunTab(content, pay);
+				jumunTab(main_Num, sub_Num, content, pay);
 			} else {
-				jumunAppend(content, pay);
+				jumunAppend(main_Num,sub_Num, content, pay);
 			}
 			
 		});	
 		
 	}
-	var jumun_Num = 1;
-	function jumunTab(content, pay){
+	var jumun_Num = 0;
+	function jumunTab(main_Num, sub_Num, content, pay){
 		var tab = "<div style='width: 280px; float: right;'>";
 		tab += "<div>장바구니</div>";
-		tab += "<div><div style='float: left;'>"+content+"</div><a id='jn"+jumun_Num+"' onclick='deleteJumun("+jumun_Num+", "+pay+")' style='cursor:pointer; float: right'>&nbsp;x&nbsp;</a><div style='float: right;'>"+pay+"원</div><br></div><div id='jumunAppend'></div>";
-		tab += "<div style='border-top: 1px solid black;'><div style='float: left;'>Total</div><div id='total_Pay' style='float: right;'>"+pay+"원</div></div><br>";
+		tab += "<div id='jumunAppend'></div>";
+		tab += "<div style='border-top: 1px solid black;'><div style='float: left;'>Total</div><div id='total_Pay' style='float: right;'>0원</div></div><br>";
 		tab += "</div>";
-		tab += "<button type='button' onclick='totalJumun();'>주문하기</button>"
+		tab += "<button type='button' class='btn' style='width: 280px; float: right;' onclick='totalJumun();'>주문하기</button>";
 		$("#totalJumun").html(tab);
+		jumunAppend(main_Num, sub_Num, content, pay);
 	}
-	function jumunAppend(content, pay) {
+	function jumunAppend(main_Num, sub_Num, content, pay) {
 		jumun_Num += 1;
-		var tab = "<div><div style='float: left;'>"+content+"</div><a id='jn"+jumun_Num+"' onclick='deleteJumun("+jumun_Num+", "+pay+")' style='cursor:pointer; float: right'>&nbsp;x&nbsp;</a><div style='float: right;'>"+pay+"원</div><br></div>";
-		$("#jumunAppend").append(tab);
 		var total = $("#total_Pay").html();
 		total = total.substring(0,total.length-1);
 		total = Number(total);
 		pay = Number(pay);
 		total += pay;
+		if (total == pay) 
+			$("#jumunAppend").html("");
+		var tab = "<div><div style='float: left;'>"+content+"</div><a id='jn"+jumun_Num+"' onclick='deleteJumun("+jumun_Num+", "+pay+")' style='cursor:pointer; float: right'>&nbsp;x&nbsp;</a><div style='float: right;'>"+pay+"원</div><br></div>";
+		tab += "<input type='hidden' name='main_Num' value='"+main_Num+"'>";
+		tab += "<input type='hidden' name='sub_Num' value='"+sub_Num+"'>";
+		$("#jumunAppend").append(tab);
 		$("#total_Pay").html(total+"원");
+		
 	}
 	function deleteJumun(juNum,pay) {
 		$("#jn"+juNum).parent().html("");
@@ -137,13 +146,41 @@
 		total = total.substring(0,total.length-1);
 		total -= pay;
 		$("#total_Pay").html(total+"원");
-		if ($("#totalJumun").html().length == 0)
-			$("#totalJumun").html("선택해주세요")
+		if (total == 0)
+			$("#jumunAppend").html("메뉴를 선택해주세요.");
 	}
 	
 	
 	function totalJumun() {
-		alert("주문했다!");
+		var mainList = document.getElementsByName('main_Num');
+		var subList = document.getElementsByName('sub_Num');
+		var mainArray = "";
+		var subArray = "";
+		for (var i = 0; i < mainList.length; i++) {
+			mainArray += mainList[i].value+",";
+		}
+		for (var i = 0; i < subList.length; i++) {
+			subArray += subList[i].value+",";
+		}
+		mainArray = mainArray.substring(0,m.length-1);
+		subArray = subArray.substring(0,s.length-1);
+		mainArray = mainArray.split(",");
+		subArray = subArray.split(",");
+		var query = "mainArray=" + mainArray + "subArray=" + subArray;
+		var url = "<%=cp%>/jumun/totalJumun";
+		$.ajax({
+			type:"post"
+			,url:url
+			,data:query
+			,dataType:"json"
+			,success:function(data) {
+				
+			}
+			,error:function(e) {
+				console.log(e.responseText);
+			
+			}
+		});
 	}
 		
 </script>

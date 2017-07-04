@@ -7,23 +7,7 @@
 %>
 
 <style type="text/css">
-.table th, .table td {
-    font-weight: normal;
-    border-top: none;
-}
-.table thead tr th{
-     border-bottom: none;
-} 
-.table thead tr{
-    border: #d5d5d5 solid 1px;
-     background: #eeeeee; color: #787878;
-} 
-.table td {
-    border-bottom: #d5d5d5 solid 1px;
-}
-.table td a{
-    color: #000;
-}
+
 
 li{
   width: 20%;  
@@ -31,7 +15,6 @@ li{
   font-weight: 100;
   
 }
-
 </style>
 
 <script type="text/javascript">
@@ -49,40 +32,31 @@ $('#myTab a:last').tab('show') // Select last tab
 $('#myTab li:eq(2) a').tab('show') // Select third tab (0-indexed)
 
 
-
-function searchList(){
-	var f=document.searchForm;
-	f.action="";
-	f.submit();
-}
-
-
 </script>
 
 
-<div role="tabpanel" >
+<div role="tabpanel">
 
   <!-- Nav tabs -->
   <ul class="nav nav-tabs" role="tablist">
     <li role="presentation"><a href="<%=cp%>/notice/list" aria-controls="notice" role="tab" data-toggle="tab">공지사항</a></li>
     <li role="presentation"><a href="<%=cp%>/userEvent/list" aria-controls="userEvent" role="tab" data-toggle="tab">이벤트</a></li>
     <li role="presentation"><a href="<%=cp%>/userFap/list" aria-controls="userFaq" role="tab" data-toggle="tab">자주찾는 질문</a></li>
-    <li role="presentation"><a href="<%=cp%>/userQna/list" aria-controls="userQna" role="tab" data-toggle="tab">그것이 알고싶다</a></li>
-    <li role="presentation" class="active"><a href="<%=cp%>/userBbs/list" aria-controls="userBbs" role="tab" data-toggle="tab">우리끼리소담소담</a></li>
+    <li role="presentation" class="active"><a href="<%=cp%>/userQna/list" aria-controls="userQna" role="tab" data-toggle="tab">그것이 알고싶다</a></li>
+    <li role="presentation"><a href="<%=cp%>/userBbs/list" aria-controls="userBbs" role="tab" data-toggle="tab">우리끼리소담소담</a></li>
   </ul>
 </div>
 
 <!-- 마크업 -->
 <div class="tab-content">
-  <div role="tabpanel" class="tab-pane active" id="userBbs">
-    
-    <div class="bodyFrame2">
+    <div role="tabpanel" class="tab-pane active" id="userQna">
+      <div class="bodyFrame2">
     <div class="body-title">
-          <h3><span class="glyphicon glyphicon-pencil"></span> 우리끼리 소담소담 </h3>
+          <h3><span class="glyphicon glyphicon-bullhorn"></span> 그것이 알고싶다 </h3>
     </div>
     
     <div class="alert alert-info">
-        <i class="glyphicon glyphicon-info-sign"></i> 우리끼리 자유롭게 이야기 해요!
+        <i class="glyphicon glyphicon-info-sign"></i> 그런데 말입니다?? 1대1문의!!!
     </div>
     
      <div style="clear: both; height: 30px; line-height: 30px;">
@@ -119,7 +93,7 @@ function searchList(){
      
      <div style="clear: both;">
         <div style="float: left; width: 20%; min-width: 85px;">
-          <button type="button" class="btn btn-default btn-sm wbtn" onclick="javascript:location.href='<%=cp%>/userBbs/list';">새로고침</button>
+          <button type="button" class="btn btn-default btn-sm wbtn" onclick="javascript:location.href='<%=cp%>/userQna/list';">새로고침</button>
         </div>
         <div style="float: left; width: 60%; text-align: center;">
           <form name="searchForm" method="post" class="form-inline">
@@ -134,11 +108,10 @@ function searchList(){
           </form>
         </div>
         <div style="float: left; width: 20%; min-width: 85px; text-align: right;">
-        		    <button type="button" class="btn btn-primary btn-sm bbtn" onclick="javascript:location.href='<%=cp%>/userBbs/created';"><span class="glyphicon glyphicon glyphicon-pencil"></span> 글쓰기</button>
+        		    <button type="button" class="btn btn-primary btn-sm bbtn" onclick="javascript:location.href='<%=cp%>/userQna/created';"><span class="glyphicon glyphicon glyphicon-pencil"></span> 글쓰기</button>
         </div>
      
      </div>
     </div>
-   
-  </div>
-</div>
+    </div>
+</div>    

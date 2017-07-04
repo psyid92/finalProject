@@ -30,7 +30,7 @@ body {
 <div style="" align="center">
 <br>
 <div>
-<h3>내 마일리지 : 10000 점</h3>
+<h3>내 마일리지 : ${mileage } 점</h3>
 <c:if test="${not empty msg }">
 <p style="color: blue;">${msg }</p>
 </c:if>

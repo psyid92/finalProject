@@ -10,6 +10,7 @@
 </select>
 
 <!-- 회원가입 -->
+<!-- 회원가입 하면서 마일리지 테이블에 마일리지 생성해줌 -->
 <insert id="insertMember1" parameterType="com.sp.member.Member1">
 	insert into member1(m1_num, m1_nickname, m1_email, m1_pwd)
 		values(#{m1_num}, #{m1_nickname}, #{m1_email}, #{m1_pwd})
@@ -19,6 +20,10 @@
 	insert into member2(m1_num, m2_birth, m2_gender, m2_tel)
 		values(#{m1_num}, #{m2_birth}, #{m2_gender}, #{m2_tel})
 </insert>
+<insert id="insertMemberMileage">
+	insert into memberMileage(m1_num) values(#{m1_num})
+</insert>
+
 
 
 <!-- lastlogin 수정 -->
@@ -63,6 +68,24 @@
 </update>
 
 
+<!-- 회원탈퇴 하기 -->
+<update id="enabledMember" parameterType="com.sp.member.Member1">
+	update member1 set m1_enabled = 1 where m1_email = #{m1_email}
+</update>
+
+
+<!--  회원 삭제 -->
+<delete id="deleteMember1" parameterType="com.sp.member.Member1">
+	delete member1 where m1_email=#{m1_email}
+</delete>
+<delete id="deleteMember2" parameterType="com.sp.member.Member1">
+	delete member2 where m1_email=#{m1_email}
+</delete>
+<delete id="deleteMemberMileage" parameterType="com.sp.member.Member1">
+	delete memberMileage where m1_email=#{m1_email}
+</delete>
+
+
 <!-- 찜한 가게 -->
 <insert id="iLikegiup" parameterType="com.sp.member.LikeGiup">
 	insert into likegiup values ( (
@@ -70,6 +93,7 @@
   select m1_num from member1 where m1_email=#{m1_email}
 ) )
 </insert>
+
 
 <delete id="idontlikegiup" parameterType="com.sp.member.LikeGiup">
 	delete likegiup
@@ -86,6 +110,9 @@
 	  left outer join category c on g1.CAT_CODE = c.CAT_CODE
 	  where m1_num=(select m1_num from member1 where m1_email = #{m1_email} )
 </select>
+
+
+
 
 
 </mapper>

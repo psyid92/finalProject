@@ -4,7 +4,16 @@ public class SessionInfo {
 	private String userId;
 	private String userName;
 	private int memberLevel;
+	private int m1_Num;
 	
+	
+	
+	public int getM1_Num() {
+		return m1_Num;
+	}
+	public void setM1_Num(int m1_Num) {
+		this.m1_Num = m1_Num;
+	}
 	public String getUserId() {
 		return userId;
 	}

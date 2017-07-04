@@ -22,11 +22,25 @@
 }
 
 .bs-write .td1 {
-    min-width: 100px;
+    min-width: 75px;
     min-height: 30px;
     color: #666;
     vertical-align: middle;
+    font-size: 20px; 	
 }
+
+.bs-write .td2 {
+}
+
+.bs-write .td3 {
+   border-color: blue;
+   border-bottom-color: blue;
+}
+
+.bs-write .td4 {
+}
+
+
 
 li{
   width: 20%;  
@@ -39,64 +53,32 @@ li{
 
 <script type="text/javascript">
   function check() {
-        var f = document.noticeForm;
+        var f = document.userQnaForm;
 
-    	var str = f.subject.value;
+    	var str = f.uq_Title.value;
         if(!str) {
-            f.subject.focus();
+            f.uq_Title.focus();
             return false;
         }
 
-    	str = f.content.value;
+    	str = f.uq_Content.value;
         if(!str) {
-            f.content.focus();
+            f.uq_Content.focus();
             return false;
         }
 
         var mode="${mode}";
     	if(mode=="created")
-    		f.action="<%=cp%>/notice/created";
+    		f.action="<%=cp%>/userQna/created";
     	else if(mode=="update")
-    		f.action="<%=cp%>/notice/update";
+    		f.action="<%=cp%>/userQna/update";
 
     	// <input type='submit' ..>,  <input type='image' ..>, <button>은 submit() 메소드 호출하면 두번전송
         return true;
  }
-  
-  //동적으로 추가된 태그도 이벤트 처리 가능
-  $(function(){
-	$("body").on("change", "input[name=upload]", function(){
-		if(! $(this).val()) {
-			return;	
-		}
-		
-		var b=false;
-		$("input[name=upload]").each(function(){
-			if(! $(this).val()) {
-				b=true;
-				return;
-			}
-		});
-		if(b)
-			return;
-
-		var $tr, $td, $input;
-		
-	    $tr=$("<tr>");
-	    $td=$("<td>", {class:"td1", html:"첨부"});
-	    $tr.append($td);
-	    $td=$("<td>", {class:"td3", colspan:"3"});
-	    $input=$("<input>", {type:"file", name:"upload", class:"form-control input-sm", style:"height: 35px;"});
-	    $td.append($input);
-	    $tr.append($td);
-	    
-	    $("#tb").append($tr);
-	});
-  });
-  
   <c:if test="${mode=='update'}">
   function deleteFile(fileNum) {
-		var url="<%=cp%>/notice/deleteFile";
+		var url="<%=cp%>/userQna/deleteFile";
 		$.post(url, {fileNum:fileNum}, function(data){
 			$("#f"+fileNum).remove();
 		}, "JSON");
@@ -144,70 +126,72 @@ $('#myTab li:eq(2) a').tab('show') // Select third tab (0-indexed)
     </div>
     
     <div>
-        <form name="noticeForm" method="post" onsubmit="return check();" enctype="multipart/form-data">
+       <form name="userQnaForm" method="post" onsubmit="return check();" enctype="multipart/form-data">
             <div class="bs-write">
                 <table class="table">
-                    <tbody id="tb">
+                    <tbody>
                         <tr>
-                            <td class="td1">작성자명</td>
+                            <td class="td1"><span class="label label-primary">작성자</span></td>
                             <td class="td2 col-md-5 col-sm-5">
-                                <p class="form-control-static">이름</p>
+                                <p class="form-control-static">${sessionScope.member.m1_Num}</p>
+                                <p class="form-control-static">${sessionScope.member.userId}</p>
                             </td>
-                            <td class="td1" align="center">비공개 체크</td>
+                            <td class="td1" align="center"></td>
                             <td class="td2 col-md-5 col-sm-5">
-                               <div class="checkbox">
-                                   <label>
-                                        <input type="checkbox" name="uq_Hidden" value="1" ${dto.notice==1 ? "checked='checked' ":"" }> 비공개
-                                    </label>
-                                </div>
                             </td>
                         </tr>
                         
                         <tr>
-                            <td class="td1">제목</td>
+                            <td class="td1"><span class="label label-primary">제목</span></td>
                             <td colspan="3" class="td3">
-                                <input type="text" name="uq_Title" class="form-control input-sm" value="제목" required="required">
+                                <input type="text" name="uq_Title" class="form-control input-sm" value="${dto.uq_Title}" required="required">
                             </td>
                         </tr>
                         
                         <tr>
-                            <td class="td1" colspan="4" style="padding-bottom: 0px;">내용</td>
+                            <td class="td1" colspan="4" style="padding-bottom: 0px;"><span class="label label-primary">내용</span></td>
                         </tr>
                         <tr>
                             <td colspan="4" class="td4">
-                            	<textarea name="uq_Content" class="form-control" rows="15">내용</textarea>
+                            	<textarea name="uq_Content" class="form-control" rows="15">${dto.uq_Content}</textarea>
                             </td>
                         </tr>
                         
                         <tr>
-                            <td class="td1">첨부</td>
+                            <td class="td1"><span class="label label-primary">첨부</span></td>
                             <td colspan="3" class="td3">
                                 <input type="file" name="upload" class="form-control input-sm" style="height: 35px;">
                             </td>
                         </tr>
-                    </tbody>
-                    
+                        
 <c:if test="${mode=='update'}">
-   <c:forEach var="vo" items="${listFile}">
-                        <tr id="f${vo.fileNum}"> 
-                            <td class="td1">첨부파일</td>
-                            <td colspan="3" class="td3"> 
-                                ${vo.originalFilename}
-                                | <a href="javascript:deleteFile('${vo.fileNum}');">삭제</a>	        
+                        <tr>
+                            <td class="td1">등록파일</td>
+                            <td colspan="3" class="td3">
+                                ${dto.uq_OriginalFilename}
+                                <c:if test="${not empty dto.uq_OriginalFilename}">
+                                    | <a href="<%=cp%>/userQna/deleteFile?uq_Num=${dto.uq_Num}&page=${page}">삭제</a>
+                                </c:if>
                             </td>
                         </tr>
-   </c:forEach>
-</c:if>			
-                    
+</c:if>                        
+                    </tbody>
                     <tfoot>
+                    
                         <tr>
+                        <td>
+                         <button type="button" class="btn btn-primary" onclick="javascript:location.href='<%=cp%>/userQna/list';">내문의로GO<i class="fa fa-hand-pointer-o"></i></button>
+                        </td>    
                             <td colspan="4" style="text-align: center; padding-top: 15px;">
                                   <button type="submit" class="btn btn-primary"> 확인 <span class="glyphicon glyphicon-ok"></span></button>
-                                  <button type="button" class="btn btn-danger" onclick="javascript:location.href='<%=cp%>/notice/list';"> 취소 </button>
+                                  <button type="button" class="btn btn-danger" onclick="javascript:location.href='<%=cp%>/userQna/list';"> 취소 </button>
                                   
                                   <c:if test="${mode=='update'}">
+                                      <input type="hidden" name="uq_Num" value="${dto.uq_Num}">
+                                      <input type="hidden" name="m1_Num" value="${dto.m1_Num}">
                                       <input type="hidden" name="page" value="${page}">
-                                      <input type="hidden" name="num" value="${dto.num}">
+                                      <input type="hidden" name="uq_SaveFilename" value="${dto.uq_SaveFilename}">
+                                      <input type="hidden" name="uq_OriginalFilename" value="${dto.uq_OriginalFilename}">
                                   </c:if>
                             </td>
                         </tr>

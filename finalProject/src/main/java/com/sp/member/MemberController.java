@@ -50,10 +50,11 @@ public class MemberController {
 
 		if(member == 1)	{
 			model.addAttribute("login", "login");
-			
+			Member1 dto=dao.getMember(m1_email);
 			// 로그인 정보를 세션에 저장
 			SessionInfo info = new SessionInfo();
 			info.setUserId(m1_email);
+			info.setM1_Num(dto.getM1_num());
 			session.setAttribute("member", info);
 			
 			

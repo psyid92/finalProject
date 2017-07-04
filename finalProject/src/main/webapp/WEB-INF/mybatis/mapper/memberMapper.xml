@@ -10,6 +10,7 @@
 </select>
 
 <!-- 회원가입 -->
+<!-- 회원가입 하면서 마일리지 테이블에 마일리지 생성해줌 -->
 <insert id="insertMember1" parameterType="com.sp.member.Member1">
 	insert into member1(m1_num, m1_nickname, m1_email, m1_pwd)
 		values(#{m1_num}, #{m1_nickname}, #{m1_email}, #{m1_pwd})
@@ -19,6 +20,10 @@
 	insert into member2(m1_num, m2_birth, m2_gender, m2_tel)
 		values(#{m1_num}, #{m2_birth}, #{m2_gender}, #{m2_tel})
 </insert>
+<insert id="insertMemberMileage">
+	insert into memberMileage(m1_num) values(#{m1_num})
+</insert>
+
 
 
 <!-- lastlogin 수정 -->
@@ -86,6 +91,9 @@
 	  left outer join category c on g1.CAT_CODE = c.CAT_CODE
 	  where m1_num=(select m1_num from member1 where m1_email = #{m1_email} )
 </select>
+
+
+
 
 
 </mapper>

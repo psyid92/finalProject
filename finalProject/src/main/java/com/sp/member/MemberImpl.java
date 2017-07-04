@@ -1,7 +1,6 @@
 package com.sp.member;
 
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -26,6 +25,7 @@ public class MemberImpl implements MemberDAO{
 			dto.setM1_num(seq);
 			dao.insertData("insertMember1", dto);
 			dao.insertData("insertMember2", dto);
+			dao.insertData("insertMemberMileage", dto);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

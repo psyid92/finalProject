@@ -6,6 +6,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.apache.tiles.request.Request;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -86,13 +87,16 @@ public class StoreContorller {
 	}
 
 	@RequestMapping(value = "/store/complete", method = RequestMethod.POST)
-	public String storeSubmit(@ModelAttribute("dto") Store dto, SessionStatus sessionstatus, Model model) {
+	public String storeSubmit(@ModelAttribute("dto") Store dto,
+			SessionStatus sessionstatus, Model model) {
 		//패스워드 암호화
 		/*ShaPasswordEncoder pe = new ShaPasswordEncoder(256);
 		String s = pe.encodePassword(dto.getG1_Pwd(), null);
 		dto.setG1_Pwd(s);*/
 		StringBuffer sb = new StringBuffer();
-
+		
+		//위도 경도 추가
+		
 		try {
 
 			service.insertStore(dto);

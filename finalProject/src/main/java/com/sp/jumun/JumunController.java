@@ -68,4 +68,12 @@ public class JumunController {
 		return model;
 	}
 	
+	@RequestMapping(value="/jumun/totalJumun", method=RequestMethod.POST)
+	public String totalJumunForm(String[] main_Num, String[] sub_Num, Model model) throws Exception {
+		model.addAttribute("mainArray",main_Num);
+		model.addAttribute("subArray",sub_Num);
+		
+		return ".pay.pay";
+	}
+	
 }

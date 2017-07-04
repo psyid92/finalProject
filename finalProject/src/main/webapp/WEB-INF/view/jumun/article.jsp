@@ -115,12 +115,15 @@
 	}
 	var jumun_Num = 0;
 	function jumunTab(main_Num, sub_Num, content, pay){
-		var tab = "<div style='width: 280px; float: right;'>";
+		var tab = "<form name='jumunForm' method='post' onsubmit='return totalJumun();'>";
+		tab += "<div style='width: 280px; float: right;'>";
 		tab += "<div>장바구니</div>";
 		tab += "<div id='jumunAppend'></div>";
 		tab += "<div style='border-top: 1px solid black;'><div style='float: left;'>Total</div><div id='total_Pay' style='float: right;'>0원</div></div><br>";
 		tab += "</div>";
-		tab += "<button type='button' class='btn' style='width: 280px; float: right;' onclick='totalJumun();'>주문하기</button>";
+		tab += "<button type='submit' class='btn' style='width: 280px; float: right;'>주문하기</button>";
+		tab += "</form>";
+		
 		$("#totalJumun").html(tab);
 		jumunAppend(main_Num, sub_Num, content, pay);
 	}
@@ -152,6 +155,7 @@
 	
 	
 	function totalJumun() {
+		var f = document.jumunForm;
 		var mainList = document.getElementsByName('main_Num');
 		var subList = document.getElementsByName('sub_Num');
 		var mainArray = "";
@@ -162,25 +166,13 @@
 		for (var i = 0; i < subList.length; i++) {
 			subArray += subList[i].value+",";
 		}
-		mainArray = mainArray.substring(0,m.length-1);
-		subArray = subArray.substring(0,s.length-1);
+		mainArray = mainArray.substring(0,mainArray.length-1);
+		subArray = subArray.substring(0,subArray.length-1);
 		mainArray = mainArray.split(",");
 		subArray = subArray.split(",");
-		var query = "mainArray=" + mainArray + "subArray=" + subArray;
 		var url = "<%=cp%>/jumun/totalJumun";
-		$.ajax({
-			type:"post"
-			,url:url
-			,data:query
-			,dataType:"json"
-			,success:function(data) {
-				
-			}
-			,error:function(e) {
-				console.log(e.responseText);
-			
-			}
-		});
+		f.action=url;
+		return true;
 	}
 		
 </script>

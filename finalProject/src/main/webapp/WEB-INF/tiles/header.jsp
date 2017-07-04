@@ -38,12 +38,6 @@
 body {
 	background-color: #eaf1f1;
 }
-#headerMenutr {
-	background-color: #f7f2e2;
-}
-#header th {
-	width: 195.8px;
-}
 
 #header a {
 	color: gray;

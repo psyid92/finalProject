@@ -35,4 +35,13 @@
 		FROM submenu
 		WHERE mainmenu_Num = #{mainmenu_Num}
 	</select>
+	<select id="mainJumunMenu" parameterType="map" resultType="com.sp.jumun.Jumun">
+		SELECT mainmenu_Num, mainmenu_Title, mainmenu_Content, mainmenu_Photo,
+			mainmenu_Pay, mainmenu_Enabled, menuct_Num
+		FROM mainmenu
+		WHERE mainmenu_Num = #{mainmenu_Num}
+	</select>
+	<select id="subJumunMenu" parameterType="map" resultType="com.sp.jumun.Jumun">
+		
+	</select>
 </mapper>

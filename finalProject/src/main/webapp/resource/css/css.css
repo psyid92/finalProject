@@ -867,3 +867,6 @@ body {
 		background-position: 0 -17px
 	}
 }
+.cutter {
+	cursor: pointer;	
+}

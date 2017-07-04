@@ -8,8 +8,17 @@
 
 <style type="text/css">
 
-  
+.bs-write .td1{
+  min-width: 100px;
+  min-height: 40px;
+  color: #666;
+  vertical-align: middle;
+}  
+
+.bs-write .td1:LAST-CHILD {
+	height: 35px;
 }
+
 </style>
 
 <script type="text/javascript">
@@ -37,15 +46,6 @@
     	// <input type='submit' ..>,  <input type='image' ..>, <button>은 submit() 메소드 호출하면 두번전송
         return true;
  }
-  
-  //동적으로 추가된 태그도 이벤트 처리 가능
- 
-
-//탭 스트립트
-
-	
-
-
 
 </script>
 
@@ -64,11 +64,11 @@
                 <table class="table">
                     <tbody id="tb">
                         <tr>
-                            <td class="td1">작성자명</td>
+                            <td class="td1">작성자</td>
                             <td class="td2 col-md-5 col-sm-5">
                                 <p class="form-control-static">관리자</p>
                             </td>
-                            <td class="td1" align="center">공지여부</td>
+                            <td class="td1" align="center">공지</td>
                             <td class="td2 col-md-5 col-sm-5">
                                <div class="checkbox">
                                    <label>
@@ -86,7 +86,7 @@
                         </tr>
                         
                         <tr>
-                            <td class="td1" colspan="4" style="padding-bottom: 0px;">내용</td>
+                            <td class="td1" colspan="4" style="padding-bottom: 0px; height: 45px;">내용</td>
                         </tr>
                         <tr>
                             <td colspan="4" class="td4">

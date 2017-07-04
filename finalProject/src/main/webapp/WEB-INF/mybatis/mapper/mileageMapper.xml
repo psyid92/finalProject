@@ -27,16 +27,33 @@ values(jumun_seq.nextVal, 21000, '주소 주소 주소 주소를 적어주세요
 	update mileage set mil_state = #{mil_state} where mil_num=#{mil_num}
 </update>
 
+
+
 <!-- 회원 마일리지 변경 -->
-<update id="updateMemberMileage">
-	update 
+<update id="addMemberMileage">
+	update memberMileage set mm_Point = mm_Point + #{mm_point} where m1_num = #{m1_num}
+</update>
+
+<update id="minusMemberMileage">
+	update memberMileage set mm_Point = mm_Point - #{mm_point} where m1_num = #{m1_num}
 </update>
 
 
-<!-- 마일리지 삭제 -->
+
+<!-- 마일리지 보기 -->
+<select id="getMemberMileage" parameterType="String" resultType="Integer">
+	select mm_point from memberMileage where m1_num=(select m1_num from member1 where m1_email=#{m1_email})
+</select>
+
+
+<!-- 적립 마일리지 내역 삭제 -->
 <delete id="deleteMileage">
 	delete mileage where mil_num=#{mil_num}
 </delete>
 
+<!-- 사용 마일리지 삭제 -->
+<delete id="deleteUseMileage">
+	delete usemileage where use_num=#{use_num}
+</delete>
 
 </mapper>

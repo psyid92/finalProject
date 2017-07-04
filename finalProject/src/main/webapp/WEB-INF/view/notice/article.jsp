@@ -25,6 +25,7 @@
 .bbs-article .table tbody tr {
     border-bottom: #dfdfdf solid 1px;
 }
+.bbs-article .table tbody tr:last-child{border-bottom:none}
 .bbs-article .table i {
     background: #424951;
     display: inline-block;
@@ -41,6 +42,8 @@ li{
   font-weight: 100;
   
 }
+
+
 </style>
 
 <script type="text/javascript">
@@ -55,11 +58,26 @@ $('#myTab a:first').tab('show') // Select first tab
 $('#myTab a:last').tab('show') // Select last tab
 $('#myTab li:eq(2) a').tab('show') // Select third tab (0-indexed)
 
+
 </script>
+
+
+<div role="tabpanel">
+
+  <!-- Nav tabs -->
+  <ul class="nav nav-tabs" role="tablist">
+    <li role="presentation" class="active"><a href="<%=cp%>/notice/list" aria-controls="notice" role="tab" data-toggle="tab">공지사항</a></li>
+    <li role="presentation"><a href="<%=cp%>/userEvent/list" aria-controls="userEvent" role="tab" data-toggle="tab">이벤트</a></li>
+    <li role="presentation"><a href="<%=cp%>/userFap/list" aria-controls="userFaq" role="tab" data-toggle="tab">자주찾는 질문</a></li>
+    <li role="presentation"><a href="<%=cp%>/userQna/created" aria-controls="userQna" role="tab" data-toggle="tab">1대1 문의</a></li>
+    <li role="presentation"><a href="<%=cp%>/userBbs/list" aria-controls="userBbs" role="tab" data-toggle="tab">우리끼리소담소담</a></li>
+    
+  </ul>
+</div>
+
 
 <div class="tab-content">
  <div role="tabpanel" class="tab-pane active" id="notice">
-
 
   <div class="bodyFrame2">
     <div class="body-title">
@@ -76,7 +94,7 @@ $('#myTab li:eq(2) a').tab('show') // Select third tab (0-indexed)
                  <thead>
                      <tr>
                          <th colspan="2" style="text-align: center;">
-                                제목
+                                ${dto.noti_Title}
                          </th>
                      </tr>
                 <thead>
@@ -84,61 +102,40 @@ $('#myTab li:eq(2) a').tab('show') // Select third tab (0-indexed)
                  <tbody>
                      <tr>
                          <td style="text-align: left;">
-                             이름 : 이름
+                                                                     이름 : 관리자 
                          </td>
                          <td style="text-align: right;">
-                          날짜<i></i>조회 수
+                          ${dto.noti_Created}<i></i>조회 ${dto.noti_Count}
                          </td>
                      </tr>
                      <tr>
                          <td colspan="2" style="height: 230px;">
-                              내용
-                         </td>
-                     </tr>
-                     
-
-                     <tr>
-                         <td colspan="2">
-                              <span style="display: inline-block; min-width: 45px;">첨부</span> :
-                                  <a href="#"><span class="glyphicon glyphicon-download-alt"></span> 파일원제</a>
-                                  (<fmt:formatNumber value="파일사이즈" pattern="0.00"/> KByte)
+                              ${dto.noti_Content}
                          </td>
                      </tr>
 
-                     
                      <tr>
                          <td colspan="2">
                               <span style="display: inline-block; min-width: 45px;">이전글</span> :
-                              
-                                  <a href="#">이전글</a>
-                             					
+                              <c:if test="${not empty preReadDto}">
+                                  <a href="<%=cp%>/notice/article?${query}&noti_Num=${preReadDto.noti_Num}">${preReadDto.noti_Title}</a>
+                              </c:if>					
                          </td>
                      </tr>
                      <tr>
                          <td colspan="2" style="border-bottom: #d5d5d5 solid 1px;">
                               <span style="display: inline-block; min-width: 45px;">다음글</span> :
-                              
-                                  <a href="#">다음들</a>
-                             
+                              <c:if test="${not empty nextReadDto}">
+                                  <a href="<%=cp%>/notice/article?${query}&noti_Num=${nextReadDto.noti_Num}">${nextReadDto.noti_Title}</a>
+                              </c:if>		
                          </td>
-                     </tr>                                          
-                </tbody>
-                
-                <tfoot>
-                	<tr>
-                		<td>
-
-                		    <button type="button" class="btn btn-default btn-sm wbtn" onclick="updateNotice();">수정</button>
-
-               		    
-                		    <button type="button" class="btn btn-default btn-sm wbtn" onclick="deleteNotice();">삭제</button>
-                		    
-                		</td>
-                		<td align="right">
+                     </tr>    
+                     <tr>
+                		<td  align="left">    
                 		    <button type="button" class="btn btn-default btn-sm wbtn" onclick="javascript:location.href='<%=cp%>/notice/list?${query}';"> 목록으로 </button>
                 		</td>
-                	</tr>
-                </tfoot>
+                	</tr>                                      
+                </tbody>
             </table>
        </div>
 

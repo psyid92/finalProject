@@ -1,6 +1,5 @@
 package com.sp.member;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.sp.mileage.MileageImpl;
 
 @Controller("member.memberController")
 public class MemberController {
@@ -112,10 +113,19 @@ public class MemberController {
 	
 	//마이페이지로 이동 /member/mypage
 	@RequestMapping("/member/mypage")
-	public String myPage(HttpSession session){
+	public String myPage(HttpSession session, Model model){
 		session.removeAttribute("preLoginURI");
+		SessionInfo info = (SessionInfo)session.getAttribute("member");
 		if(session.getAttribute("member") == null){
 			return ".mymem.login";
+		}
+		
+		int mileage;
+		try {
+			MileageImpl miDAO = new MileageImpl();
+			mileage = miDAO.getMemberMileage(info.getUserId());
+			model.addAttribute("mileage", mileage);
+		} catch (Exception e) {
 		}
 		return ".mymem.mypage";
 	}
@@ -234,6 +244,32 @@ public class MemberController {
 	}
 	
 	
+	//회원 탈퇴
+	@RequestMapping(value="/member/remove")
+	public String removeAccount(HttpSession session){
+		Member1 dto = new Member1();
+		SessionInfo info = (SessionInfo)session.getAttribute("member");
+		dto.setM1_email(info.getUserId());
+		try {
+			dao.removeAccount(dto);
+		} catch (Exception e) {
+		}
+		return "/main";
+	}
+	
+	//회원 삭제
+		public String deleteAccount(HttpSession session){
+			Member1 dto = new Member1();
+			SessionInfo info = (SessionInfo)session.getAttribute("member");
+			dto.setM1_email(info.getUserId());
+			try {
+				dao.deleteAccount(dto);
+			} catch (Exception e) {
+			}
+			return "/main";
+		}
+	
+	
 	/*
 	 * ----------------------------------------------------------------------------------------
 	 * ----------------------------------------------------------------------------------------
@@ -264,7 +300,7 @@ public class MemberController {
 	}
 	
 	@RequestMapping(value="/member/canclelike" , method=RequestMethod.POST)
-	@ResponseBody
+	@ResponseBody //AJax 사용
 	public Map<String, Object> deleteLike (
 			HttpSession session,
 			@RequestParam(value="mydata", defaultValue="") int mydata)  {

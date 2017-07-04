@@ -8,8 +8,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller("userQna.userQnaController")
 public class UserQnaController {
     
-	@RequestMapping(value="/userQna/list")
+	/*@RequestMapping(value="/userQna/list")
 	public String userQna(HttpSession session)throws Exception{
 		return ".userQna.list";
+	}*/
+	
+	@RequestMapping(value="/userQna/created")
+	public String created(HttpSession session)throws Exception{
+		return ".userQna.created";
 	}
 }

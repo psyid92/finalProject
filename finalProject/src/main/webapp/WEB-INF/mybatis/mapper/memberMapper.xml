@@ -68,6 +68,24 @@
 </update>
 
 
+<!-- 회원탈퇴 하기 -->
+<update id="enabledMember" parameterType="com.sp.member.Member1">
+	update member1 set m1_enabled = 1 where m1_email = #{m1_email}
+</update>
+
+
+<!--  회원 삭제 -->
+<delete id="deleteMember1" parameterType="com.sp.member.Member1">
+	delete member1 where m1_email=#{m1_email}
+</delete>
+<delete id="deleteMember2" parameterType="com.sp.member.Member1">
+	delete member2 where m1_email=#{m1_email}
+</delete>
+<delete id="deleteMemberMileage" parameterType="com.sp.member.Member1">
+	delete memberMileage where m1_email=#{m1_email}
+</delete>
+
+
 <!-- 찜한 가게 -->
 <insert id="iLikegiup" parameterType="com.sp.member.LikeGiup">
 	insert into likegiup values ( (
@@ -75,6 +93,7 @@
   select m1_num from member1 where m1_email=#{m1_email}
 ) )
 </insert>
+
 
 <delete id="idontlikegiup" parameterType="com.sp.member.LikeGiup">
 	delete likegiup

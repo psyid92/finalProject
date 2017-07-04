@@ -6,7 +6,7 @@ public class Store {
 	private String g2_Tel, Tel1, Tel2, Tel3;
 	private String g2_Opentime, g2_Baedal, g2_Origin, g2_Memo, g2_Minpay;
 	private String g3_Addr1, g3_Addr2, g3_Addr3;
-	private int g3_Lati, g3_Longti;
+	private float g3_Lati, g3_Longti;
 	public String getG2_GiupNum() {
 		return g2_GiupNum;
 	}
@@ -109,16 +109,16 @@ public class Store {
 	public void setG3_Addr3(String g3_Addr3) {
 		this.g3_Addr3 = g3_Addr3;
 	}
-	public int getG3_Lati() {
+	public float getG3_Lati() {
 		return g3_Lati;
 	}
-	public void setG3_Lati(int g3_Lati) {
+	public void setG3_Lati(float g3_Lati) {
 		this.g3_Lati = g3_Lati;
 	}
-	public int getG3_Longti() {
+	public float getG3_Longti() {
 		return g3_Longti;
 	}
-	public void setG3_Longti(int g3_Longti) {
+	public void setG3_Longti(float g3_Longti) {
 		this.g3_Longti = g3_Longti;
 	}
 

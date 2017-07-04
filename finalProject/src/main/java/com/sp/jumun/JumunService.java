@@ -8,5 +8,6 @@ public interface JumunService {
 	public List<Jumun> readMenuCategory (int g1_Num) throws Exception;
 	public List<Jumun> readMainMenu (int menuct_Num) throws Exception;
 	public List<Jumun> readSubMenu (int mainmenu_Num) throws Exception;
-	
+	public List<Jumun> mainJumunMenu (String mainmenu_Num[]) throws Exception;
+	public List<Jumun> subJumunMenu (String submenu_Num[]) throws Exception;
 }

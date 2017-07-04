@@ -58,5 +58,34 @@ public class JumunServiceImpl implements JumunService{
 		return list;
 	}
 
+	@Override
+	public List<Jumun> mainJumunMenu(String mainmenu_Num[]) throws Exception {
+		List<Jumun> list = new ArrayList<>();
+		try {
+			for (int i = 0; i < mainmenu_Num.length; i++) {
+				Jumun dto = new Jumun();
+				dto = dao.getReadData("jumun.mainJumunMenu", mainmenu_Num[i]);
+				list.add(dto);
+			}
+		} catch (Exception e) {
+			throw e;
+		}
+		return list;
+	}
+
+	@Override
+	public List<Jumun> subJumunMenu(String submenu_Num[]) throws Exception {
+		List<Jumun> list = new ArrayList<>();
+		try {
+			for (int i = 0; i < submenu_Num.length; i++) {
+				Jumun dto = new Jumun();
+				dto = dao.getReadData("jumun.subJumunMenu", submenu_Num[i]);
+				list.add(dto);
+			}
+		} catch (Exception e) {
+			throw e;
+		}
+		return list;
+	}
 
 }

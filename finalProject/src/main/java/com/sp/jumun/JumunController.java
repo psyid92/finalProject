@@ -70,9 +70,12 @@ public class JumunController {
 	
 	@RequestMapping(value="/jumun/totalJumun", method=RequestMethod.POST)
 	public String totalJumunForm(String[] main_Num, String[] sub_Num, Model model) throws Exception {
-		model.addAttribute("mainArray",main_Num);
-		model.addAttribute("subArray",sub_Num);
-		
+		List<Jumun> mainList = new ArrayList<>();
+		List<Jumun> subList = new ArrayList<>();
+		mainList = service.mainJumunMenu(main_Num);
+		subList = service.subJumunMenu(sub_Num);
+		model.addAttribute("mainList",mainList);
+		model.addAttribute("subList",subList);
 		return ".pay.pay";
 	}
 	

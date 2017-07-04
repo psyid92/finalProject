@@ -5,7 +5,36 @@
 <%
 	String cp = request.getContextPath();
 %>
+<script type="text/javascript"
+   src="https://openapi.map.naver.com/openapi/v3/maps.js?clientId=WlJc9L4f0E6oaul2CL2b&submodules=geocoder"></script>
+
 <script type="text/javascript">
+
+// 주소로 위도 경도 구하기
+///////////////////////////////////////////////////////////////////////
+var map = new naver.maps.Map("map", {});
+
+//주소로 위도 경도 구하기
+function searchAddressToCoordinate(address) {
+	naver.maps.Service.geocode({
+	address : address
+		}, function(status, response) {
+		if (status === naver.maps.Service.Status.ERROR) {
+		return alert('Something Wrong!');
+		}
+		
+		var item = response.result.items[0];
+		var point = new naver.maps.Point(item.point.x, item.point.y);
+		
+		$("#g3_Lati").val(item.point.x);
+		$("#g3_Longti").val(item.point.y);
+		
+		Shiny.onInputChange("text",point);
+	});
+}
+
+/////////////////////////////////////////////////////////////////////
+
 function memberOk() {
 	var f = document.giupForm2;
 	var str;
@@ -64,7 +93,7 @@ function memberOk() {
         f.g2_Minpay.focus();
         return;
     }
-    
+        
     var mode="${mode}";
     if(mode=="created") {
     	f.action = "<%=cp%>/store/complete";
@@ -74,6 +103,8 @@ function memberOk() {
 
 		f.submit();
 	}
+
+
 
 </script>
 
@@ -85,6 +116,7 @@ function memberOk() {
 }
 
 </style>
+
 <div class="body-container" style="width: 700px;">
 	<div class="body-giup2">
 		<h3>
@@ -93,6 +125,7 @@ function memberOk() {
 	</div>
 	<div>
 		<form name="giupForm2" method="post" action="<%=cp%>/store/step2">
+		<div id="map"></div>
 			<table
 				style="width: 100%; margin: 20px auto 0px; border-spacing: 0px;">
 				
@@ -191,7 +224,7 @@ function memberOk() {
 			<table style="width: 100%; margin: 0px auto; border-spacing: 0px;">
 				<tr height="45">
 					<td align="center">
-						<button type="button" name="sendButton" class="btn"
+						<button type="button" id="sendButton" name="sendButton" class="btn"
 							onclick="memberOk();">${mode=="created"?"회원가입":"정보수정"}</button>
 						<button type="reset" class="btn">다시입력</button>
 						<button type="button" class="btn" onclick="javascript:location.href='<%=cp%>/store/join'">이전단계</button>
@@ -203,12 +236,15 @@ function memberOk() {
 					<td align="center" style="color: blue;">${msg}</td>
 				</tr>
 			</table>
+			<input id="g3_Lati" name="g3_Lati" type="hidden">
+			<input id="g3_Longti" name="g3_Longti" type="hidden">
 		</form>
 	</div>
 
 </div>
+
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
-<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
+
 <script>
     function sample6_execDaumPostcode() {
         new daum.Postcode({
@@ -248,7 +284,14 @@ function memberOk() {
 
                 // 커서를 상세주소 필드로 이동한다.
                 document.getElementById('g3_Addr3').focus();
+                
+                // 주소를 받아서 위도 경도를 구한다.
+                searchAddressToCoordinate($('#g3_Addr2').val());
+                //alert($('#g3_Addr2').val());
+                
             }
         }).open();
     }
+    
+
 </script>

@@ -3,16 +3,22 @@ package com.sp.store.member;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
+import org.apache.tiles.request.Request;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.encoding.ShaPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
+
+import com.sp.member.SessionInfo;
 
 //사장님 페이지 컨트롤러
 @SessionAttributes("dto")
@@ -29,22 +35,40 @@ public class StoreContorller {
 	// 로그인창으로 이동
 	@RequestMapping(value = "/store/login", method = RequestMethod.GET)
 	public String storeLoginForm(String login_error, Model model) {
-		//로그인폼
-		if(login_error!=null){
-			String s = "아이디 또는 패스워드를 잘못 입력하셨습니다.";
-			model.addAttribute("message",s);
-		}
+		
 		return "store/store/login";
 	}
-
 	// 로그인시 이동할 페이지로 리턴
 	@RequestMapping(value = "/store/login", method = RequestMethod.POST)
-	public String storeLoginSubmit(Model model) {
-
-		model.addAttribute("mainMenu", "0");
+	public String storeLoginSubmit(
+			@RequestParam String g1_Id,
+			@RequestParam String g1_Pwd,
+			HttpSession session,
+			Model model) throws Exception{
+		
+		Store dto = service.readStore(g1_Id);
+		if (dto == null || (!dto.getG1_Pwd().equals(g1_Pwd))){
+			model.addAttribute("message", "아이디 또는 패스워드가 일치하지 않습니다.");
+			return "store/store/login";
+		}
+		
+		// 로그인 정보를 세션에 저장
+		SessionInfo info = new SessionInfo();
+		info.setUserId(dto.getG1_Id());
+		info.setUserName(dto.getG1_Name());
+		session.setAttribute("store", info);
+		
 		return ".store4.menu1.mystore.list";
 	}
 
+	@RequestMapping(value="/store/logout")
+	public String logout(HttpServletRequest req, HttpSession session, Model model){
+		session.removeAttribute("store");
+		session.invalidate();
+		
+		return "store/store/login";
+	}
+	
 	// 회원가입 눌렀을때
 	@RequestMapping(value = "/store/join", method = RequestMethod.GET)
 	public String storeJoinForm(@ModelAttribute("dto") Store dto, Model model) {
@@ -63,13 +87,16 @@ public class StoreContorller {
 	}
 
 	@RequestMapping(value = "/store/complete", method = RequestMethod.POST)
-	public String storeSubmit(@ModelAttribute("dto") Store dto, SessionStatus sessionstatus, Model model) {
+	public String storeSubmit(@ModelAttribute("dto") Store dto,
+			SessionStatus sessionstatus, Model model) {
 		//패스워드 암호화
-		ShaPasswordEncoder pe = new ShaPasswordEncoder(256);
+		/*ShaPasswordEncoder pe = new ShaPasswordEncoder(256);
 		String s = pe.encodePassword(dto.getG1_Pwd(), null);
-		dto.setG1_Pwd(s);
+		dto.setG1_Pwd(s);*/
 		StringBuffer sb = new StringBuffer();
-
+		
+		//위도 경도 추가
+		
 		try {
 
 			service.insertStore(dto);
@@ -93,16 +120,20 @@ public class StoreContorller {
 
 	}
 	
-	public Map<String, Object> userIdCheck(@RequestParam(value="g1_Id") String g1_Id) throws Exception{
-		Store dto = service.readStore(g1_Id);
+/*	@RequestMapping(value="/store/login_check")
+	@ResponseBody
+	public Map<String, Object> userIdCheck(
+			@RequestParam(value="g1_Id") String g1_Id
+			) throws Exception{
 		String passed = "true";
+		Store dto = service.readStore(g1_Id);
 		if(dto != null)
 			passed = "false";
 		
 		Map<String, Object> map = new HashMap<>();
 		map.put("passed", passed);
 		return map;
-	}
+	}*/
 	
 	// 메뉴1
 	@RequestMapping(value = "/store/mystore", method = RequestMethod.GET)

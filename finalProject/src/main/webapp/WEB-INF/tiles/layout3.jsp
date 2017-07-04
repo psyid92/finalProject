@@ -15,7 +15,6 @@
 <title>spring</title>
 
 <link rel="stylesheet" href="<%=cp%>/resource/jquery/css/smoothness/jquery-ui.min.css" type="text/css">
-<link rel="stylesheet" type="text/css" href="<%=cp%>/resource/bootswatch/bootstrap.css">
 <link rel="stylesheet" type="text/css" href="<%=cp%>/resource/bootswatch/bootstrap.min.css">
 
 <script type="text/javascript" src="<%=cp%>/resource/jquery/js/jquery-1.12.4.min.js"></script>

@@ -19,7 +19,7 @@
                        ${message}            
             </div>
             <div style="margin-top: 20px;">
-                     <button type="button" onclick="javascript:location.href='<%=cp%>/';" class="btnConfirm">메인화면으로 이동</button>
+                     <button type="button" onclick="javascript:location.href='<%=cp%>/store/login';" class="btnConfirm">메인화면으로 이동</button>
                 </div>
         </div>
      </div>   

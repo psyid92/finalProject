@@ -57,25 +57,30 @@
 	update member2 set m2_birth=#{m2_birth} , m2_gender = #{m2_gender}, m2_tel = #{m2_tel} where m1_num = #{m1_num}
 </update>
 
+<!-- 비밀번호 변경 -->
+<update id="updatePwd" parameterType="com.sp.member.Member1">
+	update member1 set m1_pwd = #{m1_pwd} where m1_email = #{m1_email}
+</update>
+
 
 <!-- 찜한 가게 -->
 <insert id="iLikegiup" parameterType="com.sp.member.LikeGiup">
 	insert into likegiup values ( (
   select g1_num from giup1 where g1_id = #{g1_id}), (
   select m1_num from member1 where m1_email=#{m1_email}
-) );
+) )
 </insert>
 
 <delete id="idontlikegiup" parameterType="com.sp.member.LikeGiup">
 	delete likegiup
 		where g1_num=( select g1_num from giup1 where g1_num = #{g1_num})
 		 and 
-		m1_num = ( select m1_num from member1 where m1_email= #{m1_email});
+		m1_num = ( select m1_num from member1 where m1_email= #{m1_email})
 </delete>
 
 <select id="listLikegiup" parameterType="map" resultType="com.sp.member.LikeGiup">
 	
-	select g1.g1_id g1_id, g1_num, g1_name, g1_sleep, cat_name
+	select g1.g1_id g1_id, g1.g1_num g1_num, g1_name, g1_sleep, cat_name
 	  from likegiup lg
 	  left outer join giup1 g1 on lg.g1_num = g1.g1_num
 	  left outer join category c on g1.CAT_CODE = c.CAT_CODE

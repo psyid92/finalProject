@@ -65,19 +65,51 @@ function memberOk() {
         return;
 	}
 	
-    str = f.g2_tel.value;
+    str = f.tel1.value;
 	str = str.trim();
     if(!str) {
         alert("전화번호를 입력하세요. ");
-        f.g2_tel.focus();
+        f.tel1.focus();
         return;
     }
     if(!/^(\d+)$/.test(str)) {
         alert("숫자만 가능합니다. ");
-        f.g2_tel.focus();
+        f.tel1.focus();
         return;
     }
-  
+    
+    str = f.tel2.value;
+	str = str.trim();
+    if(!str) {
+        alert("전화번호를 입력하세요. ");
+        f.tel2.focus();
+        return;
+    }
+    if(!/^(\d+)$/.test(str)) {
+        alert("숫자만 가능합니다. ");
+        f.tel2.focus();
+        return;
+    }
+    str = f.tel3.value;
+	str = str.trim();
+    if(!str) {
+        alert("전화번호를 입력하세요. ");
+        f.tel3.focus();
+        return;
+    }
+    if(!/^(\d+)$/.test(str)) {
+        alert("숫자만 가능합니다. ");
+        f.tel3.focus();
+        return;
+    }
+    str = f.category.value;
+	str = str.trim();
+    if(!str) {
+        alert("카테고리를 선택해주세요. ");
+        f.category.focus();
+        return;
+    }
+    
     var mode="${mode}";
     if(mode=="created") {
     	f.action = "<%=cp%>/store/step2";
@@ -183,7 +215,7 @@ function memberOk() {
 		     		</td>
 		     		<td style="padding: 0 0 15px 15px;">
 		      		<p style="margin-bottom: 5px;">
-		           		<select class="selectField" id="g2_tel" name="g2_tel">
+		           		<select class="selectField" id="tel1" name="tel1" >
 			               <option value="">선 택</option>
 			               <option value=02 ${dto.tel1=="02" ? "selected='selected'" : ""}>02</option>
 			               <option value="031" ${dto.tel1=="031" ? "selected='selected'" : ""}>031</option>

@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import com.sp.common.dao.CommonDAO;
 
 @Service("jumun.jumunService")
-public class JumunServiceImpl implements JumunService{
+public class JumunServiceImpl implements JumunService {
 	@Autowired
 	private CommonDAO dao;
 	

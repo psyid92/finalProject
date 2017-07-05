@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="pay">
+	<insert id="insertJumun" parameterType="com.sp.pay.Pay">
+		INSERT INTO jumun (jumun_Num, jumun_Pay, jumun_Addr, jumun_Tel, jumun_Memo, m1_Num, orders_Num)
+		VALUES (jumun_seq.NEXTVAL, #{jumun_Pay}, #{jumun_Addr}, #{jumun_Tel},#{jumun_Memo}, #{m1_Num}, #{orders_Num})
+	</insert>
+	
+	<insert id="insertMainGoods" parameterType="com.sp.pay.Pay">
+		INSERT INTO mainGoods (mainGoods_Num, jumun_Num, mainmenu_num, mainGoods_Conunt)
+		VALUES (mainGoods_seq.NEXTVAL, #{jumun_Num}, #{mainmenu_Num}, #{mainGoods_Count})
+	</insert>
+	
+	<insert id="insertSubGoods" parameterType="com.sp.pay.Pay">
+		INSERT INTO subGoods (subGoods_Num, submenu_Num, mainGoods_Num)
+		VALUES (subGoods_seq.NEXTVAL, #{submenu_Num}, #{mainGoods_Num})
+	</insert>
+	
+	<insert id="insertPay" parameterType="com.sp.pay.Pay">
+		INSERT INTO pay (jumun_Num, pay_Pay, payMethod_Num, use_Num)
+		VALUES (#{payMethod_Num}, #{pay_Pay}, #{payMethod_Num}, #{use_Num})
+	</insert>
+</mapper>

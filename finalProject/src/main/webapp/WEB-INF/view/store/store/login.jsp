@@ -11,6 +11,7 @@
 <meta charset="UTF-8">
 <title>spring</title>
 <script type="text/javascript">
+
 	function sendLogin() {
 		var f = document.loginForm;
 		
@@ -43,7 +44,8 @@ html, body {
 <body>
 <div style="width:340px; height:200px; position: absolute; left: 50%; top: 50%; margin: -150px 0 0 -170px;">
 	<div style="width:340px; height:300px; position: absolute; left: 50%; top: 50%; margin: -120px 0 0 -170px;" class="progress">
-		<div style="width: 300px; height: 140px; position: absolute; left: 50%; top: 50%; margin: -90px 0 0 -150px;">
+		<a href="<%=cp%>/" style="float: right;">배달행페이지로</a>
+		<div style="width: 300px; height: 140px; position: absolute; left: 50%; top: 50%; margin: -120px 0 0 -150px;">
 			<form class="form-horizontal" name="loginForm" method="post">
   				<fieldset>
     				<legend>사장님 로그인</legend>
@@ -57,7 +59,7 @@ html, body {
         					<input type="password" class="form-control" id="g1_Pwd" name="g1_Pwd" placeholder="비밀번호">
         				</div>
         			</div>
-       			</fieldset>
+       			</fieldset> 
        			<nav style="width: 300px; height: 38px; display: inline-block;">
        				<button type="button" class="btn btn-default" onclick="sendLogin();" style="width: 100%;">로그인</button>
        				<div style="line-height: 38px; float: left;">
@@ -66,6 +68,7 @@ html, body {
        				<a href="#">비밀번호 찾기</a>
        				&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
        				<a href="<%=cp%>/store/join">회원가입</a></div>
+       				<span style="color: red;">${message}</span>
        			</nav>
     		</form>
 		</div>

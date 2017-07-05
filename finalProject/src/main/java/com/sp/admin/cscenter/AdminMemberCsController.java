@@ -28,7 +28,7 @@ public class AdminMemberCsController {
 		
 		model.addAttribute("mainMenu", "3");
 		model.addAttribute("subMenu", "3");
-		return ".admin4.menu4.memberqna.list";
+		return ".admin4.menu1.memberqna.list";
 	}
 	
 	

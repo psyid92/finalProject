@@ -19,5 +19,5 @@
        <div class="list-group-item lefthead"><i></i> 회원관리</div>
        <a href="<%=cp%>/admin/membercontroll" class="list-group-item">회원정보관리</a>
        <a href="<%=cp%>/admin/memberreviewcontroll" class="list-group-item">리뷰관리</a>
-       <a href="<%=cp%>/admin/membercscentercontroll" class="list-group-item">회원1:1문의관리</a>
+       <a href="<%=cp%>/auserQna/list" class="list-group-item">회원1:1문의관리</a>
 </div>

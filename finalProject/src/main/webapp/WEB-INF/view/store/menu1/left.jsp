@@ -14,6 +14,7 @@
 		$(subMenu).addClass("active");
 	});
 </script>
+
 <div class="list-group panel-group" id="accordion" role="tablist"
 	aria-multiselectable="true">
 	<div class="list-group-item lefthead">
@@ -22,31 +23,15 @@
 	<div class="panel panel-default">
 		<div class="panel-heading" role="tab" id="headingThree">
 			<h4 class="panel-title">
-				<a class="collapsed" data-toggle="collapse" data-parent="#accordion"
-					href="#collapseThree" aria-expanded="false"
-					aria-controls="collapseThree"> 내 업소 관리 </a>
+				<a class="FirstMenu" aria-expanded="true" aria-controls="collapseThree" > 내 업소 관리 </a>
 			</h4>
 		</div>
-		<div id="collapseThree" class="panel-collapse collapse"
+		<div id="collapseThree" class="panel-collapse collapse in"
 			role="tabpanel" aria-labelledby="headingThree">
-					<a href="#" class="list-group-item">업체정보관리</a>
-					<a href="#" class="list-group-item">리뷰관리</a>
-					<a href="#" class="list-group-item">고객센터관리</a>
-					<a href="#" class="list-group-item">메뉴관리</a>
-			</div>
-		</div>
-		<div class="panel panel-default">
-			<div class="panel-heading" role="tab" id="headingTwo">
-				<h4 class="panel-title">
-					<a class="collapsed" data-toggle="collapse"data-parent="#accordion" href="#collapseTwo"
-					 aria-expanded="false" aria-controls="collapseTwo">
-					 우리가게 쿠폰 </a>
-				</h4>
-			</div>
-			<div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
-				<a href="#" class="list-group-item">쿠폰 구매</a>
-				<a href="#" class="list-group-item">쿠폰 뿌리기</a> 
-				<a href="#" class="list-group-item">쿠폰 관리</a>
+					<a href="<%=cp%>/store/mystore" class="list-group-item">업체정보관리</a>
+					<a href="<%=cp%>/store/review" class="list-group-item">리뷰관리</a>
+					<a href="<%=cp%>/store/menu" class="list-group-item">메뉴관리</a>
 			</div>
 		</div>
 	</div>
+<link rel="stylesheet" type="text/css" href="<%=cp%>/resource/bootstrap/css/none-bootstrap.css">

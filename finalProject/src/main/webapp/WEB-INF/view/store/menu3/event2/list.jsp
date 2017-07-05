@@ -8,10 +8,10 @@
 
 <div class="storeBodyFrame2">
     <div class="body-title">
-          <h3><span class="glyphicon glyphicon-tower"></span> 고객센터 </h3>
+          <h3><span class="glyphicon glyphicon-tower"></span> 마이페이지 </h3>
     </div>
     
     <div>
-        고객센터...
+        이벤트게시판2
     </div>
 </div>

@@ -121,7 +121,7 @@
 		tab += "<div id='jumunAppend'></div>";
 		tab += "<div style='border-top: 1px solid black;'><div style='float: left;'>Total</div><div id='total_Pay' style='float: right;'>0원</div></div><br>";
 		tab += "</div>";
-		tab += "<button type='submit' class='btn' style='width: 280px; float: right;'>주문하기</button>";
+		tab += "<button type='submit' class='btn btn-success' style='width: 280px; float: right;'>주문하기</button>";
 		tab += "</form>";
 		
 		$("#totalJumun").html(tab);

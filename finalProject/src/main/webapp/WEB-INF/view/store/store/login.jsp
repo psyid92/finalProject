@@ -11,6 +11,7 @@
 <meta charset="UTF-8">
 <title>spring</title>
 <script type="text/javascript">
+
 	function sendLogin() {
 		var f = document.loginForm;
 		

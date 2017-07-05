@@ -26,7 +26,16 @@
 			g2_Minpay, g3_Addr1, g3_Addr2, g3_Addr3
 	FROM giup1 g1 LEFT OUTER JOIN giup2 g2 on g1.g1_Num=g2.g2_Num
             LEFT OUTER JOIN giup3 g3 on g1.g1_Num=g3.g3_Num
-    WHERE g1_Id=#{g1_Id} AND g1_Enabled != 0
+    WHERE g1_Id=#{g1_Id} AND g1_Enabled != 0 
+</select>
+
+<select id="readStore2" resultType="com.sp.store.member.Store">
+	SELECT g1.g1_Id, g1_Pwd, g1_Name, cat_Code, g1_created, g2_Baedal,
+			g2_Tel, g2_Giupnum, g2_Origin, g2_Memo, g2_Opentime,
+			g2_Minpay, g3_Addr1, g3_Addr2, g3_Addr3
+	FROM giup1 g1 LEFT OUTER JOIN giup2 g2 on g1.g1_Num=g2.g2_Num
+            LEFT OUTER JOIN giup3 g3 on g1.g1_Num=g3.g3_Num
+    WHERE g2_Giupnum=#{g2_Giupnum} AND g1_Enabled != 0 
 </select>
 
 </mapper>

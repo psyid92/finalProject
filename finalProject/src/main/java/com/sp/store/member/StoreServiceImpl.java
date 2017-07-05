@@ -52,4 +52,27 @@ public class StoreServiceImpl implements StoreService {
 		
 		return dto;
 	}
+
+	@Override
+	public Store readStore2(String g2_Giupnum) {
+		Store dto = null;
+		try {
+			dto = dao.getReadData("store.readStore2", g2_Giupnum);
+			
+			if(dto!=null) {
+				if(dto.getG2_Tel()!=null) {
+					String [] s=dto.getG2_Tel().split("-");
+					dto.setTel1(s[0]);
+					dto.setTel2(s[1]);
+					dto.setTel3(s[2]);
+				}
+			}
+			
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		
+		return dto;
+	}
+
 }

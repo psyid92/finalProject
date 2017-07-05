@@ -5,7 +5,7 @@ import org.springframework.web.multipart.MultipartFile;
 public class UserQna {
     private int uq_Num, m1_Num, listNum;
     private String uq_Title, uq_Content, uq_Created;
-    private String m1_Email, uq_SaveFilename, uq_OriginalFilename;
+    private String userId, m1_Email, uq_SaveFilename, uq_OriginalFilename;
     private MultipartFile upload;
     
     
@@ -68,6 +68,12 @@ public class UserQna {
 	}
 	public void setUpload(MultipartFile upload) {
 		this.upload = upload;
+	}
+	public String getUserId() {
+		return userId;
+	}
+	public void setUserId(String userId) {
+		this.userId = userId;
 	}
     
     

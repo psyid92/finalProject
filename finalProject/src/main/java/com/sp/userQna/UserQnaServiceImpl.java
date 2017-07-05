@@ -38,6 +38,8 @@ public class UserQnaServiceImpl implements UserQnaService{
 	public List<UserQna> listUserQna(Map<String, Object> map) {
 		List<UserQna> list=null;
 		try {
+			
+			
 			list=dao.getListData("userQna.listUserQna", map);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -47,20 +49,35 @@ public class UserQnaServiceImpl implements UserQnaService{
 
 	@Override
 	public UserQna readUserQna(int uq_Num) {
-		// TODO Auto-generated method stub
-		return null;
+		UserQna dto=null;
+		try {
+			dto=dao.getReadData("userQna.readUserQna", uq_Num);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return dto;
 	}
 
 	@Override
-	public UserQna prereadUserQna(Map<String, Object> map) {
-		// TODO Auto-generated method stub
-		return null;
+	public UserQna preReadUserQna(Map<String, Object> map) {
+		UserQna dto=null;
+		try {
+			dto=dao.getReadData("userQna.preReadUserQna", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return dto;
 	}
 
 	@Override
-	public UserQna nextreadUserQna(Map<String, Object> map) {
-		// TODO Auto-generated method stub
-		return null;
+	public UserQna nextReadUserQna(Map<String, Object> map) {
+		UserQna dto=null;
+		try {
+			dto=dao.getReadData("userQna.nextReadUserQna", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return dto;
 	}
 
 
@@ -74,6 +91,17 @@ public class UserQnaServiceImpl implements UserQnaService{
 	public int deleteUserQna(int uq_Num, String uq_SaveFilename, String pathname) {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+
+	@Override
+	public int dataCount(Map<String, Object> map) throws Exception {
+		int result=0;
+		try {
+			result=dao.getIntValue("userQna.dataCount", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
 	}
 
 }

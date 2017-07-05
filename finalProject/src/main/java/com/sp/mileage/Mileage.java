@@ -3,42 +3,12 @@ package com.sp.mileage;
 public class Mileage {
 	
 	private String mil_created, m1_nickname, m1_email, jumun_created, mil_state;
-	private int mil_num, mil_point, m1_num, jumun_num, jumun_pay, use_num;
-	
-	private String usedmil_point, usedmil_created, usedmil_state;
+	private int mil_num, mil_point, m1_num, jumun_num, jumun_pay;
 	
 	
 	
-	public int getUse_num() {
-		return use_num;
-	}
-	public void setUse_num(int use_num) {
-		this.use_num = use_num;
-	}
-	public String getUsedmil_point() {
-		return usedmil_point;
-	}
-	public void setUsedmil_point(String usedmil_point) {
-		this.usedmil_point = usedmil_point;
-	}
-	public String getUsedmil_created() {
-		return usedmil_created;
-	}
-	public void setUsedmil_created(String usedmil_created) {
-		this.usedmil_created = usedmil_created;
-	}
-	public String getUsedmil_state() {
-		return usedmil_state;
-	}
-	public void setUsedmil_state(String usedmil_state) {
-		this.usedmil_state = usedmil_state;
-	}
-	public String getMil_state() {
-		return mil_state;
-	}
-	public void setMil_state(String mil_state) {
-		this.mil_state = mil_state;
-	}
+	
+	
 	public String getMil_created() {
 		return mil_created;
 	}
@@ -62,6 +32,12 @@ public class Mileage {
 	}
 	public void setJumun_created(String jumun_created) {
 		this.jumun_created = jumun_created;
+	}
+	public String getMil_state() {
+		return mil_state;
+	}
+	public void setMil_state(String mil_state) {
+		this.mil_state = mil_state;
 	}
 	public int getMil_num() {
 		return mil_num;

@@ -24,7 +24,8 @@
 <style type="text/css">
 html, body {
 	background-color: #f4efe1;
-	width: 100%; height: 100%;
+	width : 1000px;
+	margin: auto;
 }
 </style>
 </head>

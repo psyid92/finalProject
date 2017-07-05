@@ -23,7 +23,7 @@
 
 <style type="text/css">
 html, body {
-	background-color: #f4efe1;
+	background-color: #ffffff;
 	width: 100%; height: 100%;
 }
 #headerMenutr {

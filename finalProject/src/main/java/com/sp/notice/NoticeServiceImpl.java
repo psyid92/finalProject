@@ -73,31 +73,54 @@ public class NoticeServiceImpl implements NoticeService{
 
 	@Override
 	public Notice readNotice(int noti_Num) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		Notice dto=null;
+		try {
+			dto=dao.getReadData("notice.readNotice", noti_Num);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return dto;
 	}
 
 	@Override
 	public Notice preReadNotice(Map<String, Object> map) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		Notice dto=null;
+		try {
+			dto=dao.getReadData("notice.preReadNotice", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return dto;
 	}
 
 	@Override
 	public Notice nextReadNotice(Map<String, Object> map) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		Notice dto=null;
+		try {
+			dto=dao.getReadData("notice.nextReadNotice", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return dto;
 	}
 
 	@Override
 	public void updateNotice(Notice dto) throws Exception {
-		// TODO Auto-generated method stub
+		try {
+			dao.updateData("notice.updateNotice", dto);
+		} catch (Exception e) {
+			throw e;
+		}
 		
 	}
 
 	@Override
 	public void deleteNotice(int noti_Num) throws Exception {
-		// TODO Auto-generated method stub
+		try {
+			dao.deleteData("notice.deleteNotice", noti_Num);
+		} catch (Exception e) {
+		    throw e;
+		}
 		
 	}
 

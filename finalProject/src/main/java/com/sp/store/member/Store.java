@@ -3,11 +3,10 @@ package com.sp.store.member;
 public class Store {
 	private String g2_GiupNum;
 	private String g1_Id, g1_Pwd, g1_Name, category;
-	private String g2_tel, tel1, tel2, tel3;
-	private String g2_Opentime, g2_Baedal, g2_origin, g2_Memo, g2_Minpay;
-	private String g3_Addr, g3_Addr1, g3_Addr2;
-	private int g3_Lati, g3_Longti;
-	
+	private String g2_Tel, Tel1, Tel2, Tel3;
+	private String g2_Opentime, g2_Baedal, g2_Origin, g2_Memo, g2_Minpay;
+	private String g3_Addr1, g3_Addr2, g3_Addr3;
+	private float g3_Lati, g3_Longti;
 	public String getG2_GiupNum() {
 		return g2_GiupNum;
 	}
@@ -38,29 +37,29 @@ public class Store {
 	public void setCategory(String category) {
 		this.category = category;
 	}
-	public String getG2_tel() {
-		return g2_tel;
+	public String getG2_Tel() {
+		return g2_Tel;
 	}
-	public void setG2_tel(String g2_tel) {
-		this.g2_tel = g2_tel;
+	public void setG2_Tel(String g2_Tel) {
+		this.g2_Tel = g2_Tel;
 	}
 	public String getTel1() {
-		return tel1;
+		return Tel1;
 	}
 	public void setTel1(String tel1) {
-		this.tel1 = tel1;
+		Tel1 = tel1;
 	}
 	public String getTel2() {
-		return tel2;
+		return Tel2;
 	}
 	public void setTel2(String tel2) {
-		this.tel2 = tel2;
+		Tel2 = tel2;
 	}
 	public String getTel3() {
-		return tel3;
+		return Tel3;
 	}
 	public void setTel3(String tel3) {
-		this.tel3 = tel3;
+		Tel3 = tel3;
 	}
 	public String getG2_Opentime() {
 		return g2_Opentime;
@@ -74,11 +73,11 @@ public class Store {
 	public void setG2_Baedal(String g2_Baedal) {
 		this.g2_Baedal = g2_Baedal;
 	}
-	public String getG2_origin() {
-		return g2_origin;
+	public String getG2_Origin() {
+		return g2_Origin;
 	}
-	public void setG2_origin(String g2_origin) {
-		this.g2_origin = g2_origin;
+	public void setG2_Origin(String g2_Origin) {
+		this.g2_Origin = g2_Origin;
 	}
 	public String getG2_Memo() {
 		return g2_Memo;
@@ -92,12 +91,6 @@ public class Store {
 	public void setG2_Minpay(String g2_Minpay) {
 		this.g2_Minpay = g2_Minpay;
 	}
-	public String getG3_Addr() {
-		return g3_Addr;
-	}
-	public void setG3_Addr(String g3_Addr) {
-		this.g3_Addr = g3_Addr;
-	}
 	public String getG3_Addr1() {
 		return g3_Addr1;
 	}
@@ -110,17 +103,23 @@ public class Store {
 	public void setG3_Addr2(String g3_Addr2) {
 		this.g3_Addr2 = g3_Addr2;
 	}
-	public int getG3_Lati() {
+	public String getG3_Addr3() {
+		return g3_Addr3;
+	}
+	public void setG3_Addr3(String g3_Addr3) {
+		this.g3_Addr3 = g3_Addr3;
+	}
+	public float getG3_Lati() {
 		return g3_Lati;
 	}
-	public void setG3_Lati(int g3_Lati) {
+	public void setG3_Lati(float g3_Lati) {
 		this.g3_Lati = g3_Lati;
 	}
-	public int getG3_Longti() {
+	public float getG3_Longti() {
 		return g3_Longti;
 	}
-	public void setG3_Longti(int g3_Longti) {
+	public void setG3_Longti(float g3_Longti) {
 		this.g3_Longti = g3_Longti;
 	}
-	
+
 }

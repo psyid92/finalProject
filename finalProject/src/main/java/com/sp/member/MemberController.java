@@ -1,6 +1,5 @@
 package com.sp.member;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,6 +13,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.sp.mileage.MileageImpl;
 
 @Controller("member.memberController")
 public class MemberController {
@@ -49,10 +51,11 @@ public class MemberController {
 
 		if(member == 1)	{
 			model.addAttribute("login", "login");
-			
+			Member1 dto=dao.getMember(m1_email);
 			// 로그인 정보를 세션에 저장
 			SessionInfo info = new SessionInfo();
 			info.setUserId(m1_email);
+			info.setM1_Num(dto.getM1_num());
 			session.setAttribute("member", info);
 			
 			
@@ -68,7 +71,7 @@ public class MemberController {
 		} else {
 			model.addAttribute("msg", "로그인 실패");
 			model.addAttribute("mode", "created");
-			return "redirect:.mymem.login";
+			return "redirect:/member/login";
 		}
 		
 //		return ".mainLayout";
@@ -103,12 +106,7 @@ public class MemberController {
 		dto.setM2_gender(req.getParameter("m2_gender"));
 		dto.setM2_tel(req.getParameter("m2_tel"));
 		
-		int result = dao.insertMember(dto);
-		/*
-		if(result >0 ){
-			model.addAttribute("msg", "가입 성공");
-		}
-		*/
+		dao.insertMember(dto);
 		}
 		model.addAttribute("mode", "mainPage");
 		return ".mainLayout";
@@ -116,10 +114,19 @@ public class MemberController {
 	
 	//마이페이지로 이동 /member/mypage
 	@RequestMapping("/member/mypage")
-	public String myPage(HttpSession session){
+	public String myPage(HttpSession session, Model model){
 		session.removeAttribute("preLoginURI");
+		SessionInfo info = (SessionInfo)session.getAttribute("member");
 		if(session.getAttribute("member") == null){
-			return "member/login";
+			return ".mymem.login";
+		}
+		
+		int mileage;
+		try {
+			MileageImpl miDAO = new MileageImpl();
+			mileage = miDAO.getMemberMileage(info.getUserId());
+			model.addAttribute("mileage", mileage);
+		} catch (Exception e) {
 		}
 		return ".mymem.mypage";
 	}
@@ -144,11 +151,11 @@ public class MemberController {
 		return ".mymem.member";
 	}
 
+	//회원정보 수정
 	@RequestMapping(value="/member/update", method=RequestMethod.POST)
 	public String updateMemberDo(Member1 dto, HttpSession session, Model model, HttpServletRequest req) throws Exception {
 		
 		try {
-			System.out.println(dto.getM1_num());
 			//비밀번호가 틀리면 수정 취소
 			int check = dao.passCheck(dto);
 			if(check == 0){
@@ -162,17 +169,106 @@ public class MemberController {
 				dto.setM2_birth(req.getParameter("m2_birth"));
 				dto.setM2_gender(req.getParameter("m2_gender"));
 				dto.setM2_tel(req.getParameter("m2_tel"));
-				System.out.println(dto.getM1_nickname());
 				dao.updateMember(dto);
 			}
 			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		model.addAttribute("msg","회원 정보 업데이트에 성공했습니다.");
+		return ".mymem.mypage";
+	}
+	
+	
+	//회원탈퇴 or 비밀번호 변경
+	@RequestMapping(value="/member/memberAccount", method=RequestMethod.POST)
+	public String memberAccuntForm(@RequestParam String m1_pwd, HttpSession session, Model model){
+		String url = "";
+		if(session.getAttribute("member") == null){
+			return ".mymem.login";
+		}
+		
+		try {
+			SessionInfo info =(SessionInfo)session.getAttribute("member");
+			String m1_email=info.getUserId();
+			
+			Member1 dto = new Member1();
+			dto.setM1_pwd(m1_pwd);
+			dto.setM1_email(m1_email);
+			int check = dao.passCheck(dto);
+			
+			if(check ==0){
+				//실패
+				model.addAttribute("msg", "비밀번호가 틀렸습니다.");
+				url =  ".mymem.mypage";
+			} else {
+				url = ".mymem.memberAccount";
+			}
+		} catch (Exception e) {
+		}
+		return url;
+	}
+	
+	
+	//비밀번호 변경 하기
+	@RequestMapping("/member/mychangePass")
+	public String goChangePass(HttpSession session, @RequestParam String m1_pwd){
+		if(session.getAttribute("member") == null){
+			return ".mymem.login";
+		}
+		
+		SessionInfo info =(SessionInfo)session.getAttribute("member");
+		String m1_email=info.getUserId();
+		
+		Member1 dto = new Member1();
+		dto.setM1_email(m1_email);
+		dto.setM1_pwd(m1_pwd);
+		
+		try {
+			dao.changePass(dto);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
 		
 		return ".mymem.mypage";
 	}
 	
+	
+	//비밀번호 확인 폼
+	@RequestMapping(value="/member/memberAccount", method=RequestMethod.GET)
+	public String checkPass(HttpSession session, Model model){
+		if(session.getAttribute("member") == null){
+			return ".mymem.login";
+		}
+		
+		return ".mymem.passCheck";
+	}
+	
+	
+	//회원 탈퇴
+	@RequestMapping(value="/member/remove")
+	public String removeAccount(HttpSession session){
+		Member1 dto = new Member1();
+		SessionInfo info = (SessionInfo)session.getAttribute("member");
+		dto.setM1_email(info.getUserId());
+		try {
+			dao.removeAccount(dto);
+		} catch (Exception e) {
+		}
+		return "/main";
+	}
+	
+	//회원 삭제
+		public String deleteAccount(HttpSession session){
+			Member1 dto = new Member1();
+			SessionInfo info = (SessionInfo)session.getAttribute("member");
+			dto.setM1_email(info.getUserId());
+			try {
+				dao.deleteAccount(dto);
+			} catch (Exception e) {
+			}
+			return "/main";
+		}
 	
 	
 	/*
@@ -204,17 +300,40 @@ public class MemberController {
 		return ".mymem.likegiup";
 	}
 	
-//	@RequestMapping("/member/canclelike")
-//	public String deleteLike (Model model) {
-//		
-//	}
+	@RequestMapping(value="/member/canclelike" , method=RequestMethod.POST)
+	@ResponseBody //AJax 사용
+	public Map<String, Object> deleteLike (
+			HttpSession session,
+			@RequestParam(value="mydata", defaultValue="") int mydata)  {
+		SessionInfo info = (SessionInfo)session.getAttribute("member");
+		try {
+				LikeGiup dto = new LikeGiup();
+				String m1_email = info.getUserId();
+				dto.setM1_email(m1_email);
+				dto.setG1_num(mydata);
+				dao.deleteLikeGiup(dto);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		Map<String, Object> model = new HashMap<>();
+		model.put("state", true);
+		return model;
+	}
 	
 	
-	
+	/*
+	 * ----------------------------------------------------------------------------------------
+	 * ----------------------------------------------------------------------------------------
+	 * 				마일리지
+	 * 				
+	 */
+	//마일리지 페이지
 	@RequestMapping("/member/mileage")
 	public String goMileage(){
 		return ".mymem.mileage";
 	}
+	
+	
 	
 	
 	

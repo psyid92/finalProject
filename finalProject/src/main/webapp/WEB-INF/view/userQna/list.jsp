@@ -42,7 +42,7 @@ $('#myTab li:eq(2) a').tab('show') // Select third tab (0-indexed)
     <li role="presentation"><a href="<%=cp%>/notice/list" aria-controls="notice" role="tab" data-toggle="tab">공지사항</a></li>
     <li role="presentation"><a href="<%=cp%>/userEvent/list" aria-controls="userEvent" role="tab" data-toggle="tab">이벤트</a></li>
     <li role="presentation"><a href="<%=cp%>/userFap/list" aria-controls="userFaq" role="tab" data-toggle="tab">자주찾는 질문</a></li>
-    <li role="presentation" class="active"><a href="<%=cp%>/userQna/list" aria-controls="userQna" role="tab" data-toggle="tab">1대1 문의</a></li>
+    <li role="presentation" class="active"><a href="<%=cp%>/userQna/list" aria-controls="userQna" role="tab" data-toggle="tab">그것이 알고싶다</a></li>
     <li role="presentation"><a href="<%=cp%>/userBbs/list" aria-controls="userBbs" role="tab" data-toggle="tab">우리끼리소담소담</a></li>
   </ul>
 </div>
@@ -52,11 +52,11 @@ $('#myTab li:eq(2) a').tab('show') // Select third tab (0-indexed)
     <div role="tabpanel" class="tab-pane active" id="userQna">
       <div class="bodyFrame2">
     <div class="body-title">
-          <h3><span class="glyphicon glyphicon-bullhorn"></span> 1대1 문의 </h3>
+          <h3><span class="glyphicon glyphicon-bullhorn"></span> 그것이 알고싶다 </h3>
     </div>
     
     <div class="alert alert-info">
-        <i class="glyphicon glyphicon-info-sign"></i> 그것이 알고싶다!! 1대1문의!!!
+        <i class="glyphicon glyphicon-info-sign"></i> 그런데 말입니다?? 1대1문의!!!
     </div>
     
      <div style="clear: both; height: 30px; line-height: 30px;">
@@ -93,7 +93,7 @@ $('#myTab li:eq(2) a').tab('show') // Select third tab (0-indexed)
      
      <div style="clear: both;">
         <div style="float: left; width: 20%; min-width: 85px;">
-          <button type="button" class="btn btn-default btn-sm wbtn" onclick="javascript:location.href='<%=cp%>/notice/list';">새로고침</button>
+          <button type="button" class="btn btn-default btn-sm wbtn" onclick="javascript:location.href='<%=cp%>/userQna/list';">새로고침</button>
         </div>
         <div style="float: left; width: 60%; text-align: center;">
           <form name="searchForm" method="post" class="form-inline">
@@ -108,7 +108,7 @@ $('#myTab li:eq(2) a').tab('show') // Select third tab (0-indexed)
           </form>
         </div>
         <div style="float: left; width: 20%; min-width: 85px; text-align: right;">
-        		    <button type="button" class="btn btn-primary btn-sm bbtn" onclick="javascript:location.href='<%=cp%>';"><span class="glyphicon glyphicon glyphicon-pencil"></span> 글쓰기</button>
+        		    <button type="button" class="btn btn-primary btn-sm bbtn" onclick="javascript:location.href='<%=cp%>/userQna/created';"><span class="glyphicon glyphicon glyphicon-pencil"></span> 글쓰기</button>
         </div>
      
      </div>

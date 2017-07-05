@@ -5,24 +5,53 @@
 <%
 	String cp = request.getContextPath();
 %>
+<script type="text/javascript"
+   src="https://openapi.map.naver.com/openapi/v3/maps.js?clientId=WlJc9L4f0E6oaul2CL2b&submodules=geocoder"></script>
+
 <script type="text/javascript">
+
+// 주소로 위도 경도 구하기
+///////////////////////////////////////////////////////////////////////
+var map = new naver.maps.Map("map", {});
+
+//주소로 위도 경도 구하기
+function searchAddressToCoordinate(address) {
+	naver.maps.Service.geocode({
+	address : address
+		}, function(status, response) {
+		if (status === naver.maps.Service.Status.ERROR) {
+		return alert('Something Wrong!');
+		}
+		
+		var item = response.result.items[0];
+		var point = new naver.maps.Point(item.point.x, item.point.y);
+		
+		$("#g3_Lati").val(item.point.x);
+		$("#g3_Longti").val(item.point.y);
+		
+		Shiny.onInputChange("text",point);
+	});
+}
+
+/////////////////////////////////////////////////////////////////////
+
 function memberOk() {
 	var f = document.giupForm2;
 	var str;
 
-	str = f.sample6_postcode.value;
+	str = f.g3_Addr2.value;
 	str = str.trim();
 	if(!str) {
 		alert("주소를 입력하세요. ");
-		f.sample6_postcode.focus();
+		f.g3_Addr2.focus();
 		return;
 	}
 	
-	str = f.sample6_address2.value;
+	str = f.g3_Addr3.value;
 	str = str.trim();
 	if(!str) {
 		alert("상세주소를 입력하세요. ");
-		f.sample6_address2.focus();
+		f.g3_Addr3.focus();
 		return;
 	}
 	
@@ -49,22 +78,22 @@ function memberOk() {
         return;
     }
     
-    str = f.g2_orgin.value;
+    str = f.g2_Origin.value;
 	str = str.trim();
     if(!str) {
         alert("원산지를 입력하세요. ");
-        f.g2_orgin.focus();
+        f.g2_Origin.focus();
         return;
     }
     
-    str = f.g2_minpay.value;
+    str = f.g2_Minpay.value;
 	str = str.trim();
     if(!str) {
-        alert("원산지를 입력하세요. ");
-        f.g2_minpay.focus();
+        alert("최소 주문금액을 입력하세요. ");
+        f.g2_Minpay.focus();
         return;
     }
-    
+        
     var mode="${mode}";
     if(mode=="created") {
     	f.action = "<%=cp%>/store/complete";
@@ -74,6 +103,8 @@ function memberOk() {
 
 		f.submit();
 	}
+
+
 
 </script>
 
@@ -85,6 +116,7 @@ function memberOk() {
 }
 
 </style>
+
 <div class="body-container" style="width: 700px;">
 	<div class="body-giup2">
 		<h3>
@@ -93,6 +125,7 @@ function memberOk() {
 	</div>
 	<div>
 		<form name="giupForm2" method="post" action="<%=cp%>/store/step2">
+		<div id="map"></div>
 			<table
 				style="width: 100%; margin: 20px auto 0px; border-spacing: 0px;">
 				
@@ -102,7 +135,7 @@ function memberOk() {
 			      </td>
 			      <td style="padding: 0 0 15px 15px;">
 			        <p style="margin-top: 1px; margin-bottom: 5px;">
-			            <input type="text" id="sample6_postcode" name="sample6_postcode" value="${dto.g3_Addr}"
+			            <input type="text" id="g3_Addr1" name="g3_Addr1" value="${dto.g3_Addr1}"
 			                       class="boxTF" readonly="readonly" placeholder="우편번호">
 			            <button type="button" class="btn" onclick="sample6_execDaumPostcode()">우편번호 찾기</button>          
 			        </p>
@@ -115,11 +148,11 @@ function memberOk() {
 			      </td>
 			      <td style="padding: 0 0 15px 15px;">
 			        <p style="margin-top: 1px; margin-bottom: 5px;">
-			            <input type="text" id="sample6_address" name="sample6_address" value="${dto.g3_Addr1}" maxlength="50" 
+			            <input type="text" id="g3_Addr2" name="g3_Addr2" value="${dto.g3_Addr2}" maxlength="50" 
 			                       class="boxTF" style="width: 95%;" readonly="readonly" placeholder="주소">
 			        </p>
 			        <p style="margin-bottom: 5px;">
-			            <input type="text" id="sample6_address2" name="sample6_address2" value="${dto.g3_Addr2}" maxlength="50" 
+			            <input type="text" id="g3_Addr3" name="g3_Addr3" value="${dto.g3_Addr3}" maxlength="50" 
 			                       class="boxTF" style="width: 95%;" placeholder="상세주소를 입력해주세요">
 			        </p>
 			        <span id="guide" style="color:#999"></span>
@@ -157,7 +190,7 @@ function memberOk() {
 					</td>
 					<td style="padding: 0 0 15px 15px;">
 						<p style="margin-top: 1px; margin-bottom: 5px;">
-							<textarea id="g2_orgin" name="g2_orgin" rows="5px" cols="20px" style="resize:none; margin-left: 0px; margin-right: 0px; width: 95%;">-${dto.g2_origin}</textarea>
+							<textarea id="g2_Origin" name="g2_Origin" rows="5px" cols="20px" style="resize:none; margin-left: 0px; margin-right: 0px; width: 95%;">-${dto.g2_Origin}</textarea>
 						</p>
 						<p class="help-block">음식명 옆에 원료인 농수산물과 그 원료를 표시하세요. 예)치킨(닭고기:국산)</p>
 					</td>
@@ -169,7 +202,7 @@ function memberOk() {
 					</td>
 					<td style="padding: 0 0 15px 15px;">
 						<p style="margin-top: 1px; margin-bottom: 5px;">
-							<textarea id="g2_memo" name="g2_memo" rows="5px" cols="20px" style="resize:none; margin-left: 0px; margin-right: 0px; width: 95%;">${dto.g2_Memo }</textarea>
+							<textarea id="g2_Memo" name="g2_Memo" rows="5px" cols="20px" style="resize:none; margin-left: 0px; margin-right: 0px; width: 95%;">${dto.g2_Memo }</textarea>
 						</p>
 						<p class="help-block">업소를 소개하는 말을 작성해 주세요</p>
 					</td>
@@ -181,7 +214,7 @@ function memberOk() {
 					</td>
 					<td style="padding: 0 0 15px 15px;">
 						<p style="margin-top: 1px; margin-bottom: 5px;">
-							<input type="text" name="g2_minpay" id="g2_minpay" value="${dto.g2_Minpay}" 
+							<input type="text" name="g2_Minpay" id="g2_Minpay" value="${dto.g2_Minpay}" 
 							style="text-align:right; width: 36%;" maxlength="15" class="boxTF" placeholder="최소 주문 금액을 입력해주세요"> 원
 						</p>
 					</td>
@@ -191,7 +224,7 @@ function memberOk() {
 			<table style="width: 100%; margin: 0px auto; border-spacing: 0px;">
 				<tr height="45">
 					<td align="center">
-						<button type="button" name="sendButton" class="btn"
+						<button type="button" id="sendButton" name="sendButton" class="btn"
 							onclick="memberOk();">${mode=="created"?"회원가입":"정보수정"}</button>
 						<button type="reset" class="btn">다시입력</button>
 						<button type="button" class="btn" onclick="javascript:location.href='<%=cp%>/store/join'">이전단계</button>
@@ -203,12 +236,15 @@ function memberOk() {
 					<td align="center" style="color: blue;">${msg}</td>
 				</tr>
 			</table>
+			<input id="g3_Lati" name="g3_Lati" type="hidden">
+			<input id="g3_Longti" name="g3_Longti" type="hidden">
 		</form>
 	</div>
 
 </div>
+
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
-<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
+
 <script>
     function sample6_execDaumPostcode() {
         new daum.Postcode({
@@ -243,12 +279,19 @@ function memberOk() {
                 }
 
                 // 우편번호와 주소 정보를 해당 필드에 넣는다.
-                document.getElementById('sample6_postcode').value = data.zonecode; //5자리 새우편번호 사용
-                document.getElementById('sample6_address').value = fullAddr;
+                document.getElementById('g3_Addr1').value = data.zonecode; //5자리 새우편번호 사용
+                document.getElementById('g3_Addr2').value = fullAddr;
 
                 // 커서를 상세주소 필드로 이동한다.
-                document.getElementById('sample6_address2').focus();
+                document.getElementById('g3_Addr3').focus();
+                
+                // 주소를 받아서 위도 경도를 구한다.
+                searchAddressToCoordinate($('#g3_Addr2').val());
+                //alert($('#g3_Addr2').val());
+                
             }
         }).open();
     }
+    
+
 </script>

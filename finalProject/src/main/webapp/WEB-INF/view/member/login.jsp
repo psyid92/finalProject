@@ -21,13 +21,6 @@
 	
 </script>
 <link rel="stylesheet" type="text/css" href="<%=cp%>/resource/bootswatch/bootstrap.css">
-<style type="text/css">
-html, body {
-	background-color: #f4efe1;
-	width : 1000px;
-	margin: auto;
-}
-</style>
 </head>
 <body>
 <div style="width:340px; height:300px; position: absolute; left: 50%; top: 50%; margin: -150px 0 0 -170px;">

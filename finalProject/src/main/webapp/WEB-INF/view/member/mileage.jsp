@@ -9,32 +9,45 @@
 
 <style>
 <!--
-body {
-	width: 1000px;
-	margin: 0 auto;
-}
 
 #one_pack{
-	max-width:600px;
-	min-width: 200px; 
+	max-width:800px;
+	min-width: 600px; 
 	
 }
+
+#myTop{
+	width: 200px;
+}
+
+td {
+	font-size: 23px;
+}
+
 -->
 </style>
 
-
 <div style="" align="center">
-	<div class=".col-xs-6 .col-md-4">주문일자</div>
-	<div class=".col-xs-6 .col-md-4">용도</div>
-	<div class=".col-xs-6 .col-md-4">포인트</div>
+<br><br><br>
 
-	<c:forEach var="dto" items="${list }">
-		<div id="one_pack">
-			<div class=".col-md-4" style="float: left; font-size: 18px; line-height: 30px;">주문<br>${dto.mil_created }</div>
-			<div class=".col-md-4" align="center" style="vertical-align: middle; font-size: 20px; line-height: 40px; ">${dto.mil_state }</div>
-			<div class=".col-md-4" style="float:right; font-size: 24px;"><p style="color: pink;">
-				+ ${dto.mil_point }
-				</p></div>
-		</div>
-	</c:forEach>
+
+	<table style="border: none; border-collapse: collapse; width: 600px;">
+		<tr style="height: 40px;">
+			<td>일자</td>
+			<td>내용</td>
+			<td align="right">포인트</td>
+		</tr>
+		<c:forEach var="dto" items="${list }">
+			<tr style="height: 40px;">
+				<td>${dto.mil_created }</td>
+				<td>${dto.mil_state }</td>
+				<td align="right">
+						<c:if test="${dto.mil_state eq '적립' }"><p style="color: pink;">+ ${dto.mil_point }</p></c:if>
+						<c:if test="${dto.mil_state eq '사용' }"><p style="color: pink;">- ${dto.mil_point }</p></c:if>
+						<c:if test="${dto.mil_state eq '적립 취소' || dto.mil_state eq '사용 취소'}"><p style="color: red;">${dto.mil_point }</p></c:if>
+				 </td>
+			</tr>
+		</c:forEach>
+	</table>
+
 </div>

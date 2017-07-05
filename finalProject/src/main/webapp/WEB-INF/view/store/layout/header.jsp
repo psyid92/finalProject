@@ -35,7 +35,7 @@
 <nav class="navbar navbar-inverse navbar-fixed-top">
 	<div class="container">
 		<div class="navbar-header">
-			<a class="navbar-brand" href="<%=cp%>/">¹è´ÞÇà</a>
+			<a class="navbar-brand" href="<%=cp%>/store/mystore">¹è´ÞÇà</a>
 		</div>
 		<div id="navbar" class="navbar-collapse collapse">
 			<ul class="nav navbar-nav">
@@ -47,7 +47,7 @@
 				<li><a href="<%=cp%>/store/logout">·Î±×¾Æ¿ô</a></li>
 			</ul>
 			<p class="navbar-text navbar-right">
-				<span>${sessionScope.member.userName}</span> ´Ô
+				<span>${sessionScope.store.g1_Id}</span> ´Ô
 			</p>
 		</div>
 	</div>

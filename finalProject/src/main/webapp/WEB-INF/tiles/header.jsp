@@ -11,8 +11,8 @@
 			var category = $(this).attr("id");
 			location.href = '<%=cp%>/jumun/jumunList?category=' + category;
 		});
-		$("#category").children().mouseenter(function(){
-			
+		$("#title").click(function(){
+			location.href = '<%=cp%>/main';
 		});
 	});
 	$(function(){
@@ -39,6 +39,10 @@ body {
 	background-color: #eaf1f1;
 }
 
+#title {
+	cursor: pointer;
+}
+
 #header a {
 	color: gray;
 	font-size: 12px;
@@ -61,13 +65,13 @@ body {
 
 
 </style>
-<div style="padding-bottom: 30px;" id="header">
+<div id="header" style="margin-bottom: 20px;">
 	<div align="right" id="headerMember">
 	<c:if test="${empty sessionScope.member}"><a href="<%=cp%>/member/login">로그인</a> | <a href="<%=cp%>/member/member">회원가입</a> | <a href="<%=cp%>/notice/list">고객센터</a></c:if>
 	<c:if test="${not empty sessionScope.member}"><a href="<%=cp%>/member/logout">로그아웃</a> | <a href="<%=cp%>/member/mypage">마이페이지</a> | <a href="<%=cp%>/notice/list">고객센터</a></c:if>
 	</div>
 	<div align="center">
-		<div style="width: 444px; height: 91px; line-height: 91px; font-size: 40px; background-image:url('<%=cp%>/resource/img/title_back.png');">배 달 행</div>
+		<div id="title" style="width: 600px; height: 200px; background: url('<%=cp%>/resource/img/titleBase.png') no-repeat; background-size: contain; background-position: center center;"></div>
 	</div>
 </div>
  	
@@ -81,7 +85,7 @@ body {
   </div>
 </div>
 <c:if test="${mode ne 'mainPage'}">
-	<div style="position: absolute; top: 200px; left: 0; width: 100%; height: 100px; background-color: #817c74;  ">
+	<div style="position: absolute; top: 300px; left: 0; width: 100%; height: 100px; background-color: #817c74;  ">
 		<div style="margin: 0 auto; text-align: center; width: 1000px; height: 100%;" id="mainMenu">
 			<ul style="list-style: none; display: inline-block; height: 100%;" id="category">
 				<li id="chicken" class="cate" style="background-image: url('<%=cp%>/resource/img/category/chickenCategory.png')"></li>

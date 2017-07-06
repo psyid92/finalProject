@@ -8,17 +8,17 @@
 	</insert>
 	
 	<insert id="insertMainGoods" parameterType="com.sp.pay.Pay">
-		INSERT INTO mainGoods (mainGoods_Num, jumun_Num, mainmenu_num, mainGoods_Conunt)
-		VALUES (mainGoods_seq.NEXTVAL, #{jumun_Num}, #{mainmenu_Num}, #{mainGoods_Count})
+		INSERT INTO mainGoods (mainGoods_Num, jumun_Num, mainmenu_num, mainGoods_Count)
+		VALUES (mainGoods_seq.NEXTVAL, jumun_seq.CURRVAL, #{mainmenu_Num}, #{mainGoods_Count})
 	</insert>
 	
 	<insert id="insertSubGoods" parameterType="com.sp.pay.Pay">
 		INSERT INTO subGoods (subGoods_Num, submenu_Num, mainGoods_Num)
-		VALUES (subGoods_seq.NEXTVAL, #{submenu_Num}, #{mainGoods_Num})
+		VALUES (subGoods_seq.NEXTVAL, #{submenu_Num}, mainGoods_seq.CURRVAL)
 	</insert>
 	
 	<insert id="insertPay" parameterType="com.sp.pay.Pay">
-		INSERT INTO pay (jumun_Num, pay_Pay, payMethod_Num, use_Num)
-		VALUES (#{payMethod_Num}, #{pay_Pay}, #{payMethod_Num}, #{use_Num})
+		INSERT INTO pay (jumun_Num, pay_Pay, payMethod_Num)
+		VALUES (jumun_seq.CURRVAL, #{pay_Pay}, #{payMethod_Num})
 	</insert>
 </mapper>

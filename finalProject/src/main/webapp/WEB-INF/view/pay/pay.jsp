@@ -17,7 +17,7 @@ label {
 	height: 38px;
 }
 </style>
-
+<div id="containar">
 <div class="body-container" style="width: 700px;">
 		<h3><span class="label label-info">I</span> 배달 정보</h3>
 	<div>
@@ -102,7 +102,12 @@ label {
 	</div><br>
 	<button type="button" class='btn btn-success' id="payBtn" style='width: 100%; float: right;'>결제하기</button>
 </div>
-	
+</div>
+
+<div id="success" style="width: 100%; height: 500px; display: none; margin: 250px auto;" align="center">
+<div>결제가 완료되었습니다.</div><br>
+<div><h1><a href="<%=cp%>/main">메인페이지로 돌아가기</a></h1></div>
+</div>
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 <script type="text/javascript" src="https://service.iamport.kr/js/iamport.payment-1.1.2.js"></script>
 <script type="text/javascript">
@@ -197,6 +202,7 @@ function sample6_execDaumPostcode() {
 		var addr = $("#addr2").val()+" "+$("#addr3").val();
 		var postcode = $("#addr1").val();
 		var memo = $("#memo").val();
+		var m1_Num = ${sessionScope.member.m1_Num};
 		
 		var mainList = document.getElementsByName('main_Num');
 		var subList = document.getElementsByName('sub_Num');
@@ -205,16 +211,20 @@ function sample6_execDaumPostcode() {
 		for (var i = 0; i < mainList.length; i++) {
 			main_Nums += mainList[i].value+",";
 		}
-		for (var i = 0; i < subList.length; i++) {
-			sub_Nums += subList[i].value+",";
+		if (subList != null && subList.length > 0){
+			for (var i = 0; i < subList.length; i++) {
+				sub_Nums += subList[i].value+",";
+			}
 		}
+		
 		
 		var IMP = window.IMP; // 생략가능
 		IMP.init('${IMP_init}'); // 'iamport' 대신 부여받은 "가맹점 식별코드"를 사용
 		
 		IMP.request_pay({
 		    pg : 'inicis', // version 1.1.0부터 지원.
-		    pay_method : 'card',
+		    pay_method : 'phone',
+		    /* 'samsung':삼성페이, 'card':신용카드, 'trans':실시간계좌이체, 'vbank':가상계좌, 'phone':휴대폰소액결제 */
 		    merchant_uid : 'merchant_' + new Date().getTime(),
 		    name : name,
 		    amount : amount,
@@ -225,24 +235,27 @@ function sample6_execDaumPostcode() {
 		    buyer_postcode : postcode
 		}, function(rsp) {
 		    if ( rsp.success ) {
-		        var msg = '결제가 완료되었습니다.';
-		        alert(msg);
-		        var url = "<%=cp%>/pay/success";
+		        var url = "<%=cp%>/pay/pay";
 		        var query = "jumun_Pay="+amount+"&jumun_Tel="+tel+"&jumun_Memo="+memo;
-		        query += "&main_Nums="+main+Nums+"&sub_Nums="+sub_Nums;
+		        query += "&jumun_Addr="+addr+"&m1_Num="+m1_Num;
+		        query += "&main_Nums="+main_Nums+"&sub_Nums="+sub_Nums;
 		        $.ajax({
 					type:"post"
 					,url:url
 					,data:query
 					,success:function(data) {
+						var ss="<div style='width: 100%; height: 500px;'>";
+						ss += "<div align='center' style='line-height: 500px;'>결제가 완료되었습니다.";
+						ss += "<a href='<%=cp%>/main'>메인페이지로 돌아가기</a>";
+						ss += "</div>";
+						$("#containar").html(ss);
 					}
 					,error:function(e) {
 						console.log(e.responseText);
 					}
 				});
-		        location.href="<%=cp%>/pay/success"
 		    } else {
-		        var msg = '결제에 실패하였습니다.';
+		        var msg = '결제에 실패하였습니다.\n';
 		        msg += '에러내용 : ' + rsp.error_msg;
 			    alert(msg);
 		    }

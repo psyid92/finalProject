@@ -43,7 +43,7 @@
 				<li class="list-menu"><a href="<%=cp%>/store/mystore">업체관리</a></li>
 				<li class="list-menu"><a href="<%=cp%>/store/coupon1">쿠폰관리</a></li>
 				<li class="list-menu"><a href="<%=cp%>/store/event1">이벤트</a></li>
-				<li class="list-menu"><a href="<%=cp%>/store/cscenter1">고객센터</a></li>
+				<li class="list-menu"><a href="<%=cp%>/store/giupNotice">고객센터</a></li>
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
 				<li><a href="<%=cp%>/store/logout">로그아웃</a></li>

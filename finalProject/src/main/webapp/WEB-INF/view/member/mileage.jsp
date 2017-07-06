@@ -9,7 +9,25 @@
 <script>
 	function deleteThisList(data){
 		//위치 옮겨야 함
-		var url = "<%=cp%>/";
+		if( !confirm("내역을 삭제하시겠습니까? 복구되지 않습니다.")) return;
+		
+		var url = "<%=cp%>/member/deleteMileage";
+		var mydata = "mydata="+data;
+		
+		$.ajax ({
+			type:"post"
+			, url : url
+			, data : mydata
+			, dataType : "json"
+			, success : function(data){
+				location.reload();
+			}
+		, error :function(e){
+			console.log(e.responseText);
+		}
+		});
+		
+		
 	}
 </script>
 

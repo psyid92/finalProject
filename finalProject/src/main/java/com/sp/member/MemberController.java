@@ -367,6 +367,26 @@ public class MemberController {
 	}
 	
 	
+	@RequestMapping(value="/member/deleteMileage" , method=RequestMethod.POST)
+	@ResponseBody //AJax 사용
+	public Map<String, Object> deleteMileage (
+			HttpSession session,
+			@RequestParam(value="mydata", defaultValue="") int mydata)  {
+		
+		SessionInfo info = (SessionInfo)session.getAttribute("member");
+		try {
+			Mileage dto = new Mileage();
+			dto.setM1_num(info.getM1_Num());
+			dto.setMil_num(mydata);
+			midao.deleteMileage(dto);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		Map<String, Object> model = new HashMap<>();
+		model.put("state", true);
+		return model;
+	}
+	
 	
 	
 	

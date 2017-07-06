@@ -19,6 +19,12 @@ li{
 
 <script type="text/javascript">
 
+function searchList(){
+	var f=document.searchForm;
+	f.action="<%=cp%>/userQna/list";
+	f.submit();
+}
+
 
 //탭 스트립트
 $('#myTab a').click(function (e) {
@@ -50,7 +56,7 @@ $('#myTab li:eq(2) a').tab('show') // Select third tab (0-indexed)
 <!-- 마크업 -->
 <div class="tab-content">
     <div role="tabpanel" class="tab-pane active" id="userQna">
-      <div class="bodyFrame2">
+     <div class="bodyFrame2">
     <div class="body-title">
           <h3><span class="glyphicon glyphicon-bullhorn"></span> 그것이 알고싶다 </h3>
     </div>
@@ -58,9 +64,9 @@ $('#myTab li:eq(2) a').tab('show') // Select third tab (0-indexed)
     <div class="alert alert-info">
         <i class="glyphicon glyphicon-info-sign"></i> 그런데 말입니다?? 1대1문의!!!
     </div>
-    
+<c:if test="${dataCount !=0}">
      <div style="clear: both; height: 30px; line-height: 30px;">
-        <div style="float: left;">조회수/페이지</div>
+        <div style="float: left;">${dataCount}개(${page}/${total_page}페이지)</div>
         <div style="float: right;">/&nbsp;</div>
       </div>
     <div class="table-responsive" style="clear: both;">
@@ -72,23 +78,35 @@ $('#myTab li:eq(2) a').tab('show') // Select third tab (0-indexed)
              <th class="text-center" style="width: 100px;">글쓴이</th>
              <th class="text-center" style="width: 100px;">날짜</th>
              <th class="text-center" style="width: 70px;">조회수</th>
+             <th class="text-center" style="width: 50px;">첨부</th>
            </tr>
          </thead> 
          <tbody>
+         <c:forEach var="dto" items="${list}">
            <tr>
-             <td class="text-center"><span style="display: inline-block;width: 28px;height:18px;line-height:18px; background: #ED4C00;color: #FFFFFF">공지</span></td>
-             <td><a href="#">제목</a></td>
-             <td class="text-center">이름</td>
-             <td class="text-center">생성일</td>
-             <td class="text-center">조회수</td>
+             <td class="text-center">${dto.listNum}</td>
+             <td><a href="${articleUrl}&uq_Num=${dto.uq_Num}">${dto.uq_Title}</a></td>
+             <td class="text-center">${sessionScope.member.userId}</td>
+             <td class="text-center">${dto.uq_Created}</td>
+             <td class="text-center">
+               <c:if test="${not empty dto.uq_SaveFilename}">
+                 <a href="<%=cp%>/userQna/download?uq_Num=${dto.uq_Num}"><img src="<%=cp%>/resource/images/disk.gif" border="0" style="margin-top: 1px;"></a>
+               </c:if>
+             </td>
            </tr>   
+         </c:forEach>
          </tbody>
       </table>
     </div>
+</c:if>    
     
      <div class="paging" style="text-align: center; min-height: 50px; line-height: 50px;">
-            
-                  등록된 게시물이 없습니다.
+         <c:if test="${dataCount==0 }">
+           등록된 문의가 없습니다.
+       </c:if>
+       <c:if test="${dataCount!=0 }">
+           ${paging}
+       </c:if>
      </div>  
      
      <div style="clear: both;">
@@ -98,10 +116,10 @@ $('#myTab li:eq(2) a').tab('show') // Select third tab (0-indexed)
         <div style="float: left; width: 60%; text-align: center;">
           <form name="searchForm" method="post" class="form-inline">
 			<select class="form-control input-sm" name="searchKey" >
-				<option value="">제목</option>
-				<option value="">작성자</option>
-				<option value="">내용</option>
-				<option value="">등록일</option>
+				<option value="uq_Title">제목</option>
+				<option value="userId">작성자</option>
+				<option value="uq_Content">내용</option>
+				<option value="uq_Created">등록일</option>
 			</select>
 			<input type="text" class="form-control input-sm input-search" name="searchValue">
 			<button type="button" class="btn btn-info btn-sm btn-search" onclick="searchList();"><span class="glyphicon glyphicon-search"></span> 검색</button>

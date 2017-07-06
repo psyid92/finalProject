@@ -9,7 +9,25 @@
 <script>
 	function deleteThisList(data){
 		//위치 옮겨야 함
-		var url = "<%=cp%>/";
+		if( !confirm("내역을 삭제하시겠습니까? 복구되지 않습니다.")) return;
+		
+		var url = "<%=cp%>/member/deleteMileage";
+		var mydata = "mydata="+data;
+		
+		$.ajax ({
+			type:"post"
+			, url : url
+			, data : mydata
+			, dataType : "json"
+			, success : function(data){
+				location.reload();
+			}
+		, error :function(e){
+			console.log(e.responseText);
+		}
+		});
+		
+		
 	}
 </script>
 
@@ -26,15 +44,15 @@
 	width: 200px;
 }
 
-td {
-	font-size: 23px;
+th {
+	font-size: 18px;
 }
 
 -->
 </style>
 
 
-<br><br>
+<br>
 <div align="center">
 <h3>내 마일리지 : ${mileage } 점</h3>
 <c:if test="${not empty msg }">
@@ -50,18 +68,16 @@ td {
 
 
 
-	<table style="border: none; border-collapse: collapse; width: 600px;">
-		<tr style="height: 40px;">
-			<td width="50%">일자</td>
-			<td width="18%">내용</td>
-			<td width="18%" align="right">포인트</td>
-			<td width="*"></td>
-		</tr>
-		</table>
-		<br>
-		<hr>
-		<br>
 		<table style="border: none; border-collapse: collapse; width: 600px;">
+		<tr style="height: 40px;">
+			<th width="50%">일자</th>
+			<th width="18%">내용</th>
+			<th width="18%" align="right">포인트</th>
+			<th width="*"></th>
+		</tr>
+		<tr>
+			<td colspan="4"><hr></td>
+		</tr>
 		<c:forEach var="dto" items="${list }">
 			<tr style="height: 40px;">
 				<td width="50%">${dto.mil_created }</td>

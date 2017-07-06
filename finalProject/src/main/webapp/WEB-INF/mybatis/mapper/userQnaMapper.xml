@@ -7,6 +7,92 @@
                  VALUES(userQna_seq.NEXTVAL, #{m1_Num}, #{uq_Title}, #{uq_Content}, #{uq_OriginalFilename, jdbcType=VARCHAR}, #{uq_SaveFilename, jdbcType=VARCHAR} )
    </insert>
    
+  <sql id="where-list">
+    <if test="searchKey=='m1_nickname'">
+      m1_nickname=#{searchvalue}
+    </if>
+    <if test="searchKey=='uq_Title'">
+      uq_Title LIKE '%' || #{searchValue} || '%'
+    </if>
+    <if test="searchKey=='uq_Content'">
+      DBMS_LOB.INSTR( uq_Content, #{searchValue}) &gt; 0 
+    </if>
+    <if test="searchKey=='uq_Created' ">
+	  TO_CHAR(uq_Created, 'YYYY-MM-DD') = #{searchValue}
+	</if>
+  </sql>
+   
+   <select id="dataCount" parameterType="map" resultType="Integer">
+     SELECT NVL(COUNT(*),0) FROM userQna q JOIN member1 m1 ON q.m1_Num=m1.m1_Num
+     <where>
+       <if test="searchValue != null and searchValue != '' ">
+         <include refid="where-list"/>
+       </if>
+     </where>
+   </select>
+   
+   <select id="listUserQna" parameterType="map" resultType="com.sp.userQna.UserQna">
+     SELECT * FROM(
+       SELECT ROWNUM rnum, tb.*FROM(
+         SELECT uq_Num, q.m1_Num, uq_Title, uq_Created
+         FROM userQna q JOIN member1 m1 ON q.m1_Num=m1.m1_Num
+     <where>
+       <if test="searchValue != null and searchValue != '' ">
+         <include refid="where-list"/>
+       </if>
+     </where>
+     ORDER BY uq_Num DESC
+     <![CDATA[
+       ) tb WHERE ROWNUM <= #{end}
+     ) WHERE rnum >= #{start}
+     ]]>
+   </select>
+   
+   <select id="readUserQna" parameterType="Integer" resultType="com.sp.userQna.UserQna">
+     select uq_Num, q.m1_Num, uq_Title, uq_Content, uq_Created, uq_SaveFilename, uq_OriginalFilename
+           FROM userQna q JOIN member1 m1 ON q.m1_Num=m1.m1_Num  WHERE uq_Num = #{uq_Num}
+   </select>
+   
+   
+   <select id="preReadUserQna" resultType="com.sp.userQna.UserQna" parameterType="map">
+     SELECT tb.* FROM(
+       SELECT uq_Num, uq_Title FROM userQna q JOIN member1 m1 ON q.m1_Num=m1.m1_Num
+        <where>
+         <if test="searchValue != null and searchValue != '' ">
+          <include refid="where-list"/>
+         </if>
+         <![CDATA[
+           AND (uq_Num > #{uq_Num})
+         ]]>
+        </where>
+         ORDER BY uq_Num ASC
+     )tb WHERE ROWNUM=1
+   </select>
+   
+   
+   <select id="nextReadUserQna" resultType="com.sp.userQna.UserQna" parameterType="map">
+     SELECT tb.* FROM(
+       SELECT uq_Num, uq_Title FROM userQna q JOIN member1 m1 ON q.m1_Num=m1.m1_Num
+        <where>
+         <if test="searchValue != null and searchValue != '' ">
+          <include refid="where-list"/>
+         </if>
+         <![CDATA[
+           AND (uq_Num < #{uq_Num})
+         ]]>
+        </where>
+         ORDER BY uq_Num DESC
+     )tb WHERE ROWNUM=1
+   </select>
+   
+   <update id="updateUserQna" parameterType="com.sp.userQna.UserQna">
+     UPDATE userQna SET uq_Title=#{uq_Title}, uq_Content=#{uq_Content}, uq_SaveFilename=#{uq_SaveFilename, jdbcType=VARCHAR}, uq_OriginalFilename=#{uq_OriginalFilename, jdbcType=VARCHAR}
+     WHERE uq_Num=#{uq_Num}
+   </update>
+   
+   <delete id="deleteUserQna" parameterType="Integer">
+     DELETE FROM userQna WHERE uq_Num=#{uq_Num}
+   </delete>
    
    
 </mapper>

@@ -85,7 +85,7 @@ position : relative;
 	<div id="pack" onclick="">
 		<p style="float: left; color: red;font-size: 18px;">&nbsp;&nbsp;&nbsp;${dto.cat_name }&nbsp;&nbsp;&nbsp;</p><br><br>
 		<p style="font-size: 22px; font-weight: bold;">${dto.g1_name } <p><br>
-		<img id="likeButton" src="<%=cp%>/resource/img/likeButton.png" onclick="sendcancle(${dto.g1_num});">
+		<a onclick="sendcancle(${dto.g1_num});" class="btn btn-sm btn-primary"><span class="glyphicon glyphicon-ok-sign"></span> Âò Ç®±â</a>
 	</div>	
 </c:forEach>
 

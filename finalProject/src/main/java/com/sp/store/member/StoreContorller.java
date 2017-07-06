@@ -1,5 +1,8 @@
 package com.sp.store.member;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -10,12 +13,13 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 
 //사장님 페이지 컨트롤러
 @SessionAttributes("dto")
-@Controller("storeController")
+@Controller("member.storeController")
 public class StoreContorller {
 	@ModelAttribute("dto")
 	public Store command() {
@@ -51,7 +55,7 @@ public class StoreContorller {
 		info.setG1_Name(dto.getG1_Name());
 		session.setAttribute("store", info);
 		
-		return ".store4.menu1.mystore.list";
+		return "redirect:/store/mystore";
 	}
 
 	@RequestMapping(value="/store/logout")
@@ -89,9 +93,7 @@ public class StoreContorller {
 		StringBuffer sb = new StringBuffer();
 		
 		//위도 경도 추가
-		
 		try {
-
 			service.insertStore(dto);
 			
 			sessionstatus.setComplete();
@@ -110,45 +112,38 @@ public class StoreContorller {
 		model.addAttribute("message", sb.toString());
 		
 		return ".store.store.complete";
-
 	}
 	
-/*	@RequestMapping(value="/store/login_check")
+	@RequestMapping(value="/store/g1_IdCheck")
 	@ResponseBody
-	public Map<String, Object> userIdCheck(
-			@RequestParam(value="g1_Id") String g1_Id
-			) throws Exception{
-		String passed = "true";
+	public Map<String, Object> g1_IdCheck(
+			@RequestParam String g1_Id
+			) throws Exception {
+		String passed="false";
 		Store dto = service.readStore(g1_Id);
-		if(dto != null)
-			passed = "false";
+		if(dto==null)
+			passed="true";
 		
-		Map<String, Object> map = new HashMap<>();
+   	    // 작업 결과를 json으로 전송
+		Map<String, Object> map = new HashMap<>(); 
 		map.put("passed", passed);
 		return map;
-	}*/
+	}
 	
-	// 메뉴1
-	@RequestMapping(value = "/store/mystore", method = RequestMethod.GET)
-	public String mystoreForm(Model model) {
-
-		model.addAttribute("mainMenu", "0");
-		return ".store4.menu1.mystore.list";
+	@RequestMapping(value="/store/g2_GiupNumCheck")
+	@ResponseBody
+	public Map<String, Object> g2_GiupNumCheck(
+			@RequestParam String g2_GiupNum
+			) throws Exception {
+		String passed="false";
+		Store dto = service.readStore2(g2_GiupNum);
+		if(dto==null)
+			passed="true";
+		
+   	    // 작업 결과를 json으로 전송
+		Map<String, Object> map = new HashMap<>(); 
+		map.put("passed", passed);
+		return map;
 	}
-
-	// 메뉴2
-	@RequestMapping(value = "/store/event", method = RequestMethod.GET)
-	public String eventForm(Model model) {
-
-		model.addAttribute("mainMenu", "1");
-		return ".store4.menu2.event.list";
-	}
-
-	// 메뉴3
-	@RequestMapping(value = "/store/cscenter", method = RequestMethod.GET)
-	public String cscenterForm(Model model) {
-
-		model.addAttribute("mainMenu", "2");
-		return ".store4.menu3.cscenter.list";
-	}
+	
 }

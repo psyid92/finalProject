@@ -35,13 +35,15 @@
 <nav class="navbar navbar-inverse navbar-fixed-top">
 	<div class="container">
 		<div class="navbar-header">
-			<a class="navbar-brand" href="<%=cp%>/store/mystore">배달행</a>
+			<a class="navbar-brand" href="<%=cp%>/store/mystore">배달행 사장님</a>
 		</div>
 		<div id="navbar" class="navbar-collapse collapse">
+			<c:if test="${not empty sessionScope.store}">
 			<ul class="nav navbar-nav">
-				<li class="list-menu"><a href="<%=cp%>/store/mystore">마이페이지</a></li>
-				<li class="list-menu"><a href="<%=cp%>/store/event">이벤트</a></li>
-				<li class="list-menu"><a href="<%=cp%>/store/cscenter">고객센터</a></li>
+				<li class="list-menu"><a href="<%=cp%>/store/mystore">업체관리</a></li>
+				<li class="list-menu"><a href="<%=cp%>/store/coupon1">쿠폰관리</a></li>
+				<li class="list-menu"><a href="<%=cp%>/store/event1">이벤트</a></li>
+				<li class="list-menu"><a href="<%=cp%>/store/cscenter1">고객센터</a></li>
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
 				<li><a href="<%=cp%>/store/logout">로그아웃</a></li>
@@ -49,6 +51,8 @@
 			<p class="navbar-text navbar-right">
 				<span>${sessionScope.store.g1_Id}</span> 님
 			</p>
+			</c:if>
+			
 		</div>
 	</div>
 </nav>

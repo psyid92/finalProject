@@ -6,11 +6,73 @@
 	String cp = request.getContextPath();
 %>
 <script type="text/javascript">
+function g1_IdCheck(){
+	var g1_Id=$("#g1_Id").val();
+	if(!/^[a-z][a-z0-9_]{4,9}$/i.test(g1_Id)) { 
+		var str="아이디는 5~10자 이내이며, 첫글자는 영문자로 시작해야 합니다.";
+		$("#g1_Id").focus();
+		$("#g1_Id").parent().next(".help-block").html(str);
+		
+		return false;
+	}
+	
+	var url="<%=cp%>/store/g1_IdCheck";
+	var query="g1_Id="+g1_Id;
+	$.ajax({
+		type:"POST"
+		,url:url
+		,data:query
+		,dataType:"JSON"
+		,success:function(data) {
+			var passed=data.passed;
+			if(passed=="true") {
+				var str="<span style='color:blue;font-weight: bold;'>"+g1_Id+" 아이디는 사용가능 합니다.</span>";
+				$("#g1_Id").parent().next(".help-block").html(str);
+			} else {
+				var str="<span style='color:red;font-weight: bold;'>"+g1_Id+" 아이디는 사용할수 없습니다.</span>";
+				$("#g1_Id").parent().next(".help-block").html(str);
+				$("#g1_Id").val("");
+				$("#g1_Id").focus();
+			}
+		}
+	});
+}
+
+function g2_GiupNumCheck(){
+	var g2_GiupNum=$("#g2_GiupNum").val();
+	if(!/^(\d+){10}$/i.test(g2_GiupNum)) { 
+		var str="사업자 등록번호는 10자리 숫자만 가능합니다.";
+		$("#g2_GiupNum").focus();
+		$("#g2_GiupNum + .help-block").html(str);
+		return false;
+	}
+	
+	var url="<%=cp%>/store/g2_GiupNumCheck";
+	var query="g2_GiupNum="+g2_GiupNum;
+	$.ajax({
+		type:"POST"
+		,url:url
+		,data:query
+		,dataType:"JSON"
+		,success:function(data) {
+			var passed=data.passed;
+			if(passed=="true") {
+				var str="<span style='color:blue;font-weight: bold;'> 사용가능한 사업자 등록번호입니다. </span>";
+				$("#g2_GiupNum").parent().next(".help-block").html(str);
+			} else {
+				var str="<span style='color:red;font-weight: bold;'> 이미 등록된 사업자 등록번호입니다.</span>";
+				$("#g2_GiupNum").parent().next(".help-block").html(str);
+				$("#g2_GiupNum").val("");
+				$("#g2_GiupNum").focus();
+			}
+		}
+	});
+}
 function memberOk() {
 	var f = document.giupForm;
 	var str;
 	
-	str = f.g2_GiupNum.value;
+	/* str = f.g2_GiupNum.value;
 	str = str.trim();
  	if(!str) {
 		alert("사업자 등록번호를 입력하세요. ");
@@ -22,7 +84,7 @@ function memberOk() {
         alert("사업자 등록번호는 10자리 숫자만 가능합니다. ");
         f.g2_GiupNum.focus();
         return;
-    }
+    } */
 	str = f.g1_Name.value;
 	str = str.trim();
 	if(!str) {
@@ -31,7 +93,7 @@ function memberOk() {
 		return;
 	}
 	
-	str = f.g1_Id.value;
+	/* str = f.g1_Id.value;
 	str = str.trim();
 	if(!str) {
 		alert("아이디를 입력하세요. ");
@@ -43,7 +105,7 @@ function memberOk() {
 		f.g1_Id.focus();
 		return;
 	}
-	f.g1_Id.value = str;
+	f.g1_Id.value = str; */
 	 
 	str = f.g1_Pwd.value;
 	str = str.trim();
@@ -53,14 +115,18 @@ function memberOk() {
 		return;
 	}
 	if(!/^(?=.*[a-z])(?=.*[!@#$%^*+=-]|.*[0-9]).{5,10}$/i.test(str)) { 
-		alert("패스워드는 5~10자이며 하나 이상의 숫자나 특수문자가 포함되어야 합니다.");
+		//alert("패스워드는 5~10자이며 하나 이상의 숫자나 특수문자가 포함되어야 합니다.");
+		var str="<span style='color:red;font-weight: bold;'> 패스워드는 5~10자이며 하나 이상의 숫자나 특수문자가 포함되어야 합니다. </span>";
+		$("#g1_Pwd").parent().next(".help-block").html(str);
 		f.g1_Pwd.focus();
 		return;
 	}
+	
 	f.g1_Pwd.value = str;
-
 	if(str!= f.g1PwdCheck.value) {
-        alert("패스워드가 일치하지 않습니다. ");
+       // alert("패스워드가 일치하지 않습니다. ");
+        var str="<span style='color:red;font-weight: bold;'> 패스워드가 일치하지 않습니다. </span>";
+		$("#g1PwdCheck").parent().next(".help-block").html(str);
         f.g1PwdCheck.focus();
         return;
 	}
@@ -148,7 +214,7 @@ function memberOk() {
 							<input type="text" name="g2_GiupNum" id="g2_GiupNum"
 								value="${dto.g2_GiupNum}" style="width: 95%;"
 								${mode=="update" ? "readonly='readonly' ":""} maxlength="15"
-								class="boxTF" placeholder="사업자 등록번호를 입력해주세요">
+								class="boxTF" onchange="g2_GiupNumCheck()" placeholder="사업자 등록번호를 입력해주세요">
 						</p>
 						<p class="help-block">본인가게의 사업자 등록번호를 입력해주세요</p>
 					</td>
@@ -174,7 +240,7 @@ function memberOk() {
 					<td style="padding: 0 0 15px 15px;">
 						<p style="margin-top: 1px; margin-bottom: 5px;">
 							<input type="text" name="g1_Id" id="g1_Id" value="${dto.g1_Id}" style="width: 95%;"
-							 maxlength="15" class="boxTF" placeholder="아이디는 5~10자로 입력해주세요">
+							 maxlength="15" class="boxTF" onchange="g1_IdCheck()" placeholder="아이디는 5~10자로 입력해주세요">
 						</p>
 						<p class="help-block">아이디는 5~10자로 입력해주세요</p>
 					</td>
@@ -186,7 +252,7 @@ function memberOk() {
 					</td>
 					<td style="padding: 0 0 15px 15px;">
 						<p style="margin-top: 1px; margin-bottom: 5px;">
-							<input type="password" name="g1_Pwd" maxlength="15" class="boxTF"
+							<input type="password" id="g1_Pwd" name="g1_Pwd" maxlength="15" class="boxTF"
 								style="width: 95%;" placeholder="비밀번호를 입력해주세요">
 						</p>
 						<p class="help-block">
@@ -200,7 +266,7 @@ function memberOk() {
 						<label style="font-weight: 900;">비밀번호 확인</label></td>
 					<td style="padding: 0 0 15px 15px;">
 						<p style="margin-top: 1px; margin-bottom: 5px;">
-							<input type="password" name="g1PwdCheck" maxlength="15"
+							<input type="password" id="g1PwdCheck" name="g1PwdCheck" maxlength="15"
 								class="boxTF" style="width: 95%;" placeholder="다시 한 번 더 입력해주세요">
 						</p>
 						<p class="help-block">계정 혹은 전화번호와 같거나 연속된 문자열을 사용한 비밀번호는 권장하지
@@ -273,7 +339,7 @@ function memberOk() {
 					</td>
 				</tr>
 				<tr height="30">
-					<td align="center" style="color: blue;">${msg}</td>
+					<td align="center" style="color: blue;">${message}</td>
 				</tr>
 			</table>
 		</form>

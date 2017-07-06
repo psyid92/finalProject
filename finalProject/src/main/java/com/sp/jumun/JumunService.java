@@ -16,4 +16,5 @@ public interface JumunService {
 	 */
 	
 	public List<JumunMember> listmyPay(int m1_num) throws Exception;
+	public JumunMember detailmyPay(JumunMember dto) throws Exception;
 }

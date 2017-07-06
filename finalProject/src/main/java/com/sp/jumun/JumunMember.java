@@ -2,7 +2,15 @@ package com.sp.jumun;
 
 public class JumunMember {
 	private String jumun_created, jumun_addr, jumun_tel, jumun_memo, orders_state , g1_name;
-	private int jumun_num, jumun_pay, m1_num, pay_pay, orders_num;
+	private int jumun_num, jumun_pay, m1_num, pay_pay, orders_num, maingoods_num;
+	
+	
+	public int getMaingoods_num() {
+		return maingoods_num;
+	}
+	public void setMaingoods_num(int maingoods_num) {
+		this.maingoods_num = maingoods_num;
+	}
 	public String getJumun_created() {
 		return jumun_created;
 	}

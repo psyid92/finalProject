@@ -63,9 +63,15 @@
 	</select>
 	
 	<!-- member 주문상세 가져오기 쿼리 -->
-<!-- 	<select id="">
-		
+	<select id="getMemberPayDetail" parameterType="com.sp.jumun.JumunMember" resultType="com.sp.jumun.JumunMember">
+		select distinct j.jumun_num, jumun_pay, jumun_created, jumun_addr, jumun_tel, jumun_memo, m1_num, orders_num,
+		   mg.mainmenu_num,mg.maingoods_num, mm.MAINMENU_TITLE, mg.MAINGOODS_COUNT,  sg.submenu_num, sm.SUBMENU_TITLE,sg.SUBGOODS_NUM from jumun j
+			left outer join maingoods mg on mg.jumun_num = j.jumun_num
+			left outer join mainmenu mm on mg.MAINMENU_NUM = mm.MAINMENU_NUM
+			left outer join subgoods sg on mg.maingoods_num = sg.MAINGOODS_NUM
+			left outer join submenu sm on sg.SUBMENU_NUM = sm.SUBMENU_NUM
+			where j.M1_NUM = #{m1_num} and j.jumun_num=#{jumun_num}
+			order by jumun_num desc;		
 	</select>
-	 -->
 	
 </mapper>

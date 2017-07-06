@@ -105,4 +105,14 @@ public class JumunServiceImpl implements JumunService {
 		return list;
 	}
 
+	@Override
+	public JumunMember detailmyPay(JumunMember dto) throws Exception {
+		JumunMember Readdto = new JumunMember();
+		try {
+			Readdto = dao.getReadData("jumun.getMemberPayDetail", dto);
+		} catch (Exception e) {
+		}
+		return Readdto;
+	}
+
 }

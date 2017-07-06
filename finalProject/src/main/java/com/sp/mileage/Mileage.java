@@ -7,12 +7,8 @@ public class Mileage {
 	
 	
 	
-	public String getMil_state() {
-		return mil_state;
-	}
-	public void setMil_state(String mil_state) {
-		this.mil_state = mil_state;
-	}
+	
+	
 	public String getMil_created() {
 		return mil_created;
 	}
@@ -36,6 +32,12 @@ public class Mileage {
 	}
 	public void setJumun_created(String jumun_created) {
 		this.jumun_created = jumun_created;
+	}
+	public String getMil_state() {
+		return mil_state;
+	}
+	public void setMil_state(String mil_state) {
+		this.mil_state = mil_state;
 	}
 	public int getMil_num() {
 		return mil_num;

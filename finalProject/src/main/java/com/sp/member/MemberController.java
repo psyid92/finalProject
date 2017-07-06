@@ -15,6 +15,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.sp.jumun.JumunMember;
+import com.sp.jumun.JumunService;
+import com.sp.mileage.Mileage;
+import com.sp.mileage.MileageDAO;
 import com.sp.mileage.MileageImpl;
 
 @Controller("member.memberController")
@@ -22,6 +26,12 @@ public class MemberController {
 	
 	@Autowired
 	private MemberDAO dao;
+	
+	@Autowired
+	private MileageDAO midao;
+	
+	@Autowired
+	private JumunService judao;
 	
 	//로그인 폼
 	@RequestMapping(value="/member/login", method=RequestMethod.GET)
@@ -123,8 +133,7 @@ public class MemberController {
 		
 		int mileage;
 		try {
-			MileageImpl miDAO = new MileageImpl();
-			mileage = miDAO.getMemberMileage(info.getUserId());
+			mileage = midao.getMemberMileage(info.getUserId());
 			model.addAttribute("mileage", mileage);
 		} catch (Exception e) {
 		}
@@ -154,6 +163,10 @@ public class MemberController {
 	//회원정보 수정
 	@RequestMapping(value="/member/update", method=RequestMethod.POST)
 	public String updateMemberDo(Member1 dto, HttpSession session, Model model, HttpServletRequest req) throws Exception {
+		
+		if(session.getAttribute("member") == null){
+			return ".mymem.login";
+		}
 		
 		try {
 			//비밀번호가 틀리면 수정 취소
@@ -248,6 +261,10 @@ public class MemberController {
 	//회원 탈퇴
 	@RequestMapping(value="/member/remove")
 	public String removeAccount(HttpSession session){
+		if(session.getAttribute("member") == null){
+			return ".mymem.login";
+		}
+		
 		Member1 dto = new Member1();
 		SessionInfo info = (SessionInfo)session.getAttribute("member");
 		dto.setM1_email(info.getUserId());
@@ -282,7 +299,7 @@ public class MemberController {
 	@RequestMapping("/member/ilike")
 	public String goLikegiup(HttpSession session, Model model) throws Exception{
 		if(session.getAttribute("member") == null){
-			return "member/login";
+			return ".mymem.login";
 		}
 		
 		 Map<String, Object> map = new HashMap<String, Object>();
@@ -305,6 +322,7 @@ public class MemberController {
 	public Map<String, Object> deleteLike (
 			HttpSession session,
 			@RequestParam(value="mydata", defaultValue="") int mydata)  {
+		
 		SessionInfo info = (SessionInfo)session.getAttribute("member");
 		try {
 				LikeGiup dto = new LikeGiup();
@@ -329,12 +347,70 @@ public class MemberController {
 	 */
 	//마일리지 페이지
 	@RequestMapping("/member/mileage")
-	public String goMileage(){
+	public String goMileage(Model model, HttpSession session){
+		
+		if(session.getAttribute("member") == null){
+			return ".mymem.login";
+		}
+		int mileage =0;
+		SessionInfo info = (SessionInfo)session.getAttribute("member");
+		List<Mileage> list = null;
+		Map<String, Object> map = new HashMap<>();
+		try {
+			int m1_num = info.getM1_Num();
+			mileage = midao.getMemberMileage(info.getUserId());
+			
+			map.put("m1_num", m1_num);
+			list = midao.getMileageList(map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		model.addAttribute("mileage", mileage);
+		model.addAttribute("list",list);
 		return ".mymem.mileage";
 	}
 	
 	
+	@RequestMapping(value="/member/deleteMileage" , method=RequestMethod.POST)
+	@ResponseBody //AJax 사용
+	public Map<String, Object> deleteMileage (
+			HttpSession session,
+			@RequestParam(value="mydata", defaultValue="") int mydata)  {
+		
+		SessionInfo info = (SessionInfo)session.getAttribute("member");
+		try {
+			Mileage dto = new Mileage();
+			dto.setM1_num(info.getM1_Num());
+			dto.setMil_num(mydata);
+			midao.deleteMileage(dto);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		Map<String, Object> model = new HashMap<>();
+		model.put("state", true);
+		return model;
+	}
 	
 	
+	/*
+	 * ----------------------------------------------------------------------------------------
+	 * ----------------------------------------------------------------------------------------
+	 * 				결제 내역
+	 * 				
+	 */
+	
+	@RequestMapping("/member/payList")
+	public String goPayList(HttpSession session, Model model) throws Exception{
+		SessionInfo info = (SessionInfo)session.getAttribute("member");
+		List<JumunMember> list = null;
+		try {
+			list = judao.listmyPay(info.getM1_Num());
+		} catch (Exception e) {
+			throw e;
+		}
+		model.addAttribute("list", list);
+		return ".mymem.payList";
+	}
 	
 }

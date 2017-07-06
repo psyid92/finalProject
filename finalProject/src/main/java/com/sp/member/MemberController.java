@@ -128,8 +128,7 @@ public class MemberController {
 		
 		int mileage;
 		try {
-			MileageImpl miDAO = new MileageImpl();
-			mileage = miDAO.getMemberMileage(info.getUserId());
+			mileage = midao.getMemberMileage(info.getUserId());
 			model.addAttribute("mileage", mileage);
 		} catch (Exception e) {
 		}
@@ -348,11 +347,13 @@ public class MemberController {
 		if(session.getAttribute("member") == null){
 			return ".mymem.login";
 		}
+		int mileage =0;
 		SessionInfo info = (SessionInfo)session.getAttribute("member");
 		List<Mileage> list = null;
 		Map<String, Object> map = new HashMap<>();
 		try {
 			int m1_num = info.getM1_Num();
+			mileage = midao.getMemberMileage(info.getUserId());
 			
 			map.put("m1_num", m1_num);
 			list = midao.getMileageList(map);
@@ -360,6 +361,7 @@ public class MemberController {
 			e.printStackTrace();
 		}
 		
+		model.addAttribute("mileage", mileage);
 		model.addAttribute("list",list);
 		return ".mymem.mileage";
 	}

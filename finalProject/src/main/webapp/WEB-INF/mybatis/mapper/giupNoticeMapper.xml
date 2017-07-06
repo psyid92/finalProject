@@ -41,7 +41,7 @@
 	
 	</select>
 	
-	<select id="listNotice" parameterMap="map" resultType="com.sp.giupNotice.Notice">
+	<select id="listNotice" parameterType="map" resultType="com.sp.giupNotice.Notice">
 		SELECT * FROM (
 			SELECT ROWNUM rnum, tb.* FROM (
 				SELECT noti_Num, giupNotice, m.admin_Id, noti_Title, noti_HitCount, created

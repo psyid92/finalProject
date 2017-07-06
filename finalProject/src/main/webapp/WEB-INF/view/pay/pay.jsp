@@ -101,13 +101,14 @@ label {
 		<div id='total_Pay' style='float: right; font-weight: 900;'></div>
 	</div><br>
 	<div style="margin: 15px 0;">
-		<select class="form-control">
+		<select id="select" class="form-control">
+			<option id="way" class="way">결제 방법을 선택 해 주세요.</option>
 			<c:forEach var="dto" items="${wayList}">
 				<option id="${dto.payMethod_Num}" class="${dto.payMethod_Way}">${dto.payMethod_Content}</option>
 			</c:forEach>
 		</select>
 	</div>
-	<button type="button" class='btn btn-success' id="payBtn" style='width: 100%; float: right;'>결제하기</button>
+	<button type="button" class='btn btn-success disabled' id="payBtn" disabled="disabled" style='width: 100%; float: right;'>결제하기</button>
 </div>
 </div>
 
@@ -127,6 +128,16 @@ label {
 			s += Number(n);
 		});
 		$("#total_Pay").html(s+"원");
+		
+		$("#select").change(function(){
+			if($("#select option:selected").attr("class") == 'way') {
+				$("#payBtn").attr("class","btn btn-success disabled");
+				$("#payBtn").prop("disabled", true);
+			} else {
+				$("#payBtn").attr("class","btn btn-success");
+				$("#payBtn").prop("disabled", false);
+			}
+		})
 	});
 function sample6_execDaumPostcode() {
     new daum.Postcode({
@@ -215,6 +226,7 @@ function sample6_execDaumPostcode() {
 		var subList = document.getElementsByName('sub_Num');
 		var main_Nums = "";
 		var sub_Nums = "";
+		var pay_Method = $("#select option:selected").attr("class");
 		for (var i = 0; i < mainList.length; i++) {
 			main_Nums += mainList[i].value+",";
 		}
@@ -230,8 +242,7 @@ function sample6_execDaumPostcode() {
 		
 		IMP.request_pay({
 		    pg : 'inicis', // version 1.1.0부터 지원.
-		    pay_method : 'phone',
-		    /* 'samsung':삼성페이, 'card':신용카드, 'trans':실시간계좌이체, 'vbank':가상계좌, 'phone':휴대폰소액결제 */
+		    pay_method : pay_Method,
 		    merchant_uid : 'merchant_' + new Date().getTime(),
 		    name : name,
 		    amount : amount,

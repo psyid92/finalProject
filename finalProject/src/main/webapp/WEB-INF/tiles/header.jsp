@@ -85,7 +85,7 @@ body {
   </div>
 </div>
 <c:if test="${mode ne 'mainPage'}">
-	<div style="position: absolute; top: 300px; left: 0; width: 100%; height: 100px; background-color: #817c74;  ">
+	<div style="position: absolute; top: 300px; left: 0; width: 100%; height: 100px; background-color: #7c9dd2;">
 		<div style="margin: 0 auto; text-align: center; width: 1000px; height: 100%;" id="mainMenu">
 			<ul style="list-style: none; display: inline-block; height: 100%;" id="category">
 				<li id="chicken" class="cate" style="background-image: url('<%=cp%>/resource/img/category/chickenCategory.png')"></li>

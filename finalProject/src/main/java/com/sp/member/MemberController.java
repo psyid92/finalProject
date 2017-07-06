@@ -410,12 +410,16 @@ public class MemberController {
 		Map<String, Object> map = new HashMap<>();
 		map.put("jumun_num", jumun_num);
 		map.put("m1_num", info.getM1_Num());
+		
+		JumunMember dto = new JumunMember();
+		
 		try {
-			judao.detailmyPay(map);
+			dto = judao.detailmyPay(map);
 		} catch (Exception e) {
 		}
 		
-		return null;
+		map.put("dto", dto);
+		return map;
 		
 	}
 			

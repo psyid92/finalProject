@@ -10,6 +10,25 @@
 <script>
 function getDetail(data){
 	//주문 상세 가져오는 위치
+	
+	var url = "<%=cp%>/member/getDetail";
+	var mydata = "mydata="+data;
+	
+	$.ajax ({
+		type:"post"
+		, url : url
+		, data : mydata
+		, dataType : "json"
+		, success : function(data){
+			//여기서 tr에 내용 넣어줘야 함
+			var td = document.getElemenyByName("detail${dto.jumun_num}");
+			alert(td);
+		}
+	, error :function(e){
+		console.log(e.responseText);
+	}
+	});
+	
 }
 
 </script>
@@ -56,7 +75,7 @@ function getDetail(data){
 				
 			
 			</tr>
-			<tr id="detail${dto.jumun_num }" >
+			<tr name="detail${dto.jumun_num }" >
 			</tr>
 		</c:forEach>
 	</table>

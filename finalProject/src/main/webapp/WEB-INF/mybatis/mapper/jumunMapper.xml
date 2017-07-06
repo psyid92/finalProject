@@ -49,6 +49,10 @@
 		WHERE submenu_Num = #{submenu_Num}
 	</select>
 	
+	<select id="listPayMethod" resultType="com.sp.pay.Pay">
+		SELECT payMethod_Num, payMethod_Way, payMethod_Content
+		FROM payMethod
+	</select>
 	
 	<!-- member 결제내역 가져오기 쿼리 -->
 	<select id="getMemberPayList" parameterType="Integer" resultType="com.sp.jumun.JumunMember">

@@ -87,13 +87,19 @@ public class JumunServiceImpl implements JumunService {
 		}
 		return list;
 	}
-
+	
+	@Override
+	public List<Jumun> listPayMethod() throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 	/*
 	 * -------------------------------------------------
 	 * 			MEMBER : GetList
 	 */
 	//회원 - 
+	
 	@Override
 	public List<JumunMember> listmyPay(int m1_num) throws Exception {
 		List<JumunMember> list = new ArrayList<>();
@@ -106,13 +112,12 @@ public class JumunServiceImpl implements JumunService {
 	}
 
 	@Override
-	public JumunMember detailmyPay(JumunMember dto) throws Exception {
+	public JumunMember detailmyPay(Map<String, Object> map) throws Exception {
 		JumunMember Readdto = new JumunMember();
 		try {
-			Readdto = dao.getReadData("jumun.getMemberPayDetail", dto);
+			Readdto = dao.getReadData("jumun.getMemberPayDetail", map);
 		} catch (Exception e) {
 		}
 		return Readdto;
 	}
-
 }

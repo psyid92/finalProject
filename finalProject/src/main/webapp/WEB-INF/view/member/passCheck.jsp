@@ -58,12 +58,13 @@ function removeAccount(){
 	margin: auto;
 }
 
-#m1_pwd {
-	
+input {
+	border-radius: 5px;
 }
 </style>
 
 <div id="box">
+<br><br>
 	<div class="body-container" style="width: 700px;" align="center">
 		<form name="memberForm" method="post">
 
@@ -72,11 +73,11 @@ function removeAccount(){
 			<br><br><br><br>
 			<!-- Button -->
 				<div align="center">
-					<button class="btn btn-inverse" onclick="changePass();">비밀번호
+					<button class="btn btn-default" onclick="changePass();">비밀번호
 						변경</button>
-					<button class="btn btn-default"
+					<button class="btn btn-inverse"
 						onclick="javascript:history.go(-1);">취소</button>
-					<button class="btn btn-inverse" onclick="removeAccount();">회원탈퇴
+					<button class="btn btn-default" onclick="removeAccount();">회원탈퇴
 						변경</button>
 				</div>
 

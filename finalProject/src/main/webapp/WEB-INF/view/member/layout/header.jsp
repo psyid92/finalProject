@@ -23,8 +23,9 @@
 
 <style type="text/css">
 html, body {
-	background-color: #f4efe1;
-	width: 100%; height: 100%;
+	background-color: #ffffff;
+	width: 1000px;
+	margin: 0 auto;
 }
 #headerMenutr {
 	background-color: #f7f2e2;

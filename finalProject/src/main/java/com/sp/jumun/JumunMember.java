@@ -1,8 +1,13 @@
 package com.sp.jumun;
 
 public class JumunMember {
+	//기본 주문 보기
 	private String jumun_created, jumun_addr, jumun_tel, jumun_memo, orders_state , g1_name;
 	private int jumun_num, jumun_pay, m1_num, pay_pay, orders_num, maingoods_num;
+	
+	//detail 디테일 부분 : 주문 상세
+	private String MAINMENU_TITLE, SUBMENU_TITLE;
+	private int mainmenu_num, MAINGOODS_COUNT, submenu_num, SUBGOODS_NUM;
 	
 	
 	public int getMaingoods_num() {
@@ -77,5 +82,49 @@ public class JumunMember {
 	public void setOrders_num(int orders_num) {
 		this.orders_num = orders_num;
 	}
+	
+	
+	
+	/*
+	 * 주문 상세
+	 */
+	
+	public String getMAINMENU_TITLE() {
+		return MAINMENU_TITLE;
+	}
+	public void setMAINMENU_TITLE(String mAINMENU_TITLE) {
+		MAINMENU_TITLE = mAINMENU_TITLE;
+	}
+	public String getSUBMENU_TITLE() {
+		return SUBMENU_TITLE;
+	}
+	public void setSUBMENU_TITLE(String sUBMENU_TITLE) {
+		SUBMENU_TITLE = sUBMENU_TITLE;
+	}
+	public int getMainmenu_num() {
+		return mainmenu_num;
+	}
+	public void setMainmenu_num(int mainmenu_num) {
+		this.mainmenu_num = mainmenu_num;
+	}
+	public int getMAINGOODS_COUNT() {
+		return MAINGOODS_COUNT;
+	}
+	public void setMAINGOODS_COUNT(int mAINGOODS_COUNT) {
+		MAINGOODS_COUNT = mAINGOODS_COUNT;
+	}
+	public int getSubmenu_num() {
+		return submenu_num;
+	}
+	public void setSubmenu_num(int submenu_num) {
+		this.submenu_num = submenu_num;
+	}
+	public int getSUBGOODS_NUM() {
+		return SUBGOODS_NUM;
+	}
+	public void setSUBGOODS_NUM(int sUBGOODS_NUM) {
+		SUBGOODS_NUM = sUBGOODS_NUM;
+	}
+	
 	
 }

@@ -100,6 +100,13 @@ label {
 		<div style='float: left;'>Total</div>
 		<div id='total_Pay' style='float: right; font-weight: 900;'></div>
 	</div><br>
+	<div style="margin: 15px 0;">
+		<select class="form-control">
+			<c:forEach var="dto" items="${wayList}">
+				<option id="${dto.payMethod_Num}" class="${dto.payMethod_Way}">${dto.payMethod_Content}</option>
+			</c:forEach>
+		</select>
+	</div>
 	<button type="button" class='btn btn-success' id="payBtn" style='width: 100%; float: right;'>결제하기</button>
 </div>
 </div>

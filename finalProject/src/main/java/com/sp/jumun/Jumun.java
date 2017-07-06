@@ -3,8 +3,34 @@ package com.sp.jumun;
 public class Jumun {
 	private int g1_Num, giupAd_Num, menuct_Num, mainmenu_Num;
 	private int mainmenu_Pay, mainmenu_Enabled, submenu_Num, submenu_Pay, submenu_Enabled, g1_Enabled;
+	private int payMethod_Num;
 	private String g1_Id, g1_Pwd, g1_Name, g1_Sleep, cat_Code, menuct_Title, menuct_Info;
 	private String mainmenu_Title, mainmenu_Content, mainmenu_Photo, submenu_Title;
+	private String payMethod_Way, payMethod_Content;
+
+	public int getPayMethod_Num() {
+		return payMethod_Num;
+	}
+
+	public void setPayMethod_Num(int payMethod_Num) {
+		this.payMethod_Num = payMethod_Num;
+	}
+
+	public String getPayMethod_Way() {
+		return payMethod_Way;
+	}
+
+	public void setPayMethod_Way(String payMethod_Way) {
+		this.payMethod_Way = payMethod_Way;
+	}
+
+	public String getPayMethod_Content() {
+		return payMethod_Content;
+	}
+
+	public void setPayMethod_Content(String payMethod_Content) {
+		this.payMethod_Content = payMethod_Content;
+	}
 
 	public int getG1_Enabled() {
 		return g1_Enabled;

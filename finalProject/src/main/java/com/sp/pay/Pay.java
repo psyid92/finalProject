@@ -7,15 +7,7 @@ public class Pay {
 	private int payMethod_Num, pay_Pay;
 	private String orders_State, jumun_Created, jumun_Addr;
 	private String jumun_Tel, jumun_Memo;
-	private String payMethod_Way, pay_Created, refund_Created, refund_Memo;
-
-	public String getPayMethod_Way() {
-		return payMethod_Way;
-	}
-
-	public void setPayMethod_Way(String payMethod_Way) {
-		this.payMethod_Way = payMethod_Way;
-	}
+	private String pay_Created, refund_Created, refund_Memo;
 
 	public int getOrders_Num() {
 		return orders_Num;

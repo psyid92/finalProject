@@ -59,7 +59,7 @@ html, body {
 	<c:if test="${not empty sessionScope.member}"><a href="<%=cp%>/member/logout">로그아웃</a> | <a href="<%=cp%>/member/mypage">마이페이지</a> | <a href="<%=cp%>/notice/list">고객센터</a></c:if>
 	</div>
 	<div align="center">
-		<div style="width: 444px; height: 91px; line-height: 91px; font-size: 40px; background-image:url('<%=cp%>/resource/img/title_back.png');" onclick="javascript:location.href='<%=cp%>/main'">배 달 행</div>
+		<div id="title" style="width: 400px; height: 130px; background: url('<%=cp%>/resource/img/titleBase.png') no-repeat; background-size: contain; background-position: center center;"></div>
 	</div>
 </div>
  	

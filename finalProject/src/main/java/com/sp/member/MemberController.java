@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.sp.jumun.JumunMember;
+import com.sp.jumun.JumunService;
 import com.sp.mileage.Mileage;
 import com.sp.mileage.MileageDAO;
 import com.sp.mileage.MileageImpl;
@@ -27,6 +29,9 @@ public class MemberController {
 	
 	@Autowired
 	private MileageDAO midao;
+	
+	@Autowired
+	private JumunService judao;
 	
 	//로그인 폼
 	@RequestMapping(value="/member/login", method=RequestMethod.GET)
@@ -388,6 +393,24 @@ public class MemberController {
 	}
 	
 	
+	/*
+	 * ----------------------------------------------------------------------------------------
+	 * ----------------------------------------------------------------------------------------
+	 * 				결제 내역
+	 * 				
+	 */
 	
+	@RequestMapping("/member/payList")
+	public String goPayList(HttpSession session, Model model) throws Exception{
+		SessionInfo info = (SessionInfo)session.getAttribute("member");
+		List<JumunMember> list = null;
+		try {
+			list = judao.listmyPay(info.getM1_Num());
+		} catch (Exception e) {
+			throw e;
+		}
+		model.addAttribute("list", list);
+		return ".mymem.payList";
+	}
 	
 }

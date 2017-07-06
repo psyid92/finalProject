@@ -44,15 +44,15 @@
 	width: 200px;
 }
 
-td {
-	font-size: 23px;
+th {
+	font-size: 18px;
 }
 
 -->
 </style>
 
 
-<br><br>
+<br>
 <div align="center">
 <h3>내 마일리지 : ${mileage } 점</h3>
 <c:if test="${not empty msg }">
@@ -68,18 +68,16 @@ td {
 
 
 
-	<table style="border: none; border-collapse: collapse; width: 600px;">
-		<tr style="height: 40px;">
-			<td width="50%">일자</td>
-			<td width="18%">내용</td>
-			<td width="18%" align="right">포인트</td>
-			<td width="*"></td>
-		</tr>
-		</table>
-		<br>
-		<hr>
-		<br>
 		<table style="border: none; border-collapse: collapse; width: 600px;">
+		<tr style="height: 40px;">
+			<th width="50%">일자</th>
+			<th width="18%">내용</th>
+			<th width="18%" align="right">포인트</th>
+			<th width="*"></th>
+		</tr>
+		<tr>
+			<td colspan="4"><hr></td>
+		</tr>
 		<c:forEach var="dto" items="${list }">
 			<tr style="height: 40px;">
 				<td width="50%">${dto.mil_created }</td>

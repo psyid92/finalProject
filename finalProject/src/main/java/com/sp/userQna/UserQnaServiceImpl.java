@@ -38,8 +38,6 @@ public class UserQnaServiceImpl implements UserQnaService{
 	public List<UserQna> listUserQna(Map<String, Object> map) {
 		List<UserQna> list=null;
 		try {
-			
-			
 			list=dao.getListData("userQna.listUserQna", map);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -83,14 +81,38 @@ public class UserQnaServiceImpl implements UserQnaService{
 
 	@Override
 	public int updateUserQna(UserQna dto, String pathname) {
-		// TODO Auto-generated method stub
-		return 0;
+		int result=0;
+		try {
+			if(dto.getUpload()!=null && !dto.getUpload().isEmpty()){
+				//이전 파일 지우기
+				if(dto.getUq_SaveFilename().length()!=0)
+					fileManager.doFileDelete(dto.getUq_SaveFilename(), pathname);
+				String newfilename = fileManager.doFileUpload(dto.getUpload(), pathname);
+				if(newfilename != null){
+					dto.setUq_OriginalFilename(dto.getUpload().getOriginalFilename());
+				}
+			}
+			dao.updateData("userQna.updateUserQna", dto);
+			result=1;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
 	}
 
 	@Override
 	public int deleteUserQna(int uq_Num, String uq_SaveFilename, String pathname) {
-		// TODO Auto-generated method stub
-		return 0;
+		int result=0;
+		try {
+			if(uq_SaveFilename != null){
+				fileManager.doFileDelete(uq_SaveFilename, pathname);
+			}
+			dao.deleteData("userQna. deleteUserQna", uq_Num);
+			result=1;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
 	}
 
 	@Override

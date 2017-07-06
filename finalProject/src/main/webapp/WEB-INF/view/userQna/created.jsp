@@ -29,9 +29,6 @@
     font-size: 20px; 	
 }
 
-.bs-write .td2 {
-}
-
 .bs-write .td3 {
    border-color: blue;
    border-bottom-color: blue;
@@ -122,7 +119,7 @@ $('#myTab li:eq(2) a').tab('show') // Select third tab (0-indexed)
     </div>
     
     <div class="alert alert-info">
-        <i class="glyphicon glyphicon-info-sign"></i> 그런데 말입니다? 1대1 문의!!!
+        <i class="glyphicon glyphicon-send"></i>1대1문의 입니다. 해당 Email(아이디)로 처리된결과가 전송됩니다.
     </div>
     
     <div>
@@ -133,7 +130,6 @@ $('#myTab li:eq(2) a').tab('show') // Select third tab (0-indexed)
                         <tr>
                             <td class="td1"><span class="label label-primary">작성자</span></td>
                             <td class="td2 col-md-5 col-sm-5">
-                                <p class="form-control-static">${sessionScope.member.m1_Num}</p>
                                 <p class="form-control-static">${sessionScope.member.userId}</p>
                             </td>
                             <td class="td1" align="center"></td>

@@ -100,14 +100,11 @@ label {
 		<div style='float: left;'>Total</div>
 		<div id='total_Pay' style='float: right; font-weight: 900;'></div>
 	</div><br>
-	<div style="margin: 20px 0;">
+	<div style="margin: 15px 0;">
 		<select class="form-control">
-			<option>:::::선택:::::</option>
-			<option>신용카드</option>
-			<option>삼성페이</option>
-			<option>실시간계좌이체</option>
-			<option>가상계좌</option>
-			<option>휴대폰소액결제</option>
+			<c:forEach var="dto" items="${wayList}">
+				<option id="${dto.payMethod_Num}" class="${dto.payMethod_Way}">${dto.payMethod_Content}</option>
+			</c:forEach>
 		</select>
 	</div>
 	<button type="button" class='btn btn-success' id="payBtn" style='width: 100%; float: right;'>결제하기</button>
@@ -233,7 +230,7 @@ function sample6_execDaumPostcode() {
 		
 		IMP.request_pay({
 		    pg : 'inicis', // version 1.1.0부터 지원.
-		    pay_method : 'vbank',
+		    pay_method : 'phone',
 		    /* 'samsung':삼성페이, 'card':신용카드, 'trans':실시간계좌이체, 'vbank':가상계좌, 'phone':휴대폰소액결제 */
 		    merchant_uid : 'merchant_' + new Date().getTime(),
 		    name : name,

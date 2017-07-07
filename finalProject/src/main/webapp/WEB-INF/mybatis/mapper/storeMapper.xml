@@ -21,7 +21,7 @@
 
 <!-- 회원 정보 가져오기 -->
 <select id="readStore" resultType="com.sp.store.member.Store">
-	SELECT g1.g1_Id, g1_Pwd, g1_Name, cat_Code, g1_created, g2_Baedal,
+	SELECT g1_Num, g1.g1_Id, g1_Pwd, g1_Name, cat_Code, g1_created, g2_Baedal,
 			g2_Tel, g2_Giupnum, g2_Origin, g2_Memo, g2_Opentime,
 			g2_Minpay, g3_Addr1, g3_Addr2, g3_Addr3
 	FROM giup1 g1 LEFT OUTER JOIN giup2 g2 on g1.g1_Num=g2.g2_Num

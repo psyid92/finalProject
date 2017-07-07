@@ -27,12 +27,12 @@ $(function(){
 	transition: all 0.2s, transform 0.2s;
 }
 #giup td:hover {
-	width: 305px;
+	width: 310px;
 }
 </style>
 <div id="payLayout">
 <table style="margin-bottom: 100px; width: 1000px;">
-	<tr id="giup" style="width: 305px; height: 195px;">
+	<tr id="giup" style="width: 310px; height: 195px;">
 		<c:forEach var="dto" items="${list}">
 			<c:if test="${dto.giupAd_Num ne 0}">
 				<td id="giup${dto.g1_Num}" rowspan="2" style="height: 190px; line-height: 190px; background-image: url('<%=cp%>/resource/img/background2.png'); background-repeat: no-repeat; background-position: center center; background-size: 105% 105%;">${dto.g1_Name}

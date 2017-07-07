@@ -107,7 +107,7 @@ public class UserQnaServiceImpl implements UserQnaService{
 			if(uq_SaveFilename != null){
 				fileManager.doFileDelete(uq_SaveFilename, pathname);
 			}
-			dao.deleteData("userQna. deleteUserQna", uq_Num);
+			dao.deleteData("userQna.deleteUserQna", uq_Num);
 			result=1;
 		} catch (Exception e) {
 			e.printStackTrace();

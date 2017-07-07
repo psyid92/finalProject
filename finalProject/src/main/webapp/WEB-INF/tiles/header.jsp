@@ -30,6 +30,8 @@
 			if ($(this).attr("class") != "cate on")
 				$(this).css("background-image","url('<%=cp%>/resource/img/category/"+category+"Category.png')");
 		});
+		/* $(".cate.on").css("border-top", "2px solid black");
+		$(".cate.on").css("border-bottom", "2px solid black"); */
 		$(".cate.on").css("background-image","url('<%=cp%>/resource/img/category/${category}CategoryHover.png')");
 	});
 	
@@ -144,12 +146,37 @@
 	float: left;
 	width: 125px;
 	height: 100%;
-    transition: all 1s, transform 2s;
+    /* transition: all 1s, transform 2s; */
+}
+#mainMenu ul li:after,
+#mainMenu ul li:before {
+	border: 1px solid rgba(255, 255, 255, 0);
+    bottom: 0;
+    content: " ";
+    display: block;
+    margin: 0 auto;
+    position: relative;
+    -webkit-transition: all .28s ease-in-out;
+    transition: all .28s ease-in-out;
+    width: 0;
+}
+#mainMenu ul li:HOVER:after,
+#mainMenu ul li:HOVER:before {
+	border-color: black;
+    -webkit-transition: width 350ms ease-in-out;
+    transition: width 350ms ease-in-out;
+    width: 100%;
+}
+#mainMenu ul li:hover:before {
+    bottom: 0;
+    top: 0;
 }
 
 #mainMenu ul li:HOVER {
+	-webkit-transition: all .28s ease-in-out;
+    transition: all .28s ease-in-out;
 	cursor: pointer;
-    transition: all 0.5s, transform 2s;
+    /* transition: all 0.5s, transform 2s; */
 }
 
 .cate {
@@ -168,8 +195,8 @@
 </style>
 <div id="header" style="margin-bottom: 20px; background-repeat: round; ;">
 	<div align="right" id="headerMember">
-	<c:if test="${empty sessionScope.member}"><a href="<%=cp%>/member/login">로그인</a> | <a href="<%=cp%>/member/member">회원가입</a> | <a href="<%=cp%>/notice/list">고객센터</a></c:if>
-	<c:if test="${not empty sessionScope.member}"><a href="<%=cp%>/member/logout">로그아웃</a> | <a href="<%=cp%>/member/mypage">마이페이지</a> | <a href="<%=cp%>/notice/list">고객센터</a></c:if>
+	<c:if test="${empty sessionScope.member}"><a href="<%=cp%>/member/login">로그인</a> <a href="#">|</a> <a href="<%=cp%>/member/member">회원가입</a> <a href="#">|</a> <a href="<%=cp%>/notice/list">고객센터</a></c:if>
+	<c:if test="${not empty sessionScope.member}"><a href="<%=cp%>/member/logout">로그아웃</a> <a href="#">|</a> <a href="<%=cp%>/member/mypage">마이페이지</a> <a href="#">|</a> <a href="<%=cp%>/notice/list">고객센터</a></c:if>
 	</div>
 	<div align="center">
 		<div id="title" style="width: 600px; height: 200px; background: url('<%=cp%>/resource/img/titleBase.png') no-repeat; background-size: contain; background-position: center center;"></div>
@@ -204,3 +231,17 @@
 		</div>
 	</div>
 </c:if>
+<style>
+.progress {
+	width: 62.5px;
+	height: 2px;
+	box-shadow: none;
+	background-color: white;
+	border-radius: 0;
+}
+.progress-bar {
+	width: 0%;
+	box-shadow: none;
+	background-color: black;
+}
+</style>

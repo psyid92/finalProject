@@ -288,7 +288,7 @@ public class UserQnaController {
 		return "redirect:/userQna/list?page="+page;
 	}
 	
-	/*@RequestMapping(value="/userQna/deleteFile", method=RequestMethod.GET)
+	@RequestMapping(value="/userQna/deleteFile", method=RequestMethod.GET)
 	public String deleteFile(
 			@RequestParam(value="uq_Num")int uq_Num,
 			@RequestParam(value="page")String page,
@@ -314,7 +314,7 @@ public class UserQnaController {
 			
 		}
 		return "redirect:/userQna/update?uq_Num="+uq_Num+"&page="+page;
-	}*/
+	}
 	
 	@RequestMapping(value="/userQna/delete")
 	public String delete(

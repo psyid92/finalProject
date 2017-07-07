@@ -103,8 +103,8 @@
 </style>
 <div id="header" style="margin-bottom: 20px; background-repeat: round; ;">
 	<div align="right" id="headerMember">
-	<c:if test="${empty sessionScope.member}"><a href="<%=cp%>/member/login">로그인</a> | <a href="<%=cp%>/member/member">회원가입</a> | <a href="<%=cp%>/notice/list">고객센터</a></c:if>
-	<c:if test="${not empty sessionScope.member}"><a href="<%=cp%>/member/logout">로그아웃</a> | <a href="<%=cp%>/member/mypage">마이페이지</a> | <a href="<%=cp%>/notice/list">고객센터</a></c:if>
+	<c:if test="${empty sessionScope.member}"><a href="<%=cp%>/member/login">로그인</a> <a href="#">|</a> <a href="<%=cp%>/member/member">회원가입</a> <a href="#">|</a> <a href="<%=cp%>/notice/list">고객센터</a></c:if>
+	<c:if test="${not empty sessionScope.member}"><a href="<%=cp%>/member/logout">로그아웃</a> <a href="#">|</a> <a href="<%=cp%>/member/mypage">마이페이지</a> <a href="#">|</a> <a href="<%=cp%>/notice/list">고객센터</a></c:if>
 	</div>
 	<div align="center">
 		<div id="title" style="width: 600px; height: 200px; background: url('<%=cp%>/resource/img/titleBase.png') no-repeat; background-size: contain; background-position: center center;"></div>

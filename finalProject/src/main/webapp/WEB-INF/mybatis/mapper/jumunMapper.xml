@@ -49,7 +49,7 @@
 		WHERE submenu_Num = #{submenu_Num}
 	</select>
 	
-	<select id="listPayMethod" resultType="com.sp.pay.Pay">
+	<select id="listPayMethod" resultType="com.sp.jumun.Jumun">
 		SELECT payMethod_Num, payMethod_Way, payMethod_Content
 		FROM payMethod
 	</select>
@@ -75,7 +75,7 @@
 			left outer join subgoods sg on mg.maingoods_num = sg.MAINGOODS_NUM
 			left outer join submenu sm on sg.SUBMENU_NUM = sm.SUBMENU_NUM
 			where j.M1_NUM = #{m1_num} and j.jumun_num=#{jumun_num}
-			order by jumun_num desc;		
+			order by jumun_num desc	
 	</select>
 	
 </mapper>

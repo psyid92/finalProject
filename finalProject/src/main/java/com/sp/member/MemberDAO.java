@@ -10,6 +10,8 @@ public interface MemberDAO {
 	public int deleteMember(Member1 dto) throws Exception;
 	public int updateMember(Member1 dto) throws Exception;
 	public int getLogin(String userId, String userPWd) throws Exception;
+	public String getMyEmail(Map<String, Object> map) throws Exception;
+	public int getMyPassword(Map<String, Object> map) throws Exception;
 	
 	public int checkEmail(String m1_email) throws Exception; 
 	

@@ -5,10 +5,16 @@ import org.springframework.web.multipart.MultipartFile;
 public class UserQna {
     private int uq_Num, m1_Num, listNum;
     private String uq_Title, uq_Content, uq_Created;
-    private String userId, m1_Email, uq_SaveFilename, uq_OriginalFilename;
+    private String userId, m1_nickname, m1_Email, uq_SaveFilename, uq_OriginalFilename;
     private MultipartFile upload;
     
     
+	public String getM1_nickname() {
+		return m1_nickname;
+	}
+	public void setM1_nickname(String m1_nickname) {
+		this.m1_nickname = m1_nickname;
+	}
 	public int getUq_Num() {
 		return uq_Num;
 	}

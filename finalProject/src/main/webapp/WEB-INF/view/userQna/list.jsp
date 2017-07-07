@@ -86,7 +86,7 @@ $('#myTab li:eq(2) a').tab('show') // Select third tab (0-indexed)
            <tr>
              <td class="text-center">${dto.listNum}</td>
              <td><a href="${articleUrl}&uq_Num=${dto.uq_Num}">${dto.uq_Title}</a></td>
-             <td class="text-center">${sessionScope.member.userId}</td>
+             <td class="text-center">${dto.m1_nickname}</td>
              <td class="text-center">${dto.uq_Created}</td>
              <td class="text-center">
                <c:if test="${not empty dto.uq_SaveFilename}">

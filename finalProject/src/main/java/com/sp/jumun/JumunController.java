@@ -74,12 +74,14 @@ public class JumunController {
 	public String totalJumunForm(String[] main_Num, String[] sub_Num, String g1_Name, Model model) throws Exception {
 		List<Jumun> mainList = new ArrayList<>();
 		List<Jumun> subList = new ArrayList<>();
-		List<Jumun> payList = new ArrayList<>();
+		List<Jumun> wayList = new ArrayList<>();
 		mainList = service.mainJumunMenu(main_Num);
 		subList = service.subJumunMenu(sub_Num);
+		wayList = service.listPayMethod();
 		
 		model.addAttribute("mainList",mainList);
 		model.addAttribute("subList",subList);
+		model.addAttribute("wayList",wayList);
 		model.addAttribute("g1_Name",g1_Name);
 		model.addAttribute("IMP_init","imp89184049");
 		return ".pay.pay";

@@ -5,6 +5,7 @@
 	request.setCharacterEncoding("utf-8");
 	String cp = request.getContextPath();
 %>
+
 <script>
 	$(function() {
 		$("#category").children().click(function(){
@@ -65,7 +66,7 @@ body {
 
 
 </style>
-<div id="header" style="margin-bottom: 20px;">
+<div id="header" style="margin-bottom: 20px; background-repeat: round; ;">
 	<div align="right" id="headerMember">
 	<c:if test="${empty sessionScope.member}"><a href="<%=cp%>/member/login">로그인</a> | <a href="<%=cp%>/member/member">회원가입</a> | <a href="<%=cp%>/notice/list">고객센터</a></c:if>
 	<c:if test="${not empty sessionScope.member}"><a href="<%=cp%>/member/logout">로그아웃</a> | <a href="<%=cp%>/member/mypage">마이페이지</a> | <a href="<%=cp%>/notice/list">고객센터</a></c:if>
@@ -85,7 +86,8 @@ body {
   </div>
 </div>
 <c:if test="${mode ne 'mainPage'}">
-	<div style="position: absolute; top: 300px; left: 0; width: 100%; height: 100px; background-color: #817c74;  ">
+<div style="position: absolute; top: 300px; left: 0; width: 100%; height: 100px; background: url('<%=cp%>/resource/img/banner.jpg') repeat; z-index: 1">
+	<div  style="position:relative; width: 100%; height: 100px; z-index: 2"> <!--  background-color: #7c9dd2; --> 
 		<div style="margin: 0 auto; text-align: center; width: 1000px; height: 100%;" id="mainMenu">
 			<ul style="list-style: none; display: inline-block; height: 100%;" id="category">
 				<li id="chicken" class="cate" style="background-image: url('<%=cp%>/resource/img/category/chickenCategory.png')"></li>
@@ -99,4 +101,5 @@ body {
 			</ul>
 		</div>
 	</div>
+</div>
 </c:if>

@@ -10,6 +10,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -117,6 +118,66 @@ public class MemberController {
 		model.addAttribute("mode", "mainPage");
 		return ".mainLayout";
 	}
+	
+	//아이디를 잊어버렸어요
+	@RequestMapping(value="/member/forgotE")
+	public String getMyEmailForm(Model model){
+		model.addAttribute("state", "email");
+		return ".mymem.forgotmyAccount";
+	}
+	
+	//비밀번호를 잊어버렸어요
+	@RequestMapping("/member/forgotP")
+	public String getMyPassForm(Model model){
+		model.addAttribute("state", "password");
+		return ".mymem.forgotmyAccount";
+	}
+	
+	//아이디를 찾고 싶어요
+	@RequestMapping("/member/forgotEmail")
+	public String getMyEmail(Model model, @RequestParam String m1_nickname, @RequestParam String m2_tel) throws Exception{
+		model.addAttribute("state","email");
+		String m1_email = "";
+		try {
+			Map<String, Object> map = new HashMap<>();
+			map.put("m1_nickname", m1_nickname);
+			map.put("m2_tel", m2_tel);
+			m1_email = dao.getMyEmail(map);
+		} catch (Exception e) {
+			throw e;
+		}
+		if(m1_email == "" || m1_email == null){
+			model.addAttribute("msg", "일치하는 정보가 없습니다.");
+			return ".mymem.forgotmyAccount";
+		} else {
+			model.addAttribute("m1_email", m1_email);
+		}
+		return ".mymem.forgotAndFound";
+	}
+	
+	//비밀번호를 찾고 싶어요
+	
+	public String getMyPass(Model model, @RequestParam String m1_email, @RequestParam String m2_tel){
+		model.addAttribute("state", "password");
+		Map<String, Object> map = new HashMap<>();
+		map.put("m1_email", m1_email);
+		map.put("m2_tel", m2_tel);
+		int result = 0;
+		try {
+			result = dao.getMyPassword(map);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		
+		if(result == 0){
+			model.addAttribute("msg","일치하는 정보가 없습니다.");
+			return ".mymem.forgot";
+		} else {
+			map.put("result", "true");
+		}
+		return ".mymem.forgotAndFound";
+	}
+	
 
 	// 마이페이지로 이동 /member/mypage
 	@RequestMapping("/member/mypage")

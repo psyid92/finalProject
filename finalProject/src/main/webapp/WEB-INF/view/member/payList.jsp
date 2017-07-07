@@ -21,8 +21,7 @@ function getDetail(data){
 		, dataType : "json"
 		, success : function(data){
 			//여기서 tr에 내용 넣어줘야 함
-			var td = document.getElemenyByName("detail${dto.jumun_num}");
-			alert(td);
+			$("#detail${dto.jumun_num}").html("<td>asdasd</td>");
 		}
 	, error :function(e){
 		console.log(e.responseText);
@@ -52,7 +51,7 @@ function getDetail(data){
 		<br>
 		<table style="border: none; border-collapse: collapse; width: 90%;">
 		<tr>
-			<th style="text-align: center;">기업</th>
+			<th style="text-align: center;">가게</th>
 			<th>입력한 주소</th>
 			<th>전화번호</th>
 			<th>총 금액</th>
@@ -75,7 +74,7 @@ function getDetail(data){
 				
 			
 			</tr>
-			<tr name="detail${dto.jumun_num }" >
+			<tr id="detail${dto.jumun_num }" >
 			</tr>
 		</c:forEach>
 	</table>

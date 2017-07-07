@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="giupNotice">
+	<select id="maxNum" resultType="Integer">
+		SELECT NVL(MAX(num), 0) FROM notice
+	</select>
+	
+	<!-- insert -->
+	<insert id="insertNotice" parameterType="com.sp.giupNotice.Notice">
+		INSERT INTO giupNotice(noti_Num, noti_Title, noti_Content, noti_Top, noti_hidden, admin_Id )
+		VALUES (#{noti_Num}, #{noti_Title}, #{noti_Content}, #{noti_Top}, #{noti_hidden}, #{admin_Id} )
+	</insert>
+	
+	<!--  sql 태그 -->
+	<sql id="where-list">
+		<if test="searchKey=='admin_Id' ">
+			admin_Id=#{searchValue};
+		</if>
+		<if test="searchKey=='noti_Title'">
+			INSTR(noti_Title, #{searchValue}) &gt; 0
+		</if>
+		<if test="searchKey=='noti_Content' ">
+			DBMS_LOB.INSTR(noti_Content, #{searchValue) &gt; 0
+		</if>
+		<if test="searchKey=='created'">
+			TO_CHAR(created, 'yyyy-mm-dd) = #{searchValue}
+		</if>
+	</sql>
+	
+	
+	<!-- 글리스트 -->
+	<select id="dataCount" parameterType="map" resultType="Integer">
+		SELECT NVL(COUNT(*), 0) FROM giupNotice gn
+			JOIN admin a ON gn.admin_Id=a.admin_Id
+		<where>
+			<if test="searchValue !=null and searchValue !='' ">
+				<include refid="where-list"/>
+			</if>
+		</where>
+	
+	</select>
+	
+	<select id="listNotice" parameterType="map" resultType="com.sp.giupNotice.Notice">
+		SELECT * FROM (
+			SELECT ROWNUM rnum, tb.* FROM (
+				SELECT noti_Num, giupNotice, m.admin_Id, noti_Title, noti_HitCount, created
+				FROM giupNotice gn JOIN admin a ON gn.admin_Id=a.admin_Id
+				<where>
+					<if test="searchValue !=null and searchValue !='' ">
+						<include refid="where-list"></include>
+					</if>
+				ORDER BY noti_Num
+				</where>			
+	<![CDATA[	
+			) tb WHERE ROWNUM <= #{end}	
+		) WEHER rnum >=#{start}
+	]]>
+	</select>
+	
+	
+	<select id="listNoticeTop" resultType="com.sp.giupNotice.Notice">
+		SELECT noti_Num, giupNotice, noti_Title, m.admin_Id, noti_HitCount, 
+			TO_CHAR(noti_Created, 'yyyy-mm-dd') created
+		FROM giupNotice gn JOIN admin a ON m.admin_Id=gn.admin_Id
+		WHERE giupNotice=1
+		ORDER BY num DESC
+	</select>
+	
+	<!-- 상세보기  -->
+	<select id="readNotice" resultType="com.sp.giupNotice.Notice">
+		SELECT noti_Num, m.admin_Id, noti_Title, noti_Content, created, noti_HitCount, giupNotice
+		FROM giupNotice gn JOIN admin a ON m.admin_Id=gn.admin_Id
+		WHERE noti_Num=#{noti_Num}
+	</select>
+	
+	<update id="updateHitCount" parameterType="Integer">
+		UPDATE giupNotice SET noti_HitCount+1 WHERE noti_Num=#{noti_Num}
+	</update>
+	
+	
+	<!-- 이전글, 다음글 -->
+	<select id="preReadNotice" resultType="com.sp.giupNotice.Notice" parameterType="map">
+	
+	</select>
+	
+	<select id="nextReadNotice" resultType="com.sp.giupNotice.Notice" parameterType="map">
+	
+	
+	</select>
+	
+	
+	<!-- 글 수정  -->
+	<update id="updateNotice" parameterType="com.sp.giupNotice.Notice">
+	
+	</update>
+	
+	
+	<!-- 글 삭제 -->
+	<delete id="deleteNotice" parameterType="com.sp.giupNotice.Notice"> 
+	
+	
+	</delete>
+	
+	<!--  파일처리  -->
+	<insert id="insertFile" parameterType="com.sp.giupNotice.Notice">
+	
+	</insert>
+	
+	<select id="listFile" parameterType="Integer" resultType="com.sp.giupNotice.Notice">
+	
+	</select>
+	
+	<select id="readFile" parameterType="com.sp.giupNotice.Notice">
+	
+	</select>
+	
+	<delete id="deleteFile" parameterType="map">
+	
+	</delete>
+</mapper>

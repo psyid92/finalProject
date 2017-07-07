@@ -14,6 +14,14 @@ insert into jumun(jumun_num, jumun_pay, jumun_addr, jumun_tel, jumun_memo, m1_nu
 values(jumun_seq.nextVal, 21000, '주소 주소 주소 주소를 적어주세요', '01011234456','빨리 갖다 주세요, 치킨무 많이', 41, 2);
 
  -->
+ 
+ <!-- trigger 테스트를 위한 쿼리
+ 
+update memberMileage set mm_point=40 where m1_num=41;
+select * from memberMileage;
+update mileage set mil_state='적립 취소' where mil_num=2;
+
+ -->
 
 
 
@@ -45,15 +53,16 @@ values(jumun_seq.nextVal, 21000, '주소 주소 주소 주소를 적어주세요
 	select mm_point from memberMileage where m1_num=(select m1_num from member1 where m1_email=#{m1_email})
 </select>
 
+<!-- 마일리지 리스트 -->
+<select id="listMileage" parameterType="map" resultType="com.sp.mileage.Mileage">
+	select mil_num, to_char(mil_created, 'YYYY.MM.DD hh:mm') mil_created, mil_point, mil_state, m1_num, jumun_num
+	from mileage
+	where m1_num=#{m1_num}
+</select>
 
 <!-- 적립 마일리지 내역 삭제 -->
-<delete id="deleteMileage">
-	delete mileage where mil_num=#{mil_num}
-</delete>
-
-<!-- 사용 마일리지 삭제 -->
-<delete id="deleteUseMileage">
-	delete usemileage where use_num=#{use_num}
+<delete id="deleteMileage" parameterType="com.sp.mileage.Mileage">
+	delete mileage where mil_num=#{mil_num} and m1_num = #{m1_num}
 </delete>
 
 </mapper>

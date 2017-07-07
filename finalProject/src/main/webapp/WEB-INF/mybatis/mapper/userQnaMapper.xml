@@ -9,11 +9,11 @@
    
   <sql id="where-list">
     <if test="searchKey=='m1_nickname'">
-      m1_nickname=#{searchvalue}
+      m1_nickname=#{searchValue}
     </if>
     <if test="searchKey=='uq_Title'">
       uq_Title LIKE '%' || #{searchValue} || '%'
-    </if>
+    </if>x
     <if test="searchKey=='uq_Content'">
       DBMS_LOB.INSTR( uq_Content, #{searchValue}) &gt; 0 
     </if>
@@ -25,21 +25,23 @@
    <select id="dataCount" parameterType="map" resultType="Integer">
      SELECT NVL(COUNT(*),0) FROM userQna q JOIN member1 m1 ON q.m1_Num=m1.m1_Num
      <where>
-       <if test="searchValue != null and searchValue != '' ">
-         <include refid="where-list"/>
-       </if>
+      <if test="m1_Num!=null and m1_Num!='' and userId!='admin' ">
+          q.m1_Num = #{m1_Num} 
+        </if>
+        
+       
      </where>
    </select>
    
    <select id="listUserQna" parameterType="map" resultType="com.sp.userQna.UserQna">
      SELECT * FROM(
-       SELECT ROWNUM rnum, tb.*FROM(
-         SELECT uq_Num, q.m1_Num, uq_Title, uq_Created
+       SELECT ROWNUM rnum, tb.* FROM(
+         SELECT uq_Num, q.m1_Num, m1_nickname, uq_Title, uq_Created, uq_SaveFilename, uq_originalFilename
          FROM userQna q JOIN member1 m1 ON q.m1_Num=m1.m1_Num
      <where>
-       <if test="searchValue != null and searchValue != '' ">
-         <include refid="where-list"/>
-       </if>
+        <if test="m1_Num!=null and m1_Num!='' and userId!='admin' ">
+          q.m1_Num= #{m1_Num} 
+        </if>
      </where>
      ORDER BY uq_Num DESC
      <![CDATA[
@@ -49,7 +51,7 @@
    </select>
    
    <select id="readUserQna" parameterType="Integer" resultType="com.sp.userQna.UserQna">
-     select uq_Num, q.m1_Num, uq_Title, uq_Content, uq_Created, uq_SaveFilename, uq_OriginalFilename
+     select uq_Num, q.m1_Num, uq_Title, uq_Content, m1_nickname, uq_Created, uq_SaveFilename, uq_OriginalFilename
            FROM userQna q JOIN member1 m1 ON q.m1_Num=m1.m1_Num  WHERE uq_Num = #{uq_Num}
    </select>
    

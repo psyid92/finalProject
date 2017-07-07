@@ -8,7 +8,7 @@
 
 <div class="storeBodyFrame2">
     <div class="body-title">
-          <h3><span class="glyphicon glyphicon-tower"></span> 이벤트 </h3>
+          <h3><span class="glyphicon glyphicon-tower"></span> 사장님 공지사항 </h3>
     </div>
     
     <div>

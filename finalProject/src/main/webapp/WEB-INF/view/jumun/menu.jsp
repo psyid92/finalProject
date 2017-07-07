@@ -9,7 +9,8 @@
 $(function(){
 	$("#giup").children().click(function(){
 		var g1_Num = $(this).attr("id").substring(4);
-		location.href = "<%=cp%>/jumun/article?g1_Num=" + g1_Num;
+		var g1_Name = $(this).next().val();
+		location.href = "<%=cp%>/jumun/article?g1_Num=" + g1_Num + "&g1_Name=" + g1_Name;
 	});
 });
 
@@ -22,11 +23,13 @@ $(function(){
 				<td id="giup${dto.g1_Num}" rowspan="2" style="cursor:pointer; text-align:center; width: 300px; height: 190px; border: 1px solid black; float: left; margin: 0 12.5px 15px;">${dto.g1_Name}<br>
 					광고 구매 기업
 				</td>
+				<input type="hidden" name="g1_Name" value="${dto.g1_Name}">
 			</c:if>
 			<c:if test="${dto.giupAd_Num eq 0}">
 				<td id="giup${dto.g1_Num}" style="cursor:pointer; text-align:center; width: 300px; height: 92.5px; border: 1px solid black; float: left; margin: 0 12.5px 10px;">${dto.g1_Name}<br>
 					광고 비구매 기업
 				</td>
+				<input type="hidden" name="g1_Name" value="${dto.g1_Name}">
 			</c:if>
 		</c:forEach>
 	</tr>

@@ -8,7 +8,6 @@
 
 <div class="adminBodyFrame2">
     <div class="body-title">
-          <h3><span class="glyphicon glyphicon-tower"></span> 자주하는질문(회원) </h3>
           <div class="bodyFrame2">
     <div class="body-title">
           <h3><span class="glyphicon glyphicon-bullhorn"></span> 그것이 알고싶다 </h3>
@@ -39,7 +38,7 @@
            <tr>
              <td class="text-center">${dto.listNum}</td>
              <td><a href="${articleUrl}&uq_Num=${dto.uq_Num}">${dto.uq_Title}</a></td>
-             <td class="text-center">${sessionScope.member.userId}</td>
+             <td class="text-center">${dto.m1_nickname}</td>
              <td class="text-center">${dto.uq_Created}</td>
              <td class="text-center">
                <c:if test="${not empty dto.uq_SaveFilename}">
@@ -77,9 +76,6 @@
 			<input type="text" class="form-control input-sm input-search" name="searchValue">
 			<button type="button" class="btn btn-info btn-sm btn-search" onclick="searchList();"><span class="glyphicon glyphicon-search"></span> 검색</button>
           </form>
-        </div>
-        <div style="float: left; width: 20%; min-width: 85px; text-align: right;">
-        		    <button type="button" class="btn btn-primary btn-sm bbtn" onclick="javascript:location.href='<%=cp%>/userQna/created';"><span class="glyphicon glyphicon glyphicon-pencil"></span> 글쓰기</button>
         </div>
      
      </div>

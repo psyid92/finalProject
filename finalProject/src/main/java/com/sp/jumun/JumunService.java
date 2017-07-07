@@ -8,5 +8,14 @@ public interface JumunService {
 	public List<Jumun> readMenuCategory (int g1_Num) throws Exception;
 	public List<Jumun> readMainMenu (int menuct_Num) throws Exception;
 	public List<Jumun> readSubMenu (int mainmenu_Num) throws Exception;
+	public List<Jumun> mainJumunMenu (String mainmenu_Num[]) throws Exception;
+	public List<Jumun> subJumunMenu (String submenu_Num[]) throws Exception;
+	public List<Jumun> listPayMethod() throws Exception;
 	
+	/*
+	 * ---------- Member - 주문내역 가져오기
+	 */
+	
+	public List<JumunMember> listmyPay(int m1_num) throws Exception;
+	public JumunMember detailmyPay(Map<String, Object> map) throws Exception;
 }

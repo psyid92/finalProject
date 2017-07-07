@@ -14,7 +14,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller("jumun.jumunController")
 public class JumunController {
-	@Autowired JumunService service;
+	@Autowired
+	JumunService service;
 	
 	@RequestMapping(value="/jumun/jumunList", method=RequestMethod.GET)
 	public String payList(String category, Model model) throws Exception {
@@ -35,11 +36,12 @@ public class JumunController {
 	}
 	
 	@RequestMapping(value="/jumun/article", method=RequestMethod.GET)
-	public String article(int g1_Num, Model model) throws Exception {
+	public String article(int g1_Num, String g1_Name, Model model) throws Exception {
 		List<Jumun> cateList = new ArrayList<>();
 		cateList = service.readMenuCategory(g1_Num);
 		model.addAttribute("cateList", cateList);
 		model.addAttribute("g1_Num", g1_Num);
+		model.addAttribute("g1_Name", g1_Name);
 		
 		return ".jumun.article";
 	}
@@ -66,6 +68,23 @@ public class JumunController {
 		subList = service.readSubMenu(mainmenu_Num);
 		model.put("subList", subList);
 		return model;
+	}
+	
+	@RequestMapping(value="/jumun/totalJumun", method=RequestMethod.POST)
+	public String totalJumunForm(String[] main_Num, String[] sub_Num, String g1_Name, Model model) throws Exception {
+		List<Jumun> mainList = new ArrayList<>();
+		List<Jumun> subList = new ArrayList<>();
+		List<Jumun> wayList = new ArrayList<>();
+		mainList = service.mainJumunMenu(main_Num);
+		subList = service.subJumunMenu(sub_Num);
+		wayList = service.listPayMethod();
+		
+		model.addAttribute("mainList",mainList);
+		model.addAttribute("subList",subList);
+		model.addAttribute("wayList",wayList);
+		model.addAttribute("g1_Name",g1_Name);
+		model.addAttribute("IMP_init","imp89184049");
+		return ".pay.pay";
 	}
 	
 }

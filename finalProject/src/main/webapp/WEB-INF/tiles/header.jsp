@@ -56,12 +56,34 @@
 	height: 100%;
     /* transition: all 1s, transform 2s; */
 }
+#mainMenu ul li:after,
+#mainMenu ul li:before {
+	border: 1px solid rgba(255, 255, 255, 0);
+    bottom: 0;
+    content: " ";
+    display: block;
+    margin: 0 auto;
+    position: relative;
+    -webkit-transition: all .28s ease-in-out;
+    transition: all .28s ease-in-out;
+    width: 0;
+}
+#mainMenu ul li:HOVER:after,
+#mainMenu ul li:HOVER:before {
+	border-color: black;
+    -webkit-transition: width 350ms ease-in-out;
+    transition: width 350ms ease-in-out;
+    width: 100%;
+}
+#mainMenu ul li:hover:before {
+    bottom: 0;
+    top: 0;
+}
 
 #mainMenu ul li:HOVER {
-	/* border-top: 1px solid black;
-	border-bottom: 1px solid black; */
+	-webkit-transition: all .28s ease-in-out;
+    transition: all .28s ease-in-out;
 	cursor: pointer;
-	/* transition: width 350ms ease-in-out; */
     /* transition: all 0.5s, transform 2s; */
 }
 
@@ -131,13 +153,3 @@
 	background-color: black;
 }
 </style>
-<!-- <div class='progress' style='transform:rotate(180deg); float: left;'>
-  <div class='progress-bar'></div>
-</div>
-<div class='progress'>
-  <div class='progress-bar'></div>
-</div> -->
-
-<script>
-	$(".progress-bar").css("width", "100%");
-</script>

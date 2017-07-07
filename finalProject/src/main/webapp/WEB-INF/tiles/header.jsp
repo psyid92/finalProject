@@ -28,6 +28,8 @@
 			if ($(this).attr("class") != "cate on")
 				$(this).css("background-image","url('<%=cp%>/resource/img/category/"+category+"Category.png')");
 		});
+		/* $(".cate.on").css("border-top", "2px solid black");
+		$(".cate.on").css("border-bottom", "2px solid black"); */
 		$(".cate.on").css("background-image","url('<%=cp%>/resource/img/category/${category}CategoryHover.png')");
 	});
 	
@@ -52,12 +54,15 @@
 	float: left;
 	width: 125px;
 	height: 100%;
-    transition: all 1s, transform 2s;
+    /* transition: all 1s, transform 2s; */
 }
 
 #mainMenu ul li:HOVER {
+	/* border-top: 1px solid black;
+	border-bottom: 1px solid black; */
 	cursor: pointer;
-    transition: all 0.5s, transform 2s;
+	/* transition: width 350ms ease-in-out; */
+    /* transition: all 0.5s, transform 2s; */
 }
 
 .cate {
@@ -112,3 +117,27 @@
 		</div>
 	</div>
 </c:if>
+<style>
+.progress {
+	width: 62.5px;
+	height: 2px;
+	box-shadow: none;
+	background-color: white;
+	border-radius: 0;
+}
+.progress-bar {
+	width: 0%;
+	box-shadow: none;
+	background-color: black;
+}
+</style>
+<!-- <div class='progress' style='transform:rotate(180deg); float: left;'>
+  <div class='progress-bar'></div>
+</div>
+<div class='progress'>
+  <div class='progress-bar'></div>
+</div> -->
+
+<script>
+	$(".progress-bar").css("width", "100%");
+</script>

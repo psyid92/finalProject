@@ -36,7 +36,7 @@
 		function layout1(list, menu_on) {
 			var s = "";
 			for (var i = 0; i < list.length; i++) {
-				s += "<div onclick='submenu("+list[i].mainmenu_Num+")' style='width: 700px; height: 20px; background-color: #dddddd;'><div style='float: left;'>" + list[i].mainmenu_Title + "</div><div style='float: right;'>" + list[i].mainmenu_Pay + "</div></div>";
+				s += "<div onclick='submenu("+list[i].mainmenu_Num+")' style='width: 700px; height: 30px;  line-height: 30px; background-color: #dddddd;'><div style='float: left;'>" + list[i].mainmenu_Title + "</div><div style='float: right;'>" + list[i].mainmenu_Pay + "</div></div>";
 				s += "<div id='sub"+list[i].mainmenu_Num+"' style='width:700px; background-color: white; display: none;'>"
 				s += "<div>"+list[i].mainmenu_Num + "</div><div class='title'>" + list[i].mainmenu_Title + "</div>";
 				s += "<div class='content'>"+list[i].mainmenu_Content + "</div><div>" + list[i].mainmenu_Photo + "</div>";

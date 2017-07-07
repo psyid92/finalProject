@@ -40,7 +40,7 @@
       <div id="navbar" class="navbar-collapse collapse">
          <ul class="nav navbar-nav">
             <li class="list-menu"><a href="<%=cp%>/admin/membercontroll">회원관리</a></li>
-            <li class="list-menu"><a href="<%=cp%>/admin/giupcontroll">업체관리</a></li>
+            <li class="list-menu"><a href="<%=cp%>/admin/giupcontroll/list">업체관리</a></li>
             <li class="list-menu"><a href="<%=cp%>/admin/memberevent">이벤트</a></li>
             <li class="list-menu"><a href="<%=cp%>/anotice/list">고객센터</a></li>
          </ul>

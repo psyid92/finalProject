@@ -62,7 +62,7 @@ public class AdminGiupController {
 		int start = (current_page - 1) * rows + 1;
 		int end = current_page * rows;
 		map.put("start", start);
-		map.put("end", end);
+		map.put("end", end); 
 		
 		List<AdminGiup> list = service.listAdminGiup(map);
 		

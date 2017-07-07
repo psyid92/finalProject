@@ -5,6 +5,8 @@
 	request.setCharacterEncoding("utf-8");
 	String cp = request.getContextPath();
 %>
+<script type="text/javascript"
+	src="https://openapi.map.naver.com/openapi/v3/maps.js?clientId=WlJc9L4f0E6oaul2CL2b&submodules=geocoder"></script>
 
 <script>
 	$(function() {
@@ -31,7 +33,97 @@
 		$(".cate.on").css("background-image","url('<%=cp%>/resource/img/category/${category}CategoryHover.png')");
 	});
 	
-		
+	//구글맵으로 현재 위도 경도 받아오기
+	function geoFindMe() {
+		var output = document.getElementById("out");
+
+		if (!navigator.geolocation) {
+			output.innerHTML = "<p>Geolocation is not supported by your browser</p>";
+			return;
+		}
+
+		function success(position) {
+			var latitude = position.coords.latitude;
+			var longitude = position.coords.longitude;
+
+			searchCoordinateToAddress(longitude, latitude);
+
+		}
+
+		function error() {
+			output.innerHTML = "Unable to retrieve your location";
+		}
+
+		navigator.geolocation.getCurrentPosition(success, error);
+	}
+
+	//네이버맵 위도 경도로 주소검색
+	function searchCoordinateToAddress(lat, lng) {
+		var latlng = new naver.maps.Point(lat, lng);
+
+		naver.maps.Service.reverseGeocode({
+			location : latlng
+		}, function(status, response) {
+			if (status === naver.maps.Service.Status.ERROR) {
+				return alert('Something Wrong!');
+			}
+
+			var item = response.result.items[0];
+
+			//주소 뒤에 번지수 빼기(주소가 동까지만 나오게)
+			var cur_Num = item.address.lastIndexOf(" ");
+			var cur_Loc = item.address.substring(0, cur_Num);
+
+			//주소 및 위도 경도 넘기기
+			var query = "location=" + encodeURI(cur_Loc) + "&lat="
+					+ item.point.x + "&lng=" + item.point.y;
+
+			var url = "<%=cp%>/resource/cookie/setcookie.jsp";
+
+			$.ajax({
+				type : "post",
+				url : url,
+				data : query,
+				success : function(data) {
+					getcookie(); 
+				},
+				error : function(e) {
+					console.log(e);
+				}
+			}); 
+		});
+	}
+
+	//쿠키 가져오면서 textbox에 주소 넣기
+	function getcookie() {
+		var url = "<%=cp%>/getcookie";
+
+		$.ajax({
+			type : "post",
+			url : url,
+			dataType:"json",
+			success : function(data) {
+				$("#cur_Loc").val(data.cur_Loc);
+			},
+			error : function(e) {
+				console.log(e);
+			}
+		}); 
+	}
+
+	function removecookie() {
+		var url = "removecookie.jsp";
+
+		$.ajax({
+			type : "post",
+			url : url,
+			success : function(data) {
+			},
+			error : function(e) {
+				console.log(e);
+			}
+		});
+	}
 </script>
 
 <style type="text/css">
@@ -86,9 +178,9 @@
  	
 <div class="form-group" style="width: 500px; height:38px; margin: 0 auto 50px; <c:if test="${mode ne 'mainPage'}">margin-bottom: 200px;</c:if>">
   <div class="input-group">
-    <input type="text" class="form-control" placeholder="현재위치" readonly="readonly">
+    <input type="text" id="cur_Loc" name="cur_Loc" class="form-control" placeholder="현재위치" readonly="readonly">
     <span class="input-group-btn" style="padding-right: 10px;">
-      <button class="btn btn-default" type="button" style="background-image: url('<%=cp%>/resource/img/where.png');"></button>
+      <button class="btn btn-default" type="button" style="background-image: url('<%=cp%>/resource/img/where.png');" onclick="geoFindMe(); "></button>
     </span>
     <input type="text" class="form-control" placeholder="업소명을 입력 해 주세요.">
     <span class="input-group-btn">

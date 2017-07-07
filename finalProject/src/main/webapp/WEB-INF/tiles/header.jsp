@@ -9,6 +9,10 @@
 	src="https://openapi.map.naver.com/openapi/v3/maps.js?clientId=WlJc9L4f0E6oaul2CL2b&submodules=geocoder"></script>
 
 <script>
+	$(function(){
+		getcookie();
+	});
+	
 	$(function() {
 		$("#category").children().click(function(){
 			var category = $(this).attr("id");

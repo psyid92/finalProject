@@ -1,13 +1,66 @@
 package com.sp.admin.giup;
 
 public class AdminGiup {
-	private int g1_sleep, g1_enabled;
-	private String g1_num, g1_id, g1_name; 
-	private String cat_code;
+	private int g1_sleep, g1_enabled, g1_num;
+	private String  g1_id, g1_name;
+	private String cat_code, g1_created;
 
 	private int g2_giupnum, g2_minpay;
 	private String g2_baedal, g2_tel, g2_origin, g2_memo, g2_opentime;
+
+	private String g3_addr1, g3_addr2, g3_addr3;
+	private float g3_lati, g3_longti;
 	
+	private int listNum;
+	
+	public int getListNum() {
+		return listNum;
+	}
+	public void setListNum(int listNum) {
+		this.listNum = listNum;
+	}
+	public int getG1_sleep() {
+		return g1_sleep;
+	}
+	public void setG1_sleep(int g1_sleep) {
+		this.g1_sleep = g1_sleep;
+	}
+	public int getG1_enabled() {
+		return g1_enabled;
+	}
+	public void setG1_enabled(int g1_enabled) {
+		this.g1_enabled = g1_enabled;
+	}
+	public int getG1_num() {
+		return g1_num;
+	}
+	public void setG1_num(int g1_num) {
+		this.g1_num = g1_num;
+	}
+	public String getG1_id() {
+		return g1_id;
+	}
+	public void setG1_id(String g1_id) {
+		this.g1_id = g1_id;
+	}
+	public String getG1_name() {
+		return g1_name;
+	}
+	public void setG1_name(String g1_name) {
+		this.g1_name = g1_name;
+	}
+	public String getCat_code() {
+		return cat_code;
+	}
+	public void setCat_code(String cat_code) {
+		this.cat_code = cat_code;
+	}
+	public String getG1_created() {
+		return g1_created;
+	}
+	public void setG1_created(String g1_created) {
+		this.g1_created = g1_created;
+	}
 	public int getG2_giupnum() {
 		return g2_giupnum;
 	}
@@ -50,40 +103,35 @@ public class AdminGiup {
 	public void setG2_opentime(String g2_opentime) {
 		this.g2_opentime = g2_opentime;
 	}
-	public int getG1_sleep() {
-		return g1_sleep;
+	public String getG3_addr1() {
+		return g3_addr1;
 	}
-	public void setG1_sleep(int g1_sleep) {
-		this.g1_sleep = g1_sleep;
+	public void setG3_addr1(String g3_addr1) {
+		this.g3_addr1 = g3_addr1;
 	}
-	public int getG1_enabled() {
-		return g1_enabled;
+	public String getG3_addr2() {
+		return g3_addr2;
 	}
-	public void setG1_enabled(int g1_enabled) {
-		this.g1_enabled = g1_enabled;
+	public void setG3_addr2(String g3_addr2) {
+		this.g3_addr2 = g3_addr2;
 	}
-	public String getG1_num() {
-		return g1_num;
+	public String getG3_addr3() {
+		return g3_addr3;
 	}
-	public void setG1_num(String g1_num) {
-		this.g1_num = g1_num;
+	public void setG3_addr3(String g3_addr3) {
+		this.g3_addr3 = g3_addr3;
 	}
-	public String getG1_id() {
-		return g1_id;
+	public float getG3_lati() {
+		return g3_lati;
 	}
-	public void setG1_id(String g1_id) {
-		this.g1_id = g1_id;
+	public void setG3_lati(float g3_lati) {
+		this.g3_lati = g3_lati;
 	}
-	public String getG1_name() {
-		return g1_name;
+	public float getG3_longti() {
+		return g3_longti;
 	}
-	public void setG1_name(String g1_name) {
-		this.g1_name = g1_name;
+	public void setG3_longti(float g3_longti) {
+		this.g3_longti = g3_longti;
 	}
-	public String getCat_code() {
-		return cat_code;
-	}
-	public void setCat_code(String cat_code) {
-		this.cat_code = cat_code;
-	}
+	
 }

@@ -30,7 +30,7 @@ label {
 				<td style="padding-left: 15px;">
 					<div class="form-group">
 						<input type="text" id="addr1" class="form-control" readonly="readonly" placeholder="우편번호" style="width: 25%; float: left; margin-right: 10px;">
-						<button type="button" class="btn btn-default" onclick="sample6_execDaumPostcode()">우편번호 찾기</button>
+						<button type="button" class="btn btn-default" onclick="sample6_execDaumPostcode()" style="width: 115px;">우편번호 찾기</button>
 					</div>
 				</td>
 			</tr>

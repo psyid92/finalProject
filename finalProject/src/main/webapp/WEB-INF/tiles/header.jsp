@@ -29,17 +29,12 @@
 				$(this).css("background-image","url('<%=cp%>/resource/img/category/"+category+"Category.png')");
 		});
 		$(".cate.on").css("background-image","url('<%=cp%>/resource/img/category/${category}CategoryHover.png')");
-		$(".cate.on").css("background-color","#eaf1f1");
 	});
 	
 		
 </script>
 
 <style type="text/css">
-body {
-	background-color: #eaf1f1;
-}
-
 #title {
 	cursor: pointer;
 }
@@ -57,13 +52,26 @@ body {
 	float: left;
 	width: 125px;
 	height: 100%;
+    transition: all 1s, transform 2s;
 }
 
 #mainMenu ul li:HOVER {
-	background-color: #eaf1f1;
 	cursor: pointer;
+    transition: all 0.5s, transform 2s;
 }
 
+.cate {
+	background-repeat: no-repeat;
+	background-size: contain;
+	background-position: center center;
+}
+
+.btn.btn-default {
+	width: 34px;
+	height: 38px; 
+	background-repeat: no-repeat;
+	background-size: 100% 100%;
+}
 
 </style>
 <div id="header" style="margin-bottom: 20px; background-repeat: round; ;">
@@ -76,18 +84,20 @@ body {
 	</div>
 </div>
  	
-<div class="form-group" style="width: 300px; margin: 0 auto 50px; <c:if test="${mode ne 'mainPage'}">margin-bottom: 200px;</c:if>">
+<div class="form-group" style="width: 500px; height:38px; margin: 0 auto 50px; <c:if test="${mode ne 'mainPage'}">margin-bottom: 200px;</c:if>">
   <div class="input-group">
-    <span class="input-group-addon">검색</span>
-    <input type="text" class="form-control" placeholder="검색 할 위치를 입력해주세요">
+    <input type="text" class="form-control" placeholder="현재위치" readonly="readonly">
+    <span class="input-group-btn" style="padding-right: 10px;">
+      <button class="btn btn-default" type="button" style="background-image: url('<%=cp%>/resource/img/where.png');"></button>
+    </span>
+    <input type="text" class="form-control" placeholder="업소명을 입력 해 주세요.">
     <span class="input-group-btn">
-      <button class="btn btn-default" type="button" style="width: 34px; height: 38px; background: url('<%=cp%>/resource/img/search.png') no-repeat; background-size: contain;  background-color: white;"></button>
+      <button class="btn btn-default" type="button" style="background-image: url('<%=cp%>/resource/img/search.png');"></button>
     </span>
   </div>
 </div>
 <c:if test="${mode ne 'mainPage'}">
-<div style="position: absolute; top: 300px; left: 0; width: 100%; height: 100px; background: url('<%=cp%>/resource/img/banner.jpg') repeat; z-index: 1">
-	<div  style="position:relative; width: 100%; height: 100px; z-index: 2"> <!--  background-color: #7c9dd2; --> 
+	<div style="position: absolute; top: 300px; left: 0; width: 100%; height: 100px; background-color: #dadada; <%-- background: url('<%=cp%>/resource/img/banner1.jpg') repeat; --%>" > <!--  background-color: #7c9dd2; --> 
 		<div style="margin: 0 auto; text-align: center; width: 1000px; height: 100%;" id="mainMenu">
 			<ul style="list-style: none; display: inline-block; height: 100%;" id="category">
 				<li id="chicken" class="cate" style="background-image: url('<%=cp%>/resource/img/category/chickenCategory.png')"></li>
@@ -101,5 +111,4 @@ body {
 			</ul>
 		</div>
 	</div>
-</div>
 </c:if>

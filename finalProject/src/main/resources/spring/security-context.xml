@@ -41,7 +41,7 @@
 		<logout
 			logout-url="/admin/logout"
 			invalidate-session="true"
-			logout-success-url="/admin/login"/>
+			logout-success-url="/"/>
 
 		<!-- 접근 권한이 없는 경우 -->
 		<access-denied-handler error-page="/admin/login"/>

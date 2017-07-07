@@ -50,27 +50,25 @@ li{
 <script type="text/javascript" src="<%=cp%>/resource/se/js/HuskyEZCreator.js" charset="utf-8"></script>
 <script type="text/javascript">
   function check() {
-        var f = document.boardForm;
+        var f = document.userBbsForm;
 
-    	var str = f.subject.value;
+    	var str = f.bbs_Subject.value;
         if(!str) {
-            f.subject.focus();
+            f.bbs_Subject.focus();
             return false;
         }
 
-    	str = f.content.value;
+    	str = f.bbs_Content.value;
         if(!str || str=="<p>&nbsp;</p>") {
-            f.content.focus();
+            f.bbs_Content.focus();
             return false;
         }
 
         var mode="${mode}";
     	if(mode=="created")
-    		f.action="";
+    		f.action="<%=cp%>/userBbs/created";
     	else if(mode=="update")
-    		f.action="";
-
-    	// <input type='submit' ..>,  <input type='image' ..>, <button>은 submit() 메소드 호출하면 두번전송
+    		f.action="<%=cp%>/userBbs/update";
         return true;
  }
   
@@ -106,11 +104,11 @@ li{
   <div role="tabpanel" class="tab-pane active" id="userQna">
     <div class="bodyFrame2">
     <div class="body-title">
-       <h3><span class="glyphicon glyphicon-book"></span> 게시판 </h3>
+        <h3><span class="glyphicon glyphicon-pencil"></span> 우리끼리 소담소담 </h3>
     </div>
     
     <div class="alert alert-info">
-        <i class="glyphicon glyphicon-info-sign"></i> 회원과 자유로이 토론할 수 있는 공간입니다.
+        <i class="glyphicon glyphicon-info-sign"></i> 우리끼리 자유롭게 이야기 해요!
     </div>
     
     <div>
@@ -121,7 +119,7 @@ li{
                         <tr>
                             <td class="td1">작성자명</td>
                             <td class="td2 col-md-5 col-sm-5">
-                                <p class="form-control-static">이름</p>
+                                <p class="form-control-static">${sessionScope.member.userId}</p>
                             </td>
                             <td class="td1" align="center"></td>
                             <td class="td2 col-md-5 col-sm-5">
@@ -131,7 +129,7 @@ li{
                         <tr>
                             <td class="td1">제목</td>
                             <td colspan="3" class="td3">
-                                <input type="text" name="subject" class="form-control input-sm" value="제목" required="required">
+                                <input type="text" name="bbs_Subject" class="form-control input-sm" value="${dto.bbs_Subject }" required="required">
                             </td>
                         </tr>
                         
@@ -140,7 +138,7 @@ li{
                         </tr>
                         <tr>
                             <td colspan="4" class="td4">
-                            	<textarea name="content" class="form-control" rows="15">내용</textarea>
+                            	<textarea name="bbs_Content" class="form-control" rows="15">${dto.bbs_Content}</textarea>
                             </td>
                         </tr>
                         
@@ -150,27 +148,30 @@ li{
                                 <input type="file" name="upload" class="form-control input-sm" style="height: 35px;">
                             </td>
                         </tr>
-                        
+                  <c:if test="${mode=='update'}">      
                         <tr>
                             <td class="td1">등록파일</td>
                             <td colspan="3" class="td3">
-                                                                                   파일이름
-                               
+                              ${dto.bbs_OriginalFilename}
+                              <c:if test="${not empty dto.bbs_OriginalFilename}">
+                                  | <a href="<%=cp%>/userBbs/deleteFile?bbs_Num=${dto.bbs_Num}&page=${page}">삭제</a>
+                              </c:if>
                             </td>
-                        </tr>                       
+                        </tr>                    
+                  </c:if>   
                     </tbody>
                     <tfoot>
                         <tr>
                             <td colspan="4" style="text-align: center; padding-top: 15px;">
                                   <button type="submit" class="btn btn-primary"> 확인 <span class="glyphicon glyphicon-ok"></span></button>
-                                  <button type="button" class="btn btn-danger" onclick="#"> 취소 </button>
+                                  <button type="button" class="btn btn-danger" onclick="javascript:location.href='<%=cp%>/userBbs/list';"> 취소 </button>
                                   
-                                 
-                                      <input type="hidden" name="num" value="">
-                                      <input type="hidden" name="page" value="">
-                                      <input type="hidden" name="saveFilename" value="">
-                                      <input type="hidden" name="originalFilename" value="">
-                                  
+                                 <c:if test="${mode=='update'}">
+                                      <input type="hidden" name="bbs_Num" value="${dto.bbs_Num}">
+                                      <input type="hidden" name="page" value="${page}">
+                                      <input type="hidden" name=bbs_SaveFilename value="${dto.bbs_SaveFilename}">
+                                      <input type="hidden" name="bbs_OriginalFilename" value="${dto.bbs_OriginalFilename}">
+                                 </c:if> 
                             </td>
                         </tr>
                     </tfoot>

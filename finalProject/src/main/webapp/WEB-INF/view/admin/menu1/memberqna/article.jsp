@@ -42,35 +42,21 @@ function deleteUserQna() {
   var uq_Num = "${dto.uq_Num}";
   var page = "${page}";
   var query = "uq_Num="+uq_Num+"&page="+page;
-  var url = "<%=cp%>/auserQna/delete?" + query;
+  var url = "<%=cp%>/userQna/delete?" + query;
 
   if(confirm("위 자료를 삭제 하시 겠습니까 ? "))
   	location.href=url;
 }
 
-function updateUserQna() {
-
-  var uq_Num = "${dto.uq_Num}";
-  var page = "${page}";
-  var query = "uq_Num="+uq_Num+"&page="+page;
-  var url = "<%=cp%>/auserQna/update?" + query;
-
-  location.href=url;
-
-
-
- alert("게시물을 수정할 수  없습니다.");
-
-}
 </script>
 
 <div class="bodyFrame2">
     <div class="body-title">
-          <h3><span class="glyphicon glyphicon-book"></span> 공지사항 </h3>
+          <h3><span class="glyphicon glyphicon-book"></span> 1대1문의 </h3>
     </div>
     
     <div class="alert alert-info">
-        <i class="glyphicon glyphicon-info-sign"></i> 중요한 일정 및 알림, 이벤트 등은 공지사항 통해 고객님께 알려 드립니다.
+        <i class="glyphicon glyphicon-info-sign"></i> 회원의 해당 이메일로 답변을 해주세요
     </div>
     
     <div class="table-responsive" style="clear: both;">

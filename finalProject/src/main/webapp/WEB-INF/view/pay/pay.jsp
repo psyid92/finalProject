@@ -83,8 +83,9 @@ label {
 				</td>
 				<td style="padding-left: 15px;">
 					<div class="form-group">
-					
-						<input type="text" id="memo" style="width: 95%;" maxlength="50" class="form-control" placeholder="보유 마일리지 : ${mileage}">
+						<input type="text" id="mileage" style="width: 25%; float:left; margin-right: 10px;" maxlength="50" class="form-control" placeholder="보유 마일리지 : ${mileage}p">
+						<button type="button" class="btn btn-default" style="width: 115px;">적용하기</button>
+						<div style='font-size: 14px;'>마일리지는 1000p 이상부터 100p단위로 사용하실 수 있습니다.</div>
 			    	</div>
 			    </td>
 			</tr>
@@ -106,6 +107,9 @@ label {
 			<input type="hidden" name="main_Num" value="${dto.mainmenu_Num}">
 			<input type="hidden" name="sub_Num" value="${subList[idx.index].submenu_Num}">
 		</c:forEach>
+		<div style="border-bottom: 1px solid black;">
+			<div style="float: left;">마일리지 사용</div><div style="float: right;">-100원</div><br>
+		</div>
 	</div>
 	<div style='border-top: 1px solid black;'>
 		<div style='float: left;'>Total</div>
@@ -130,6 +134,23 @@ label {
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 <script type="text/javascript" src="https://service.iamport.kr/js/iamport.payment-1.1.2.js"></script>
 <script type="text/javascript">
+	$(function(){
+		if (${mileage} < 1000) {
+			$("#mileage").attr("readonly", true);
+			$("#mileage").next().prop("disabled", true);
+		}
+		$("#mileage").next().click(function(){
+			if ($("#mileage").val() > ${mileage}) {
+				$("#mileage").next().next().html("보유 마일리지 보다 많습니다.");
+				return;
+			}
+			if ($("#mileage").val() % 100 != 0) {
+				$("#mileage").next().next().html("100p 단위를 입력 해 주세요.");
+				return;
+			}
+		});
+	});
+	
 	$(function(){
 		var s = 0;
 		var n = "";
@@ -233,8 +254,9 @@ function sample6_execDaumPostcode() {
 	
 	function payModal() {
 		var name = "주문 기업 : ${g1_Name}";
-		var pay = $("#total_Pay").html();
-		var amount = pay.substring(0,pay.length-1);
+		var pay_Pay = $("#total_Pay").html();
+		var amount = pay_Pay.substring(0,pay_Pay.length-1);
+		var jumun_Pay = amount - Number($("#"))
 		var email = '${sessionScope.member.userId}';
 		var buyer_name = $("#name").val();
 		var tel = $("#tel").val();

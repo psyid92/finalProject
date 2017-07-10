@@ -57,8 +57,6 @@ public class JumunController {
 		List<Jumun> menuList = new ArrayList<>();
 		menuList = service.readMainMenu(menuct_Num);
 		
-		menuList.get(1).getMainmenu_Title();
-		
 		model.put("menuList", menuList);
 		return model;
 	}

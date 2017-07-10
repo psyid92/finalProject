@@ -59,7 +59,7 @@ html, body {
 	<c:if test="${not empty sessionScope.member}"><a href="<%=cp%>/member/logout">로그아웃</a> | <a href="<%=cp%>/member/mypage">마이페이지</a> | <a href="<%=cp%>/notice/list">고객센터</a></c:if>
 	</div>
 	<div align="center">
-		<div id="title" style="width: 400px; height: 130px; background: url('<%=cp%>/resource/img/titleBase.png') no-repeat; background-size: contain; background-position: center center;"></div>
+		<div id="title" onclick="javascript:location.href='<%=cp %>/main'" style="width: 400px; height: 130px; background: url('<%=cp%>/resource/img/titleBase.png') no-repeat; background-size: contain; background-position: center center;"></div>
 	</div>
 </div>
  	

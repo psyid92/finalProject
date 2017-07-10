@@ -10,6 +10,24 @@
 <script>
 function getDetail(data){
 	//주문 상세 가져오는 위치
+	
+	var url = "<%=cp%>/member/getDetail";
+	var mydata = "mydata="+data;
+	
+	$.ajax ({
+		type:"post"
+		, url : url
+		, data : mydata
+		, dataType : "json"
+		, success : function(data){
+			//여기서 tr에 내용 넣어줘야 함
+			$("#detail${dto.jumun_num}").html("<td>asdasd</td>");
+		}
+	, error :function(e){
+		console.log(e.responseText);
+	}
+	});
+	
 }
 
 </script>
@@ -33,7 +51,7 @@ function getDetail(data){
 		<br>
 		<table style="border: none; border-collapse: collapse; width: 90%;">
 		<tr>
-			<th style="text-align: center;">기업</th>
+			<th style="text-align: center;">가게</th>
 			<th>입력한 주소</th>
 			<th>전화번호</th>
 			<th>총 금액</th>

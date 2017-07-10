@@ -61,6 +61,32 @@ public class MemberImpl implements MemberDAO {
 		// TODO Auto-generated method stub
 		return 0;
 	}
+	
+	
+	//이메일 찾기 / 아이디 찾기
+	@Override
+	public String getMyEmail(Map<String, Object> map) throws Exception {
+		String m1_email = "";
+		try {
+			m1_email = dao.getReadData("member.findId", map);
+		} catch (Exception e) {
+		}
+		return m1_email;
+	}
+
+	//비밀번호 찾기
+	@Override
+	public int getMyPassword(Map<String, Object> map) throws Exception {
+		int result = 0;
+		try {
+			result=dao.getReadData("member.findPass", map);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		return result;
+	}
+	
+	
 
 	// lastlongin 수정
 	@Override
@@ -189,6 +215,7 @@ public class MemberImpl implements MemberDAO {
 
 		return list;
 	}
+
 
 
 }

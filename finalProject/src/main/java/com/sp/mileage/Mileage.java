@@ -3,12 +3,18 @@ package com.sp.mileage;
 public class Mileage {
 	
 	private String mil_created, m1_nickname, m1_email, jumun_created, mil_state;
-	private int mil_num, mil_point, m1_num, jumun_num, jumun_pay;
+	private int mil_num, mil_point, m1_num, jumun_num, jumun_pay, mm_point;
 	
 	
 	
 	
 	
+	public int getMm_point() {
+		return mm_point;
+	}
+	public void setMm_point(int mm_point) {
+		this.mm_point = mm_point;
+	}
 	public String getMil_created() {
 		return mil_created;
 	}

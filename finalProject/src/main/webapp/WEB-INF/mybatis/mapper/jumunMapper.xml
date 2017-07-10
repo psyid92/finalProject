@@ -65,6 +65,7 @@
 			join orders o on o.orders_num = j.orders_num
 			left outer join pay p on j.jumun_num = p.jumun_num
 			where m1_num=#{m1_num}
+			order by jumun_num desc
 	</select>
 	
 	<!-- member 주문상세 가져오기 쿼리 -->

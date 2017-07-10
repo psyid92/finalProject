@@ -69,15 +69,21 @@ input {
 	<div class="body-container" style="width: 700px;" align="center">
 		<form name="memberForm" method="post">
 
-				<label class="control-label">&nbsp;&nbsp; 비밀번호 :&nbsp;&nbsp;&nbsp; </label> 	<input id="m1_pwd" name="m1_pwd" type="password" placeholder="비밀번호"
-						class="input-md">
+
+<div class="form-group">
+  <label class="col-md-4 control-label" for="m1_pwd">비밀번호</label>  
+  <div class="col-md-5">
+  <input id="m1_pwd" name="m1_pwd" type="text" placeholder="비밀번호" type="password" class="form-control input-md" >
+    
+  </div>
+</div>
 			<br><br><br><br>
 			<!-- Button -->
 				<div align="center">
 					<button class="btn btn-default" onclick="changePass();">비밀번호
 						변경</button>
 					<button class="btn btn-inverse" type="button"
-						onclick="javascript:location.href='<%=cp%>/member/login';">취소</button>
+						onclick="javascript:location.href='<%=cp%>/member/mypage';">취소</button>
 					<button type="button" class="btn btn-default" onclick="removeAccount();">회원탈퇴
 						변경</button>
 				</div>

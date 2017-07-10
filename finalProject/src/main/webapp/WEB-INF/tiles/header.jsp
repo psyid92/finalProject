@@ -110,6 +110,8 @@
 			dataType:"json",
 			success : function(data) {
 				$("#cur_Loc").val(data.cur_Loc);
+				$("#lat").val(data.lat);
+				$("#lng").val(data.lng);
 			},
 			error : function(e) {
 				console.log(e);
@@ -210,6 +212,8 @@
 <div class="form-group" style="width: 500px; height:38px; margin: 0 auto 50px; <c:if test="${mode ne 'mainPage'}">margin-bottom: 200px;</c:if>">
   <div class="input-group">
     <input type="text" id="cur_Loc" name="cur_Loc" class="form-control" placeholder="현재위치" readonly="readonly">
+    <input type="hidden" id="lat" name="lat">
+    <input type="hidden" id="lng" name="lng">
     <span class="input-group-btn" style="padding-right: 10px;">
       <button class="btn btn-default" type="button" style="background-image: url('<%=cp%>/resource/img/where.png');" onclick="geoFindMe(); "></button>
     </span>

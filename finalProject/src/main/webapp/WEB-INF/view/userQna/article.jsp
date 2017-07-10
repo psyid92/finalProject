@@ -38,7 +38,7 @@
 
 <script type="text/javascript">
 function deleteUserQna() {
-<c:if test="${sessionScope.member.userId=='admin' || sessionScope.member.userId==dto.userId}">
+
   var uq_Num = "${dto.uq_Num}";
   var page = "${page}";
   var query = "uq_Num="+uq_Num+"&page="+page;
@@ -46,25 +46,20 @@ function deleteUserQna() {
 
   if(confirm("위 자료를 삭제 하시 겠습니까 ? "))
   	location.href=url;
-</c:if>    
-<c:if test="${sessionScope.member.userId!='admin' && sessionScope.member.userId!=dto.userId}">
-  alert("게시물을 삭제할 수  없습니다.");
-</c:if>
+   
 }
 
 function updateUserQna() {
-<c:if test="${sessionScope.member.userId==dto.userId}">
+
   var uq_Num = "${dto.uq_Num}";
   var page = "${page}";
   var query = "uq_Num="+uq_Num+"&page="+page;
   var url = "<%=cp%>/userQna/update?" + query;
 
   location.href=url;
-</c:if>
 
-<c:if test="${sessionScope.member.userId!=dto.userId}">
- alert("게시물을 수정할 수  없습니다.");
-</c:if>
+
+
 }
 </script>
 

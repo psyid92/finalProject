@@ -49,7 +49,7 @@
 				<li><a href="<%=cp%>/store/logout">·Î±×¾Æ¿ô</a></li>
 			</ul>
 			<p class="navbar-text navbar-right">
-				<span>${sessionScope.store.g1_Id}</span> ´Ô
+				<span>${sessionScope.store.g1_Name}</span> ´Ô
 			</p>
 			</c:if>
 			

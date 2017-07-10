@@ -1,12 +1,20 @@
 package com.sp.store.member;
 
 public class Store {
+	private int g1_Num;
 	private String g2_GiupNum;
 	private String g1_Id, g1_Pwd, g1_Name, category;
 	private String g2_Tel, Tel1, Tel2, Tel3;
 	private String g2_Opentime, g2_Baedal, g2_Origin, g2_Memo, g2_Minpay;
 	private String g3_Addr1, g3_Addr2, g3_Addr3;
 	private float g3_Lati, g3_Longti;
+	
+	public int getG1_Num() {
+		return g1_Num;
+	}
+	public void setG1_Num(int g1_Num) {
+		this.g1_Num = g1_Num;
+	}
 	public String getG2_GiupNum() {
 		return g2_GiupNum;
 	}

@@ -30,12 +30,12 @@ label {
 				<td style="padding-left: 15px;">
 					<div class="form-group">
 						<input type="text" id="addr1" class="form-control" readonly="readonly" placeholder="우편번호" style="width: 25%; float: left; margin-right: 10px;">
-						<button type="button" class="btn btn-default" onclick="sample6_execDaumPostcode()">우편번호 찾기</button>
+						<button type="button" class="btn btn-default" onclick="sample6_execDaumPostcode()" style="width: 115px;">우편번호 찾기</button>
 					</div>
 				</td>
 			</tr>
 			<tr>	
-				<td width="60" valign="top" style="text-align: right; padding-top: 5px;">
+				<td width="70" valign="top" style="text-align: right; padding-top: 5px;">
 					<label style="font-weight: 900;">주소</label>
 				</td>
 				<td style="padding-left: 15px;">
@@ -48,7 +48,7 @@ label {
 				</td>
 			</tr>
 			<tr>
-				<td width="60" valign="top" style="text-align: right; padding-top: 5px;">
+				<td width="70" valign="top" style="text-align: right; padding-top: 5px;">
 					<label style="font-weight: 900;">이름</label>
 				</td>
 				<td style="padding-left: 15px;">
@@ -58,7 +58,7 @@ label {
 				</td>
 			</tr>
 			<tr>
-				<td width="60" valign="top" style="text-align: right; padding-top: 5px;">
+				<td width="70" valign="top" style="text-align: right; padding-top: 5px;">
 					<label style="font-weight: 900;">전화번호</label>
 				</td>
 				<td style="padding-left: 15px;">
@@ -68,7 +68,7 @@ label {
 				</td>
 			</tr>
 			<tr>
-				<td width="60" valign="top" style="text-align: right; padding-top: 5px;">
+				<td width="70" valign="top" style="text-align: right; padding-top: 5px;">
 					<label style="font-weight: 900;">요청사항</label>
 				</td>
 				<td style="padding-left: 15px;">
@@ -182,31 +182,41 @@ function sample6_execDaumPostcode() {
 
 	$("#payBtn").click(function(){
 		if($("#addr1").val().length == 0 || $("#addr2").val().length == 0 || $("#addr3").val().length == 0) {
-			alert("주소를 입력 해 주세요.");
+			$("#addr3").css("border","1px solid #ff0000");
 			$("#addr3").focus();
 			return;
 		}
 		if ($("#name").val().length == 0) {
-			alert("받는사람의 이름을 입력 해 주세요.");
+			$("#addr3").css("border","1px solid #cccccc");
+			$("#name").css("border","1px solid #ff0000");
 			$("#name").focus();
 			return;
 		}
 		if ($("#tel").val().length == 0) {
-			alert("전화번호를 입력 해 주세요.");
+			$("#addr3").css("border","1px solid #cccccc");
+			$("#name").css("border","1px solid #cccccc");
+			$("#tel").css("border","1px solid #ff0000");
 			$("#tel").focus();
 			return;
 		}
 		if (isNaN($("#tel").val())) {
-			alert("숫자만 입력 해 주세요.");
+			$("#tel").css("border","1px solid #ff0000");
 			$("#tel").val("");
 			$("#tel").focus();
 			return;
 		}
 		if ($("#memo").val().length == 0) {
-			alert("요청사항을 입력 해 주세요")
+			$("#addr3").css("border","1px solid #cccccc");
+			$("#name").css("border","1px solid #cccccc");
+			$("#tel").css("border","1px solid #cccccc");
+			$("#memo").css("border","1px solid #ff0000");
 			$("#memo").focus();
 			return;
 		}
+		$("#addr3").css("border","1px solid #cccccc");
+		$("#name").css("border","1px solid #cccccc");
+		$("#tel").css("border","1px solid #cccccc");
+		$("#memo").css("border","1px solid #cccccc");
 		payModal();
 	});
 	

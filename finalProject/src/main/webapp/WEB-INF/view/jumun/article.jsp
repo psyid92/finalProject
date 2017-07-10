@@ -137,9 +137,9 @@
 		total += pay;
 		if (total == pay) 
 			$("#jumunAppend").html("");
-		var tab = "<div><div id='jn"+jumun_Num+"' onclick='deleteJumun("+jumun_Num+", "+pay+")'><a style='cursor:pointer; float: left'>&nbsp;X&nbsp;</a></div><div style='float: left;'>"+content+"</div><div style='float: right;'>"+pay+"원</div><br></div>";
+		var tab = "<div><div id='jn"+jumun_Num+"' onclick='deleteJumun("+jumun_Num+", "+pay+")'><a style='cursor:pointer; float: left'>&nbsp;X&nbsp;</a></div><div style='float: left;'>"+content+"</div><div style='float: right;'>"+pay+"원</div><br>";
 		tab += "<input type='hidden' name='main_Num' value='"+main_Num+"'>";
-		tab += "<input type='hidden' name='sub_Num' value='"+sub_Num+"'>";
+		tab += "<input type='hidden' name='sub_Num' value='"+sub_Num+"'></div>";
 		$("#jumunAppend").append(tab);
 		$("#total_Pay").html(total+"원");
 		

@@ -14,20 +14,35 @@ function getDetail(data){
 	var url = "<%=cp%>/member/getDetail";
 	var mydata = "mydata="+data;
 	
-	$.ajax ({
-		type:"post"
-		, url : url
-		, data : mydata
-		, dataType : "json"
-		, success : function(data){
-			//여기서 tr에 내용 넣어줘야 함
-			$("#detail${dto.jumun_num}").html("<td>asdasd</td>");
-		}
-	, error :function(e){
-		console.log(e.responseText);
+	var detail = "#detail"+data;
+	var realD = "#realDetail" + data;
+
+	if(!$(realD).show()){
 	}
-	});
 	
+	if($(realD).html() != ""){
+		$(realD).html("");
+		$(realD).hide();
+		
+	} else {
+		
+		$.ajax ({
+			type:"post"
+			, url : url
+			, data : mydata
+			, dataType : "json"
+			, success : function(data){
+				var myJumun = data.myJumun;
+				
+				$(realD).html(myJumun);
+				$(detail).show();
+			}
+		, error :function(e){
+			console.log(e.responseText);
+		}
+		});
+	}
+
 }
 
 </script>
@@ -45,38 +60,45 @@ function getDetail(data){
 </div>
 <br>
 <br>
-<div style="border-radius: 5px; border: 1px double black; min-height: 500px;" align="center">
+<div style="border-radius: 5px; border: 1px double black; min-height: 300px;" align="center">
 <br><br>
 
 		<br>
 		<table style="border: none; border-collapse: collapse; width: 90%;">
 		<tr>
-			<th style="text-align: center;">가게</th>
-			<th>입력한 주소</th>
-			<th>전화번호</th>
-			<th>총 금액</th>
-			<th>주문 상태</th>
-			<th>결제 상태</th>
+			<th width="8%" style="text-align: center;">가게</th>
+			<th width="*">입력한 주소</th>
+			<th width="13%">전화번호</th>
+			<th width="10%">총 금액</th>
+			<th width="10%">주문 상태</th>
+			<th width="10%">결제 상태</th>
 		</tr>
 		<tr><td colspan="6"><hr></td></tr>
 		<c:forEach var="dto" items="${list }">
 			<tr style="height: 40px;" onclick="getDetail(${dto.jumun_num})">
-			<td>${dto.g1_name }</td>
-			<td>${dto.jumun_addr }</td>
-			<td>${dto.jumun_tel }</td>
-			<td>${dto.jumun_pay }</td>
-			<td>${dto.orders_state }</td>
-				<c:if test="${dto.pay_pay ne 0}"><td>결제완료</td>
+				<td width="8%">${dto.g1_name }</td>
+				<td width="*">${dto.jumun_addr }</td>
+				<td width="13%">${dto.jumun_tel }</td>
+				<td width="10%">${dto.jumun_pay }</td>
+				<td width="10%">${dto.orders_state }</td>
+				<c:if test="${dto.pay_pay ne 0}"><td width="10%">결제완료</td>
 				</c:if>
 				
-				<c:if test="${dto.pay_pay eq 0}"><td>미결제</td>
+				<c:if test="${dto.pay_pay eq 0}"><td width="10%">미결제</td>
 				</c:if>
 				
 			
 			</tr>
-			<tr id="detail${dto.jumun_num }" >
+			<tr style="display: none;" id="detail${dto.jumun_num }" >
+				<td colspan="6" style="background-color: #f1f1f1;">
+					<div id="realDetail${dto.jumun_num }"></div>
+				</td>
 			</tr>
 		</c:forEach>
+		<c:if test="${empty list }">
+			<tr><td colspan="6" align="center" valign="middle"><h4>주문 내역이 없습니다.</h4><td></tr>
+		</c:if>
 	</table>
-
+	
 </div>
+<div style="min-height: 40px;"></div>

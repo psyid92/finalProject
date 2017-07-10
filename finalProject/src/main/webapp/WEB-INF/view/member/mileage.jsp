@@ -63,7 +63,7 @@ th {
 <br>
 
 
-<div style="border-radius: 5px; border: 1px double black; min-height: 600px;" align="center">
+<div style="border-radius: 5px; border: 1px double black; min-height: 300px;" align="center">
 <br><br>
 
 
@@ -78,9 +78,9 @@ th {
 		<tr>
 			<td colspan="4"><hr></td>
 		</tr>
-		<c:forEach var="dto" items="${list }">
+		<c:forEach var="dto" items="${list }" varStatus="stat">
 			<tr style="height: 40px;">
-				<td width="50%">${dto.mil_created }</td>
+				<td width="50%">${dto.mil_created } </td>
 				<td width="18%">${dto.mil_state }</td>
 				<td align="right" width="18%">
 						<c:if test="${dto.mil_state eq '적립' }"><p style="color: pink;">+ ${dto.mil_point }</p></c:if>
@@ -90,6 +90,11 @@ th {
 				 <td width="*" align="right"> <a onclick="deleteThisList(${dto.mil_num});" class="btn btn-sm btn-danger"><span class="glyphicon glyphicon-remove"></span> 삭제</a></td>
 			</tr>
 		</c:forEach>
+		<c:if test="${empty list }">
+			<tr><td colspan="4" align="center" valign="middle"><h4>마일리지 내역이 없습니다.</h4><td></tr>
+		</c:if>
+		
 	</table>
+	<div style="min-height: 60px;"></div>
 
 </div>

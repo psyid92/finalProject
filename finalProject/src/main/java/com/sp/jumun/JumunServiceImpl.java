@@ -117,12 +117,12 @@ public class JumunServiceImpl implements JumunService {
 	}
 
 	@Override
-	public JumunMember detailmyPay(Map<String, Object> map) throws Exception {
-		JumunMember Readdto = new JumunMember();
+	public List<JumunMember> detailmyPay(Map<String, Object> map) throws Exception {
+		List<JumunMember> list = new ArrayList<>();
 		try {
-			Readdto = dao.getReadData("jumun.getMemberPayDetail", map);
+			list = dao.getListData("jumun.getMemberPayDetail", map);
 		} catch (Exception e) {
 		}
-		return Readdto;
+		return list;
 	}
 }

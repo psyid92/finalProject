@@ -17,5 +17,5 @@ public interface JumunService {
 	 */
 	
 	public List<JumunMember> listmyPay(int m1_num) throws Exception;
-	public JumunMember detailmyPay(Map<String, Object> map) throws Exception;
+	public List<JumunMember> detailmyPay(Map<String, Object> map) throws Exception;
 }

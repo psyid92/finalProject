@@ -77,7 +77,7 @@ input {
 					<button class="btn btn-default" onclick="changePass();">비밀번호
 						변경</button>
 					<button class="btn btn-inverse" type="button"
-						onclick="javascript:location.href='<%=cp%>/member/login';">취소</button>
+						onclick="javascript:location.href='<%=cp%>/member/mypage';">취소</button>
 					<button type="button" class="btn btn-default" onclick="removeAccount();">회원탈퇴
 						변경</button>
 				</div>

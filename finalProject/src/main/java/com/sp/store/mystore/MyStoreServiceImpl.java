@@ -1,5 +1,8 @@
 package com.sp.store.mystore;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -84,5 +87,38 @@ public class MyStoreServiceImpl implements MyStoreService{
 			System.out.println(e.toString());
 		}
 		return result;
+	}
+
+	@Override
+	public List<MyStore> readMenuCT(int g1_Num) throws Exception {
+		List<MyStore> list = new ArrayList<>();
+		try {
+			list = dao.getListData("menu.readMenuCT", g1_Num);
+		} catch (Exception e) {
+			throw e;
+		}
+		return list;
+	}
+
+	@Override
+	public List<MyStore> readMainMenu(int menuct_num) throws Exception {
+		List<MyStore> list = new ArrayList<>();
+		try {
+			list = dao.getListData("menu.readMainMenu", menuct_num);
+		} catch (Exception e) {
+			throw e;
+		}
+		return list;
+	}
+
+	@Override
+	public List<MyStore> readSubmenu(int mainmenu_Num) throws Exception {
+		List<MyStore> list = new ArrayList<>();
+		try {
+			list = dao.getListData("menu.readSubMenu", mainmenu_Num);
+		} catch (Exception e) {
+			throw e;
+		}
+		return list;
 	}
 }

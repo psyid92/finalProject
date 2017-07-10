@@ -1,12 +1,21 @@
 package com.sp.store.mystore;
 
 public class MyStore {
+	private int g1_Num;
 	private int menuct_Num;
 	private String menuct_Title, menuct_Info;
 	private int mainmenu_Num;
 	private String mainmenu_Title, mainmenu_Content, mainmenu_Photo, mainmenu_Pay;
 	private int submenu_Num;
 	private String submenu_Title, submenu_Pay;
+
+	public int getG1_Num() {
+		return g1_Num;
+	}
+
+	public void setG1_Num(int g1_Num) {
+		this.g1_Num = g1_Num;
+	}
 
 	public int getMenuct_Num() {
 		return menuct_Num;

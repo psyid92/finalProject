@@ -39,4 +39,24 @@
 	<delete id="deleteSubmenu" parameterType="Integer">
 		DELETE FROM submenu WHERE submenu_Num=#{submenu_Num}
 	</delete>
+	
+	<select id="readMenuCT" parameterType="Integer" resultType="com.sp.store.mystore.MyStore">
+		SELECT menuct_Num, menuct_Title, menuct_Info, g1_Num
+		FROM menuCate
+		WHERE g1_Num = #{g1_Num}
+	</select>
+	
+	<select id="readMainMenu" parameterType="Integer" resultType="com.sp.store.mystore.MyStore">
+		SELECT mainmenu_Num, mainmenu_Title, mainmenu_Content, mainmenu_Photo,
+			mainmenu_Pay, mainmenu_Enabled, menuct_Num
+		FROM mainmenu
+		WHERE menuct_Num = #{menuct_Num}
+	</select>
+	
+	<select id="readSubMenu" parameterType="Integer" resultType="com.sp.store.mystore.MyStore">
+		SELECT submenu_Num, submenu_Title, submenu_Pay, submenu_Enabled, mainmenu_Num
+		FROM submenu
+		WHERE mainmenu_Num = #{mainmenu_Num}
+	</select>
+	
 </mapper>

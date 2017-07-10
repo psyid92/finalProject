@@ -65,7 +65,7 @@ function getDetail(data){
 
 		<br>
 		<table style="border: none; border-collapse: collapse; width: 90%;">
-		<tr>
+		<tr  style="font-family: arial; font-size: 10px;">
 			<th width="8%" style="text-align: center;">가게</th>
 			<th width="*">입력한 주소</th>
 			<th width="13%">전화번호</th>
@@ -75,7 +75,7 @@ function getDetail(data){
 		</tr>
 		<tr><td colspan="6"><hr></td></tr>
 		<c:forEach var="dto" items="${list }">
-			<tr style="height: 40px;" onclick="getDetail(${dto.jumun_num})">
+			<tr style="height: 40px; font-family: arial; font-size: 13px;" onclick="getDetail(${dto.jumun_num})">
 				<td width="8%">${dto.g1_name }</td>
 				<td width="*">${dto.jumun_addr }</td>
 				<td width="13%">${dto.jumun_tel }</td>
@@ -90,7 +90,7 @@ function getDetail(data){
 			
 			</tr>
 			<tr style="display: none;" id="detail${dto.jumun_num }" >
-				<td colspan="6" style="background-color: #f1f1f1;">
+				<td colspan="6" style="background-color: #f1f1f1; font-family: arial; font-size: 14px;">
 					<div id="realDetail${dto.jumun_num }"></div>
 				</td>
 			</tr>

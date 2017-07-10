@@ -33,12 +33,19 @@ public class MileageImpl implements MileageDAO{
 		return list;
 	}
 
-	//마일리지 등록
+	//마일리지 등록 / 마일리지 삽입
 	@Override
 	public int insertMileage(Mileage dto) throws Exception {
 		int result = 0;
 		try {
 			result = dao.insertData("mileage.insertMileage", dto);
+			if(result > 0 && dto.getMil_state().equals("사용")){
+				//사용일 때
+				dao.updateData("mileage.updateMinusMemberMileage", dto);
+			} else if (result >0 && dto.getMil_state().equals("적립")){
+				//적립일 때
+				dao.updateData("mileage.updatePlusMemberMileage", dto);
+			}
 		} catch (Exception e) {
 		}
 		return result;
@@ -69,5 +76,6 @@ public class MileageImpl implements MileageDAO{
 		}
 		return result;
 	}
+	
 
 }

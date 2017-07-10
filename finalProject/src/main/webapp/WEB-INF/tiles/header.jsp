@@ -9,10 +9,6 @@
 	src="https://openapi.map.naver.com/openapi/v3/maps.js?clientId=WlJc9L4f0E6oaul2CL2b&submodules=geocoder"></script>
 
 <script>
-	$(function(){
-		getcookie();
-	});
-	
 	$(function() {
 		$("#category").children().click(function(){
 			var category = $(this).attr("id");
@@ -37,6 +33,12 @@
 		/* $(".cate.on").css("border-top", "2px solid black");
 		$(".cate.on").css("border-bottom", "2px solid black"); */
 		$(".cate.on").css("background-image","url('<%=cp%>/resource/img/category/${category}CategoryHover.png')");
+	});
+	
+	$(function(){
+		if(getcookie()==null){
+			geoFindMe();
+		}
 	});
 	
 	//구글맵으로 현재 위도 경도 받아오기
@@ -84,6 +86,8 @@
 			var query = "location=" + encodeURI(cur_Loc) + "&lat="
 					+ item.point.x + "&lng=" + item.point.y;
 
+			
+			// 쿠키 설정하기
 			var url = "<%=cp%>/resource/cookie/setcookie.jsp";
 
 			$.ajax({
@@ -96,7 +100,7 @@
 				error : function(e) {
 					console.log(e);
 				}
-			}); 
+			});
 		});
 	}
 
@@ -110,6 +114,8 @@
 			dataType:"json",
 			success : function(data) {
 				$("#cur_Loc").val(data.cur_Loc);
+				$("#lat").val(data.lat);
+				$("#lng").val(data.lng);
 			},
 			error : function(e) {
 				console.log(e);
@@ -117,8 +123,9 @@
 		}); 
 	}
 
+	// 쿠키 삭제하기
 	function removecookie() {
-		var url = "removecookie.jsp";
+		var url = "<%=cp%>/resource/cookie/removecookie.jsp";
 
 		$.ajax({
 			type : "post",
@@ -210,6 +217,8 @@
 <div class="form-group" style="width: 500px; height:38px; margin: 0 auto 50px; <c:if test="${mode ne 'mainPage'}">margin-bottom: 200px;</c:if>">
   <div class="input-group">
     <input type="text" id="cur_Loc" name="cur_Loc" class="form-control" placeholder="현재위치" readonly="readonly">
+    <input type="hidden" id="lat" name="lat">
+    <input type="hidden" id="lng" name="lng">
     <span class="input-group-btn" style="padding-right: 10px;">
       <button class="btn btn-default" type="button" style="background-image: url('<%=cp%>/resource/img/where.png');" onclick="geoFindMe(); "></button>
     </span>

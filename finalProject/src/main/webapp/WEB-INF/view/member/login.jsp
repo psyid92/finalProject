@@ -41,7 +41,7 @@
         			</div>
        			</fieldset>
        			<nav style="width: 300px; height: 80px; display: inline-block;">
-       				<div style="line-height: 38px; float: left;"><a href="#">아이디 찾기</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#">비밀번호 찾기</a></div>
+       				<div style="line-height: 38px; float: left;"><a href="<%=cp %>/member/forgotE">아이디 찾기</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="<%=cp %>/member/forgotP">비밀번호 찾기</a></div>
        				&nbsp;&nbsp;&nbsp;<button type="submit" class="btn btn-default">로그인</button><br>
 <%--        				<p>${msg }</p> --%>
        			</nav>

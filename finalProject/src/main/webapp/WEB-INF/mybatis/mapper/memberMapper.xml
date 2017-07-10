@@ -25,6 +25,19 @@
 </insert>
 
 
+<!-- 아이디 찾기 -->
+<select id="findId" parameterType="map" resultType="String">
+	select m1_email from member1 m
+		join member2 m2 on m.m1_num = m2.m1_num
+		where m.m1_nickname=#{m1_nickname} and m2_tel = #{m2_tel}
+</select>
+
+<select id="findPass" parameterType="map" resultType="Integer">
+	select nvl(count(*),0) from member1 m
+join member2 m2 on m.m1_num = m.m1_num
+where m.m1_email=#{m1_email} and m2.m2_tel=#{m2_tel}
+</select>
+
 
 <!-- lastlogin 수정 -->
 <update id="newLogin" parameterType="String">

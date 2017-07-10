@@ -9,10 +9,6 @@
 	src="https://openapi.map.naver.com/openapi/v3/maps.js?clientId=WlJc9L4f0E6oaul2CL2b&submodules=geocoder"></script>
 
 <script>
-	$(function(){
-		getcookie();
-	});
-	
 	$(function() {
 		$("#category").children().click(function(){
 			var category = $(this).attr("id");
@@ -37,6 +33,12 @@
 		/* $(".cate.on").css("border-top", "2px solid black");
 		$(".cate.on").css("border-bottom", "2px solid black"); */
 		$(".cate.on").css("background-image","url('<%=cp%>/resource/img/category/${category}CategoryHover.png')");
+	});
+	
+	$(function(){
+		if(getcookie()==null){
+			geoFindMe();
+		}
 	});
 	
 	//구글맵으로 현재 위도 경도 받아오기
@@ -84,6 +86,8 @@
 			var query = "location=" + encodeURI(cur_Loc) + "&lat="
 					+ item.point.x + "&lng=" + item.point.y;
 
+			
+			// 쿠키 설정하기
 			var url = "<%=cp%>/resource/cookie/setcookie.jsp";
 
 			$.ajax({
@@ -96,7 +100,7 @@
 				error : function(e) {
 					console.log(e);
 				}
-			}); 
+			});
 		});
 	}
 
@@ -119,8 +123,9 @@
 		}); 
 	}
 
+	// 쿠키 삭제하기
 	function removecookie() {
-		var url = "removecookie.jsp";
+		var url = "<%=cp%>/resource/cookie/removecookie.jsp";
 
 		$.ajax({
 			type : "post",

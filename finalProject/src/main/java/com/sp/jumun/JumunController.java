@@ -102,7 +102,7 @@ public class JumunController {
 		return model;
 	}
 
-	@RequestMapping(value = "/jumun/totalJumun", method = RequestMethod.POST)
+	@RequestMapping(value="/jumun/totalJumun", method = RequestMethod.POST)
 	public String totalJumunForm(String[] main_Num, String[] sub_Num, String g1_Name, HttpSession session, Model model)
 			throws Exception {
 		List<Jumun> mainList = new ArrayList<>();

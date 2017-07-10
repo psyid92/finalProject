@@ -115,6 +115,10 @@
 	}
 	var jumun_Num = 0;
 	function jumunTab(main_Num, sub_Num, content, pay){
+		if ('${sessionScope.member.userId}' == "") {
+			location.href = "<%=cp%>/member/login";
+			return;	
+		}
 		var tab = "<form name='jumunForm' method='post' onsubmit='return totalJumun();'>";
 		tab += "<div style='width: 300px; float: right;'>";
 		tab += "<div>장바구니</div>";

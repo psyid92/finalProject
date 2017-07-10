@@ -6,8 +6,16 @@ public class MyStore {
 	private String menuct_Title, menuct_Info;
 	private int mainmenu_Num;
 	private String mainmenu_Title, mainmenu_Content, mainmenu_Photo, mainmenu_Pay;
-	private int submenu_Num;
+	private int submenu_Num, mainmenu_Enabled;
 	private String submenu_Title, submenu_Pay;
+	
+	public int getMainmenu_Enabled() {
+		return mainmenu_Enabled;
+	}
+
+	public void setMainmenu_Enabled(int mainmenu_Enabled) {
+		this.mainmenu_Enabled = mainmenu_Enabled;
+	}
 
 	public int getG1_Num() {
 		return g1_Num;

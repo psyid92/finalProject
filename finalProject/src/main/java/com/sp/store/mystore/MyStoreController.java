@@ -1,5 +1,6 @@
 package com.sp.store.mystore;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -40,9 +41,9 @@ public class MyStoreController {
 	@RequestMapping(value = "/store/menu", method = RequestMethod.GET)
 	public String menuForm(Model model, HttpSession session) throws Exception{
 		SessionInfo info = (SessionInfo)session.getAttribute("store");
-		List<MyStore> list = service.readMenuCT(info.getG1_Num());
+		List<MyStore> menuctlist = service.readMenuCT(info.getG1_Num());
 		
-		model.addAttribute("list",list);
+		model.addAttribute("menuctlist",menuctlist);
 		model.addAttribute("mainMenu", "0");
 		model.addAttribute("subMenu", "3");
 		return ".store4.menu1.menu.list";
@@ -51,28 +52,30 @@ public class MyStoreController {
 	@RequestMapping(value="/store/menu/mainMenuList", method = RequestMethod.POST)
 	@ResponseBody
 	public Map<String, Object> mainMenuList(int menuct_Num)throws Exception{
-		List<MyStore> list = service.readMainMenu(menuct_Num);
+		List<MyStore> mainmenulist = new ArrayList<>();
+				
+		mainmenulist = service.readMainMenu(menuct_Num);
 		
 		Map<String, Object> model = new HashMap<>();
-		model.put("list", list);
+		model.put("mainmenulist", mainmenulist);
 		return model;
 	}
 	
 	@RequestMapping(value="/store/menu/subMenuList", method = RequestMethod.POST)
 	@ResponseBody
 	public Map<String, Object> submenuList(int mainmenu_Num)throws Exception{
-		List<MyStore> list = service.readSubmenu(mainmenu_Num);
+		List<MyStore> submenulist = service.readSubmenu(mainmenu_Num);
 		
 		Map<String, Object> model = new HashMap<>();
-		model.put("list", list);
+		model.put("submenulist", submenulist);
 		return model;
 	}
 	
 	@RequestMapping(value="store/menu/insertMenuCT", method=RequestMethod.POST)
 	@ResponseBody
-	public Map<String, Object> insertMenuCT(MyStore dto)throws Exception{
+	public Map<String, Object> insertMenuCT(MyStore mystoreDto)throws Exception{
 		String state = "true";
-		int result = service.insertMenuCT(dto);
+		int result = service.insertMenuCT(mystoreDto);
 		if(result == 0)
 			state = "false";
 		
@@ -84,9 +87,9 @@ public class MyStoreController {
 	
 	@RequestMapping(value="store/menu/insertMainMenu", method=RequestMethod.POST)
 	@ResponseBody
-	public Map<String, Object> insertMainMenu(MyStore dto)throws Exception{
+	public Map<String, Object> insertMainMenu(MyStore mystoreDto)throws Exception{
 		String state = "true";
-		int result = service.insertMainMenu(dto);
+		int result = service.insertMainMenu(mystoreDto);
 		if(result == 0)
 			state = "false";
 		
@@ -96,11 +99,11 @@ public class MyStoreController {
 		return model;
 	}
 	
-	@RequestMapping(value="store/menu/insertsubMenu", method=RequestMethod.POST)
+	@RequestMapping(value="store/menu/insertSubMenu", method=RequestMethod.POST)
 	@ResponseBody
-	public Map<String, Object> store(MyStore dto)throws Exception{
+	public Map<String, Object> store(MyStore mystoreDto)throws Exception{
 		String state = "true";
-		int result = service.insertSubMenu(dto);
+		int result = service.insertSubMenu(mystoreDto);
 		if(result == 0)
 			state = "false";
 		

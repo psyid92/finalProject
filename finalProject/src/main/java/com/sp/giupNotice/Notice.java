@@ -1,23 +1,72 @@
 package com.sp.giupNotice;
 
+import java.util.List;
+
+import org.springframework.web.multipart.MultipartFile;
 
 public class Notice {
-	private int listNum, noti_Num, noti_Top; 
-	private String noti_Title, noti_Content, noti_Created;
-	private int noti_Hidden, noti_Count;
+	private int listNum, num, noti_Top; 
+	private String title, content, created;
+	private int hidden, hitCount;
 	private String admin_Id;
 	
+	private int fileNum;
+	private String originalFileName, saveFileName; 
+	private long fileSize;
+	
+	//스프링에서 파일 받기
+	private List<MultipartFile> upload;
+	
+	private long gap; 	
+	
+	
+	public int getFileNum() {
+		return fileNum;
+	}
+	public void setFileNum(int fileNum) {
+		this.fileNum = fileNum;
+	}
+	public String getOriginalFileName() {
+		return originalFileName;
+	}
+	public void setOriginalFileName(String originalFileName) {
+		this.originalFileName = originalFileName;
+	}
+	public String getSaveFileName() {
+		return saveFileName;
+	}
+	public void setSaveFileName(String saveFileName) {
+		this.saveFileName = saveFileName;
+	}
+	public long getFileSize() {
+		return fileSize;
+	}
+	public void setFileSize(long fileSize) {
+		this.fileSize = fileSize;
+	}
+	public List<MultipartFile> getUpload() {
+		return upload;
+	}
+	public void setUpload(List<MultipartFile> upload) {
+		this.upload = upload;
+	}
+	public long getGap() {
+		return gap;
+	}
+	public void setGap(long gap) {
+		this.gap = gap;
+	}
 	public int getListNum() {
 		return listNum;
 	}
 	public void setListNum(int listNum) {
 		this.listNum = listNum;
 	}
-	public int getNoti_Num() {
-		return noti_Num;
+	public int getNum() {
+		return num;
 	}
-	public void setNoti_Num(int noti_Num) {
-		this.noti_Num = noti_Num;
+	public void setNum(int num) {
+		this.num =num;
 	}
 	public int getNoti_Top() {
 		return noti_Top;
@@ -25,35 +74,35 @@ public class Notice {
 	public void setNoti_Top(int noti_Top) {
 		this.noti_Top = noti_Top;
 	}
-	public String getNoti_Title() {
-		return noti_Title;
+	public String getTitle() {
+		return title;
 	}
-	public void setNoti_Title(String noti_Title) {
-		this.noti_Title = noti_Title;
+	public void setTitle(String title) {
+		this.title = title;
 	}
-	public String getNoti_Content() {
-		return noti_Content;
+	public String getContent() {
+		return content;
 	}
-	public void setNoti_Content(String noti_Content) {
-		this.noti_Content = noti_Content;
+	public void setContent(String content) {
+		this.content = content;
 	}
-	public String getNoti_Created() {
-		return noti_Created;
+	public String getCreated() {
+		return created;
 	}
-	public void setNoti_Created(String noti_Created) {
-		this.noti_Created = noti_Created;
+	public void setCreated(String created) {
+		this.created = created;
 	}
-	public int getNoti_Hidden() {
-		return noti_Hidden;
+	public int getHidden() {
+		return hidden;
 	}
-	public void setNoti_Hidden(int noti_Hidden) {
-		this.noti_Hidden = noti_Hidden;
+	public void setHidden(int hidden) {
+		this.hidden = hidden;
 	}
-	public int getNoti_Count() {
-		return noti_Count;
+	public int getHitCount() {
+		return hitCount;
 	}
-	public void setNoti_Count(int noti_Count) {
-		this.noti_Count = noti_Count;
+	public void setHitCount(int hitCount) {
+		this.hitCount = hitCount;
 	}
 	public String getAdmin_Id() {
 		return admin_Id;

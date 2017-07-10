@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="userBbs">
+  <insert id="insertUserBbs" parameterType="com.sp.userBbs.UserBbs">
+    INSERT INTO userBbs(bbs_Num, m1_Num, bbs_Subject, bbs_Content, bbs_SaveFilename ,bbs_OriginalFilename)
+    VALUES(userBbs_seq.NEXTVAL, #{m1_Num}, #{bbs_Subject}, #{bbs_Content}, #{bbs_SaveFilename, jdbcType=VARCHAR}, #{bbs_OriginalFilename, jdbcType=VARCHAR})
+  </insert>
+  
+   <sql id="where-list">
+    <if test="searchKey=='m1_nickname'">
+      m1_nickname=#{searchValue}
+    </if>
+    <if test="searchKey=='bbs_Subject'">
+      bbs_Subject LIKE '%' || #{searchValue} || '%'
+    </if>
+    <if test="searchKey=='bbs_Content'">
+      DBMS_LOB.INSTR( bbs_Content, #{searchValue}) &gt; 0 
+    </if>
+    <if test="searchKey=='bbs_Created' ">
+	  TO_CHAR(bbs_Created, 'YYYY-MM-DD') = #{searchValue}
+	   OR TO_CHAR(bbs_Created, 'YYYYMMDD') = #{searchValue}
+	</if>
+  </sql>
+  
+  <select id="dataCount" parameterType="map" resultType="Integer">
+    SELECT NVL(COUNT(*),0) FROM userBbs b JOIN member1 m1 ON b.m1_Num=m1.m1_Num
+    <where>
+      <if test="searchValue!=null and searchValue!='' ">
+        <include refid="where-list"/>
+      </if>
+    </where>
+  </select>
+  
+  <select id="listUserBbs" parameterType="map" resultType="com.sp.userBbs.UserBbs">
+    SELECT * FROM (
+      SELECT ROWNUM rnum, tb.* FROM(
+        SELECT bbs_Num, m1_Num, bbs_Subject, m1_nickname, bbs_Count, TO_CHAR(bbs_Created, 'YYYY-MM-DD')bbs_Created, bbs_SaveFilename
+               FROM userBbs b JOIN member1 m1 ON b.m1_Num=m1.m1_Num
+    <where>
+      <if test="searchValue!=null and searchValue!='' ">
+        <include refid="where-list"/>
+      </if>
+    </where>
+    ORDER BY bbs_Num DESC
+<![CDATA[    
+      )tb WHERE ROWNUM <= #{end}
+    ) WHERE rnum  >= #{start}
+    ]]>
+  </select>
+  
+  
+  
+  
+</mapper>

@@ -90,8 +90,13 @@ public class JumunServiceImpl implements JumunService {
 	
 	@Override
 	public List<Jumun> listPayMethod() throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		List<Jumun> list = new ArrayList<>();
+		try {
+			list = dao.getListData("jumun.listPayMethod");
+		} catch (Exception e) {
+			throw e;
+		}
+		return list;
 	}
 	
 	/*

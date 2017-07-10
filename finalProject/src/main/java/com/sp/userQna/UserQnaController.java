@@ -5,6 +5,7 @@ import java.io.PrintWriter;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -58,6 +59,7 @@ public class UserQnaController {
 			}
 			
 			Map<String, Object>map=new HashMap<String, Object>();
+			map.put("m1_Num", info.getM1_Num());
 			map.put("searchKey", searchKey);
 			map.put("searchValue", searchValue);
 			
@@ -75,6 +77,15 @@ public class UserQnaController {
 			map.put("end", end);
 			
 			List<UserQna>list=service.listUserQna(map);
+			
+			int listNum, n=0;
+			Iterator<UserQna>it=list.iterator();
+			while(it.hasNext()){
+				UserQna data=it.next();
+				listNum=dataCount-(start+n-1);
+				data.setListNum(listNum);
+				n++;
+			}
 			
 			String query="";
 			String listUrl = cp+"/userQna/list";
@@ -97,7 +108,7 @@ public class UserQnaController {
 			model.addAttribute("paging", paging);
 			
 			if(info.getUserId().equals("admin")){
-				model.addAttribute("mainMenu", "3");
+				model.addAttribute("mainMenu", "0");
 				model.addAttribute("subMenu", "3");
 				return ".admin4.menu1.memberqna.list";
 			}
@@ -177,7 +188,7 @@ public class UserQnaController {
 	}
 
 	
-	@RequestMapping(value="userQna/article")
+	@RequestMapping(value={"/userQna/article", "/auserQna/article"})
 	public String article(
 			@RequestParam(value="uq_Num") int uq_Num,
 			@RequestParam(value="page")String page,
@@ -221,8 +232,9 @@ public class UserQnaController {
 			model.addAttribute("query", query);
 			
 			if(info.getUserId().equals("admin")){
-				model.addAttribute("mainMenu", "3");
-				return ".admin4.menu4.memberqna.article";
+				model.addAttribute("mainMenu", "0");
+				model.addAttribute("subMenu", "3");
+				return ".admin4.menu1.memberqna.article";
 			}
 			
 		} catch (Exception e) {
@@ -231,9 +243,100 @@ public class UserQnaController {
 		return ".userQna.article";
 	}
 	
+	@RequestMapping(value="/userQna/update", method=RequestMethod.GET)
+	public String updateForm(
+			@RequestParam(value="uq_Num")int uq_Num,
+			@RequestParam(value="page")String page,
+			Model model,
+			HttpSession session
+			){
+		try {
+			UserQna dto=(UserQna)service.readUserQna(uq_Num);
+			if(dto==null){
+				return "redirect:/userQna/list?page="+page;
+			}
+			
+			model.addAttribute("mode", "update");
+			model.addAttribute("dto", dto);
+			model.addAttribute("page", page);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return ".userQna.created";
+	}
 	
+	@RequestMapping(value="/userQna/update", method=RequestMethod.POST)
+	public String updateSubmit(
+			@RequestParam String page,
+			UserQna dto,
+			HttpSession session
+			){
+		try {
+			SessionInfo info=(SessionInfo) session.getAttribute("member");
+			if(info==null){
+				return "redirect:/member/login";
+			}
+			String root=session.getServletContext().getRealPath("/");
+			String pathname = root+File.separator+"uploads"+File.separator + "userQna";
+			
+			service.updateUserQna(dto, pathname);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "redirect:/userQna/list?page="+page;
+	}
 	
+	@RequestMapping(value="/userQna/deleteFile", method=RequestMethod.GET)
+	public String deleteFile(
+			@RequestParam(value="uq_Num")int uq_Num,
+			@RequestParam(value="page")String page,
+			HttpSession session
+			){
+		try {
+			UserQna dto=service.readUserQna(uq_Num);
+			if(dto==null){
+				return "redirect:/userQna/list?page="+page;
+			}
+			
+			String root=session.getServletContext().getRealPath("/");
+			String pathname = root+File.separator+"uploads"+File.separator + "userQna";
+			if(dto.getUq_SaveFilename()!=null && dto.getUq_SaveFilename().length()!=0){
+				fileManager.doFileDelete(dto.getUq_SaveFilename(), pathname);
+				
+				dto.setUq_SaveFilename("");
+				dto.setUq_OriginalFilename("");
+				service.updateUserQna(dto, pathname);
+			}
+			
+		} catch (Exception e) {
+			
+		}
+		return "redirect:/userQna/update?uq_Num="+uq_Num+"&page="+page;
+	}
 	
+	@RequestMapping(value="/userQna/delete")
+	public String delete(
+			@RequestParam String page,
+			@RequestParam int uq_Num,
+			HttpSession session
+			){
+		try {
+			UserQna dto=service.readUserQna(uq_Num);
+			if(dto==null){
+				return "redirect:/userQna/list?page="+page;
+			}
+			String root=session.getServletContext().getRealPath("/");
+			String pathname = root+File.separator+"uploads"+File.separator + "userQna";
+			
+			service.deleteUserQna(uq_Num, dto.getUq_SaveFilename(), pathname);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "redirect:/userQna/list?page="+page;
+	}
 	
 	
 	

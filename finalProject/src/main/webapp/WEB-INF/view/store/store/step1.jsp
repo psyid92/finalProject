@@ -9,7 +9,7 @@
 function g1_IdCheck(){
 	var g1_Id=$("#g1_Id").val();
 	if(!/^[a-z][a-z0-9_]{4,9}$/i.test(g1_Id)) { 
-		var str="아이디는 5~10자 이내이며, 첫글자는 영문자로 시작해야 합니다.";
+		var str="<span style='color:red;font-weight: bold;'>아이디는 5~10자 이내이며, 첫글자는 영문자로 시작해야 합니다.</span>";
 		$("#g1_Id").focus();
 		$("#g1_Id").parent().next(".help-block").html(str);
 		
@@ -41,9 +41,9 @@ function g1_IdCheck(){
 function g2_GiupNumCheck(){
 	var g2_GiupNum=$("#g2_GiupNum").val();
 	if(!/^(\d+){10}$/i.test(g2_GiupNum)) { 
-		var str="사업자 등록번호는 10자리 숫자만 가능합니다.";
+		var str="<span style='color:red;font-weight: bold;'>사업자 등록번호는 10자리 숫자만 가능합니다.</span>";
 		$("#g2_GiupNum").focus();
-		$("#g2_GiupNum + .help-block").html(str);
+		$("#g2_GiupNum").parent().next(".help-block").html(str);
 		return false;
 	}
 	

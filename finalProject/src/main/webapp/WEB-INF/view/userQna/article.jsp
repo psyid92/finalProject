@@ -37,44 +37,39 @@
 </style>
 
 <script type="text/javascript">
-function deleteNotice() {
-<c:if test="${sessionScope.member.userId=='admin' || sessionScope.member.userId==dto.userId}">
-  var num = "${dto.num}";
+function deleteUserQna() {
+
+  var uq_Num = "${dto.uq_Num}";
   var page = "${page}";
-  var query = "num="+num+"&page="+page;
-  var url = "<%=cp%>/notice/delete?" + query;
+  var query = "uq_Num="+uq_Num+"&page="+page;
+  var url = "<%=cp%>/userQna/delete?" + query;
 
   if(confirm("위 자료를 삭제 하시 겠습니까 ? "))
   	location.href=url;
-</c:if>    
-<c:if test="${sessionScope.member.userId!='admin' && sessionScope.member.userId!=dto.userId}">
-  alert("게시물을 삭제할 수  없습니다.");
-</c:if>
+   
 }
 
-function updateNotice() {
-<c:if test="${sessionScope.member.userId==dto.userId}">
-  var num = "${dto.num}";
+function updateUserQna() {
+
+  var uq_Num = "${dto.uq_Num}";
   var page = "${page}";
-  var query = "num="+num+"&page="+page;
-  var url = "<%=cp%>/notice/update?" + query;
+  var query = "uq_Num="+uq_Num+"&page="+page;
+  var url = "<%=cp%>/userQna/update?" + query;
 
   location.href=url;
-</c:if>
 
-<c:if test="${sessionScope.member.userId!=dto.userId}">
- alert("게시물을 수정할 수  없습니다.");
-</c:if>
+
+
 }
 </script>
 
 <div class="bodyFrame2">
     <div class="body-title">
-          <h3><span class="glyphicon glyphicon-book"></span> 공지사항 </h3>
+          <h3><span class="glyphicon glyphicon-bullhorn"></span> 그것이 알고싶다 </h3>
     </div>
     
     <div class="alert alert-info">
-        <i class="glyphicon glyphicon-info-sign"></i> 중요한 일정 및 알림, 이벤트 등은 공지사항 통해 고객님께 알려 드립니다.
+        <i class="glyphicon glyphicon-send"></i>1대1문의 입니다. 해당 Email(아이디)로 처리된결과가 전송됩니다.
     </div>
     
     <div class="table-responsive" style="clear: both;">
@@ -83,7 +78,7 @@ function updateNotice() {
                  <thead>
                      <tr>
                          <th colspan="2" style="text-align: center;">
-                                ${dto.subject}
+                                ${dto.uq_Title}
                          </th>
                      </tr>
                 <thead>
@@ -91,33 +86,32 @@ function updateNotice() {
                  <tbody>
                      <tr>
                          <td style="text-align: left;">
-                             이름 : ${dto.userName}
+                             작성자 : ${dto.m1_nickname}
                          </td>
                          <td style="text-align: right;">
-                          ${dto.created}<i></i>조회 ${dto.hitCount}
+                          ${dto.uq_Created}<i></i>
                          </td>
                      </tr>
                      <tr>
                          <td colspan="2" style="height: 230px;">
-                              ${dto.content}
+                              ${dto.uq_Content}
                          </td>
-                     </tr>
-                     
-<c:forEach var="vo" items="${listFile}">
+                     </tr>                     
                      <tr>
                          <td colspan="2">
                               <span style="display: inline-block; min-width: 45px;">첨부</span> :
-                                  <a href="<%=cp%>/notice/download?fileNum=${vo.fileNum}"><span class="glyphicon glyphicon-download-alt"></span> ${vo.originalFilename}</a>
+                              <c:if test="${not empty dto.uq_SaveFilename}">
+                                  <a href="<%=cp%>/userQna/download?uq_Num=${dto.uq_Num}"><span class="glyphicon glyphicon-download-alt"></span> ${dto.uq_OriginalFilename}</a>
                                   (<fmt:formatNumber value="${vo.fileSize/1024}" pattern="0.00"/> KByte)
+                              </c:if>  
                          </td>
                      </tr>
-</c:forEach>
-                     
+                    
                      <tr>
                          <td colspan="2">
                               <span style="display: inline-block; min-width: 45px;">이전글</span> :
                               <c:if test="${not empty preReadDto }">
-                                  <a href="<%=cp%>/notice/article?${query}&num=${preReadDto.num}">${preReadDto.subject}</a>
+                                  <a href="<%=cp%>/userQna/article?${query}&uq_Num=${preReadDto.uq_Num}">${preReadDto.uq_Title}</a>
                               </c:if>					
                          </td>
                      </tr>
@@ -125,7 +119,7 @@ function updateNotice() {
                          <td colspan="2" style="border-bottom: #d5d5d5 solid 1px;">
                               <span style="display: inline-block; min-width: 45px;">다음글</span> :
                               <c:if test="${not empty nextReadDto }">
-                                  <a href="<%=cp%>/notice/article?${query}&num=${nextReadDto.num}">${nextReadDto.subject}</a>
+                                  <a href="<%=cp%>/userQna/article?${query}&uq_Num=${nextReadDto.uq_Num}">${nextReadDto.uq_Title}</a>
                               </c:if>
                          </td>
                      </tr>                                          
@@ -134,15 +128,15 @@ function updateNotice() {
                 <tfoot>
                 	<tr>
                 		<td>
-<c:if test="${sessionScope.member.userId==dto.userId}">
-                		    <button type="button" class="btn btn-default btn-sm wbtn" onclick="updateNotice();">수정</button>
-</c:if>
-<c:if test="${sessionScope.member.userId==dto.userId || sessionScope.member.userId=='admin'}">	                		    
-                		    <button type="button" class="btn btn-default btn-sm wbtn" onclick="deleteNotice();">삭제</button>
-</c:if>                		    
+
+                		    <button type="button" class="btn btn-default btn-sm wbtn" onclick="updateUserQna();">수정</button>
+
+                		    
+                		    <button type="button" class="btn btn-default btn-sm wbtn" onclick="deleteUserQna();">삭제</button>
+             		    
                 		</td>
                 		<td align="right">
-                		    <button type="button" class="btn btn-default btn-sm wbtn" onclick="javascript:location.href='<%=cp%>/notice/list?${query}';"> 목록으로 </button>
+                		    <button type="button" class="btn btn-default btn-sm wbtn" onclick="javascript:location.href='<%=cp%>/userQna/list?${query}';"> 목록으로 </button>
                 		</td>
                 	</tr>
                 </tfoot>

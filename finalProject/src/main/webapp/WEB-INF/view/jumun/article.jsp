@@ -36,7 +36,7 @@
 		function layout1(list, menu_on) {
 			var s = "";
 			for (var i = 0; i < list.length; i++) {
-				s += "<div onclick='submenu("+list[i].mainmenu_Num+")' style='width: 700px; height: 20px; background-color: #dddddd;'><div style='float: left;'>" + list[i].mainmenu_Title + "</div><div style='float: right;'>" + list[i].mainmenu_Pay + "</div></div>";
+				s += "<div onclick='submenu("+list[i].mainmenu_Num+")' style='width: 680px; height: 30px;  line-height: 30px; background-color: #dddddd;'><div style='float: left;'>" + list[i].mainmenu_Title + "</div><div style='float: right;'>" + list[i].mainmenu_Pay + "</div></div>";
 				s += "<div id='sub"+list[i].mainmenu_Num+"' style='width:700px; background-color: white; display: none;'>"
 				s += "<div>"+list[i].mainmenu_Num + "</div><div class='title'>" + list[i].mainmenu_Title + "</div>";
 				s += "<div class='content'>"+list[i].mainmenu_Content + "</div><div>" + list[i].mainmenu_Photo + "</div>";
@@ -116,13 +116,13 @@
 	var jumun_Num = 0;
 	function jumunTab(main_Num, sub_Num, content, pay){
 		var tab = "<form name='jumunForm' method='post' onsubmit='return totalJumun();'>";
-		tab += "<div style='width: 280px; float: right;'>";
+		tab += "<div style='width: 300px; float: right;'>";
 		tab += "<div>장바구니</div>";
 		tab += "<div id='jumunAppend'></div>";
 		tab += "<div style='border-top: 1px solid black;'><div style='float: left;'>Total</div><div id='total_Pay' style='float: right;'>0원</div></div><br>";
 		tab += "<input type='hidden' name='g1_Name' value='${g1_Name}'>";
 		tab += "</div>";
-		tab += "<button type='submit' class='btn btn-success' style='width: 280px; float: right;'>주문하기</button>";
+		tab += "<button type='submit' class='btn btn-success' style='width: 300px; float: right;'>주문하기</button>";
 		tab += "</form>";
 		
 		$("#totalJumun").html(tab);
@@ -137,7 +137,7 @@
 		total += pay;
 		if (total == pay) 
 			$("#jumunAppend").html("");
-		var tab = "<div><div style='float: left;'>"+content+"</div><a id='jn"+jumun_Num+"' onclick='deleteJumun("+jumun_Num+", "+pay+")' style='cursor:pointer; float: right'>&nbsp;x&nbsp;</a><div style='float: right;'>"+pay+"원</div><br></div>";
+		var tab = "<div><div id='jn"+jumun_Num+"' onclick='deleteJumun("+jumun_Num+", "+pay+")'><a style='cursor:pointer; float: left'>&nbsp;X&nbsp;</a></div><div style='float: left;'>"+content+"</div><div style='float: right;'>"+pay+"원</div><br></div>";
 		tab += "<input type='hidden' name='main_Num' value='"+main_Num+"'>";
 		tab += "<input type='hidden' name='sub_Num' value='"+sub_Num+"'>";
 		$("#jumunAppend").append(tab);
@@ -177,10 +177,10 @@
 	}
 		
 </script>
-	<div id="giupMenu" style="width: 700px; margin: 0; float: left;">
+	<div id="giupMenu" style="width: 680px; margin: 0; float: left;">
 		<c:forEach var="cateDto" items="${cateList}">
-			<div id="cate${cateDto.menuct_Num}" class="cateMenu" style="cursor: pointer; width: 700px; height: 50px; background-color: #cccccc">${cateDto.menuct_Title}</div>
+			<div id="cate${cateDto.menuct_Num}" class="cateMenu" style="cursor: pointer; width: 680px; height: 50px; background-color: #cccccc">${cateDto.menuct_Title}</div>
 			<div id="main${cateDto.menuct_Num}" class="mainMenu" style="margin-bottom: 20px; cursor: pointer;"></div>
 		</c:forEach>
 	</div>
-<div id="totalJumun"></div>
+<div id="totalJumun" style="font-size: 15px;"></div>

@@ -5,12 +5,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.sp.member.SessionInfo;
 
 @Controller("jumun.jumunController")
 public class JumunController {
@@ -71,18 +75,22 @@ public class JumunController {
 	}
 	
 	@RequestMapping(value="/jumun/totalJumun", method=RequestMethod.POST)
-	public String totalJumunForm(String[] main_Num, String[] sub_Num, String g1_Name, Model model) throws Exception {
+	public String totalJumunForm(String[] main_Num, String[] sub_Num, String g1_Name, HttpSession session, Model model) throws Exception {
 		List<Jumun> mainList = new ArrayList<>();
 		List<Jumun> subList = new ArrayList<>();
 		List<Jumun> wayList = new ArrayList<>();
+		int mileage = 0;
 		mainList = service.mainJumunMenu(main_Num);
 		subList = service.subJumunMenu(sub_Num);
 		wayList = service.listPayMethod();
+		SessionInfo info = (SessionInfo)session.getAttribute("member");
+		mileage = service.readMileage(info.getUserId());
 		
 		model.addAttribute("mainList",mainList);
 		model.addAttribute("subList",subList);
 		model.addAttribute("wayList",wayList);
 		model.addAttribute("g1_Name",g1_Name);
+		model.addAttribute("mileage", mileage);
 		model.addAttribute("IMP_init","imp89184049");
 		return ".pay.pay";
 	}

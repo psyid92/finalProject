@@ -77,6 +77,17 @@ label {
 			    	</div>
 			    </td>
 			</tr>
+			<tr>
+				<td width="70" valign="top" style="text-align: right; padding-top: 5px;">
+					<label style="font-weight: 900;">마일리지</label>
+				</td>
+				<td style="padding-left: 15px;">
+					<div class="form-group">
+					
+						<input type="text" id="memo" style="width: 95%;" maxlength="50" class="form-control" placeholder="보유 마일리지 : ${mileage}">
+			    	</div>
+			    </td>
+			</tr>
 		</table>
 	</div>
 </div>

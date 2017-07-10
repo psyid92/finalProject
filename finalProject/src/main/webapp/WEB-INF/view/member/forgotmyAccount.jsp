@@ -39,7 +39,7 @@
 			$('#m2_tel').focus();
 			return;
 		}
-		f.action="<%=cp%>/main";
+		f.action="<%=cp%>/member/forgotPass";
 		f.submit();
 	}
 </c:if>

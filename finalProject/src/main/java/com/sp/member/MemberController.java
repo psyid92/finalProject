@@ -156,7 +156,7 @@ public class MemberController {
 	}
 	
 	//비밀번호를 찾고 싶어요
-	
+	@RequestMapping("/member/forgotPass")
 	public String getMyPass(Model model, @RequestParam String m1_email, @RequestParam String m2_tel){
 		model.addAttribute("state", "password");
 		Map<String, Object> map = new HashMap<>();
@@ -175,7 +175,7 @@ public class MemberController {
 		} else {
 			map.put("result", "true");
 		}
-		return ".mymem.forgotAndFound";
+		return ".mymem.memberAccount";
 	}
 	
 
@@ -299,6 +299,12 @@ public class MemberController {
 		}
 
 		return ".mymem.mypage";
+	}
+	
+	//비밀번호 변경 하기 필수
+	@RequestMapping("/member/changeForgot")
+	public String rew(){
+		return "";
 	}
 
 	// 비밀번호 확인 폼

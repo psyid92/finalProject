@@ -11,7 +11,7 @@
 				LEFT OUTER JOIN giupAd ga ON g1.g1_Num = ga.g1_Num
 				LEFT OUTER JOIN giup3 g3 ON g1.g1_Num=g3.g3_Num
 				WHERE cat_Code = #{category} AND g1_Sleep = 1
-				ORDER BY giupAd_Num DESC
+				ORDER BY giupAd_Num DESC, g1.g1_Num ASC
 <![CDATA[
 			) tb WHERE ROWNUM <= #{end}
 		) WHERE rnum >= #{start}

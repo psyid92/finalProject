@@ -12,6 +12,15 @@ $(function(){
 		var g1_Name = $(this).next().val();
 		location.href = "<%=cp%>/jumun/article?g1_Num=" + g1_Num + "&g1_Name=" + g1_Name;
 	});
+	var n = 0;
+    $(window).scroll(function(){
+    	if ($(window).scrollTop() == $(document).height() - $(window).height()) {
+    		n++;
+    		for (var i = 0; i < 10; i++) {
+        		 	$('body').append(n + "<br>");
+    		}
+    	}
+    });
 });
 
 </script>

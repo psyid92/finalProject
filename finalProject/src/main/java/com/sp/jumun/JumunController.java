@@ -37,12 +37,12 @@ public class JumunController {
 		List<Jumun> list = new ArrayList<>();
 		Map<String, Object> map = new HashMap<>();
 		int start = 1;
-		int end = 10;
+		int end = 20;
 
 		map.put("category", category);
 		map.put("start", start);
 		map.put("end", end);
-
+		
 		list = service.listGiup(map);
 
 		// 쿠키에서 현재 위치 받아오기
@@ -60,6 +60,9 @@ public class JumunController {
 			// 5km이상이면 해당기업은 리스트에서 삭제
 			if (dist >= 5) {
 				it.remove();
+			}
+			if (list.size() <10) {
+				
 			}
 		}
 		System.out.println("삭제후 : " + list.size());

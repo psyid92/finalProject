@@ -124,7 +124,7 @@ function insertMenuct() {
 		s+="<span class='menuct_Info'>"+menuct_Info+"</span>&nbsp;";
 		s+="<span class='btnDelete' onclick=\"deletemenuct('"+menuct_Num+"');\">삭제</span>";
 		s+="</div>";
-		s+="<div class='cityLayout'>"; 
+		s+="<div class='catelayout'>"; 
 		s+="<div style='margin: 10px 3px;'>";
 		s+="<input type='text' id='mainmenu_Title"+menuct_Num+"' class='boxTF' style='width:190px;'>&nbsp;";
 		s+="<input type='text' id='mainmenu_Content"+menuct_Num+"' class='boxTF' style='width:190px;'>&nbsp;";
@@ -135,7 +135,7 @@ function insertMenuct() {
 		s+="<div id='listMenu"+menuct_Num+"'></div>";
 		s+="</div>";
 		
-		$("#menuctlistLayout").append(s);
+		$(".cateMenu").append(s);
 	}, "json");
 }
 //메인 메뉴 추가
@@ -183,12 +183,12 @@ function insertMainmenu(menuct_Num) {
 		else
 			out+="<div id='mainmenu_Title"+mainmenu_Num+"' style='border: 1px solid #ccc; padding: 5px; border-top:none;'>";
 		out+="<span class='mainmenu_Title'>"+mainmenu_Title+"</span>&nbsp;";
-		out+="<span class='btnDelete' onclick=\"deleteCity('"+menuct_Num+"', '"+mainmenu_Num+"');\">삭제</span>";
+		out+="<span class='btnDelete' onclick=\"deleteMainmenu('"+mainmenu_Num+"');\">삭제</span>";
 		out+="</div>";
 		
-		$("#listCity"+menuct_Num).append(out);
+		$(".mainMenu").append(out);
 		
-	}, "json");
+	}, "json"); 
 }
 //서브 메뉴 추가
 function insertSubmenu(mainmenu_Num) {
@@ -224,37 +224,84 @@ function insertSubmenu(mainmenu_Num) {
 		out+="<div id='submenu_Title"+submenu_Num+"' style='border: 1px solid #ccc; padding: 5px; border-top:none;'>";
 		out+="<span class='submenu_Title'>"+submenu_Title+"</span>&nbsp;";
 		out+="<span class='submenu_Pay'>"+submenu_Pay+"</span>&nbsp;";
-		out+="<span class='btnDelete' onclick=\"deleteCity('"+mainmenu_Num+"', '"+submenu_Num+"');\">삭제</span>";
+		out+="<span class='btnDelete' onclick=\"deleteSubmenu('"+submenu_Num+"');\">삭제</span>";
 		out+="</div>";
 		
 		$("#submenu"+submenu_Num).append(out);
 		
 	}, "json");
 }
+
+//메뉴카테 삭제
+function deletemenuct(menuct_Num) {
+	if(!confirm("삭제하시겠습니까?")) {
+		return;
+	}
+	
+	$.post("<%=cp%>/store/menu/deleteMenuCT", {menuct_Num:menuct_Num}, function(data){
+		if(data.state=="false") {
+			alert("삭제를 실패했습니다.");
+			return;
+		}
+		
+		$("#cate"+menuct_Num).remove();
+		
+	},"json");
+}
+
+//메인메뉴 삭제
+function deleteMainmenu(mainmenu_Num) {
+	if(!confirm("삭제하시겠습니까?")) {
+		return;
+	}
+	
+	$.post("<%=cp%>/store/menu/deleteMainMenu", {mainmenu_Num:mainmenu_Num}, function(data){
+		if(data.state=="false") {
+			alert("삭제를 실패했습니다.");
+			return;
+		}
+		
+		$("#cate"+menuct_Num).remove();
+		
+	},"json");
+}
+
+//서브메뉴 삭제
+function deleteSubmenu(submenu_Num) {
+	if(!confirm("삭제하시겠습니까?")) {
+		return;
+	}
+	
+	$.post("<%=cp%>/store/menu/deleteSubMenu", {submenu_Num:submenu_Num}, function(data){
+		if(data.state=="false") {
+			alert("삭제를 실패했습니다.");
+			return;
+		}
+		
+		$("#cate"+menuct_Num).remove();
+		
+	},"json");
+}
 </script>
 <div class="storeBodyFrame2">
-    <div class="body-title">
+    <div class="body-title"> 
           <h3>메뉴 관리 </h3>
     </div>
     <div>
     	내 업소 명 <br>
     	${sessionScope.store.g1_Name} <br>
-    	${sessionScope.store.g1_Num}
-    	Menucate : 메뉴제목, 메뉴정보<br>
-    	Mainmenu : 메뉴상품명(title), 소개(content), 사진(photo), 가격(pay), 상태(enabled) <br>
-    	Submenu : 서브메뉴 상품명(title), 메뉴가격(pay), 메뉴 상태(enabled)
 	<div style="margin-top: 20px;">
           <input type="text" id="menuct_Title" class="boxTF" style="width: 210px;">
           <input type="text" id="menuct_Info" class="boxTF" style="width: 210px;">
          <button type="button" onclick="insertMenuct();" class="btn">추가</button>
     </div> 
          
-         <div id="giupMenu" style="width: 680px; margin: 0; float: left;">
+         <div id="giupMenu" style="width: 680px; margin: 0; float: left;"> 
 			<c:forEach var="mystoreDto" items="${menuctlist}">
 				<div id="cate${mystoreDto.menuct_Num}" class="cateMenu" style="cursor: pointer; width: 680px; height: 50px; background-color: #cccccc">
 					${mystoreDto.menuct_Title}
-				<br>${mystoreDto.menuct_Info}</div>
-				<button class='btnDelete' onclick="deletemenuct(${mystoreDto.menuct_Num})">삭제</button>
+				<br>${mystoreDto.menuct_Info}
+				<button class='btnDelete' onclick="deletemenuct(${mystoreDto.menuct_Num})" style="float: right;">삭제</button></div>
 				<div id="main${mystoreDto.menuct_Num}" class="mainMenu" style="margin-bottom: 20px; cursor: pointer;"></div>
 			</c:forEach>
 		</div>

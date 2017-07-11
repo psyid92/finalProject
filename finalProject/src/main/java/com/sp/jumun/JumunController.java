@@ -33,39 +33,20 @@ public class JumunController {
 	@RequestMapping(value = "/jumun/jumunList", method = RequestMethod.GET)
 	public String payList(String category,
 			HttpServletRequest req, HttpServletResponse resp,
-			Model model) throws Exception {
+			Model model
+			) throws Exception {
 		List<Jumun> list = new ArrayList<>();
 		Map<String, Object> map = new HashMap<>();
-		int start = 1;
-		int end = 20;
-
-		map.put("category", category);
-		map.put("start", start);
-		map.put("end", end);
 		
-		list = service.listGiup(map);
-
-		// 쿠키에서 현재 위치 받아오기
-		System.out.println("삭제전 : " + list.size()); // 카테고리 전체 기업
 		JSONObject job = myMath.getCookie(req, resp);
-
 		double cur_lat = Double.parseDouble((String) job.get("lat"));
 		double cur_lng = Double.parseDouble((String) job.get("lng"));
 
-		Iterator<Jumun> it = list.iterator();
-		while (it.hasNext()) {
-			Jumun jumun = it.next();
-
-			double dist = myMath.calculateDistance(cur_lat, cur_lng, jumun.getG3_lati(), jumun.getG3_longti());
-			// 5km이상이면 해당기업은 리스트에서 삭제
-			if (dist >= 5) {
-				it.remove();
-			}
-			if (list.size() <10) {
-				
-			}
-		}
-		System.out.println("삭제후 : " + list.size());
+		map.put("category", category);
+		map.put("cur_lat", cur_lat);
+		map.put("cur_lng", cur_lng);
+		
+		list = service.listGiup(map);
 
 		model.addAttribute("category", category);
 		model.addAttribute("mode", null);

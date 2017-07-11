@@ -2,7 +2,6 @@ package com.sp.jumun;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -47,10 +46,11 @@ public class JumunController {
 		map.put("cur_lng", cur_lng);
 		
 		list = service.listGiup(map);
-
+		
 		model.addAttribute("category", category);
 		model.addAttribute("mode", null);
 		model.addAttribute("list", list);
+		model.addAttribute("count",list.size());
 		return ".jumun.menu";
 	}
 

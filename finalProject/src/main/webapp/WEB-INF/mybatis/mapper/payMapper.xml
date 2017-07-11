@@ -21,4 +21,17 @@
 		INSERT INTO pay (jumun_Num, pay_Pay, payMethod_Num)
 		VALUES (jumun_seq.CURRVAL, #{pay_Pay}, #{payMethod_Num})
 	</insert>
+	
+	<insert id="insertMileage" parameterType="map">
+		INSERT INTO mileage (mil_Num, mil_Point, mil_State, m1_Num, jumun_Num)
+		VALUES (mil_seq.NEXTVAL, #{mil_Point}, #{mil_State}, #{m1_Num}, jumun_seq.CURRVAL)
+	</insert>
+	
+	<update id="useMemberMileage" parameterType="map">
+		UPDATE membermileage SET mm_Point = mm_Point-#{mil_Point} WHERE m1_Num = #{m1_Num}
+	</update>
+	
+	<update id="earnMemberMileage" parameterType="map">
+		UPDATE membermileage SET mm_Point = mm_Point+#{mil_Point} WHERE m1_Num = #{m1_Num}
+	</update>
 </mapper>

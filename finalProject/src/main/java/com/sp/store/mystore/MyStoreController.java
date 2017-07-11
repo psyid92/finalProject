@@ -80,7 +80,7 @@ public class MyStoreController {
 			state = "false";
 		
 		Map<String , Object> model = new HashMap<>();
-		model.put("menuct_Num", result);
+		model.put("menuct_Num", mystoreDto.getMenuct_Num());
 		model.put("state", state);
 		return model;
 	}
@@ -93,8 +93,11 @@ public class MyStoreController {
 		if(result == 0)
 			state = "false";
 		
+		List<MyStore> mainmenulist = new ArrayList<>();
+		mainmenulist = service.readMainMenu(mystoreDto.getMenuct_Num());
 		Map<String , Object> model = new HashMap<>();
-		model.put("mainmenu_Num", result);
+		model.put("mainmenulist", mainmenulist);
+		model.put("mainmenu_Num", mystoreDto.getMainmenu_Num());
 		model.put("state", state);
 		return model;
 	}
@@ -107,8 +110,12 @@ public class MyStoreController {
 		if(result == 0)
 			state = "false";
 		
+		List<MyStore> submenulist = new ArrayList<>();
+		submenulist	= service.readSubmenu(mystoreDto.getMainmenu_Num());
+		
 		Map<String , Object> model = new HashMap<>();
-		model.put("submenu_Num", result);
+		model.put("submenulist", submenulist);
+		model.put("submenu_Num", mystoreDto.getSubmenu_Num());
 		model.put("state", state);
 		return model;
 	}

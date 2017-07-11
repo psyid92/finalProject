@@ -16,7 +16,7 @@
 								'button,input,textarea,select');
 						var index = fields.index(this);
 						if (index > -1 && (index + 1) < fields.length) {
-							fields.eq(index + 1).focus();
+							fields.eq(index + 1).focus(); 
 						}
 						return false;
 					}

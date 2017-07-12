@@ -44,35 +44,45 @@
     padding: 10px;
     min-height: 50px;
 }
+
+li{
+  width: 20%;  
+  text-align: center;
+  font-weight: 100;
+  
+}
+
 </style>
 
 <script type="text/javascript">
+
 function deleteBoard() {
-<c:if test="${sessionScope.member.userId=='admin' || sessionScope.member.userId==dto.userId}">
-  var num = "${dto.num}";
+<c:if test="${sessionScope.member.userId==userId}">
+  var bbs_Num = "${dto.bbs_Num}";
   var page = "${page}";
-  var query = "num="+num+"&page="+page;
-  var url = "<%=cp%>/bbs/delete?" + query;
+  var query = "bbs_Num="+bbs_Num+"&page="+page;
+  var url = "<%=cp%>/userBbs/delete?" + query;
 
   if(confirm("위 자료를 삭제 하시 겠습니까 ? "))
   	location.href=url;
-</c:if>    
-<c:if test="${sessionScope.member.userId!='admin' && sessionScope.member.userId!=dto.userId}">
+</c:if>  
+
+<c:if test="${sessionScope.member.userId!=userId}">
   alert("게시물을 삭제할 수  없습니다.");
 </c:if>
 }
 
 function updateBoard() {
-<c:if test="${sessionScope.member.userId==dto.userId}">
-  var num = "${dto.num}";
+<c:if test="${sessionScope.member.userId==userId}">
+  var bbs_Num = "${dto.bbs_Num}";
   var page = "${page}";
-  var query = "num="+num+"&page="+page;
-  var url = "<%=cp%>/bbs/update?" + query;
+  var query = "bbs_Num="+bbs_Num+"&page="+page;
+  var url = "<%=cp%>/userBbs/update?" + query;
 
   location.href=url;
 </c:if>
 
-<c:if test="${sessionScope.member.userId!=dto.userId}">
+<c:if test="${sessionScope.member.userId!=userId}">
  alert("게시물을 수정할 수  없습니다.");
 </c:if>
 }
@@ -80,17 +90,17 @@ function updateBoard() {
 
 <script type="text/javascript">
 //게시물 공감 개수
-function countLikeBoard(num) {
-	var url="<%=cp%>/bbs/countLikeBoard";
-	$.post(url, {num:num}, function(data){
-		var count=data.countLikeBoard;
+function countUserBbsLike(bbs_Num) {
+	var url="<%=cp%>/userBbs/countUserBbsLike";
+	$.post(url, {bbs_Num:bbs_Num}, function(data){
+		var count=data.countUserBbsLike;
 		
-		$("#countLikeBoard").html(count);
+		$("#countUserBbsLike").html(count);
 	}, "json");
 }
 
 // 게시물 공감 추가
-function sendLikeBoard(num) {
+function sendLikeBoard(bbs_Num) {
 	var uid="${sessionScope.member.userId}";
 	if(! uid) {
 		login();
@@ -101,17 +111,17 @@ function sendLikeBoard(num) {
 	if(! confirm(msg))
 		return;
 	
-	var query="num="+num;
+	var query="bbs_Num="+bbs_Num;
 
 	$.ajax({
 		type:"post"
-		,url:"<%=cp%>/bbs/insertLikeBoard"
+		,url:"<%=cp%>/userBbs/insertUserBbsLike"
 		,data:query
 		,dataType:"json"
 		,success:function(data) {
 			var state=data.state;
 			if(state=="true") {
-				countLikeBoard(num);
+				countUserBbsLike(bbs_Num);
 			} else if(state=="false") {
 				alert("좋아요는 한번만 가능합니다. !!!");
 			} else if(state=="loginFail") {
@@ -136,10 +146,10 @@ $(function(){
 });
 
 function listPage(page) {
-	var url="<%=cp%>/bbs/listReply";
-	var num="${dto.num}";
-	$.post(url, {num:num, pageNo:page}, function(data){
-		$("#listReply").html(data);
+	var url="<%=cp%>/userBbs/listUserReply";
+	var bbs_Num="${dto.bbs_Num}";
+	$.post(url, {bbs_Num:bbs_Num, pageNo:page}, function(data){
+		$("#listUserReply").html(data);
 	});
 }
 
@@ -151,25 +161,25 @@ function sendReply() {
 		return false;
 	}
 
-	var num="${dto.num}"; // 해당 게시물 번호
-	var content=$.trim($("#content").val());
-	if(! content ) {
+	var bbs_Num="${dto.bbs_Num}"; // 해당 게시물 번호
+	var rep_Content=$.trim($("#rep_Content").val());
+	if(! rep_Content ) {
 		alert("내용을 입력하세요 !!! ");
-		$("#content").focus();
+		$("#rep_Content").focus();
 		return false;
 	}
 	
-	var query="num="+num;
-	query+="&content="+encodeURIComponent(content);
-	query+="&answer=0";
+	var query="bbs_Num="+bbs_Num;
+	query+="&rep_Content="+encodeURIComponent(rep_Content);
+	query+="&rep_Answer=0";
 	
 	$.ajax({
 		type:"post"
-		,url:"<%=cp%>/bbs/createdReply"
+		,url:"<%=cp%>/userBbs/createdReply"
 		,data:query
 		,dataType:"json"
 		,success:function(data) {
-			$("#content").val("");
+			$("#rep_Content").val("");
 			
 			var state=data.state;
 			if(state=="true") {
@@ -187,7 +197,7 @@ function sendReply() {
 }
 
 // 댓글 삭제
-function deleteReply(replyNum, page) {
+function deleteReply(rep_Num, page) {
 	var uid="${sessionScope.member.userId}";
 	if(! uid) {
 		login();
@@ -195,8 +205,8 @@ function deleteReply(replyNum, page) {
 	}
 	
 	if(confirm("게시물을 삭제하시겠습니까 ? ")) {	
-		var url="<%=cp%>/bbs/deleteReply";
-		$.post(url, {replyNum:replyNum, mode:"reply"}, function(data){
+		var url="<%=cp%>/userBbs/deleteReply";
+		$.post(url, {rep_Num:rep_Num, mode:"reply"}, function(data){
 		        var state=data.state;
 
 				if(state=="loginFail") {
@@ -209,19 +219,19 @@ function deleteReply(replyNum, page) {
 }
 
 // 댓글별 답글 리스트
-function listAnswer(answer) {
-	var listReplyAnswerId="#listReplyAnswer"+answer;
-	var url="<%=cp%>/bbs/listReplyAnswer";
-	$.post(url, {answer:answer}, function(data){
-		$(listReplyAnswerId).html(data);
+function listUserReplyAnswer(rep_Answer) {
+	var listUserReplyAnswer="#listUserReplyAnswer"+rep_Answer;
+	var url="<%=cp%>/userBbs/listUserReplyAnswer";
+	$.post(url, {rep_Answer:rep_Answer}, function(data){
+		$(listUserReplyAnswer).html(data);
 	});
 }
 
 // 답글 버튼(댓글별 답글 등록폼 및 답글리스트)
-function replyAnswerLayout(replyNum) {
-	var id="#replyAnswerLayout"+replyNum;
-	var replyContent="#replyContent"+replyNum;
-	var answerGlyphiconId="#answerGlyphicon"+replyNum;
+function replyAnswerLayout(rep_Num) {
+	var id="#replyAnswerLayout"+rep_Num;
+	var rep_Content="#rep_Content"+rep_Num;
+	var answerGlyphiconId="#answerGlyphicon"+rep_Num;
 	
 	if($(id).is(':hidden')) {
 		$("[id*=replyAnswerLayout]").hide();
@@ -231,8 +241,8 @@ function replyAnswerLayout(replyNum) {
 			$(this).addClass("glyphicon-triangle-bottom");
 		});
 		
-		listAnswer(replyNum);
-		countAnswer(replyNum);
+		listUserReplyAnswer(rep_Num);
+		replyCountAnswer(rep_Num);
 		
 		$(id).show();
 		$(answerGlyphiconId).removeClass("glyphicon-triangle-bottom");
@@ -245,28 +255,28 @@ function replyAnswerLayout(replyNum) {
 }
 
 // 댓글별 답글 등록
-function sendReplyAnswer(num, replyNum) {
+function sendReplyAnswer(bbs_num, rep_Num) {
 	var uid="${sessionScope.member.userId}";
 	if(! uid) {
 		login();
 		return false;
 	}
 	
-	var rta="#replyContent"+replyNum;
-	var content=$.trim($(rta).val());
-	if(! content ) {
+	var rta="#rep_Content"+rep_Num;
+	var rep_Content=$.trim($(rta).val());
+	if(! rep_Content ) {
 		alert("내용을 입력하세요 !!!\n");
 		$(rta).focus();
 		return false;
 	}
 	
-	var query="num="+num;
-	query+="&content="+encodeURIComponent(content);
-	query+="&answer="+replyNum;
+	var query="bbs_Num="+bbs_Num;
+	query+="&rep_Content="+encodeURIComponent(rep_Content);
+	query+="&rep_Answer="+rep_Num;
 	
 	$.ajax({
 		type:"post"
-		,url:"<%=cp%>/bbs/createdReply"
+		,url:"<%=cp%>/userBbs/createdReply"
 		,data:query
 		,dataType:"json"
 		,success:function(data) {
@@ -274,8 +284,8 @@ function sendReplyAnswer(num, replyNum) {
 			
   			var state=data.state;
 			if(state=="true") {
-				listAnswer(replyNum);
-				countAnswer(replyNum);
+				listUserReplyAnswer(rep_Num);
+				replyCountAnswer(rep_Num);
 			} else if(state=="false") {
 				alert("답글을 등록하지 못했습니다. !!!");
 			} else if(state=="loginFail") {
@@ -289,12 +299,12 @@ function sendReplyAnswer(num, replyNum) {
 }
 
 //댓글별 답글 갯수
-function countAnswer(answer) {
+function replyCountAnswer(rep_Answer) {
 	var url="<%=cp%>/bbs/replyCountAnswer";
-	$.post(url, {answer:answer}, function(data){
+	$.post(url, {rep_Answer:rep_Answer}, function(data){
 		var count="("+data.count+")";
-		var answerCountId="#answerCount"+answer;
-		var answerGlyphiconId="#answerGlyphicon"+answer;
+		var answerCountId="#answerCount"+rep_Answer;
+		var answerGlyphiconId="#answerGlyphicon"+rep_Answer;
 		
 		$(answerCountId).html(count);
 		$(answerGlyphiconId).removeClass("glyphicon-triangle-bottom");
@@ -303,88 +313,64 @@ function countAnswer(answer) {
 }
 
 // 댓글별 답글 삭제
-function deleteReplyAnswer(replyNum, answer) {
-	var uid="${sessionScope.member.userId}";
+function deleteReplyAnswer(rep_Num, rep_Answer) {
+	var uid="${sessionScope.member.userId==userId}";
 	if(! uid) {
 		login();
 		return false;
 	}
 	
 	if(confirm("게시물을 삭제하시겠습니까 ? ")) {	
-		var url="<%=cp%>/bbs/deleteReply";
-		$.post(url, {replyNum:replyNum, mode:"answer"}, function(data){
+		var url="<%=cp%>/userBbs/deleteReply";
+		$.post(url, {rep_Num:rep_Num, mode:"rep_Answer"}, function(data){
 		        var state=data.state;
 				if(state=="loginFail") {
 					login();
 				} else {
-				    listAnswer(answer);
-				    countAnswer(answer);
+					listUserReplyAnswer(rep_Answer);
+					replyCountAnswer(rep_Answer);
 				}
 		}, "json");
 	}
 }
 
-// 댓글 좋아요/싫어요 개수
-function countLike(replyNum) {
-	var url="<%=cp%>/bbs/countLike";
-	$.post(url, {replyNum:replyNum}, function(data){
-		var likeCountId="#likeCount"+replyNum;
-		var disLikeCountId="#disLikeCount"+replyNum;
-		var likeCount=data.likeCount;
-		var disLikeCount=data.disLikeCount;
-		
-		$(likeCountId).html(likeCount);
-		$(disLikeCountId).html(disLikeCount);
-	}, "json");
-}
-
-// 댓글 좋아요/싫어요 추가
-function sendLike(replyNum, replyLike) {
-	var uid="${sessionScope.member.userId}";
-	if(! uid) {
-		login();
-		return false;
-	}
-
-	var msg="게시물이 마음에 들지 않으십니까 ?";
-	if(replyLike==1)
-		msg="게시물에 공감하십니까 ?";
-	if(! confirm(msg))
-		return false;
+//탭 스트립트
+$('#myTab a').click(function (e) {
+  e.preventDefault()
+  $(this).tab('show')
+})
 	
-	var query="replyNum="+replyNum;
-	query+="&replyLike="+replyLike;
+$('#myTab a[href="#profile"]').tab('show') // Select tab by name
+$('#myTab a:first').tab('show') // Select first tab
+$('#myTab a:last').tab('show') // Select last tab
+$('#myTab li:eq(2) a').tab('show') // Select third tab (0-indexed)
 
-	$.ajax({
-		type:"post"
-		,url:"<%=cp%>/bbs/replyLike"
-		,data:query
-		,dataType:"json"
-		,success:function(data) {
-			
-			var state=data.state;
-			if(state=="true") {
-				countLike(replyNum);
-			} else if(state=="false") {
-				alert("좋아요/싫어요는 한번만 가능합니다. !!!");
-			} else if(state=="loginFail") {
-				login();
-			}
-		}
-		,error:function(e) {
-			console.log(e.responseText);
-		}
-	});
-}
+
+
 </script>
+<div role="tabpanel" >
 
-<div class="bodyFrame2">
-    <div class="body-title">
-          <h3><span class="glyphicon glyphicon-book"></span> 게시판 </h3>
-    </div>
+  <!-- Nav tabs -->
+  <ul class="nav nav-tabs" role="tablist">
+    <li role="presentation"><a href="<%=cp%>/notice/list" aria-controls="notice" role="tab" data-toggle="tab">공지사항</a></li>
+    <li role="presentation"><a href="<%=cp%>/userEvent/list" aria-controls="userEvent" role="tab" data-toggle="tab">이벤트</a></li>
+    <li role="presentation"><a href="<%=cp%>/userFap/list" aria-controls="userFaq" role="tab" data-toggle="tab">자주찾는 질문</a></li>
+    <li role="presentation"><a href="<%=cp%>/userQna/list" aria-controls="userQna" role="tab" data-toggle="tab">그것이 알고싶다</a></li>
+    <li role="presentation" class="active"><a href="<%=cp%>/userBbs/list" aria-controls="userBbs" role="tab" data-toggle="tab">우리끼리소담소담</a></li>
+  </ul>
+</div>
+
+<!-- 마크업 -->
+<div class="tab-content">
+ <div role="tabpanel" class="tab-pane active" id="userBbs">
+
+  <div class="bodyFrame2">
+     <div class="body-title">
+          <h3><span class="glyphicon glyphicon-pencil"></span> 우리끼리 소담소담 </h3>
+     </div>
     
     <div class="alert alert-info">
-        <i class="glyphicon glyphicon-info-sign"></i> 회원과 자유로이 토론할 수 있는 공간입니다.
+        <i class="glyphicon glyphicon-info-sign"></i> 우리끼리 자유롭게 이야기 해요!
     </div>
     
     <div class="table-responsive" style="clear: both;">
@@ -393,34 +379,34 @@ function sendLike(replyNum, replyLike) {
                  <thead>
                      <tr>
                          <th colspan="2" style="text-align: center;">
-                                ${dto.subject}
+                                ${dto.bbs_Subject}
                          </th>
                      </tr>
                 <thead>
                  <tbody>
                      <tr>
                          <td style="text-align: left;">
-                             이름 : ${dto.userName}
+                             이름 : ${dto.m1_nickname}/ 이메일: ${dto.m1_Email}
                          </td>
                          <td style="text-align: right;">
-                          ${dto.created}<i></i>조회 ${dto.hitCount}
+                          ${dto.bbs_Created}<i></i>조회 ${dto.bbs_Count}
                          </td>
                      </tr>
                      <tr style="border-bottom:none;">
                          <td colspan="2" style="height: 170px;">
-                              ${dto.content}
+                              ${dto.bbs_Content}
                          </td>
                      </tr>
                      <tr>
                          <td colspan="2" style="height: 40px; padding-bottom: 15px; text-align: center;">
-                              <button type="button" class="btn btn-default btn-sm wbtn" style="background: white;" onclick="sendLikeBoard('${dto.num}')"><span class="glyphicon glyphicon-hand-up"></span> <span id="countLikeBoard">${countLikeBoard}</span></button>
+                              <button type="button" class="btn btn-default btn-sm wbtn" style="background: white; width: 43px;" onclick="sendLikeBoard('${dto.bbs_Num}')"><span class="glyphicon glyphicon-heart-empty"></span> <span id="countUserBbsLike">${countUserBbsLike}</span></button>
                          </td>
                      </tr>
                      <tr>
                          <td colspan="2">
                               <span style="display: inline-block; min-width: 45px;">첨부</span> :
-                              <c:if test="${not empty dto.saveFilename}">
-                                  <a href="<%=cp%>/bbs/download?num=${dto.num}"><span class="glyphicon glyphicon-download-alt"></span> ${dto.originalFilename}</a>
+                              <c:if test="${not empty dto.bbs_SaveFilename}">
+                                  <a href="<%=cp%>/userBbs/download?bbs_Num=${dto.bbs_Num}"><span class="glyphicon glyphicon-download-alt"></span> ${dto.bbs_OriginalFilename}</a>
                               </c:if>
                          </td>
                      </tr>
@@ -428,7 +414,7 @@ function sendLike(replyNum, replyLike) {
                          <td colspan="2">
                               <span style="display: inline-block; min-width: 45px;">이전글</span> :
                               <c:if test="${not empty preReadDto }">
-                                  <a href="<%=cp%>/bbs/article?${query}&num=${preReadDto.num}">${preReadDto.subject}</a>
+                                  <a href="<%=cp%>/userBbs/article?${query}&bbs_Num=${preReadDto.bbs_Num}">${preReadDto.bbs_Subject}</a>
                               </c:if>					
                          </td>
                      </tr>
@@ -436,7 +422,7 @@ function sendLike(replyNum, replyLike) {
                          <td colspan="2" style="border-bottom: #d5d5d5 solid 1px;">
                               <span style="display: inline-block; min-width: 45px;">다음글</span> :
                               <c:if test="${not empty nextReadDto }">
-                                  <a href="<%=cp%>/bbs/article?${query}&num=${nextReadDto.num}">${nextReadDto.subject}</a>
+                                  <a href="<%=cp%>/userBbs/article?${query}&bbs_Num=${nextReadDto.bbs_Num}">${nextReadDto.bbs_Subject}</a>
                               </c:if>
                          </td>
                      </tr>                                          
@@ -444,15 +430,15 @@ function sendLike(replyNum, replyLike) {
                 <tfoot>
                 	<tr>
                 		<td>
-<c:if test="${sessionScope.member.userId==dto.userId}">
+<c:if test="${sessionScope.member.userId==userId}">
                 		    <button type="button" class="btn btn-default btn-sm wbtn" onclick="updateBoard();">수정</button>
 </c:if>
-<c:if test="${sessionScope.member.userId==dto.userId || sessionScope.member.userId=='admin'}">	                		    
+<c:if test="${sessionScope.member.userId==userId}">	                		    
                 		    <button type="button" class="btn btn-default btn-sm wbtn" onclick="deleteBoard();">삭제</button>
 </c:if>                		    
                 		</td>
                 		<td align="right">
-                		    <button type="button" class="btn btn-default btn-sm wbtn" onclick="javascript:location.href='<%=cp%>/bbs/list?${query}';"> 목록으로 </button>
+                		    <button type="button" class="btn btn-default btn-sm wbtn" style="width: 50px;" onclick="javascript:location.href='<%=cp%>/userBbs/list?${query}';"> 목록으로 </button>
                 		</td>
                 	</tr>
                 </tfoot>
@@ -466,15 +452,18 @@ function sendLike(replyNum, replyLike) {
            	       <div style="float: right; text-align: right;"></div>
                </div>
                <div style="clear: both; padding-top: 10px;">
-                   <textarea id="content" class="form-control" rows="3"></textarea>
+                   <textarea id="rep_Content" class="form-control" rows="3"></textarea>
                </div>
                <div style="text-align: right; padding-top: 10px;">
                    <button type="button" class="btn btn-primary btn-sm" onclick="sendReply();"> 댓글등록 <span class="glyphicon glyphicon-ok"></span></button>
                </div>           
            </div>
-       
-           <div id="listReply"></div>
+            
+            <div id="listUserReply"></div>
+           
        </div>
-   </div>
+    </div>
 
-</div>
+  </div>
+ </div>
+</div>  

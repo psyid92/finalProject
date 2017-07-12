@@ -3,7 +3,7 @@ package com.sp.userBbs;
 public class UserReply {
 	private int rep_Num, bbs_Num, m1_Num, listNum, rep_Answer;
 	private String userId, m1_nickname, m1_Email;
-	private String rep_content, rep_Created;
+	private String rep_Content, rep_Created;
 	
 	private int answerCount,likeCount, disLikeCount;
 
@@ -71,12 +71,12 @@ public class UserReply {
 		this.m1_Email = m1_Email;
 	}
 
-	public String getRep_content() {
-		return rep_content;
+	public String getRep_Content() {
+		return rep_Content;
 	}
 
-	public void setRep_content(String rep_content) {
-		this.rep_content = rep_content;
+	public void setRep_Content(String rep_Content) {
+		this.rep_Content = rep_Content;
 	}
 
 	public String getRep_Created() {

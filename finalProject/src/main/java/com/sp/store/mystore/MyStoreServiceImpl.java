@@ -17,6 +17,8 @@ public class MyStoreServiceImpl implements MyStoreService{
 	public int insertMenuCT(MyStore mystoreDto) throws Exception {
 		int result = 0;
 		try {
+			result=dao.getIntValue("menu.seqmenuct");
+			mystoreDto.setMenuct_Num(result);
 			result = dao.insertData("menu.insertMenuCT", mystoreDto);
 		} catch (Exception e) {
 			result = 0;
@@ -29,6 +31,8 @@ public class MyStoreServiceImpl implements MyStoreService{
 	public int insertMainMenu(MyStore mystoreDto) throws Exception {
 		int result = 0;
 		try {
+			result=dao.getIntValue("menu.seqmainmenu");
+			mystoreDto.setMainmenu_Num(result);
 			result = dao.insertData("menu.insertMainMenu", mystoreDto);
 		} catch (Exception e) {
 			result = 0;
@@ -42,6 +46,8 @@ public class MyStoreServiceImpl implements MyStoreService{
 	public int insertSubMenu(MyStore mystoreDto) throws Exception {
 		int result = 0;
 		try {
+			result=dao.getIntValue("menu.seqsubmenu");
+			mystoreDto.setSubmenu_Num(result);
 			result = dao.insertData("menu.insertSubMenu", mystoreDto);
 		} catch (Exception e) {
 			result = 0;

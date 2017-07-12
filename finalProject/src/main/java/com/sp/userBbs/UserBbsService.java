@@ -14,14 +14,14 @@ public interface UserBbsService {
     public int updateUserBbs(UserBbs dto, String pathname);
     public int deleteUserBbs(int bbs_Num, String bbs_SaveFilename, String pathname);
     
-    public int insertUserbbsLike(UserBbs dto);
-    public int countUserbbsLike(int bbs_Num);
+    public int insertUserBbsLike(UserBbs dto);
+    public int countUserBbsLike(int bbs_Num);
     
     public int insertUserReply(UserReply dto);
     public List<UserReply> listUserReply(Map<String, Object>map);
-    public List<UserReply> listUserReplyAnswer(int answer);
+    public List<UserReply> listUserReplyAnswer(int rep_Answer);
     public int replyDataCount(Map<String, Object>map);
-    public int replyCountAnswer(int answer);
+    public int replyCountAnswer(int rep_Answer);
     public int deleteUserReply(Map<String, Object>map);
     
 }

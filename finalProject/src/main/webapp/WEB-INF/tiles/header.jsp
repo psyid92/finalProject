@@ -10,6 +10,7 @@
 
 <script>
 	$(function() {
+		$("input[name=searchValue]").focus();
 		$("#category").children().click(function(){
 			var category = $(this).attr("id");
 			location.href = '<%=cp%>/jumun/jumunList?category=' + category;
@@ -213,7 +214,7 @@
 		<div id="title" style="width: 600px; height: 200px; background: url('<%=cp%>/resource/img/titleBase.png') no-repeat; background-size: contain; background-position: center center;"></div>
 	</div>
 </div>
- 	
+<form action="<%=cp%>/jumun/jumunList" method="post">
 <div class="form-group" style="width: 500px; height:38px; margin: 0 auto 50px; <c:if test="${mode ne 'mainPage'}">margin-bottom: 200px;</c:if>">
   <div class="input-group">
     <input type="text" id="cur_Loc" name="cur_Loc" class="form-control" placeholder="현재위치" readonly="readonly">
@@ -222,12 +223,14 @@
     <span class="input-group-btn" style="padding-right: 10px;">
       <button class="btn btn-default" type="button" style="background-image: url('<%=cp%>/resource/img/where.png');" onclick="geoFindMe(); "></button>
     </span>
-    <input type="text" class="form-control" placeholder="업소명을 입력 해 주세요.">
+    
+    <input type="text" class="form-control" name="searchValue" placeholder="업소명을 입력 해 주세요.">
     <span class="input-group-btn">
-      <button class="btn btn-default" type="button" style="background-image: url('<%=cp%>/resource/img/search.png');"></button>
+      <input class="btn btn-default" type="submit" style="background-image: url('<%=cp%>/resource/img/search.png');" value="">	
     </span>
   </div>
 </div>
+</form>
 <c:if test="${mode ne 'mainPage'}">
 	<div style="position: absolute; top: 300px; left: 0; width: 100%; height: 100px; background-color: #dadada; <%-- background: url('<%=cp%>/resource/img/banner1.jpg') repeat; --%>" > <!--  background-color: #7c9dd2; --> 
 		<div style="margin: 0 auto; text-align: center; width: 1000px; height: 100%;" id="mainMenu">

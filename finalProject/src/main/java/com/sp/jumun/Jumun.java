@@ -4,10 +4,18 @@ public class Jumun {
 	private int g1_Num, giupAd_Num, menuct_Num, mainmenu_Num;
 	private int mainmenu_Pay, mainmenu_Enabled, submenu_Num, submenu_Pay, submenu_Enabled, g1_Enabled;
 	private int payMethod_Num;
-	private String g1_Id, g1_Pwd, g1_Name, g1_Sleep, cat_Code, menuct_Title, menuct_Info;
+	private String g1_Id, g1_Pwd, g1_Name, g1_Sleep, cat_Code, cat_Name, menuct_Title, menuct_Info;
 	private String mainmenu_Title, mainmenu_Content, mainmenu_Photo, submenu_Title;
 	private String payMethod_Way, payMethod_Content;
 	private double distance;
+
+	public String getCat_Name() {
+		return cat_Name;
+	}
+
+	public void setCat_Name(String cat_Name) {
+		this.cat_Name = cat_Name;
+	}
 
 	public double getDistance() {
 		return distance;

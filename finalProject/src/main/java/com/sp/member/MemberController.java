@@ -156,7 +156,7 @@ public class MemberController {
 	
 	//비밀번호를 찾고 싶어요
 	@RequestMapping("/member/forgotPass")
-	public String getMyPass(Model model, @RequestParam String m1_email, @RequestParam String m2_tel){
+	public String getMyPass(HttpSession session, Model model, @RequestParam String m1_email, @RequestParam String m2_tel){
 		model.addAttribute("state", "password");
 		Map<String, Object> map = new HashMap<>();
 		map.put("m1_email", m1_email);
@@ -174,6 +174,8 @@ public class MemberController {
 		} else {
 			map.put("result", "true");
 		}
+		session.setAttribute("result", "pass");
+		session.setAttribute("m1_email", m1_email);
 		return ".mymem.memberAccount";
 	}
 	
@@ -302,8 +304,20 @@ public class MemberController {
 	
 	//비밀번호 변경 하기 필수
 	@RequestMapping("/member/changeForgot")
-	public String rew(){
-		return "";
+	public String rewitePassword( @RequestParam String m1_pwd, @RequestParam String m1_email, HttpSession session){
+		String uri = "/member/login";
+		
+		Member1 dto = new Member1();
+		dto.setM1_pwd(m1_pwd);
+		dto.setM1_email(m1_email);
+		try {
+			dao.changePass(dto);
+		} catch (Exception e) {
+		}
+		
+		session.removeAttribute("result");
+		session.removeAttribute("m1_email");
+		return uri;
 	}
 
 	// 비밀번호 확인 폼
@@ -484,7 +498,7 @@ public class MemberController {
 		map.put("m1_num", info.getM1_Num());
 		
 		List<JumunMember> list = new ArrayList<>();
-		String myJumun= "";
+		String myJumun= "<br><br>";
 		try {
 			list = judao.detailmyPay(map);
 			
@@ -493,18 +507,23 @@ public class MemberController {
 				if(jumun.getSUBMENU_TITLE() != null){
 					myJumun += "&nbsp;&nbsp;&nbsp;" ;
 					myJumun += jumun.getSUBMENU_TITLE() + ", ";
-					System.out.println(myJumun.length() + "          " + myJumun);
 				} else {
 					myJumun += ", ";
 				}
-				if(myJumun.length() > 0){
-					myJumun.substring(0, myJumun.length()-3);
-				}
 			}
 			
-			for (int i = 0; i < list.size(); i++) {
-			}
 		} catch (Exception e) {
+		}
+		if(myJumun.length() > 0){
+			myJumun = myJumun.substring(0, myJumun.length()-2);
+		}
+		myJumun += "<br><br>";
+		//리뷰를 이미 썼으면
+		
+		if(myJumun == ""){
+			myJumun += "<a href='#' class='btn btn-block btn-primary btn-success'><span class='glyphicon glyphicon-book'></span> 리뷰 남기기</a>";
+		} else {
+			myJumun += "<a href='#' class='btn btn-block btn-primary btn-success'><span class='glyphicon glyphicon-book'></span> 내가 남긴 리뷰 보기</a>";
 		}
 		
 		map.put("myJumun", myJumun);

@@ -15,6 +15,8 @@ function cancle(){
 	f.submit();
 }
 
+<c:if test="${empty result}">
+
 function memberOk() {
 	var f = document.memberForm;
 	var str;
@@ -41,11 +43,49 @@ function memberOk() {
         return;
 	}
 	f.action = "<%=cp%>/member/mychangePass";
-	<c:if test="${not empty result}">
-		f.action = "<%=cp%>/member/changeForgot";
-	</c:if>
+	
 	f.submit();
 }
+
+</c:if>
+
+
+<c:if test="${not empty result}">
+
+function memberOk() {
+	var f = document.memberForm;
+	var str;
+	
+	str = f.m1_pwd.value;
+	str = str.trim();
+	if(!str) {
+		alert("패스워드를 입력하세요. ");
+		f.m1_pwd.focus();
+		return;
+	}
+	
+	if(!/^(?=.*[a-z])(?=.*[!@#$%^*+=-]|.*[0-9]).{5,10}$/i.test(str)) { 
+		alert("패스워드는 5~10자이며 하나 이상의 숫자나 특수문자가 포함되어야 합니다.");
+		f.m1_pwd.focus();
+		return;
+	}
+	f.m1_pwd.value = str;
+	
+
+	if(str!= f.userPwdCheck.value) {
+        alert("패스워드가 일치하지 않습니다. ");
+        f.userPwdCheck.focus();
+        return;
+	}
+	
+		f.action = "<%=cp%>/member/changeForgot";
+	
+	f.submit();
+}
+
+
+
+</c:if>
 </script>
 <style>
 .body-container {
@@ -85,8 +125,11 @@ function memberOk() {
 			      </td>
 			  </tr>
 		</table>
-			<button type="button" class="btn btn-default"  onclick="memberOk();">변경하기</button>
+		<c:if test="${not empty m1_email }">
+			<input type="hidden" name="m1_email" value="${m1_email }">
+		</c:if>
 			<button type="button" class="btn btn-inverse"  onclick="cancle();">변경 취소</button>
+			<button type="button" class="btn btn-default"  onclick="memberOk();">변경하기</button>
 		</form>
 </div>
 </div>

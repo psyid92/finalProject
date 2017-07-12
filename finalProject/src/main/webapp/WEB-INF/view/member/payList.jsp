@@ -34,7 +34,7 @@ function getDetail(data){
 			, success : function(data){
 				var myJumun = data.myJumun;
 				
-				$(realD).html(myJumun);
+				$(realD).html( myJumun);
 				$(detail).show();
 			}
 		, error :function(e){
@@ -97,8 +97,11 @@ function getDetail(data){
 			</tr>
 		</c:forEach>
 		<c:if test="${empty list }">
-			<tr><td colspan="6" align="center" valign="middle"><h4>주문 내역이 없습니다.</h4><td></tr>
+			<tr><td colspan="7" align="center" valign="middle"><h4>주문 내역이 없습니다.</h4><td></tr>
 		</c:if>
+		<tr>
+			<td><div style="min-height: 50px;"></div></td>
+		</tr>
 	</table>
 	
 </div>

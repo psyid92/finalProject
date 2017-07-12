@@ -2,6 +2,9 @@
 
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="jumun">
+	<select id="listCategory" resultType="com.sp.jumun.Jumun">
+		SELECT cat_Code, cat_Name FROM category
+	</select>
 	<select id="readMenuCategory" parameterType="Integer" resultType="com.sp.jumun.Jumun">
 		SELECT menuct_Num, menuct_Title, menuct_Info, g1_Num
 		FROM menuCate
@@ -73,7 +76,15 @@
 	       	FROM giup1 g1
 	       	LEFT OUTER JOIN giupAd ga ON g1.g1_Num = ga.g1_Num
 	       	LEFT OUTER JOIN giup3 g3 ON g1.g1_Num=g3.g3_Num
-	       	WHERE cat_Code = #{category} AND g1_Sleep = 1
+	       	<where>
+	       		g1_Sleep = 1
+	     		<if test="category!=null and category!='' ">
+	       			AND cat_Code = #{category}
+	     		</if>
+	     		<if test="searchValue!=null and searchValue!='' and searchValue != category">
+	     			AND INSTR(g1_Name, #{searchValue}) != 0
+	     		</if>
+	     	</where>
 	       	ORDER BY giupAd_Num DESC
 <![CDATA[
 	    )tb WHERE distance < 5

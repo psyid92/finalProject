@@ -5,7 +5,7 @@
 	request.setCharacterEncoding("utf-8");
 	String cp = request.getContextPath();
 %>
-
+<script type="text/javascript" src="<%=cp%>/resource/jquery/js/jquery.form.js"></script>
 <script>
 	$(function(){
 		$(".cateMenu").click(function() {
@@ -18,6 +18,8 @@
 				$.ajax({
 					type:"post"
 					,url:url
+					/* ,processData: false  // file 전송시 필수
+			        ,contentType: false  // file 전송시 필수 */
 					,data:query
 					,dataType:"json"
 					,success:function(data) {
@@ -40,7 +42,7 @@
 				s += "<div onclick='submenu("+list[i].mainmenu_Num+")' style='width: 680px; height: 30px;  line-height: 30px; background-color: #dddddd;'><div style='float: left;'>" + list[i].mainmenu_Title + "</div><div style='float: right;'>" + list[i].mainmenu_Pay + "</div></div>";
 				s += "<div id='sub"+list[i].mainmenu_Num+"' style='width:680px; background-color: white; display: none;'>"
 				s += "<div>"+list[i].mainmenu_Num + "</div><div class='title'>" + list[i].mainmenu_Title + "</div>";
-				s += "<div class='content'>"+list[i].mainmenu_Content + "</div><div>" + list[i].mainmenu_Photo + "</div>";
+				s += "<div class='content'>"+list[i].mainmenu_Content + "</div><div style='width:680px; height: 180px; background-image:url("+'<%=cp%>/resource/img/chiken.jpg'+"); background-repeat: no-repeat; background-size: contain;'></div>";
 				s += "<div class='pay'>"+list[i].mainmenu_Pay + "</div><div>" + list[i].mainmenu_Enabled + "</div></div>";
 			}
 			$(menu_on).html(s);
@@ -191,7 +193,8 @@
 	}
 		
 </script>
-	<div id="giupMenu" style="width: 680px; margin: 100px 0; float: left;">
+<div style="width: 1000px; height: 730px;">
+	<div id="giupMenu" style="width: 680px; margin-bottom: 50px; float: left;">
 		<c:forEach var="cateDto" items="${cateList}">
 		<div style="margin-bottom: 20px;">
 			<div id="cate${cateDto.menuct_Num}" class="cateMenu" style="cursor: pointer; width: 680px; height: 50px; background-color: #cccccc">${cateDto.menuct_Title}</div>
@@ -200,3 +203,4 @@
 		</c:forEach>
 	</div>
 <div id="totalJumun" style="font-size: 15px; margin: 100px 0;"></div>
+</div>

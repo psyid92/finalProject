@@ -1,7 +1,5 @@
 package com.sp.giupNotice;
 
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.request;
-
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
@@ -15,7 +13,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.mvel2.conversion.IntArrayCH;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -35,14 +32,15 @@ public class NoticeController {
 	@Autowired
 	private MyUtil myUtil;
 	
+	@Autowired
 	private FileManager fileMangaer; 
 	
 	//list 
-	@RequestMapping(value="/notice/list")
+	@RequestMapping(value="/giupNotice/list")
 	public String List(
 			@RequestParam(value="page", defaultValue="1") int current_page,
-			@RequestParam(value="searchKey", defaultValue="subject") String searchKey, 
-			@RequestParam(value="searhValue", defaultValue="") String searchValue, 
+			@RequestParam(value="searchKey", defaultValue="title") String searchKey, 
+			@RequestParam(value="searchhValue", defaultValue="") String searchValue, 
 			Model model, HttpServletRequest req ) throws Exception {
 		
 		String cp = req.getContextPath();
@@ -51,14 +49,14 @@ public class NoticeController {
 		int total_page=0;
 		int dataCount=0;
 		
-		if(req.getMethod().equalsIgnoreCase("GET")) { //Get방식인 경우 
+		if(req.getMethod().equalsIgnoreCase("GET")) { // Get방식인 경우 
 			searchValue = URLDecoder.decode(searchValue, "utf-8");
 		}
 		
 		//전체 페이지 수 
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("", searchKey);
-		map.put("", searchValue);
+		map.put("searchKey", searchKey);
+		map.put("searchValue", searchValue);
 		
 		dataCount=service.dataCount(map);
 		if(dataCount !=0)
@@ -82,13 +80,13 @@ public class NoticeController {
 		
 		// 글 리스트
 		List<Notice> list = service.listNotice(map);
-		
+		System.out.println(list.size());
 		// 리스트의 번호
 		Date endDate = new Date();
 		long gap; 
 		int listNum, n =0;
 		Iterator<Notice> it = list.iterator();
-		while(it.hasNext()) {
+		/*while(it.hasNext()) {
 			Notice data =(Notice)it.next();
 			listNum =dataCount -(start +n -1);
 			data.setListNum(listNum);
@@ -103,63 +101,67 @@ public class NoticeController {
 			data.setCreated(data.getCreated().substring(0, 10));
 			
 			n++;
-		}
+		}*/
 		
 		String query = "";
-		String listUrl = cp+"/notice/list";
-		String articleUrl = cp+"/notice/article?page="+current_page;
+		String listUrl = cp+"/giupNotice/list";
+		String articleUrl = cp+"/giupNotice/article?page="+current_page;
 		if(searchValue.length()!=0) {
 			query ="searchKey="+searchKey+"&searchValule="+URLEncoder.encode(searchValue,"utf-8");
 		}
 		
 		if(query.length() !=0) {
-			listUrl = cp+"/notice/list?"+query;
-			articleUrl=cp+"/notice/article?page="+current_page+"&"+query;
+			listUrl = cp+"/giupNotice/list?"+query;
+			articleUrl=cp+"/giupNotice/article?page="+current_page+"&"+query;
 		}
 		
 		String paging = myUtil.paging(current_page, total_page, listUrl); 
 		
-		model.addAttribute("noticeList", "2");
+		model.addAttribute("subMenu","1");
+		
+		model.addAttribute("noticeList", noticeList);
 		model.addAttribute("list", list);
 		model.addAttribute("articleUrl",articleUrl);
 		model.addAttribute("page", current_page);
-		model.addAttribute("", dataCount);
+		model.addAttribute("dataCount", dataCount);
 		model.addAttribute("paging", paging);
-		
-		return ".four.menu4.notice.list";
+		model.addAttribute("mainMenu", "3");
+		model.addAttribute("subMenu", "1");
+		System.out.println(dataCount);
+		return ".store4.menu4.giupNotice.list";
 	}
 	
 	
 	//신규 작성 
 	public String createdForm() throws Exception {
 		
-		return ".four.menu4.notice.created";
+		return ".store4.menu4.giupNotice.created";
 	}
 	
 	public String createdSubmit() throws Exception {
 		
-		return "redirect:/notice/list";
+		return "redirect:/giupNotice/list";
 	}
 	
 	
 	//상세 보기 
 	public String article() throws Exception {
 		
-		return ".four.menu.notice.article";
+		return ".store4.menu4.giupNotice.article";
 	}
 	
 	
 	//수정 
-	@RequestMapping(value="/notice/update", method=RequestMethod.GET)
+	@RequestMapping(value="/giupNotice/update", method=RequestMethod.GET)
 	public String updateNotice(
 			@RequestParam(value="num") int num,
 			@RequestParam(value="page") int page, 
 			Model model, HttpSession session) throws Exception {
 		
-		return ".four.menu.notice.created";
+		return ".store4.menu4.giupNotice.created";
 	}
 	
-	@RequestMapping(value="/notice/update", method=RequestMethod.POST)
+	@RequestMapping(value="/giupNotice/update", method=RequestMethod.POST)
 	@ResponseBody
 	public String updateSubmit(
 			Notice dto, 
@@ -167,22 +169,22 @@ public class NoticeController {
 			HttpSession session
 			) throws Exception {
 		
-		return "redirect:/notice/list?page="+page;
+		return "redirect:/giupNotice/list?page="+page;
 	}
 	
 	// 삭제 
-	@RequestMapping(value="/notice/delete", method=RequestMethod.GET)
+	@RequestMapping(value="/giupNotice/delete", method=RequestMethod.GET)
 	public String delete(
 			Notice dto, 
 			@RequestParam int num, 
 			@RequestParam int page, 
 			HttpSession session) throws Exception {
 		
-		return "rediect:/notice/list?page "+page;
+		return "rediect:/giupNotice/list?page "+page;
 	}
 	
 	//다운로드 
-	@RequestMapping(value="notice/download")
+	@RequestMapping(value="giupNotice/download")
 	public void download() throws Exception {
 		
 	}
@@ -202,6 +204,20 @@ public class NoticeController {
 		return model; 
 	}
 	
+	@RequestMapping(value = "/giupFaq/list", method = RequestMethod.GET)
+	public String faqList(Model model) {
+
+		model.addAttribute("mainMenu", "3");
+		model.addAttribute("subMenu", "2");
+		return ".store4.menu4.giupFAQ.list";
+	}
 	
+	@RequestMapping(value = "/giupQna/list", method = RequestMethod.GET)
+	public String qnaList(Model model) {
+
+		model.addAttribute("mainMenu", "3");
+		model.addAttribute("subMenu", "3");
+		return ".store4.menu4.giupQna.list";
+	}
 	
 }

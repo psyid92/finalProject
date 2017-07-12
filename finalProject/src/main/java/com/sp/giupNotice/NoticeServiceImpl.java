@@ -28,7 +28,7 @@ public class NoticeServiceImpl implements NoticeService {
 		int result=0;
 		
 		try {
-			result = dao.getIntValue("notice.dataCount", map);
+			result = dao.getIntValue("giupNotice.dataCount", map);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -40,7 +40,7 @@ public class NoticeServiceImpl implements NoticeService {
 		List<Notice> list = null;
 		
 		try {
-			list=dao.getListData("notic.listNotice", map);
+			list=dao.getListData("giupNotice.listNotice", map);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -51,7 +51,7 @@ public class NoticeServiceImpl implements NoticeService {
 	public List<Notice> listNoticeTop() {
 		List<Notice> list = null; 
 		try {
-			list=dao.getListData("notice.listNoticeTop");
+			list=dao.getListData("giupNotice.listNoticeTop");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

@@ -25,7 +25,6 @@
 					}
 					,error:function(e) {
 						console.log(e.responseText);
-					
 					}
 				});
 			} else {
@@ -81,7 +80,7 @@
 				if (i == list.length-1)
 					s += "<br>";
 			}
-			s += "<button type='button' onclick='damgi("+main_Num+");'>담기</button></div>";
+			s += "<button type='button' class='btn btn-success' onclick='damgi("+main_Num+");'>담기</button></div>";
 			$(menu_on).append(s);
 		}
 	}

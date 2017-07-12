@@ -7,7 +7,16 @@ public class Jumun {
 	private String g1_Id, g1_Pwd, g1_Name, g1_Sleep, cat_Code, menuct_Title, menuct_Info;
 	private String mainmenu_Title, mainmenu_Content, mainmenu_Photo, submenu_Title;
 	private String payMethod_Way, payMethod_Content;
-	
+	private double distance;
+
+	public double getDistance() {
+		return distance;
+	}
+
+	public void setDistance(double distance) {
+		this.distance = distance;
+	}
+
 	private double g3_lati, g3_longti;
 
 	public double getG3_lati() {

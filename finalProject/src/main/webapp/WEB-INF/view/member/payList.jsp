@@ -59,7 +59,6 @@ function getDetail(data){
 <h3>주문 내역</h3>
 </div>
 <br>
-<br>
 <div style="border-radius: 5px; border: 1px double black; min-height: 300px;" align="center">
 <br><br>
 

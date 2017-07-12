@@ -489,12 +489,16 @@ public class MemberController {
 			list = judao.detailmyPay(map);
 			
 			for (JumunMember jumun : list) {
-				myJumun += jumun.getMAINMENU_TITLE() + "&nbsp;&nbsp;&nbsp;" + jumun.getMAINGOODS_COUNT() + "&nbsp;개";
+				myJumun += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + jumun.getMAINMENU_TITLE() + "&nbsp;&nbsp;&nbsp;" + jumun.getMAINGOODS_COUNT() + "&nbsp;개";
 				if(jumun.getSUBMENU_TITLE() != null){
 					myJumun += "&nbsp;&nbsp;&nbsp;" ;
-					myJumun += jumun.getSUBMENU_TITLE() + "<br>";
+					myJumun += jumun.getSUBMENU_TITLE() + ", ";
+					System.out.println(myJumun.length() + "          " + myJumun);
 				} else {
-					myJumun += "<br>";
+					myJumun += ", ";
+				}
+				if(myJumun.length() > 0){
+					myJumun.substring(0, myJumun.length()-3);
 				}
 			}
 			

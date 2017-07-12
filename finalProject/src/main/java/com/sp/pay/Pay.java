@@ -8,7 +8,7 @@ public class Pay {
 	private String orders_State, jumun_Created, jumun_Addr;
 	private String jumun_Tel, jumun_Memo;
 	private String pay_Created, refund_Created, refund_Memo;
-
+	
 	public int getOrders_Num() {
 		return orders_Num;
 	}

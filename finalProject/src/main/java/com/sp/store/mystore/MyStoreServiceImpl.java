@@ -14,12 +14,12 @@ public class MyStoreServiceImpl implements MyStoreService{
 	private CommonDAO dao;
 	
 	@Override
-	public int insertMenuCT(MyStore dto) throws Exception {
+	public int insertMenuCT(MyStore mystoreDto) throws Exception {
 		int result = 0;
 		try {
-			dao.getIntValue("menu.seqMenuCT");
-			dto.setMenuct_Num(result);
-			dao.insertData("menu.insertMenuCT", dto);
+			result=dao.getIntValue("menu.seqmenuct");
+			mystoreDto.setMenuct_Num(result);
+			result = dao.insertData("menu.insertMenuCT", mystoreDto);
 		} catch (Exception e) {
 			result = 0;
 			System.out.println(e.toString());
@@ -28,12 +28,12 @@ public class MyStoreServiceImpl implements MyStoreService{
 	}
 
 	@Override
-	public int insertMainMenu(MyStore dto) throws Exception {
+	public int insertMainMenu(MyStore mystoreDto) throws Exception {
 		int result = 0;
 		try {
-			dao.getIntValue("menu.seqMainMenu");
-			dto.setMainmenu_Num(result);
-			result = dao.insertData("menu.insertMainMenu", dto);
+			result=dao.getIntValue("menu.seqmainmenu");
+			mystoreDto.setMainmenu_Num(result);
+			result = dao.insertData("menu.insertMainMenu", mystoreDto);
 		} catch (Exception e) {
 			result = 0;
 			System.out.println(e.toString());
@@ -43,12 +43,12 @@ public class MyStoreServiceImpl implements MyStoreService{
 	}
 
 	@Override
-	public int insertSubMenu(MyStore dto) throws Exception {
+	public int insertSubMenu(MyStore mystoreDto) throws Exception {
 		int result = 0;
 		try {
-			dao.getIntValue("menu.seqSubMenu");
-			dto.setSubmenu_Num(result);
-			result = dao.insertData("menu.insertSubMenu", dto);
+			result=dao.getIntValue("menu.seqsubmenu");
+			mystoreDto.setSubmenu_Num(result);
+			result = dao.insertData("menu.insertSubMenu", mystoreDto);
 		} catch (Exception e) {
 			result = 0;
 			System.out.println(e.toString());
@@ -91,34 +91,34 @@ public class MyStoreServiceImpl implements MyStoreService{
 
 	@Override
 	public List<MyStore> readMenuCT(int g1_Num) throws Exception {
-		List<MyStore> list = new ArrayList<>();
+		List<MyStore> menuctlist = new ArrayList<>();
 		try {
-			list = dao.getListData("menu.readMenuCT", g1_Num);
+			menuctlist = dao.getListData("menu.readMenuCT", g1_Num);
 		} catch (Exception e) {
 			throw e;
 		}
-		return list;
+		return menuctlist;
 	}
 
 	@Override
 	public List<MyStore> readMainMenu(int menuct_num) throws Exception {
-		List<MyStore> list = new ArrayList<>();
+		List<MyStore> mainmenulist = new ArrayList<>();
 		try {
-			list = dao.getListData("menu.readMainMenu", menuct_num);
+			mainmenulist = dao.getListData("menu.readMainMenu", menuct_num);
 		} catch (Exception e) {
 			throw e;
 		}
-		return list;
+		return mainmenulist;
 	}
 
 	@Override
 	public List<MyStore> readSubmenu(int mainmenu_Num) throws Exception {
-		List<MyStore> list = new ArrayList<>();
+		List<MyStore> submenulist = new ArrayList<>();
 		try {
-			list = dao.getListData("menu.readSubMenu", mainmenu_Num);
+			submenulist = dao.getListData("menu.readSubMenu", mainmenu_Num);
 		} catch (Exception e) {
 			throw e;
 		}
-		return list;
+		return submenulist;
 	}
 }

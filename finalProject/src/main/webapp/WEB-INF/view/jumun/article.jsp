@@ -25,7 +25,6 @@
 					}
 					,error:function(e) {
 						console.log(e.responseText);
-					
 					}
 				});
 			} else {
@@ -81,7 +80,7 @@
 				if (i == list.length-1)
 					s += "<br>";
 			}
-			s += "<button type='button' onclick='damgi("+main_Num+");'>담기</button></div>";
+			s += "<button type='button' class='btn btn-success' onclick='damgi("+main_Num+");'>담기</button></div>";
 			$(menu_on).append(s);
 		}
 	}
@@ -115,6 +114,10 @@
 	}
 	var jumun_Num = 0;
 	function jumunTab(main_Num, sub_Num, content, pay){
+		if ('${sessionScope.member.userId}' == "") {
+			location.href = "<%=cp%>/member/login";
+			return;	
+		}
 		var tab = "<form name='jumunForm' method='post' onsubmit='return totalJumun();'>";
 		tab += "<div style='width: 300px; float: right;'>";
 		tab += "<div>장바구니</div>";

@@ -1,5 +1,6 @@
 package com.sp.member;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -380,6 +381,7 @@ public class MemberController {
 	@ResponseBody // AJax 사용
 	public Map<String, Object> deleteLike(HttpSession session,
 			@RequestParam(value = "mydata", defaultValue = "") int mydata) {
+		
 
 		SessionInfo info = (SessionInfo) session.getAttribute("member");
 		try {
@@ -459,6 +461,11 @@ public class MemberController {
 	@RequestMapping("/member/payList")
 	public String goPayList(HttpSession session, Model model) throws Exception{
 		SessionInfo info = (SessionInfo)session.getAttribute("member");
+		
+		if (session.getAttribute("member") == null) {
+			return ".mymem.login";
+		}
+		
 		List<JumunMember> list = null;
 		try {
 			list = judao.listmyPay(info.getM1_Num());
@@ -478,14 +485,27 @@ public class MemberController {
 		map.put("jumun_num", jumun_num);
 		map.put("m1_num", info.getM1_Num());
 		
-		JumunMember dto = new JumunMember();
-		
+		List<JumunMember> list = new ArrayList<>();
+		String myJumun= "";
 		try {
-			dto = judao.detailmyPay(map);
+			list = judao.detailmyPay(map);
+			
+			for (JumunMember jumun : list) {
+				myJumun += jumun.getMAINMENU_TITLE() + "&nbsp;&nbsp;&nbsp;" + jumun.getMAINGOODS_COUNT() + "&nbsp;개";
+				if(jumun.getSUBMENU_TITLE() != null){
+					myJumun += "&nbsp;&nbsp;&nbsp;" ;
+					myJumun += jumun.getSUBMENU_TITLE() + "<br>";
+				} else {
+					myJumun += "<br>";
+				}
+			}
+			
+			for (int i = 0; i < list.size(); i++) {
+			}
 		} catch (Exception e) {
 		}
 		
-		map.put("dto", dto);
+		map.put("myJumun", myJumun);
 		return map;
 		
 	}

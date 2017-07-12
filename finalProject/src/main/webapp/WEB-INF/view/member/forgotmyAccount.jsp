@@ -26,12 +26,12 @@
 	}
 </c:if>
 
-<c:if test="${state eq 'password' }">
+<c:if test="${state eq 'password'}">
 	function myAccountPw(){
 		var f=document.memberForm;
-		if($('#"m1_email"').val()== null || $('#"m1_email"').val() == ""){
+		if($('#m1_email').val()== null || $('#m1_email').val() == ""){
 			alert("아이디를 입력해 주세요.");
-			$('#"m1_email"').focus();
+			$('#m1_email').focus();
 			return;
 		}
 		if($('#m2_tel').val() == null || $('#m2_tel').val() == ""){

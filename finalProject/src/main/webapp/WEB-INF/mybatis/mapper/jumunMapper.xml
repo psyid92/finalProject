@@ -2,21 +2,17 @@
 
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="jumun">
-	<select id="listGiup" parameterType="map" resultType="com.sp.jumun.Jumun">
-		SELECT * FROM (
-			SELECT ROWNUM rnum, tb.* FROM (
-				SELECT g1.g1_Num, g1_Id, g1_Pwd, g1_Name, g1_Sleep, cat_Code,
-				NVL(giupAd_Num, 0) giupAd_Num, g3_lati, g3_longti
-				FROM giup1 g1
-				LEFT OUTER JOIN giupAd ga ON g1.g1_Num = ga.g1_Num
-				LEFT OUTER JOIN giup3 g3 ON g1.g1_Num=g3.g3_Num
-				WHERE cat_Code = #{category} AND g1_Sleep = 1
-				ORDER BY giupAd_Num DESC
+	<!-- <select id="listGiup" parameterType="String" resultType="com.sp.jumun.Jumun">
+		SELECT g1.g1_Num, g1_Id, g1_Pwd, g1_Name, g1_Sleep, cat_Code,
+			NVL(giupAd_Num, 0) giupAd_Num, g3_lati, g3_longti
+		FROM giup1 g1
+		LEFT OUTER JOIN giupAd ga ON g1.g1_Num = ga.g1_Num
+		LEFT OUTER JOIN giup3 g3 ON g1.g1_Num=g3.g3_Num
+		WHERE cat_Code = #{category} AND g1_Sleep = 1
+		ORDER BY giupAd_Num DESC, g1.g1_Num ASC
 <![CDATA[
-			) tb WHERE ROWNUM <= #{end}
-		) WHERE rnum >= #{start}
 ]]>
-	</select>
+	</select> -->
 	
 	<select id="readMenuCategory" parameterType="Integer" resultType="com.sp.jumun.Jumun">
 		SELECT menuct_Num, menuct_Title, menuct_Info, g1_Num
@@ -65,6 +61,7 @@
 			join orders o on o.orders_num = j.orders_num
 			left outer join pay p on j.jumun_num = p.jumun_num
 			where m1_num=#{m1_num}
+			order by jumun_num desc
 	</select>
 	
 	<!-- member 주문상세 가져오기 쿼리 -->
@@ -79,4 +76,18 @@
 			order by jumun_num desc	
 	</select>
 	
+	<select id="listGiup" parameterType="map" resultType="com.sp.jumun.Jumun">
+		SELECT tb.* FROM (
+	 		SELECT g1.g1_Num, g1_Id, g1_Pwd, g1_Name, g1_Sleep, cat_Code,
+	       	NVL(giupAd_Num, 0) giupAd_Num, g3_lati, g3_longti,
+	       	DISTNACE_WGS84(#{cur_lng},#{cur_lat},g3_longti,g3_lati) distance
+	       	FROM giup1 g1
+	       	LEFT OUTER JOIN giupAd ga ON g1.g1_Num = ga.g1_Num
+	       	LEFT OUTER JOIN giup3 g3 ON g1.g1_Num=g3.g3_Num
+	       	WHERE cat_Code = #{category} AND g1_Sleep = 1
+	       	ORDER BY giupAd_Num DESC
+<![CDATA[
+	    )tb WHERE distance < 5
+]]>
+	</select>
 </mapper>

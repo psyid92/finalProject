@@ -71,8 +71,6 @@ public class MemberController {
 
 			if (uri == null) {
 				uri = "redirect:/";
-			} else {
-				uri = "redirect:" + uri;
 			}
 
 			return uri;

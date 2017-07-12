@@ -11,6 +11,20 @@ public class AdminGiup {
 	private String g3_addr1, g3_addr2, g3_addr3;
 	private float g3_lati, g3_longti;
 	
+	private int giupad_term,ad_num;
+	
+	public int getGiupad_term() {
+		return giupad_term;
+	}
+	public void setGiupad_term(int giupad_term) {
+		this.giupad_term = giupad_term;
+	}
+	public int getAd_num() {
+		return ad_num;
+	}
+	public void setAd_num(int ad_num) {
+		this.ad_num = ad_num;
+	}
 	private int listNum;
 	
 	public int getListNum() {

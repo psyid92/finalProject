@@ -40,8 +40,10 @@ function memberOk() {
         f.userPwdCheck.focus();
         return;
 	}
-	
 	f.action = "<%=cp%>/member/mychangePass";
+	<c:if test="${not empty result}">
+		f.action = "<%=cp%>/member/changeForgot";
+	</c:if>
 	f.submit();
 }
 </script>

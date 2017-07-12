@@ -3,7 +3,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="giupNotice">
 	<select id="maxNum" resultType="Integer">
-		SELECT NVL(MAX(num), 0) FROM notice
+		SELECT NVL(MAX(noti_Num), 0) FROM giupNotice
 	</select>
 	
 	<!-- insert -->
@@ -23,8 +23,8 @@
 		<if test="searchKey=='noti_Content' ">
 			DBMS_LOB.INSTR(noti_Content, #{searchValue) &gt; 0
 		</if>
-		<if test="searchKey=='created'">
-			TO_CHAR(created, 'yyyy-mm-dd) = #{searchValue}
+		<if test="searchKey=='noti_Created'">
+			TO_CHAR(noti_Created, 'yyyy-mm-dd') = #{searchValue}
 		</if>
 	</sql>
 	
@@ -44,33 +44,36 @@
 	<select id="listNotice" parameterType="map" resultType="com.sp.giupNotice.Notice">
 		SELECT * FROM (
 			SELECT ROWNUM rnum, tb.* FROM (
-				SELECT noti_Num, giupNotice, m.admin_Id, noti_Title, noti_HitCount, created
+				SELECT noti_Num, noti_Top, gn.admin_Id, noti_Title, noti_HitCount, noti_hidden, noti_Created
 				FROM giupNotice gn JOIN admin a ON gn.admin_Id=a.admin_Id
 				<where>
 					<if test="searchValue !=null and searchValue !='' ">
 						<include refid="where-list"></include>
-					</if>
-				ORDER BY noti_Num
-				</where>			
+					</if>				
+				</where>
+				ORDER BY noti_Num DESC	
 	<![CDATA[	
 			) tb WHERE ROWNUM <= #{end}	
-		) WEHER rnum >=#{start}
+		) WHERE rnum >=#{start}
 	]]>
 	</select>
 	
-	
+	<!-- 상단노출 : 추가 구현 1) max 4개 까지만 노출   2) 한 화면에 노출되는 10개 리스트에 공지도 포함함 (상단노출+상단비노출 = 10)-->
 	<select id="listNoticeTop" resultType="com.sp.giupNotice.Notice">
-		SELECT noti_Num, giupNotice, noti_Title, m.admin_Id, noti_HitCount, 
-			TO_CHAR(noti_Created, 'yyyy-mm-dd') created
-		FROM giupNotice gn JOIN admin a ON m.admin_Id=gn.admin_Id
-		WHERE giupNotice=1
-		ORDER BY num DESC
+		SELECT noti_Num, noti_Top, noti_Title, gn.admin_Id, noti_HitCount, noti_hidden, 
+			TO_CHAR(noti_Created, 'yyyy-mm-dd') noti_Created
+		FROM giupNotice gn JOIN admin a ON a.admin_Id=gn.admin_Id
+		WHERE noti_Top=1
+		ORDER BY noti_Num DESC
 	</select>
+	
+	<!-- hidden 처리: 추가 구현  -->
+	
 	
 	<!-- 상세보기  -->
 	<select id="readNotice" resultType="com.sp.giupNotice.Notice">
-		SELECT noti_Num, m.admin_Id, noti_Title, noti_Content, created, noti_HitCount, giupNotice
-		FROM giupNotice gn JOIN admin a ON m.admin_Id=gn.admin_Id
+		SELECT noti_Num, gn.admin_Id, noti_Title, noti_Content, noti_Created, noti_HitCount, noti_Top, noti_hidden, 
+		FROM giupNotice gn JOIN admin a ON a.admin_Id=gn.admin_Id
 		WHERE noti_Num=#{noti_Num}
 	</select>
 	
@@ -81,41 +84,69 @@
 	
 	<!-- 이전글, 다음글 -->
 	<select id="preReadNotice" resultType="com.sp.giupNotice.Notice" parameterType="map">
-	
+		SELECT tb.* FROM (
+			SELECT noti_Num, noti_Title
+			FROM giupNotice gn JOIN admin a ON gn.admin_Id=a.admin_Id
+			<where>
+			 <if test="searchValue !=null and searchValue !='' ">
+			 	<include refid="where-list"></include>
+			 </if>
+			 <![CDATA[
+			 	AND (num>#{noti_Num))
+			 ]]>
+			</where>			
+			ORDER BY noti_Num ASC		
+		) tb WHERE ROWNUM=1
 	</select>
 	
 	<select id="nextReadNotice" resultType="com.sp.giupNotice.Notice" parameterType="map">
-	
+		SELECT tb.* FROM (
+			SELECT noti_Num, noti_Title 
+			FROM giupNotice gn JOIN admin a ON gn.admin_Id=a.admin_id
+			<where>
+			<if test="searchValue !=null and searchValue !='' ">
+				<include refid="where-list"></include>
+			</if>
+			<![CDATA[
+				AND (noti_Num<#{noti_Num})
+			]]>			
+			</where>
+			ORDER BY noti_Num DESC
+		) tb WHERE ROWNUM=1
 	
 	</select>
 	
 	
 	<!-- 글 수정  -->
 	<update id="updateNotice" parameterType="com.sp.giupNotice.Notice">
-	
+		UPDATE giupNotice 
+		SET noti_Num=#{noti_Num}, noti_Title=#{noti_Title}, noti_Content=#{noti_Content}, 
+			noti_Top=#{noti_Top}, noti_hidden=#{noti_hidden}, admin_Id=#{admin_Id}
 	</update>
-	
 	
 	<!-- 글 삭제 -->
 	<delete id="deleteNotice" parameterType="com.sp.giupNotice.Notice"> 
-	
+		DELETE FROM giupNotice WHERE noti_Num = #{noti_Num}
 	
 	</delete>
 	
-	<!--  파일처리  -->
+	<!--  파일처리 : 추가구현 >> 첨부파일은 5개 까지만 첨부 가능 -->
 	<insert id="insertFile" parameterType="com.sp.giupNotice.Notice">
-	
+		INSERT INTO giupNoticeFile(noti_FileNum, noti_Num, noti_OriginalFileName, noti_SaveFileName, noti_FileSize)
+		VALUE(#{noti_FileNum}, #{noti_Num}, #{noti_OriginalFileName}, #{noti_SaveFileName})
 	</insert>
 	
 	<select id="listFile" parameterType="Integer" resultType="com.sp.giupNotice.Notice">
-	
+		SELECT noti_FileNum, noti_Num, noti_OriginalFileName, noti_SaveFileName, noti_FileSize
+		FROM giupNoticeFile WHERE noti_Num = #{noti_Num}
 	</select>
 	
 	<select id="readFile" parameterType="com.sp.giupNotice.Notice">
-	
+		SELECT noti_FileNum, noti_Num, noti_OriginalFileName, noti_SaveFileName, noti_FileSize
+		FROM giupNoticeFile WHERE noti_FileNum = #{noti_FileNum}
 	</select>
 	
 	<delete id="deleteFile" parameterType="map">
-	
+		DELETE FROM giupNoticeFile WHERE ${field} = #{noti_Num}  <!-- field는 컬럼명이 동적일 때 -->
 	</delete>
 </mapper>

@@ -7,6 +7,33 @@ public class Jumun {
 	private String g1_Id, g1_Pwd, g1_Name, g1_Sleep, cat_Code, menuct_Title, menuct_Info;
 	private String mainmenu_Title, mainmenu_Content, mainmenu_Photo, submenu_Title;
 	private String payMethod_Way, payMethod_Content;
+	private double distance;
+
+	public double getDistance() {
+		return distance;
+	}
+
+	public void setDistance(double distance) {
+		this.distance = distance;
+	}
+
+	private double g3_lati, g3_longti;
+
+	public double getG3_lati() {
+		return g3_lati;
+	}
+
+	public void setG3_lati(double g3_lati) {
+		this.g3_lati = g3_lati;
+	}
+
+	public double getG3_longti() {
+		return g3_longti;
+	}
+
+	public void setG3_longti(double g3_longti) {
+		this.g3_longti = g3_longti;
+	}
 
 	public int getPayMethod_Num() {
 		return payMethod_Num;

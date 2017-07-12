@@ -1,12 +1,15 @@
 package com.sp.member;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.sp.common.dao.CommonDAO;
+import com.sp.jumun.JumunMember;
 
 @Service("member.memberService")
 public class MemberImpl implements MemberDAO {
@@ -61,6 +64,32 @@ public class MemberImpl implements MemberDAO {
 		// TODO Auto-generated method stub
 		return 0;
 	}
+	
+	
+	//이메일 찾기 / 아이디 찾기
+	@Override
+	public String getMyEmail(Map<String, Object> map) throws Exception {
+		String m1_email = "";
+		try {
+			m1_email = dao.getReadData("member.findId", map);
+		} catch (Exception e) {
+		}
+		return m1_email;
+	}
+
+	//비밀번호 찾기
+	@Override
+	public int getMyPassword(Map<String, Object> map) throws Exception {
+		int result = 0;
+		try {
+			result=dao.getReadData("member.findPass", map);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		return result;
+	}
+	
+	
 
 	// lastlongin 수정
 	@Override
@@ -145,7 +174,6 @@ public class MemberImpl implements MemberDAO {
 
 	/*
 	 * -------------------------------------------------------------------------
-	 * ---------------
 	 * -------------------------------------------------------------------------
 	 * ---------------- 기업 좋아요 버튼 / 찜하기 버튼
 	 */
@@ -190,5 +218,6 @@ public class MemberImpl implements MemberDAO {
 		return list;
 	}
 
+	
 
 }

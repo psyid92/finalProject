@@ -44,6 +44,7 @@ public class StoreContorller {
 			Model model) throws Exception{
 		
 		Store dto = service.readStore(g1_Id);
+		
 		if (dto == null || (!dto.getG1_Pwd().equals(g1_Pwd))){
 			model.addAttribute("message", "아이디 또는 패스워드가 일치하지 않습니다.");
 			return "store/store/login";
@@ -53,9 +54,10 @@ public class StoreContorller {
 		SessionInfo info = new SessionInfo();
 		info.setG1_Id(dto.getG1_Id());
 		info.setG1_Name(dto.getG1_Name());
+		info.setG1_Num(dto.getG1_Num());
 		session.setAttribute("store", info);
 		
-		return "redirect:/store/mystore";
+		return ".store4.menu1.mystore.list";
 	}
 
 	@RequestMapping(value="/store/logout")

@@ -35,7 +35,7 @@ label {
 				</td>
 			</tr>
 			<tr>	
-				<td width="60" valign="top" style="text-align: right; padding-top: 5px;">
+				<td width="70" valign="top" style="text-align: right; padding-top: 5px;">
 					<label style="font-weight: 900;">주소</label>
 				</td>
 				<td style="padding-left: 15px;">
@@ -48,7 +48,7 @@ label {
 				</td>
 			</tr>
 			<tr>
-				<td width="60" valign="top" style="text-align: right; padding-top: 5px;">
+				<td width="70" valign="top" style="text-align: right; padding-top: 5px;">
 					<label style="font-weight: 900;">이름</label>
 				</td>
 				<td style="padding-left: 15px;">
@@ -58,7 +58,7 @@ label {
 				</td>
 			</tr>
 			<tr>
-				<td width="60" valign="top" style="text-align: right; padding-top: 5px;">
+				<td width="70" valign="top" style="text-align: right; padding-top: 5px;">
 					<label style="font-weight: 900;">전화번호</label>
 				</td>
 				<td style="padding-left: 15px;">
@@ -68,12 +68,24 @@ label {
 				</td>
 			</tr>
 			<tr>
-				<td width="60" valign="top" style="text-align: right; padding-top: 5px;">
+				<td width="70" valign="top" style="text-align: right; padding-top: 5px;">
 					<label style="font-weight: 900;">요청사항</label>
 				</td>
 				<td style="padding-left: 15px;">
 					<div class="form-group">
 						<input type="text" id="memo" style="width: 95%;" maxlength="50" class="form-control" placeholder="요청사항을 입력 해 주세요. (50자 이내)">
+			    	</div>
+			    </td>
+			</tr>
+			<tr>
+				<td width="70" valign="top" style="text-align: right; padding-top: 5px;">
+					<label style="font-weight: 900;">마일리지</label>
+				</td>
+				<td style="padding-left: 15px;">
+					<div class="form-group">
+						<input type="text" id="mileage" style="width: 25%; float:left; margin-right: 10px;" maxlength="50" class="form-control" placeholder="보유 마일리지 : ${mileage}p">
+						<button type="button" class="btn btn-default" style="width: 115px;">적용하기</button>
+						<div style='font-size: 14px;'>마일리지는 1000p이상부터 사용 가능하며 100p단위로 사용 하실 수 있습니다.</div>
 			    	</div>
 			    </td>
 			</tr>
@@ -95,10 +107,14 @@ label {
 			<input type="hidden" name="main_Num" value="${dto.mainmenu_Num}">
 			<input type="hidden" name="sub_Num" value="${subList[idx.index].submenu_Num}">
 		</c:forEach>
+		<div id="jumunMileage" style="border-bottom: 1px solid black; display: none;">
+			<div style="float: left;">마일리지 사용</div><div style="float: right;"></div><br>
+		</div>
 	</div>
 	<div style='border-top: 1px solid black;'>
 		<div style='float: left;'>Total</div>
 		<div id='total_Pay' style='float: right; font-weight: 900;'></div>
+		<input type='hidden' id='jumun_Pay'>
 	</div><br>
 	<div style="margin: 15px 0;">
 		<select id="select" class="form-control">
@@ -120,6 +136,67 @@ label {
 <script type="text/javascript" src="https://service.iamport.kr/js/iamport.payment-1.1.2.js"></script>
 <script type="text/javascript">
 	$(function(){
+		if (${mileage} < 1000) {
+			$("#mileage").attr("readonly", true);
+			$("#mileage").next().prop("disabled", true);
+		}
+		$("#mileage").next().click(function(){
+			if ($("#mileage").val() == "") {
+				$("#mileage").next().next().html("마일리지를 입력 해 주세요.");
+				warning()
+				return;
+			}
+			if (Number($("#mileage").val()) > ${mileage}) {
+				$("#mileage").next().next().html("보유 마일리지 보다 많습니다.");
+				warning()
+				return;
+			}
+			if (isNaN($("#mileage").val())) {
+				$("#mileage").next().next().html("숫자를 입력 해 주세요.");
+				warning()
+				return;
+			}
+			if ($("#mileage").val().indexOf("-") != -1) {
+				$("#mileage").next().next().html("-는 입력할 수 없습니다.");
+				warning()
+				return;
+			}
+			if (Number($("#mileage").val()) % 100 != 0) {
+				$("#mileage").next().next().html("100p 단위를 입력 해 주세요.");
+				warning()
+				return;
+			}
+			if (Number($("#mileage").val()) >= Number($("#jumun_Pay").val())) {
+				$("#mileage").next().next().html("사용하려는 마일리지가 총 금액과 같거나 높습니다.");
+				warning()
+				return;
+			}
+			
+			var tp = $("#total_Pay").html();
+			tp = tp.substring(0,tp.length-1);
+			var oriMil = $("#jumunMileage div:nth-child(2)").html()
+			oriMil = oriMil.substring(1,oriMil.length-1);
+			tp = Number(tp) + Number(oriMil);
+			tp = tp - $("#mileage").val();
+			
+			$("#jumunMileage div:nth-child(2)").html("-"+$("#mileage").val()+"원");
+			$("#total_Pay").html(tp+"원");
+			
+			$("#mileage").next().next().html("마일리지 사용이 적용되었습니다.");
+			$("#mileage").css("border","1px solid #cccccc");
+			$("#mileage").next().next().css("color","blue");
+			if($("#mileage").val() == 0) {
+				$("#jumunMileage").hide();
+			} else {
+				$("#jumunMileage").show();
+			}
+		});
+	});
+	function warning(){
+		$("#mileage").css("border","1px solid #ff0000");
+		$("#mileage").next().next().css("color","orange");
+	}
+	$(function(){
 		var s = 0;
 		var n = "";
 		$(".pay").each(function(){
@@ -127,7 +204,9 @@ label {
 			n = n.substring(0,n.length-1);
 			s += Number(n);
 		});
+		
 		$("#total_Pay").html(s+"원");
+		$("#jumun_Pay").val(s);
 		
 		$("#select").change(function(){
 			if($("#select option:selected").attr("class") == 'way') {
@@ -182,38 +261,49 @@ function sample6_execDaumPostcode() {
 
 	$("#payBtn").click(function(){
 		if($("#addr1").val().length == 0 || $("#addr2").val().length == 0 || $("#addr3").val().length == 0) {
-			alert("주소를 입력 해 주세요.");
+			$("#addr3").css("border","1px solid #ff0000");
 			$("#addr3").focus();
 			return;
 		}
 		if ($("#name").val().length == 0) {
-			alert("받는사람의 이름을 입력 해 주세요.");
+			$("#addr3").css("border","1px solid #cccccc");
+			$("#name").css("border","1px solid #ff0000");
 			$("#name").focus();
 			return;
 		}
 		if ($("#tel").val().length == 0) {
-			alert("전화번호를 입력 해 주세요.");
+			$("#addr3").css("border","1px solid #cccccc");
+			$("#name").css("border","1px solid #cccccc");
+			$("#tel").css("border","1px solid #ff0000");
 			$("#tel").focus();
 			return;
 		}
 		if (isNaN($("#tel").val())) {
-			alert("숫자만 입력 해 주세요.");
+			$("#tel").css("border","1px solid #ff0000");
 			$("#tel").val("");
 			$("#tel").focus();
 			return;
 		}
 		if ($("#memo").val().length == 0) {
-			alert("요청사항을 입력 해 주세요")
+			$("#addr3").css("border","1px solid #cccccc");
+			$("#name").css("border","1px solid #cccccc");
+			$("#tel").css("border","1px solid #cccccc");
+			$("#memo").css("border","1px solid #ff0000");
 			$("#memo").focus();
 			return;
 		}
+		$("#addr3").css("border","1px solid #cccccc");
+		$("#name").css("border","1px solid #cccccc");
+		$("#tel").css("border","1px solid #cccccc");
+		$("#memo").css("border","1px solid #cccccc");
 		payModal();
 	});
 	
 	function payModal() {
 		var name = "주문 기업 : ${g1_Name}";
-		var pay = $("#total_Pay").html();
-		var amount = pay.substring(0,pay.length-1);
+		var jumun_Pay = $("#jumun_Pay").val();
+		var pay_Pay = $("#total_Pay").html();
+		var amount = pay_Pay.substring(0,pay_Pay.length-1);
 		var email = '${sessionScope.member.userId}';
 		var buyer_name = $("#name").val();
 		var tel = $("#tel").val();
@@ -221,7 +311,8 @@ function sample6_execDaumPostcode() {
 		var postcode = $("#addr1").val();
 		var memo = $("#memo").val();
 		var m1_Num = ${sessionScope.member.m1_Num};
-		
+		var mileage = $("#jumunMileage div:nth-child(2)").html();
+		mileage = mileage.substring(1,mileage.length-1);
 		var mainList = document.getElementsByName('main_Num');
 		var subList = document.getElementsByName('sub_Num');
 		var main_Nums = "";
@@ -235,6 +326,11 @@ function sample6_execDaumPostcode() {
 				sub_Nums += subList[i].value+",";
 			}
 		}
+		
+		if (pay_Pay == 0) {
+			
+		}
+		
 		
 		
 		var IMP = window.IMP; // 생략가능
@@ -254,9 +350,9 @@ function sample6_execDaumPostcode() {
 		}, function(rsp) {
 		    if ( rsp.success ) {
 		        var url = "<%=cp%>/pay/pay";
-		        var query = "jumun_Pay="+amount+"&jumun_Tel="+tel+"&jumun_Memo="+memo;
+		        var query = "jumun_Pay="+jumun_Pay+"&pay_Pay="+amount+"&jumun_Tel="+tel+"&jumun_Memo="+memo;
 		        query += "&jumun_Addr="+addr+"&m1_Num="+m1_Num;
-		        query += "&main_Nums="+main_Nums+"&sub_Nums="+sub_Nums;
+		        query += "&main_Nums="+main_Nums+"&sub_Nums="+sub_Nums+"&mileage="+mileage;
 		        $.ajax({
 					type:"post"
 					,url:url

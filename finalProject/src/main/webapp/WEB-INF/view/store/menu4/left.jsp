@@ -28,9 +28,9 @@
 		</div> -->
 		<div id="collapseThree" class="panel-collapse collapse in"
 			role="tabpanel" aria-labelledby="headingThree">
-					<a href="<%=cp%>/store/giupNotice" class="list-group-item">공지사항</a>
-					<a href="<%=cp%>/store/giupFaq" class="list-group-item">FAQ</a>
-					<a href="<%=cp%>/store/giupQna" class="list-group-item">Q&amp;A</a>
+					<a href="<%=cp%>/giupNotice/list" class="list-group-item">공지사항</a>
+					<a href="<%=cp%>/giupFaq/list" class="list-group-item">FAQ</a>
+					<a href="<%=cp%>/giupQna/list" class="list-group-item">Q&amp;A</a>
 			</div>
 		</div> 
 	</div>

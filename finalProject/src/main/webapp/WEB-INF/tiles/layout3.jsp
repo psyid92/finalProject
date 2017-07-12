@@ -27,7 +27,7 @@
 
 body {
 	font-family: ice;
-	font-size: 15px;
+	font-size: 20px;
 }
 </style>
 </head>

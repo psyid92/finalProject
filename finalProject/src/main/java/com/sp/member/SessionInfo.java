@@ -5,6 +5,8 @@ public class SessionInfo {
 	private String userName;
 	private int memberLevel;
 	private int m1_Num;
+	private String check_visit;
+	
 	
 	
 	
@@ -32,4 +34,11 @@ public class SessionInfo {
 	public void setMemberLevel(int memberLevel) {
 		this.memberLevel = memberLevel;
 	}
+	public String getCheck_visit() {
+		return check_visit;
+	}
+	public void setCheck_visit(String check_visit) {
+		this.check_visit = check_visit;
+	}
+	
 }

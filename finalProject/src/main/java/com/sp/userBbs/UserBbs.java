@@ -9,6 +9,9 @@ public class UserBbs {
     private int bbs_Count;
     private String bbs_SaveFilename, bbs_OriginalFilename;
     private MultipartFile upload;
+    
+    
+    
 	public int getBbs_Num() {
 		return bbs_Num;
 	}
@@ -75,10 +78,10 @@ public class UserBbs {
 	public void setBbs_SaveFilename(String bbs_SaveFilename) {
 		this.bbs_SaveFilename = bbs_SaveFilename;
 	}
-	public String getBbs_Originalfilename() {
+	public String getBbs_OriginalFilename() {
 		return bbs_OriginalFilename;
 	}
-	public void setBbs_Originalfilename(String bbs_OriginalFilename) {
+	public void setBbs_OriginalFilename(String bbs_OriginalFilename) {
 		this.bbs_OriginalFilename = bbs_OriginalFilename;
 	}
 	public MultipartFile getUpload() {

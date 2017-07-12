@@ -1,5 +1,6 @@
 package com.sp.admin.giup;
 
+import java.io.PrintWriter;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.HashMap;
@@ -8,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,6 +19,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.sp.common.MyUtil;
+
+import net.sf.json.JSONObject;
 
 //기업관리 컨트롤러
 
@@ -28,7 +32,7 @@ public class AdminGiupController {
 	@Autowired
 	private MyUtil myUtil;
 	
-	@RequestMapping(value="/admin/giupcontroll/list", method=RequestMethod.GET)
+	@RequestMapping(value="/admin/giupcontroll/list")
 	public String giupControllList(
 			@RequestParam(value="page", defaultValue="1") int current_page,
 			@RequestParam(value="searchKey", defaultValue="giupName") String searchKey,
@@ -99,6 +103,26 @@ public class AdminGiupController {
 		model.addAttribute("mainMenu", "1");
 		model.addAttribute("subMenu", "1");
 		return ".admin4.menu2.giupcontroll.list";
+	}
+	
+	@RequestMapping(value="/admin/giupcontroll/article")
+	public void giupControllArticle (
+			@RequestParam(value="page", defaultValue="1") int current_page,
+			@RequestParam(value="searchKey", defaultValue="giupName") String searchKey,
+			@RequestParam(value="searchValue", defaultValue="") String searchValue,
+			@RequestParam(value="num") int num,
+			Model model,
+			HttpServletResponse resp
+			) throws Exception {
+		AdminGiup adminGiup = service.readAdminGiup(num);
+		
+		JSONObject job=new JSONObject();
+		
+		job.put("dto", adminGiup);
+		
+		resp.setContentType("text/html;charset=utf-8");
+		PrintWriter out=resp.getWriter();
+		out.print(job.toString());
 	}
 	
 	@RequestMapping(value="/admin/giupreviewcontroll", method=RequestMethod.GET)

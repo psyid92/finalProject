@@ -25,6 +25,7 @@
 			<if test="searchValue!=null and searchValue!='' ">
 				<include refid="where-list"/>
 			</if>
+			AND g1.g1_num != 1
 		</where>
 	</select>
 	

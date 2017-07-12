@@ -7,6 +7,7 @@
 %>
 <script>
 $(function(){
+	
 	$("#giup").children().click(function(){
 		var g1_Num = $(this).attr("id").substring(4);
 		var g1_Name = $(this).next().val();

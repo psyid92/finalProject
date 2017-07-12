@@ -53,7 +53,6 @@ public class MyStoreController {
 	@ResponseBody
 	public Map<String, Object> mainMenuList(int menuct_Num)throws Exception{
 		List<MyStore> mainmenulist = new ArrayList<>();
-				
 		mainmenulist = service.readMainMenu(menuct_Num);
 		
 		Map<String, Object> model = new HashMap<>();
@@ -104,7 +103,7 @@ public class MyStoreController {
 	
 	@RequestMapping(value="store/menu/insertSubMenu", method=RequestMethod.POST)
 	@ResponseBody
-	public Map<String, Object> store(MyStore mystoreDto)throws Exception{
+	public Map<String, Object> insertSubMenu(MyStore mystoreDto)throws Exception{
 		String state = "true";
 		int result = service.insertSubMenu(mystoreDto);
 		if(result == 0)

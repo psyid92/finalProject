@@ -25,8 +25,8 @@
 							#{mainmenu_Photo}, #{mainmenu_Pay}, '1', #{menuct_Num} )
 	</insert>
 	<insert id="insertSubMenu" parameterType="com.sp.store.mystore.MyStore">
-		INSERT INTO submenu(submenu_Num, submenu_Title, submenu_Pay, mainmenu_Num)
-					VALUES(${submenu_Num}, #{submenu_Title}, #{submenu_Pay},
+		INSERT INTO submenu(submenu_Num, submenu_Title, submenu_Pay, submenu_Enabled, mainmenu_Num)
+					VALUES(${submenu_Num}, #{submenu_Title}, #{submenu_Pay}, '1',
 					 #{mainmenu_Num} )
 	</insert>
 	
@@ -44,6 +44,7 @@
 		SELECT menuct_Num, menuct_Title, menuct_Info, g1_Num
 		FROM menuCate
 		WHERE g1_Num = #{g1_Num}
+		ORDER BY menuct_Num ASC
 	</select>
 	
 	<select id="readMainMenu" parameterType="Integer" resultType="com.sp.store.mystore.MyStore">
@@ -51,12 +52,14 @@
 			mainmenu_Pay, mainmenu_Enabled, menuct_Num
 		FROM mainmenu
 		WHERE menuct_Num = #{menuct_Num}
+		ORDER BY mainmenu_Num ASC
 	</select>
 	
 	<select id="readSubMenu" parameterType="Integer" resultType="com.sp.store.mystore.MyStore">
 		SELECT submenu_Num, submenu_Title, submenu_Pay, submenu_Enabled, mainmenu_Num
 		FROM submenu
 		WHERE mainmenu_Num = #{mainmenu_Num}
+		ORDER BY submenu_Num ASC
 	</select>
 	
 </mapper>

@@ -44,6 +44,10 @@
 .giup_arti_select {
  margin-left: -5px;
 }
+
+.giup_arti_sp {
+font-weight: bold;
+}
 </style>
 
 <script type="text/javascript"
@@ -70,24 +74,29 @@
 				
 				$("#cur_giupName").val(dto.g1_name);
 				$("#cur_giupId").val(dto.g1_id);
-				$("#cur_giupSleep").val(dto.g1_sleep);
-				$("#cur_giupEnabled").val(dto.g1_enabled);
 				$("#cur_giupCatCode").val(dto.cat_code);
 				$("#cur_giupCreated").val(dto.g1_created);
 				$("#cur_giupAddr1").val(dto.g3_addr2);
 				$("#cur_giupAddr2").val(dto.g3_addr3);
-				$("#cur_giupAdNum").val(dto.ad_num);
 				$("#cur_giupAdTerm").val(dto.giupad_term);
+				
+				
+				$("#cur_giupSleep").val(dto.g1_sleep);
+				$("#cur_giupEnabled").val(dto.g1_enabled);
+				$("#cur_giupAdNum").val(dto.ad_num);
+				
+				
 				
 				//현재 보고있는 글의 listNum
 				$("#cur_listNum").val(listNum);
 				
 				if(mode=="article"){
-					$(".giup_arti_input").attr( 'readonly', true );
-					$("#cur_giupCatCode").attr('disabled', true ); 
+					$(".giup_arti_input").attr( 'readonly', true ).css('background','#eeeeee');
+					$(".giup_arti_select").attr('disabled', true ); 
+
 				} else if (mode=="update") {
-					$(".giup_arti_input").attr( 'readonly', false );
-					$("#cur_giupCatCode").attr('disabled', false ); 
+					$(".text_write").attr( 'readonly', false ).css('background', '#ffffff');
+					$(".giup_arti_select").attr('disabled', false ).css('background', '#ffffff');
 				}
 			},
 			error : function(e) {
@@ -253,8 +262,16 @@
 				<div id="article" class="modal-body giup_arti">
 					<span class="giup_arti_sp">기업명 </span><input class="giup_arti_input" type="text" id="cur_giupName" value="">
 					<span class="giup_arti_sp">아이디 </span><input class="giup_arti_input" type="text" id="cur_giupId" value=""><br>
-					<span class="giup_arti_sp">운영상태 </span><input class="giup_arti_input" type="text" id="cur_giupSleep" value="">
-					<span class="giup_arti_sp">휴면상태 </span><input class="giup_arti_input" type="text" id="cur_giupEnabled" value=""><br>
+					<span class="giup_arti_sp">운영상태 </span>
+					<select name="cur_giup_un" id="cur_giup_un" class="giup_arti_input giup_arti_select">
+						<option value="1">운영중</option>
+						<option value="0">쉬는중</option>
+					</select>
+					<span class="giup_arti_sp">휴면상태 </span>
+					<select name="cur_giup_hyu" id="cur_giup__hyu" class="giup_arti_input giup_arti_select">
+						<option value="1">활동</option>
+						<option value="0">휴면</option>
+					</select>
 					<span class="giup_arti_sp">카테고리 </span>
 					<select name="cur_giupCatCode" id="cur_giupCatCode" class="giup_arti_input giup_arti_select">
 						<option value="chicken">치킨</option>
@@ -269,8 +286,12 @@
 					<span class="giup_arti_sp">가입시간 </span><input class="giup_arti_input" type="text" id="cur_giupCreated" value=""><br>
 					<span class="giup_arti_sp">주소1 </span><input class="giup_arti_input" type="text" id="cur_giupAddr1" value="">
 					<span class="giup_arti_sp">주소2 </span><input class="giup_arti_input" type="text" id="cur_giupAddr2" value=""><br>
-					<span class="giup_arti_sp">광고여부 </span><input class="giup_arti_input" type="text" id="cur_giupAdNum" value=""> 
-					<span class="giup_arti_sp">광고일수 </span><input class="giup_arti_input" type="text" id="cur_giupAdTerm" value=""><br>
+					<span class="giup_arti_sp">광고여부 </span> 
+					<select name="cur_giup_ad" id="cur_giup_ad" class="giup_arti_input giup_arti_select">
+						<option value="1000">광고</option>
+						<option value="0">일반</option>
+					</select>
+					<span class="giup_arti_sp">광고일수 </span><input class="giup_arti_input text_write" type="text" id="cur_giupAdTerm" value=""><br>
 					<input type="hidden" id="cur_listNum">
 				</div> 
 				<div class="modal-footer">

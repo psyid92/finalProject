@@ -2,7 +2,7 @@ package com.sp.jumun;
 
 public class JumunMember {
 	//기본 주문 보기
-	private String jumun_created, jumun_addr, jumun_tel, jumun_memo, orders_state , g1_name;
+	private String jumun_created, jumun_addr, jumun_tel, jumun_memo, orders_state , g1_name, g2_tel;
 	private int jumun_num, jumun_pay, m1_num, pay_pay, orders_num, maingoods_num;
 	
 	//detail 디테일 부분 : 주문 상세
@@ -10,6 +10,13 @@ public class JumunMember {
 	private int mainmenu_num, MAINGOODS_COUNT, submenu_num, SUBGOODS_NUM;
 	
 	
+	
+	public String getG2_tel() {
+		return g2_tel;
+	}
+	public void setG2_tel(String g2_tel) {
+		this.g2_tel = g2_tel;
+	}
 	public int getMaingoods_num() {
 		return maingoods_num;
 	}

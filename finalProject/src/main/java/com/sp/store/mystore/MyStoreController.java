@@ -1,5 +1,6 @@
 package com.sp.store.mystore;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -53,7 +54,6 @@ public class MyStoreController {
 	@ResponseBody
 	public Map<String, Object> mainMenuList(int menuct_Num)throws Exception{
 		List<MyStore> mainmenulist = new ArrayList<>();
-				
 		mainmenulist = service.readMainMenu(menuct_Num);
 		
 		Map<String, Object> model = new HashMap<>();
@@ -80,35 +80,46 @@ public class MyStoreController {
 			state = "false";
 		
 		Map<String , Object> model = new HashMap<>();
-		model.put("menuct_Num", result);
+		model.put("menuct_Num", mystoreDto.getMenuct_Num());
 		model.put("state", state);
 		return model;
 	}
 	
 	@RequestMapping(value="store/menu/insertMainMenu", method=RequestMethod.POST)
 	@ResponseBody
-	public Map<String, Object> insertMainMenu(MyStore mystoreDto)throws Exception{
+	public Map<String, Object> insertMainMenu(MyStore mystoreDto, HttpSession session)throws Exception{
+		Map<String , Object> model = new HashMap<>();
 		String state = "true";
-		int result = service.insertMainMenu(mystoreDto);
+		String root = session.getServletContext().getRealPath("/");
+		String path = root+"uploads"+File.separator+"photo";
+		
+		int result = service.insertMainMenu(mystoreDto, path);
+		System.out.println(result);
 		if(result == 0)
 			state = "false";
 		
-		Map<String , Object> model = new HashMap<>();
-		model.put("mainmenu_Num", result);
+		List<MyStore> mainmenulist = new ArrayList<>();
+		mainmenulist = service.readMainMenu(mystoreDto.getMenuct_Num());
+		model.put("mainmenulist", mainmenulist);
+		model.put("mainmenu_Num", mystoreDto.getMainmenu_Num());
 		model.put("state", state);
 		return model;
 	}
 	
 	@RequestMapping(value="store/menu/insertSubMenu", method=RequestMethod.POST)
 	@ResponseBody
-	public Map<String, Object> store(MyStore mystoreDto)throws Exception{
+	public Map<String, Object> insertSubMenu(MyStore mystoreDto)throws Exception{
 		String state = "true";
 		int result = service.insertSubMenu(mystoreDto);
 		if(result == 0)
 			state = "false";
 		
+		List<MyStore> submenulist = new ArrayList<>();
+		submenulist	= service.readSubmenu(mystoreDto.getMainmenu_Num());
+		
 		Map<String , Object> model = new HashMap<>();
-		model.put("submenu_Num", result);
+		model.put("submenulist", submenulist);
+		model.put("submenu_Num", mystoreDto.getSubmenu_Num());
 		model.put("state", state);
 		return model;
 	}

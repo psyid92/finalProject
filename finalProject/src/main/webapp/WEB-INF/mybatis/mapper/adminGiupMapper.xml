@@ -2,12 +2,31 @@
 
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="admingiup">
-	
+	<sql id="where-list">
+		<if test="searchKey=='giupName'">
+			INSTR(g1_name, #{searchValue}) &gt; 0
+		</if>
+		<if test="searchKey=='giupId'">
+			g1_id=#{searchValue}
+		</if>
+		<if test="searchKey=='giupCate'">
+			INSTR(cat_code, #{searchValue}) &gt; 0
+		</if>
+		<if test="searchKey=='giupNum'">
+			g1.g1_num=#{searchValue}
+		</if>
+	</sql>
 	
 	
 	<!-- 총 기업 수 -->
 	<select id="dataCount" parameterType="map" resultType="Integer">
-		SELECT NVL(COUNT(*),0) FROM giup1
+		SELECT NVL(COUNT(*),0) FROM giup1 g1
+		<where>
+			<if test="searchValue!=null and searchValue!='' ">
+				<include refid="where-list"/>
+			</if>
+			AND g1.g1_num != 1
+		</where>
 	</select>
 	
 	<!-- 기업리스트 -->
@@ -16,13 +35,34 @@
 		SELECT ROWNUM rnum, tb.* FROM (	
 			SELECT g1.g1_num, g1_id, g1_name, g1_sleep, cat_code, g1_enabled, g1_created,
             NVL(g2_baedal,0), NVL(g2_tel,0), NVL(g2_giupnum,0), NVL(g2_origin,0), NVL(g2_memo,0), NVL(g2_opentime,0), NVL(g2_minpay,0),
-            NVL(g3_addr1,0), NVL(g3_addr2,0), NVL(g3_addr3,0), NVL(g3_lati,0), NVL(g3_longti,0)
+            g3_addr1, g3_addr2, g3_addr3, g3_lati, g3_longti,
+            giupad_term, ad_num
 		        FROM giup1 g1
 		        LEFT OUTER JOIN giup2 g2 ON g1.g1_num=g2.g2_num
 		        LEFT OUTER JOIN giup3 g3 ON g1.g1_num=g3.g3_num
+                LEFT OUTER JOIN giupad ad ON g1.g1_num=ad.g1_num
+                <where>
+					<if test="searchValue!=null and searchValue!='' ">
+						<include refid="where-list"/>
+					</if>
+					 AND g1.g1_num != 1
+				</where>
+                ORDER BY g1_num ASC
       <![CDATA[
 	        ) tb WHERE ROWNUM <= #{end}
         ) WHERE rnum >= #{start}    
       ]]>
+	</select>
+	
+	<select id="readGiup" parameterType="map" resultType="com.sp.admin.giup.AdminGiup">
+		SELECT g1.g1_num, g1_id, g1_name, g1_sleep, cat_code, g1_enabled, g1_created,
+            NVL(g2_baedal,0), NVL(g2_tel,0), NVL(g2_giupnum,0), NVL(g2_origin,0), NVL(g2_memo,0), NVL(g2_opentime,0), NVL(g2_minpay,0),
+            g3_addr1, g3_addr2, g3_addr3, g3_lati, g3_longti,
+            giupad_term, ad_num
+		        FROM giup1 g1
+		        LEFT OUTER JOIN giup2 g2 ON g1.g1_num=g2.g2_num
+		        LEFT OUTER JOIN giup3 g3 ON g1.g1_num=g3.g3_num
+                LEFT OUTER JOIN giupad ad ON g1.g1_num=ad.g1_num
+                WHERE g1.g1_num = #{num}
 	</select>
 </mapper>

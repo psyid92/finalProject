@@ -2,19 +2,31 @@
 
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="menu">
+	<select id="seqmenuct" resultType="Integer">
+		SELECT menucate_seq.NEXTVAl FROM dual
+	</select>
+	
+	<select id="seqmainmenu" resultType="Integer">
+		SELECT mainmenu_seq.NEXTVAL FROM dual
+	</select>
+	
+	<select id="seqsubmenu" resultType="Integer">
+		SELECT submenu_seq.NEXTVAL FROM dual
+	</select>
+	
 	<insert id="insertMenuCT" parameterType="com.sp.store.mystore.MyStore">
 		INSERT INTO menucate(menuct_Num, menuct_Title, menuct_Info, g1_Num)
-					VALUES(menucate_seq.NEXTVAl, #{menuct_Title}, #{menuct_Info}, #{g1_Num})
+					VALUES(${menuct_Num}, #{menuct_Title}, #{menuct_Info}, #{g1_Num})
 	</insert>
 	<insert id="insertMainMenu" parameterType="com.sp.store.mystore.MyStore">
 		INSERT INTO mainmenu(mainmenu_Num, mainmenu_Title, mainmenu_Content, mainmenu_Photo,
 							 mainmenu_Pay, mainmenu_Enabled, menuct_Num)
-					VALUES(mainmenu_seq.NEXTVAL, #{mainmenu_Title}, #{mainmenu_Content}, 
+					VALUES(${mainmenu_Num}, #{mainmenu_Title}, #{mainmenu_Content}, 
 							#{mainmenu_Photo}, #{mainmenu_Pay}, '1', #{menuct_Num} )
 	</insert>
 	<insert id="insertSubMenu" parameterType="com.sp.store.mystore.MyStore">
-		INSERT INTO submenu(submenu_Num, submenu_Title, submenu_Pay, mainmenu_Num)
-					VALUES(submenu_seq.NEXTVAL, #{submenu_Title}, #{submenu_Pay},
+		INSERT INTO submenu(submenu_Num, submenu_Title, submenu_Pay, submenu_Enabled, mainmenu_Num)
+					VALUES(${submenu_Num}, #{submenu_Title}, #{submenu_Pay}, '1',
 					 #{mainmenu_Num} )
 	</insert>
 	
@@ -32,6 +44,7 @@
 		SELECT menuct_Num, menuct_Title, menuct_Info, g1_Num
 		FROM menuCate
 		WHERE g1_Num = #{g1_Num}
+		ORDER BY menuct_Num ASC
 	</select>
 	
 	<select id="readMainMenu" parameterType="Integer" resultType="com.sp.store.mystore.MyStore">
@@ -39,12 +52,14 @@
 			mainmenu_Pay, mainmenu_Enabled, menuct_Num
 		FROM mainmenu
 		WHERE menuct_Num = #{menuct_Num}
+		ORDER BY mainmenu_Num ASC
 	</select>
 	
 	<select id="readSubMenu" parameterType="Integer" resultType="com.sp.store.mystore.MyStore">
 		SELECT submenu_Num, submenu_Title, submenu_Pay, submenu_Enabled, mainmenu_Num
 		FROM submenu
 		WHERE mainmenu_Num = #{mainmenu_Num}
+		ORDER BY submenu_Num ASC
 	</select>
 	
 </mapper>

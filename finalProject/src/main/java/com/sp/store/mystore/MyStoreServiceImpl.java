@@ -6,17 +6,21 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.sp.common.FileManager;
 import com.sp.common.dao.CommonDAO;
 
 @Service("store.mystore.myStoreService")
 public class MyStoreServiceImpl implements MyStoreService{
 	@Autowired
 	private CommonDAO dao;
-	
+	@Autowired
+	private FileManager filemanger;
 	@Override
 	public int insertMenuCT(MyStore mystoreDto) throws Exception {
 		int result = 0;
 		try {
+			result=dao.getIntValue("menu.seqmenuct");
+			mystoreDto.setMenuct_Num(result);
 			result = dao.insertData("menu.insertMenuCT", mystoreDto);
 		} catch (Exception e) {
 			result = 0;
@@ -26,10 +30,27 @@ public class MyStoreServiceImpl implements MyStoreService{
 	}
 
 	@Override
-	public int insertMainMenu(MyStore mystoreDto) throws Exception {
+	public int insertMainMenu(MyStore mystoreDto, String path) throws Exception {
 		int result = 0;
 		try {
-			result = dao.insertData("menu.insertMainMenu", mystoreDto);
+			System.out.println(mystoreDto.getUpload());
+			if(mystoreDto.getUpload()!=null && !mystoreDto.getUpload().isEmpty()){
+				//사진 업로드
+				String newFilename = filemanger.doFileUpload(mystoreDto.getUpload(), path);
+				
+				System.out.println("photoname:"+mystoreDto.getMainmenu_Photo());
+				System.out.println("newFilename:"+newFilename);
+				
+				result=dao.getIntValue("menu.seqmainmenu");
+				mystoreDto.setMainmenu_Num(result);
+				mystoreDto.setMainmenu_Photo(newFilename);
+				
+				System.out.println("photoname2  :"+mystoreDto.getMainmenu_Photo());
+				System.out.println("newFilename2 :"+newFilename);
+				
+				result = dao.insertData("menu.insertMainMenu", mystoreDto);
+			}else
+				System.out.println("실행안함");
 		} catch (Exception e) {
 			result = 0;
 			System.out.println(e.toString());
@@ -42,6 +63,8 @@ public class MyStoreServiceImpl implements MyStoreService{
 	public int insertSubMenu(MyStore mystoreDto) throws Exception {
 		int result = 0;
 		try {
+			result=dao.getIntValue("menu.seqsubmenu");
+			mystoreDto.setSubmenu_Num(result);
 			result = dao.insertData("menu.insertSubMenu", mystoreDto);
 		} catch (Exception e) {
 			result = 0;

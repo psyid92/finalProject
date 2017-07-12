@@ -138,4 +138,15 @@ public class JumunServiceImpl implements JumunService {
 		}
 		return mil_Point;
 	}
+
+	@Override
+	public List<Jumun> listCategory() throws Exception {
+		List<Jumun> list = new ArrayList<>();
+		try {
+			list = dao.getListData("jumun.listCategory");
+		} catch (Exception e) {
+			throw e;
+		}
+		return list;
+	}
 }

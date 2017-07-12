@@ -40,8 +40,15 @@ public class AdminGiupServiceImpl implements AdminGiupService{
 
 	@Override
 	public AdminGiup readAdminGiup(int num) {
-		// TODO Auto-generated method stub
-		return null;
+		AdminGiup dto=null;
+		
+		try {
+			dto=dao.getReadData("admingiup.readGiup", num);
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		
+		return dto;
 	}
 
 }

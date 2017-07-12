@@ -39,10 +39,10 @@
 <script type="text/javascript">
 function deleteNotice() {
 <c:if test="${sessionScope.store.g1_Id=='admin'}">
-	var num="${dto.num}";
+	var num="${dto.noti_Num}";
 	var page="${page}";
-	var query ="num="+num+"&page="+page;
-	var url = "<%=cp%>/"+query;
+	var query ="noti_Num="+num+"&page="+page;
+	var url = "<%=cp%>/giupNotice/delete?"+query;
 	
 	if(confirm("위 자료를 삭제하시겠습니까?"))
 		location.href=url;
@@ -55,10 +55,10 @@ function deleteNotice() {
 
 function updateNotice() {
 <c:if test="${sessionScope.store.g1_Id =='admin'}">
-	var num = "${dto.num}";
-	var page="${dto.page}";
-	var query= "num="+num+"&page="+page;
-	var url = "<%=cp%>/"+query;
+	var num = "${dto.noti_Num}";
+	var page="${page}";
+	var query= "noti_Num="+num+"&page="+page;
+	var url = "<%=cp%>/giupNotice/update?"+query;
 	
 	location.href=url; 
 
@@ -88,7 +88,7 @@ function updateNotice() {
 				<thead>
 					<tr>
 						<th colspan="2" style="text-align: center;">
-							${dto.title}
+							${dto.noti_Title}
 						</th>
 					</tr>				
 				</thead>
@@ -96,16 +96,16 @@ function updateNotice() {
 				<tbody>
 					<tr>
 						<td style="text-align: left"> 이름 : ${dto.admin_Id}</td>
-						<td style="text-align: right"> ${dto.created}조회${dto.hitCount}</td>
+						<td style="text-align: right"> ${dto.noti_Created}조회${dto.noti_HItCount}</td>
 					</tr>
 					<tr>
-						<td colspan="2" style="height: 230px"> ${dto.content}</td>
+						<td colspan="2" style="height: 230px"> ${dto.noti_Content}</td>
 					</tr>	
 <c:forEach var="vo" items="${listFile}">			
 					<tr>
 						<td colspan="2"> 
 							<span style="display: inline-block; min-width: 45px">첨부</span>
-							<a href="<%=cp%>/"> <span class="glyphicon glyphicon-download-alt"></span>${vo.originalFilename} </a>
+							<a href="<%=cp%>/giupNotice/download?noti_FileNum=${vo.noti_FileNum}"> <span class="glyphicon glyphicon-download-alt"></span>${vo.originalFilename} </a>
 							 (<fmt:formatNumber value="${vo.fileSize/1024}" pattern="0.00" /> KByte)
 						</td>
 					</tr>
@@ -113,12 +113,12 @@ function updateNotice() {
 					<tr>
 						<td colspan="2">
 							<span style="display: inline-block; min-width: 45px">이전글</span>
-							<a href="<%=cp%>">${preReadDto.title}</a>
+							<a href="<%=cp%>/giupNotice/article?${query}&noti_Num=${preReadDto.noti_Num}">${preReadDto.noti_Title}</a>
 						</td>
 						
 						<td colspan="2" style="border-bottom: #d5d5d5 solid 1px; ">
 							<span style="display: inline-block; min-width: 45px;">다음글</span>
-							<a href="<%=cp%>">${nextReadDto.title}</a>
+							<a href="<%=cp%>/giupNotice/article?${query}&noti_Num=${nextReadDto.noti_Num}"">${nextReadDto.noti_Title}</a>
 						</td>
 					
 					</tr>		
@@ -137,7 +137,7 @@ function updateNotice() {
 
 						</td>
 						<td align="right">
-							<button type="button" class="btn btn-default btn-sm wbtn" onclick="javascript:location.href ='<%=cp%>'">목록으로</button>
+							<button type="button" class="btn btn-default btn-sm wbtn" onclick="javascript:location.href ='<%=cp%>/giupNotice/list?${query }';">목록으로</button>
 						</td>
 					
 					</tr>

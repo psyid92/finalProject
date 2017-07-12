@@ -13,7 +13,7 @@ public interface NoticeService {
 	public Notice preReadNotice(Map<String, Object> map);
 	public Notice nextReadNotice(Map<String, Object> map);
 	public int updateNotice(Notice dto, String pathname);
-	public int deleteNotice(Notice dto, String pathname); 
+	public int deleteNotice(int num, String pathname); 
 	
 	public int insertFile(Notice dto);
 	public List<Notice> listFile(int num);

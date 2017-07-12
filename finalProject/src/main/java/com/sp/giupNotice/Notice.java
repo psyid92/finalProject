@@ -5,14 +5,15 @@ import java.util.List;
 import org.springframework.web.multipart.MultipartFile;
 
 public class Notice {
-	private int listNum, num, noti_Top; 
-	private String title, content, created;
-	private int hidden, hitCount;
+	private int listNum, noti_Num, noti_Top; 
+	private String noti_Title, noti_Content, noti_Created;
+	private int noti_hidden, noti_HItCount;
 	private String admin_Id;
 	
-	private int fileNum;
-	private String originalFileName, saveFileName; 
-	private long fileSize;
+	private int noti_FileNum;
+	private String noti_OrigianlFileName, noti_SaveFileName; 
+	private long noti_FileSize;
+	
 	
 	//스프링에서 파일 받기
 	private List<MultipartFile> upload;
@@ -20,29 +21,29 @@ public class Notice {
 	private long gap; 	
 	
 	
-	public int getFileNum() {
-		return fileNum;
+	public int getNoti_FileNum() {
+		return noti_FileNum;
 	}
-	public void setFileNum(int fileNum) {
-		this.fileNum = fileNum;
+	public void setNoti_FileNum(int noti_FileNum) {
+		this.noti_FileNum = noti_FileNum;
 	}
-	public String getOriginalFileName() {
-		return originalFileName;
+	public String getNoti_OrigianlFileName() {
+		return noti_OrigianlFileName;
 	}
-	public void setOriginalFileName(String originalFileName) {
-		this.originalFileName = originalFileName;
+	public void setNoti_OrigianlFileName(String noti_OrigianlFileName) {
+		this.noti_OrigianlFileName = noti_OrigianlFileName;
 	}
-	public String getSaveFileName() {
-		return saveFileName;
+	public String getNoti_SaveFileName() {
+		return noti_SaveFileName;
 	}
-	public void setSaveFileName(String saveFileName) {
-		this.saveFileName = saveFileName;
+	public void setNoti_SaveFileName(String noti_SaveFileName) {
+		this.noti_SaveFileName = noti_SaveFileName;
 	}
-	public long getFileSize() {
-		return fileSize;
+	public long getNoti_FileSize() {
+		return noti_FileSize;
 	}
-	public void setFileSize(long fileSize) {
-		this.fileSize = fileSize;
+	public void setNoti_FileSize(long noti_FileSize) {
+		this.noti_FileSize = noti_FileSize;
 	}
 	public List<MultipartFile> getUpload() {
 		return upload;
@@ -62,11 +63,11 @@ public class Notice {
 	public void setListNum(int listNum) {
 		this.listNum = listNum;
 	}
-	public int getNum() {
-		return num;
+	public int getNoti_Num() {
+		return noti_Num;
 	}
-	public void setNum(int num) {
-		this.num =num;
+	public void setNoti_Num(int noti_Num) {
+		this.noti_Num =noti_Num;
 	}
 	public int getNoti_Top() {
 		return noti_Top;
@@ -74,35 +75,35 @@ public class Notice {
 	public void setNoti_Top(int noti_Top) {
 		this.noti_Top = noti_Top;
 	}
-	public String getTitle() {
-		return title;
+	public String getNoti_Title() {
+		return noti_Title;
 	}
-	public void setTitle(String title) {
-		this.title = title;
+	public void setNoti_Title(String noti_Title) {
+		this.noti_Title = noti_Title;
 	}
-	public String getContent() {
-		return content;
+	public String getNoti_Content() {
+		return noti_Content;
 	}
-	public void setContent(String content) {
-		this.content = content;
+	public void setNoti_Content(String noti_Content) {
+		this.noti_Content = noti_Content;
 	}
-	public String getCreated() {
-		return created;
+	public String getNoti_Created() {
+		return noti_Created;
 	}
-	public void setCreated(String created) {
-		this.created = created;
+	public void setNoti_Created(String noti_Created) {
+		this.noti_Created = noti_Created;
 	}
-	public int getHidden() {
-		return hidden;
+	public int getNoti_hidden() {
+		return noti_hidden;
 	}
-	public void setHidden(int hidden) {
-		this.hidden = hidden;
+	public void setNoti_hidden(int noti_hidden) {
+		this.noti_hidden = noti_hidden;
 	}
-	public int getHitCount() {
-		return hitCount;
+	public int getNoti_HItCount() {
+		return noti_HItCount;
 	}
-	public void setHitCount(int hitCount) {
-		this.hitCount = hitCount;
+	public void setNoti_HItCount(int noti_HItCount) {
+		this.noti_HItCount = noti_HItCount;
 	}
 	public String getAdmin_Id() {
 		return admin_Id;

@@ -18,10 +18,10 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 
 //사장님 페이지 컨트롤러
-@SessionAttributes("store")
+@SessionAttributes("storeDto")
 @Controller("member.storeController")
 public class StoreContorller {
-	@ModelAttribute("store")
+	@ModelAttribute("storeDto")
 	public Store command() {
 		return new Store();
 	}
@@ -70,7 +70,7 @@ public class StoreContorller {
 	
 	// 회원가입 눌렀을때
 	@RequestMapping(value = "/store/join", method = RequestMethod.GET)
-	public String storeJoinForm(@ModelAttribute("store") Store store, Model model) {
+	public String storeJoinForm(@ModelAttribute("storeDto") Store store, Model model) {
 
 		model.addAttribute("mode", "created");
 		return ".store.store.step1";
@@ -78,7 +78,7 @@ public class StoreContorller {
 
 	// 다음단계
 	@RequestMapping(value = "/store/step2", method = RequestMethod.POST)
-	public String storeStep2(@ModelAttribute("store") Store store, SessionStatus sessionstatus, Model model) {
+	public String storeStep2(@ModelAttribute("storeDto") Store store, SessionStatus sessionstatus, Model model) {
 		
 		model.addAttribute("mode", "created");
 		
@@ -86,7 +86,7 @@ public class StoreContorller {
 	}
 
 	@RequestMapping(value = "/store/complete", method = RequestMethod.POST)
-	public String storeSubmit(@ModelAttribute("store") Store store,
+	public String storeSubmit(@ModelAttribute("storeDto") Store store,
 			SessionStatus sessionstatus, Model model) {
 		//패스워드 암호화
 		/*ShaPasswordEncoder pe = new ShaPasswordEncoder(256);

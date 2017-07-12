@@ -31,6 +31,12 @@ $(function(){
 	width: 310px;
 }
 </style>
+<c:if test="${count > 0}">
+	<div style="width: 1000px; margin: 50px auto;"><div id="where" style="float: left;"></div><div>에서 5km반경 내 총 ${count}곳을 찾았습니다.</div></div>
+</c:if>
+<c:if test="${count == 0}">
+	<div style="width: 1000px; margin: 50px auto;"><div id="where" style="float: left;"></div><div>에서 5km반경 내에 음식점이 없습니다.</div></div>
+</c:if>
 <div id="payLayout">
 <table style="margin-bottom: 100px; width: 1000px;">
 	<tr id="giup" style="width: 310px; height: 195px;">

@@ -191,7 +191,7 @@
 	}
 		
 </script>
-	<div id="giupMenu" style="width: 680px; margin: 0; float: left;">
+	<div id="giupMenu" style="width: 680px; margin: 100px 0; float: left;">
 		<c:forEach var="cateDto" items="${cateList}">
 		<div style="margin-bottom: 20px;">
 			<div id="cate${cateDto.menuct_Num}" class="cateMenu" style="cursor: pointer; width: 680px; height: 50px; background-color: #cccccc">${cateDto.menuct_Title}</div>
@@ -199,4 +199,4 @@
 		</div>
 		</c:forEach>
 	</div>
-<div id="totalJumun" style="font-size: 15px;"></div>
+<div id="totalJumun" style="font-size: 15px; margin: 100px 0;"></div>

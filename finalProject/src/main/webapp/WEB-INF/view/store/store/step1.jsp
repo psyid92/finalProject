@@ -212,7 +212,7 @@ function memberOk() {
 					<td style="padding: 0 0 15px 15px;">
 						<p style="margin-top: 1px; margin-bottom: 5px;">
 							<input type="text" name="g2_GiupNum" id="g2_GiupNum"
-								value="${dto.g2_GiupNum}" style="width: 95%;"
+								value="${store.g2_GiupNum}" style="width: 95%;"
 								${mode=="update" ? "readonly='readonly' ":""} maxlength="15"
 								class="boxTF" onchange="g2_GiupNumCheck()" placeholder="사업자 등록번호를 입력해주세요">
 						</p>
@@ -226,7 +226,7 @@ function memberOk() {
 					</td>
 					<td style="padding: 0 0 15px 15px;">
 						<p style="margin-top: 1px; margin-bottom: 5px;">
-							<input type="text" name="g1_Name" id="g1_Name" value="${dto.g1_Name}" style="width: 95%;"
+							<input type="text" name="g1_Name" id="g1_Name" value="${store.g1_Name}" style="width: 95%;"
 							 ${mode=="update" ? "readonly='readonly' ":""} maxlength="15" class="boxTF" placeholder="가게의 이름을 적어주세요">
 						</p>
 						<p class="help-block">가게이름을 입력해주세요</p>
@@ -239,7 +239,7 @@ function memberOk() {
 					</td>
 					<td style="padding: 0 0 15px 15px;">
 						<p style="margin-top: 1px; margin-bottom: 5px;">
-							<input type="text" name="g1_Id" id="g1_Id" value="${dto.g1_Id}" style="width: 95%;"
+							<input type="text" name="g1_Id" id="g1_Id" value="${store.g1_Id}" style="width: 95%;"
 							 maxlength="15" class="boxTF" onchange="g1_IdCheck()" placeholder="아이디는 5~10자로 입력해주세요">
 						</p>
 						<p class="help-block">아이디는 5~10자로 입력해주세요</p>
@@ -283,26 +283,26 @@ function memberOk() {
 		      		<p style="margin-bottom: 5px;">
 		           		<select class="selectField" id="tel1" name="tel1" >
 			               <option value="">선 택</option>
-			               <option value=02 ${dto.tel1=="02" ? "selected='selected'" : ""}>02</option>
-			               <option value="031" ${dto.tel1=="031" ? "selected='selected'" : ""}>031</option>
-			               <option value="032" ${dto.tel1=="032" ? "selected='selected'" : ""}>032</option>
-			               <option value="051" ${dto.tel1=="051" ? "selected='selected'" : ""}>051</option>
-			               <option value="033" ${dto.tel1=="033" ? "selected='selected'" : ""}>033</option>
-			               <option value="053" ${dto.tel1=="053" ? "selected='selected'" : ""}>053</option>
-			               <option value="054" ${dto.tel1=="054" ? "selected='selected'" : ""}>054</option>
-			               <option value="055" ${dto.tel1=="055" ? "selected='selected'" : ""}>055</option>
-			               <option value="052" ${dto.tel1=="052" ? "selected='selected'" : ""}>052</option>
-			               <option value="042" ${dto.tel1=="042" ? "selected='selected'" : ""}>042</option>
-			               <option value="041" ${dto.tel1=="041" ? "selected='selected'" : ""}>041</option>
-			               <option value="043" ${dto.tel1=="043" ? "selected='selected'" : ""}>043</option>
-			               <option value="062" ${dto.tel1=="062" ? "selected='selected'" : ""}>062</option>
-			               <option value="061" ${dto.tel1=="061" ? "selected='selected'" : ""}>061</option>
-			               <option value="063" ${dto.tel1=="063" ? "selected='selected'" : ""}>063</option>
+			               <option value=02 ${store.tel1=="02" ? "selected='selected'" : ""}>02</option>
+			               <option value="031" ${store.tel1=="031" ? "selected='selected'" : ""}>031</option>
+			               <option value="032" ${store.tel1=="032" ? "selected='selected'" : ""}>032</option>
+			               <option value="051" ${store.tel1=="051" ? "selected='selected'" : ""}>051</option>
+			               <option value="033" ${store.tel1=="033" ? "selected='selected'" : ""}>033</option>
+			               <option value="053" ${store.tel1=="053" ? "selected='selected'" : ""}>053</option>
+			               <option value="054" ${store.tel1=="054" ? "selected='selected'" : ""}>054</option>
+			               <option value="055" ${store.tel1=="055" ? "selected='selected'" : ""}>055</option>
+			               <option value="052" ${store.tel1=="052" ? "selected='selected'" : ""}>052</option>
+			               <option value="042" ${store.tel1=="042" ? "selected='selected'" : ""}>042</option>
+			               <option value="041" ${store.tel1=="041" ? "selected='selected'" : ""}>041</option>
+			               <option value="043" ${store.tel1=="043" ? "selected='selected'" : ""}>043</option>
+			               <option value="062" ${store.tel1=="062" ? "selected='selected'" : ""}>062</option>
+			               <option value="061" ${store.tel1=="061" ? "selected='selected'" : ""}>061</option>
+			               <option value="063" ${store.tel1=="063" ? "selected='selected'" : ""}>063</option>
 			           </select>
 		           			-
-		           	   <input type="text" name="tel2" value="${dto.tel2}" class="boxTF" maxlength="4">
+		           	   <input type="text" name="tel2" value="${store.tel2}" class="boxTF" maxlength="4">
 		          			-
-		           	   <input type="text" name="tel3" value="${dto.tel3}" class="boxTF" maxlength="4">
+		           	   <input type="text" name="tel3" value="${store.tel3}" class="boxTF" maxlength="4">
 		      	 	</p>
 		     	  </td>
 		 		</tr>

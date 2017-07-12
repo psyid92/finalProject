@@ -1,5 +1,6 @@
 package com.sp.store.mystore;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -86,15 +87,19 @@ public class MyStoreController {
 	
 	@RequestMapping(value="store/menu/insertMainMenu", method=RequestMethod.POST)
 	@ResponseBody
-	public Map<String, Object> insertMainMenu(MyStore mystoreDto)throws Exception{
+	public Map<String, Object> insertMainMenu(MyStore mystoreDto, HttpSession session)throws Exception{
+		Map<String , Object> model = new HashMap<>();
 		String state = "true";
-		int result = service.insertMainMenu(mystoreDto);
+		String root = session.getServletContext().getRealPath("/");
+		String path = root+"uploads"+File.separator+"photo";
+		
+		int result = service.insertMainMenu(mystoreDto, path);
+		System.out.println(result);
 		if(result == 0)
 			state = "false";
 		
 		List<MyStore> mainmenulist = new ArrayList<>();
 		mainmenulist = service.readMainMenu(mystoreDto.getMenuct_Num());
-		Map<String , Object> model = new HashMap<>();
 		model.put("mainmenulist", mainmenulist);
 		model.put("mainmenu_Num", mystoreDto.getMainmenu_Num());
 		model.put("state", state);

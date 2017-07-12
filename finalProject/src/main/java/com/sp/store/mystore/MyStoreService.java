@@ -4,7 +4,7 @@ import java.util.List;
 
 public interface MyStoreService {
 	public int insertMenuCT(MyStore dto) throws Exception;
-	public int insertMainMenu(MyStore dto) throws Exception;
+	public int insertMainMenu(MyStore dto, String path) throws Exception;
 	public int insertSubMenu(MyStore dto) throws Exception;
 	
 	public int deleteMenuCT(int menuct_Num) throws Exception;

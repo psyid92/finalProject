@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="visit">
+
+
+<!-- 오늘자 index가 있는지 확인 -->
+<select id="getTodayVisit" resultType="Integer">
+	select nvl(count(*), 0) from visitCount where visit_date= ( to_char(sysdate, 'YYYYMMDD'))
+</select>
+
+<!-- 삽입 -->
+<insert id="insertTodayVisit">
+	insert into VISITCOUNT (VISIT_DATE) VALUES ( to_char(sysdate, 'YYYYMMDD'))
+</insert>
+
+<!-- 수정 -->
+<update id="updateTodayVisit">
+	update visitCount set VISIT_COUNT = VISIT_COUNT+1 where visit_date= ( to_char(sysdate, 'YYYYMMDD'))
+</update>
+
+</mapper>

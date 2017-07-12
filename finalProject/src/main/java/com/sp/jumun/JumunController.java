@@ -2,7 +2,6 @@ package com.sp.jumun;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -15,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.sp.common.MyMath;
@@ -30,27 +30,40 @@ public class JumunController {
 	@Autowired
 	MyMath myMath;
 
-	@RequestMapping(value = "/jumun/jumunList", method = RequestMethod.GET)
-	public String payList(String category,
+	@RequestMapping("/jumun/jumunList")
+	public String payList(@RequestParam(value="category",defaultValue="") String category,
 			HttpServletRequest req, HttpServletResponse resp,
-			Model model
+			Model model,
+			@RequestParam(value="searchValue", defaultValue="") String searchValue
 			) throws Exception {
 		List<Jumun> list = new ArrayList<>();
+		List<Jumun> clist = new ArrayList<>();
 		Map<String, Object> map = new HashMap<>();
 		
 		JSONObject job = myMath.getCookie(req, resp);
 		double cur_lat = Double.parseDouble((String) job.get("lat"));
 		double cur_lng = Double.parseDouble((String) job.get("lng"));
-
+		
+		clist = service.listCategory();
+		for (int i = 0; i < clist.size(); i++) {
+			if (clist.get(i).getCat_Name().equals(searchValue)) {
+				category = clist.get(i).getCat_Code();
+				searchValue = clist.get(i).getCat_Code();
+				break;
+			}
+		}
+		map.put("searchValue", searchValue);
 		map.put("category", category);
 		map.put("cur_lat", cur_lat);
 		map.put("cur_lng", cur_lng);
 		
 		list = service.listGiup(map);
-
+		
+		
 		model.addAttribute("category", category);
 		model.addAttribute("mode", null);
 		model.addAttribute("list", list);
+		model.addAttribute("count",list.size());
 		return ".jumun.menu";
 	}
 

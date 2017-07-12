@@ -12,16 +12,16 @@ public class StoreServiceImpl implements StoreService {
 	
 	//회원가입하기
 	@Override
-	public void insertStore(Store dto) throws Exception {
+	public void insertStore(Store store) throws Exception {
 		try {
-			if(dto.getTel1() != null && dto.getTel1().length()!=0 &&
-					dto.getTel2() != null && dto.getTel2().length()!=0 &&
-					dto.getTel3() != null && dto.getTel3().length()!=0)
-				dto.setG2_Tel(dto.getTel1 () + "-" + dto.getTel2() + "-" + dto.getTel3());
+			if(store.getTel1() != null && store.getTel1().length()!=0 &&
+					store.getTel2() != null && store.getTel2().length()!=0 &&
+					store.getTel3() != null && store.getTel3().length()!=0)
+				store.setG2_Tel(store.getTel1 () + "-" + store.getTel2() + "-" + store.getTel3());
 			
-			dao.insertData("store.insertStore1", dto);
-			dao.insertData("store.insertStore2", dto);
-			dao.insertData("store.insertStore3", dto);
+			dao.insertData("store.insertStore1", store);
+			dao.insertData("store.insertStore2", store);
+			dao.insertData("store.insertStore3", store);
 			
 		} catch (Exception e) {
 			System.out.println(e.toString());
@@ -33,16 +33,16 @@ public class StoreServiceImpl implements StoreService {
 	//정보 읽어오기
 	@Override
 	public Store readStore(String g1_Id) {
-		Store dto = null;
+		Store store = null;
 		try {
-			dto = dao.getReadData("store.readStore", g1_Id);
+			store = dao.getReadData("store.readStore", g1_Id);
 			
-			if(dto!=null) {
-				if(dto.getG2_Tel()!=null) {
-					String [] s=dto.getG2_Tel().split("-");
-					dto.setTel1(s[0]);
-					dto.setTel2(s[1]);
-					dto.setTel3(s[2]);
+			if(store!=null) {
+				if(store.getG2_Tel()!=null) {
+					String [] s=store.getG2_Tel().split("-");
+					store.setTel1(s[0]);
+					store.setTel2(s[1]);
+					store.setTel3(s[2]);
 				}
 			}
 			
@@ -50,21 +50,21 @@ public class StoreServiceImpl implements StoreService {
 			System.out.println(e.toString());
 		}
 		
-		return dto;
+		return store;
 	}
 
 	@Override
 	public Store readStore2(String g2_Giupnum) {
-		Store dto = null;
+		Store store = null;
 		try {
-			dto = dao.getReadData("store.readStore2", g2_Giupnum);
+			store = dao.getReadData("store.readStore2", g2_Giupnum);
 			
-			if(dto!=null) {
-				if(dto.getG2_Tel()!=null) {
-					String [] s=dto.getG2_Tel().split("-");
-					dto.setTel1(s[0]);
-					dto.setTel2(s[1]);
-					dto.setTel3(s[2]);
+			if(store!=null) {
+				if(store.getG2_Tel()!=null) {
+					String [] s=store.getG2_Tel().split("-");
+					store.setTel1(s[0]);
+					store.setTel2(s[1]);
+					store.setTel3(s[2]);
 				}
 			}
 			
@@ -72,7 +72,7 @@ public class StoreServiceImpl implements StoreService {
 			System.out.println(e.toString());
 		}
 		
-		return dto;
+		return store;
 	}
 
 }

@@ -6,19 +6,19 @@
 
 <!-- insert into giupreview(req_num, req_star, req_content, m1_num, g1_num, jumun_num) values(GIUPREVIEW_SEQ.nextval, 4, '맛있었습니다', 41, 1004, 48 ); -->
 <!-- 리뷰 삽입 / 리뷰 등록 -->
-<insert id="insertGiupReview" parameterType="">
+<insert id="insertGiupReview" parameterType="com.sp.giupReview.giupReview">
 	insert into giupreview(rep_num, rep_star, rep_content, m1_num, g1_num, jumun_num) 
 		values(GIUPREVIEW_SEQ.nextval, #{req_star}, #{req_content}, #{m1_num}, #{g1_num}, #{jumun_num} )
 </insert>
 
 <!-- 리뷰 있는지 없는지 확인 -->
-<select id="getNumReview" parameterType="" resultType="Integer">
+<select id="getNumReview" parameterType="com.sp.giupReview.giupReview" resultType="Integer">
 	select nvl(count(*), 0) from giupReview
 		where m1_num = #{m1_num} and jumun_num=  #{jumun_num}
 </select>
 
 <!-- 리뷰 내용 가져오기 -->
-<select id="getReview" parameterType="" resultType="">
+<select id="getReview" parameterType="com.sp.giupReview.giupReview" resultType="com.sp.giupReview.giupReview">
 	select rep_num, rep_star, rep_created, rep_content, m1_num, g1_num, jumun_num from giupReview
 		where m1_num = #{m1_num} and jumun_num=  #{jumun_num}
 </select>

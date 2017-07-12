@@ -42,7 +42,7 @@
 
 </style>
 
-<script type="text/javascript" src="<%=cp%>/resource/se/js/"> </script>
+
 
 
 

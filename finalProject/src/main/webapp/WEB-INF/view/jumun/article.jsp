@@ -5,7 +5,7 @@
 	request.setCharacterEncoding("utf-8");
 	String cp = request.getContextPath();
 %>
-
+<script type="text/javascript" src="<%=cp%>/resource/jquery/js/jquery.form.js"></script>
 <script>
 	$(function(){
 		$(".cateMenu").click(function() {
@@ -18,6 +18,8 @@
 				$.ajax({
 					type:"post"
 					,url:url
+					/* ,processData: false  // file 전송시 필수
+			        ,contentType: false  // file 전송시 필수 */
 					,data:query
 					,dataType:"json"
 					,success:function(data) {
@@ -40,7 +42,7 @@
 				s += "<div onclick='submenu("+list[i].mainmenu_Num+")' style='width: 680px; height: 30px;  line-height: 30px; background-color: #dddddd;'><div style='float: left;'>" + list[i].mainmenu_Title + "</div><div style='float: right;'>" + list[i].mainmenu_Pay + "</div></div>";
 				s += "<div id='sub"+list[i].mainmenu_Num+"' style='width:680px; background-color: white; display: none;'>"
 				s += "<div>"+list[i].mainmenu_Num + "</div><div class='title'>" + list[i].mainmenu_Title + "</div>";
-				s += "<div class='content'>"+list[i].mainmenu_Content + "</div><div>" + list[i].mainmenu_Photo + "</div>";
+				s += "<div class='content'>"+list[i].mainmenu_Content + "</div><div style='width:680px; height: 180px; background-image:url("+'<%=cp%>/resource/img/chiken.jpg'+"); background-repeat: no-repeat; background-size: contain;'></div>";
 				s += "<div class='pay'>"+list[i].mainmenu_Pay + "</div><div>" + list[i].mainmenu_Enabled + "</div></div>";
 			}
 			$(menu_on).html(s);
@@ -155,7 +157,7 @@
 		tab += "<input type='hidden' name='sub_Num' value='"+sub_Num+"'></div>";
 		$("#jumunAppend").append(tab);
 		$("#total_Pay").html(total+"원");
-		
+		$(".btn").prop("disabled",false);
 		
 	}
 	function deleteJumun(juNum,pay) {
@@ -164,12 +166,17 @@
 		total = total.substring(0,total.length-1);
 		total -= pay;
 		$("#total_Pay").html(total+"원");
-		if (total == 0)
+		if (total == 0) {
 			$("#jumunAppend").html("메뉴를 선택해주세요.");
+			$(".btn").prop("disabled",true);
+		}
 	}
 	
 	
 	function totalJumun() {
+		if ($("#total_Pay").html() == "0원") {
+			return false;
+		}
 		var f = document.jumunForm;
 		var mainList = document.getElementsByName('main_Num');
 		var subList = document.getElementsByName('sub_Num');
@@ -191,12 +198,14 @@
 	}
 		
 </script>
-	<div id="giupMenu" style="width: 680px; margin: 0; float: left;">
+<div style="width: 1000px; height: 730px; margin-top: 100px;">
+	<div id="giupMenu" style="width: 680px; margin-bottom: 50px; float: left;">
 		<c:forEach var="cateDto" items="${cateList}">
-		<div style="margin-bottom: 20px;">
-			<div id="cate${cateDto.menuct_Num}" class="cateMenu" style="cursor: pointer; width: 680px; height: 50px; background-color: #cccccc">${cateDto.menuct_Title}</div>
-			<div id="main${cateDto.menuct_Num}" class="mainMenu" style="cursor: pointer;"></div>
-		</div>
+			<div style="margin-bottom: 20px;">
+				<div id="cate${cateDto.menuct_Num}" class="cateMenu" style="cursor: pointer; width: 680px; height: 50px; background-color: #cccccc">${cateDto.menuct_Title}</div>
+				<div id="main${cateDto.menuct_Num}" class="mainMenu" style="cursor: pointer;"></div>
+			</div>
 		</c:forEach>
 	</div>
-<div id="totalJumun" style="font-size: 15px;"></div>
+	<div id="totalJumun" style="font-size: 15px; margin: 0; float: right; width: 300px; height: 102px;"></div>
+</div>

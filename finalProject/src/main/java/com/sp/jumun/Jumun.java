@@ -8,6 +8,7 @@ public class Jumun {
 	private String mainmenu_Title, mainmenu_Content, mainmenu_Photo, submenu_Title;
 	private String payMethod_Way, payMethod_Content;
 	private double distance;
+	
 
 	public int getMenuct_Enabled() {
 		return menuct_Enabled;

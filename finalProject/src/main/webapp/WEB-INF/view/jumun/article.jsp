@@ -47,7 +47,7 @@
 				s += "<div onclick='submenu("+list[i].mainmenu_Num+")' style='width: 680px; height: 30px;  line-height: 30px; background-color: #dddddd;'><div style='float: left;'>" + list[i].mainmenu_Title + "</div><div style='float: right;'>" + list[i].mainmenu_Pay + "</div></div>";
 				s += "<div id='sub"+list[i].mainmenu_Num+"' style='width:680px; background-color: white; display: none;'>"
 				s += "<div>"+list[i].mainmenu_Num + "</div><div class='title'>" + list[i].mainmenu_Title + "</div>";
-				s += "<div class='content'>"+list[i].mainmenu_Content + "</div><div style='width:680px; height: 180px; background-image:url("+'<%=cp%>/resource/img/chiken.jpg'+"); background-repeat: no-repeat; background-size: contain;'></div>";
+				s += "<div class='content'>"+list[i].mainmenu_Content + "</div><div><img src='<%=cp%>/uploads/photo/"+list[i].mainmenu_Photo+"' style='width:500px; height: 300px;'></img></div>";
 				s += "<div class='pay'>"+list[i].mainmenu_Pay + "</div><div>" + list[i].mainmenu_Enabled + "</div></div>";
 			}
 			$(menu_on).html(s);
@@ -101,6 +101,8 @@
 	}
 	
 	function damgi(main_Num) {
+		
+
 		$(function(){
 			var pay = $("#sub"+main_Num+" div[class=pay]").html();
 			var content = $("#sub"+main_Num+" div[class=content]").html();
@@ -125,7 +127,8 @@
 			}
 			
 		});	
-		
+		 var offset = $("#totalJumun").offset();
+	        $('html, body').animate({scrollTop : offset.top}, 400);
 	}
 	var jumun_Num = 0;
 	function jumunTab(main_Num, sub_Num, content, pay){

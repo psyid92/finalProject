@@ -5,10 +5,16 @@
 
 
 <!-- insert into giupreview(rep_num, rep_star, rep_content, m1_num, g1_num, jumun_num) values(GIUPREVIEW_SEQ.nextval, 4, '맛있었습니다', 41, 1004, 48 ); -->
+
+<select id="selectReviewSeq" resultType="Integer">
+	select GIUPREVIEW_SEQ.nextval from dual
+</select>
+
+
 <!-- 리뷰 삽입 / 리뷰 등록 -->
 <insert id="insertGiupReview" parameterType="com.sp.giupReview.giupReview">
 	insert into giupreview(rep_num, rep_star, rep_content, m1_num, g1_num, jumun_num) 
-		values(GIUPREVIEW_SEQ.nextval, #{rep_star}, #{rep_content}, #{m1_num}, (
+		values(#{rep_num}, #{rep_star}, #{rep_content}, #{m1_num}, (
 			select distinct mc.g1_num from menucate mc
 			    join MAINMENU mm on mm.menuct_Num = mc.menuct_Num
 			    join mainGoods mg on mm.mainmenu_Num = mg.mainmenu_Num
@@ -38,5 +44,9 @@
 
 
 <!-- 리뷰 사진 -->
+<insert id="insertReviewPhoto" parameterType="com.sp.giupReview.giupReview">
+	insert into reviewPhoto (RPHOTO_SAVEFILENAME, RPHOTO_ORIGINALFILENAME, REP_NUM)
+		values(#{RPHOTO_SAVEFILENAME}, #{RPHOTO_ORIGINALFILENAME}, #{REP_NUM} )
+</insert>
 
 </mapper>

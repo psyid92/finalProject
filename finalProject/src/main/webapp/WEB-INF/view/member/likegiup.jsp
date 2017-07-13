@@ -82,7 +82,7 @@ position : relative;
 
 <br>
 <c:forEach items="${list }" var="dto">
-	<div id="pack" onclick="">
+	<div id="pack" onclick="javascript:location.href='<%=cp%>/jumun/article?g1_Num=${dto.g1_num }&g1_Name=${dto.g1_name }'">
 		<p style="float: left; color: red;font-size: 18px;">&nbsp;&nbsp;&nbsp;${dto.cat_name }&nbsp;&nbsp;&nbsp;</p><br><br>
 		<p style="font-size: 22px; font-weight: bold;">${dto.g1_name } <p><br>
 		<a onclick="sendcancle(${dto.g1_num});" class="btn btn-sm btn-primary"><span class="glyphicon glyphicon-ok-sign"></span> Âò Ç®±â</a>

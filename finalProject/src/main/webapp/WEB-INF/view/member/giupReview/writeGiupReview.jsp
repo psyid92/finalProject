@@ -21,7 +21,7 @@ textarea {
 <c:if test="${mode eq 'nowCreate' }">
 
 
-<form class="form-horizontal" name="writeForm" method="post" action="<%=cp %>/member/writeReview">
+<form class="form-horizontal" name="writeForm" method="post" action="<%=cp %>/member/writeReview" enctype="multipart/form-data">
 	<fieldset>
 
 		<!-- Text input-->
@@ -50,7 +50,7 @@ textarea {
 		<div class="form-group">
 			<label class="col-md-4 control-label" for="rphoto_OriginalFilename">»çÁø</label>
 			<div class="col-md-3">
-				<input id="rphoto_OriginalFilename" name="rphoto_OriginalFilename"
+				<input id="upload" name="upload"
 					class="input-file" type="file">
 			</div>
 		</div>

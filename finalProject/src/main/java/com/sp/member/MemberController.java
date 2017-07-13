@@ -1,5 +1,6 @@
 package com.sp.member;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -11,11 +12,11 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartRequest;
 
 import com.sp.giupReview.giupReview;
 import com.sp.giupReview.giupReviewService;
@@ -23,7 +24,6 @@ import com.sp.jumun.JumunMember;
 import com.sp.jumun.JumunService;
 import com.sp.mileage.Mileage;
 import com.sp.mileage.MileageDAO;
-import com.sp.mileage.MileageImpl;
 
 @Controller("member.memberController")
 public class MemberController {
@@ -40,6 +40,7 @@ public class MemberController {
 	@Autowired
 	private giupReviewService review;
 
+	
 	// 로그인 폼
 	@RequestMapping(value = "/member/login", method = RequestMethod.GET)
 	public String loginForm() {
@@ -549,31 +550,29 @@ public class MemberController {
 	 */
 	@RequestMapping(value="/member/writeReview", method=RequestMethod.GET)
 	public String writeGiupReviewForm(Model model, @RequestParam int jumun_num, HttpSession session){
-		/*
 		if (session.getAttribute("member") == null) {
 			return ".mymem.login";
 		}
-		*/
-		
+
 		SessionInfo info = (SessionInfo) session.getAttribute("member");
 		model.addAttribute("jumun_num", jumun_num);
 		model.addAttribute("m1_email", info.getUserId());
 		model.addAttribute("mode", "nowCreate");
+		giupReview reviewDto = new giupReview();
+		model.addAttribute("reviewDto", reviewDto);
 		
 		return ".mymem.giupReview.writeGiupReview";
 	}
 	
 	@RequestMapping(value="/member/writeReview", method=RequestMethod.POST)
-	public String writeGiupReview(HttpServletRequest req, HttpSession session, Model model){
+	public String writeGiupReview(giupReview reviewDto, HttpSession session, Model model){
 		SessionInfo info = (SessionInfo) session.getAttribute("member");
 		
-		giupReview dto = new giupReview();
-		dto.setM1_num(info.getM1_Num());
-		dto.setRep_content(req.getParameter("rep_content"));
-		dto.setRep_star(Integer.parseInt(req.getParameter("rep_star")));
-		dto.setJumun_num(Integer.parseInt(req.getParameter("jumun_num")));
+		String root=session.getServletContext().getRealPath("/");
+		String pathname=root+File.separator+"uploads"+File.separator+"giupReview";
+		
 		try {
-			review.insertReview(dto);
+			review.insertReview(reviewDto, pathname);
 		} catch (Exception e) {
 		}
 		model.addAttribute("mode", "clear");

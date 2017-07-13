@@ -6,26 +6,40 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.sp.common.FileManager;
 import com.sp.common.dao.CommonDAO;
 
 @Service("giupReviewService")
-public class giupServiceImpl  implements giupReviewService{
-	
+public class giupServiceImpl implements giupReviewService {
+
 	@Autowired
 	private CommonDAO dao;
 
-	//등록 - 삽입
+	@Autowired
+	private FileManager fileManager;
+
+	// 등록 - 삽입
 	@Override
-	public int insertReview(giupReview dto) throws Exception {
+	public int insertReview(giupReview dto, String pathname) throws Exception {
 		int result = 0;
+
 		try {
-			result = dao.insertData("giupreview.insertGiupReview", dto); 
+			int seq = dao.getReadData("giupreview.selectReviewSeq");
+			dto.setRep_num(seq);
+
+			// 사진 업로드
+			String newFilename = fileManager.doFileUpload(dto.getUpload(), pathname);
+			dto.setRphoto_SaveFilename(newFilename);
+			
+			dao.insertData("giupreview.insertReviewPhoto", dto);
+			result = dao.insertData("giupreview.insertGiupReview", dto);
+			
 		} catch (Exception e) {
 		}
 		return result;
 	}
 
-	//확인
+	// 확인
 	@Override
 	public int getNumReview(giupReview dto) throws Exception {
 		int result = 0;
@@ -36,7 +50,7 @@ public class giupServiceImpl  implements giupReviewService{
 		return result;
 	}
 
-	//읽기
+	// 읽기
 	@Override
 	public giupReview getReview(giupReview dto) throws Exception {
 		giupReview review = new giupReview();
@@ -47,7 +61,7 @@ public class giupServiceImpl  implements giupReviewService{
 		return review;
 	}
 
-	//삭제
+	// 삭제
 	@Override
 	public int deleteReview(giupReview dto) throws Exception {
 		int result = 0;
@@ -63,8 +77,8 @@ public class giupServiceImpl  implements giupReviewService{
 	public List<giupReview> getListMyReview(giupReview dto) throws Exception {
 		List<giupReview> list = new ArrayList<>();
 		try {
-			//리스트 가져오기
-			
+			// 리스트 가져오기
+
 		} catch (Exception e) {
 		}
 		return list;

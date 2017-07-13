@@ -68,10 +68,33 @@ public class JumunController {
 	}
 
 	@RequestMapping(value = "/jumun/article", method = RequestMethod.GET)
-	public String article(int g1_Num, String g1_Name, Model model) throws Exception {
+	public String article(int g1_Num, String g1_Name, HttpSession session, Model model) throws Exception {
 		List<Jumun> cateList = new ArrayList<>();
+		List<Review> reviewList = new ArrayList<>();
+		Map<String, Object> likeMap = new HashMap<>();
+		SessionInfo info = (SessionInfo)session.getAttribute("member");
+				
+		int result = 0;
+		int start = 1;
+		int end = 10;
+		
 		cateList = service.readMenuCategory(g1_Num);
+		
+		Map<String, Object> map = new HashMap<>();
+		map.put("g1_Num", g1_Num);
+		map.put("start", start);
+		map.put("end", end);
+		reviewList = service.listReview(map);
+		
+		if (info != null) {
+			likeMap.put("g1_Num", g1_Num);
+			likeMap.put("m1_Num", info.getM1_Num());
+			result = service.likeGiup(likeMap);
+		} 
+		
+		model.addAttribute("result",result);
 		model.addAttribute("cateList", cateList);
+		model.addAttribute("reviewList", reviewList);
 		model.addAttribute("g1_Num", g1_Num);
 		model.addAttribute("g1_Name", g1_Name);
 
@@ -121,4 +144,41 @@ public class JumunController {
 		return ".pay.pay";
 	}
 
+	@RequestMapping(value="/jumun/likeGiup", method = RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> likeGiup(int g1_Num, int m1_Num) throws Exception {
+		Map<String, Object> map = new HashMap<>();
+		int state = 0;
+		map.put("g1_Num", g1_Num);
+		map.put("m1_Num", m1_Num);
+		
+		Map<String, Object> model = new HashMap<>();
+		try {
+			state = service.insertLikeGiup(map);
+		} catch (Exception e) {
+		}
+		
+		model.put("state", state);
+		return model;
+		
+	}
+	
+	@RequestMapping(value="/jumun/deLikeGiup", method = RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> deLikeGiup(int g1_Num, int m1_Num) throws Exception {
+		Map<String, Object> map = new HashMap<>();
+		int state = 0;
+		map.put("g1_Num", g1_Num);
+		map.put("m1_Num", m1_Num);
+		
+		Map<String, Object> model = new HashMap<>();
+		try {
+			state = service.deleteLikeGiup(map);
+		} catch (Exception e) {
+		}
+		
+		model.put("state", state);
+		return model;
+		
+	}
 }

@@ -8,6 +8,11 @@
 <script type="text/javascript" src="<%=cp%>/resource/jquery/js/jquery.form.js"></script>
 <script>
 	$(function(){
+		if (${result} > 0) {
+			$("#likeGiup").hide();
+			$("#deLikeGiup").show();
+		}
+		
 		$(".cateMenu").click(function() {
 			var menuct_Num = $(this).attr("id").substring(4);
 			var menu_on = "#main"+menuct_Num;
@@ -196,10 +201,84 @@
 		f.action=url;
 		return true;
 	}
+	$(function(){
+		$("#likeGiup").click(function() {
+			var m1_Num = "${sessionScope.member.m1_Num}";
+			if (m1_Num == null || m1_Num == "") {
+				m1_Num = "loginFail";
+				location.href = "<%=cp%>/member/login";
+				return;
+			}
 		
+			if (!confirm("${g1_Name}을 찜 하시겠습니까?")) {
+				return;
+			}
+			var url = "<%=cp%>/jumun/likeGiup";
+			var query = "g1_Num="+${g1_Num}+"&m1_Num="+m1_Num;
+			$.ajax({
+				type:"post"
+				,url:url
+				,data:query
+				,dataType:"json"
+				,success:function(data) {
+					if (data.state > 0) {
+						$("#likeGiup").hide();
+						$("#deLikeGiup").show();
+					}
+				}
+				,error:function(e) {
+					console.log(e.responseText);
+				}
+			});
+		});
+		$("#deLikeGiup").click(function() {
+			if (!confirm("${g1_Name}을 찜 풀기 하시겠습니까?")) {
+				return;
+			}
+			var url = "<%=cp%>/jumun/deLikeGiup";
+			var m1_Num = "${sessionScope.member.m1_Num}";
+			if (m1_Num == null || m1_Num == "") {
+				m1_Num = "loginFail";
+				location.href = "<%=cp%>/member/login";
+			}
+			var query = "g1_Num="+${g1_Num}+"&m1_Num="+m1_Num;
+			$.ajax({
+				type:"post"
+				,url:url
+				,data:query
+				,dataType:"json"
+				,success:function(data) {
+					if (data.state > 0) {
+						$("#deLikeGiup").hide();
+						$("#likeGiup").show();
+					}
+				}
+				,error:function(e) {
+					console.log(e.responseText);
+				}
+			});
+		});
+	});
 </script>
-<div style="width: 1000px; height: 730px; margin-top: 100px;">
-	<div id="giupMenu" style="width: 680px; margin-bottom: 50px; float: left;">
+<style>
+#review tr td {
+	padding: 5px 30px;
+}
+#like {
+	cursor: pointer;
+}
+</style>
+
+<div id="like">
+	<div id="likeGiup" style="margin: 50px 0px;">
+		<i class="glyphicon glyphicon-heart-empty" style="float: left; color: red;"></i><div style="float: left;">${g1_Name} 찜 하기</div><i class="glyphicon glyphicon-heart-empty" style="color: red;"></i>
+	</div>
+	<div id="deLikeGiup" style="margin: 50px 0px; display: none;">
+		<i class="glyphicon glyphicon-heart" style="float: left; color: red;"></i><div style="float: left;">${g1_Name} 찜 풀기</div><i class="glyphicon glyphicon-heart" style="color: red;"></i>
+	</div>
+</div>
+<div style="width: 680px; float: left;">
+	<div id="giupMenu" style="width: 680px; margin-bottom: 50px;">
 		<c:forEach var="cateDto" items="${cateList}">
 			<div style="margin-bottom: 20px;">
 				<div id="cate${cateDto.menuct_Num}" class="cateMenu" style="cursor: pointer; width: 680px; height: 50px; background-color: #cccccc">${cateDto.menuct_Title}</div>
@@ -207,5 +286,45 @@
 			</div>
 		</c:forEach>
 	</div>
-	<div id="totalJumun" style="font-size: 15px; margin: 0; float: right; width: 300px; height: 102px;"></div>
+	<div id="review" style="width:680px; height:500px; margin: 0;">
+		<table style="width: 680px; border: 1px solid black;">
+			<tr style="border-bottom: 1px solid black;">
+				<th style="font-size: 40px; font-weight: 900; text-align: center;">리뷰</th>
+			</tr>
+			
+			<c:if test="${empty reviewList}">
+				<tr>
+					<td>등록 된 리뷰가 없습니다.</td>
+				</tr>
+			</c:if>
+			<c:forEach var="dto" items="${reviewList}">
+				<tr style="float: left;">
+					<td>${dto.m1_Nickname} | ${dto.rep_Created }</td>
+				</tr>
+				<tr style="float: right;">
+					<td style="color: orange;">
+						<c:forEach begin="1" end="${dto.rep_Star}">★</c:forEach>
+						<c:forEach begin="1" end="${5 - dto.rep_Star}">☆</c:forEach>
+					</td>
+				</tr>
+				<c:if test="${empty dto.rrep_Created}">
+					<tr style="border-bottom: 1px solid black;">
+						<td>${dto.rep_Content}</td>
+					</tr>
+				</c:if>
+				<c:if test="${not empty dto.rrep_Created}">
+					<tr style="border-bottom: 1px solid #cccccc;">
+						<td>${dto.rep_Content}</td>
+					</tr>
+					<tr>
+						<td>사장님 | ${dto.rrep_Created}</td>
+					</tr>
+					<tr style="border-bottom: 1px solid black;">
+						<td>${dto.rrep_Content}</td>
+					</tr>
+				</c:if>
+			</c:forEach>
+		</table>
+	</div>
 </div>
+<div id="totalJumun" style="font-size: 15px; margin-top: 100px; float: right; width: 300px;"></div>

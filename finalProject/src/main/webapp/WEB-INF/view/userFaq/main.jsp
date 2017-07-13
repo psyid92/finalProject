@@ -23,7 +23,14 @@
 }
 .table td a{
     color: #000;
+}
 
+li{
+  width: 20%;  
+  text-align: center;
+  font-weight: 100;
+  
+}
 
 </style>
 
@@ -36,10 +43,39 @@ function searchList(){
 }
 
 
+
+//탭 스트립트
+$('#myTab a').click(function (e) {
+  e.preventDefault()
+  $(this).tab('show')
+})
+	
+$('#myTab a[href="#profile"]').tab('show') // Select tab by name
+$('#myTab a:first').tab('show') // Select first tab
+$('#myTab a:last').tab('show') // Select last tab
+$('#myTab li:eq(2) a').tab('show') // Select third tab (0-indexed)
+
+
 </script>
 
 <!-- 마크업 -->
+<div role="tabpanel">
+
+  <!-- Nav tabs -->
+  <ul class="nav nav-tabs" role="tablist">
+    <li role="presentation" class="active"><a href="<%=cp%>/notice/list" aria-controls="notice" role="tab" data-toggle="tab">공지사항</a></li>
+    <li role="presentation"><a href="<%=cp%>/userEvent/list" aria-controls="userEvent" role="tab" data-toggle="tab">이벤트</a></li>
+    <li role="presentation"><a href="<%=cp%>/userFaq/main" aria-controls="userFaq" role="tab" data-toggle="tab">자주찾는 질문</a></li>
+    <li role="presentation"><a href="<%=cp%>/userQna/created" aria-controls="userQna" role="tab" data-toggle="tab">그것이 알고싶다</a></li>
+    <li role="presentation"><a href="<%=cp%>/userBbs/list" aria-controls="userBbs" role="tab" data-toggle="tab">우리끼리소담소담</a></li>
+    
+  </ul>
+</div>
+
+
   <!-- Tab panes -->
+<div class="tab-content">
+  <div role="tabpanel" class="tab-pane active" id="notice">
     
     <div class="bodyFrame2">
     <div class="body-title">
@@ -89,4 +125,9 @@ function searchList(){
          </tbody>
       </table>
     </div>
+         
+        
+
     </div>
+  </div>
+</div>

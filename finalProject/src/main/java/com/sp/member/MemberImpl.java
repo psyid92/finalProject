@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.sp.common.dao.CommonDAO;
+import com.sp.giupReview.giupReview;
 import com.sp.jumun.JumunMember;
 
 @Service("member.memberService")
@@ -216,6 +217,23 @@ public class MemberImpl implements MemberDAO {
 		}
 
 		return list;
+	}
+
+	
+	/*
+	 * -------------------------------------------------------------------------
+	 * -------------------------------------------------------------------------
+	 * ---------------- 리뷰를 썼는지 가져오기
+	 */
+	
+	@Override
+	public int getNumReview(giupReview dto) throws Exception {
+		int result = 0;
+		try {
+			result = dao.getReadData("giupreview.getNumReview", dto);
+		} catch (Exception e) {
+		}
+		return result;
 	}
 
 	

@@ -29,4 +29,8 @@
 		where m1_num = #{m1_num} and jumun_num=  #{jumun_num}
 </delete>
 
+
+
+<!-- 리뷰 사진 -->
+
 </mapper>

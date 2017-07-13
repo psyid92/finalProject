@@ -4,11 +4,17 @@
 <mapper namespace="giupreview">
 
 
-<!-- insert into giupreview(req_num, req_star, req_content, m1_num, g1_num, jumun_num) values(GIUPREVIEW_SEQ.nextval, 4, '맛있었습니다', 41, 1004, 48 ); -->
+<!-- insert into giupreview(rep_num, rep_star, rep_content, m1_num, g1_num, jumun_num) values(GIUPREVIEW_SEQ.nextval, 4, '맛있었습니다', 41, 1004, 48 ); -->
 <!-- 리뷰 삽입 / 리뷰 등록 -->
 <insert id="insertGiupReview" parameterType="com.sp.giupReview.giupReview">
 	insert into giupreview(rep_num, rep_star, rep_content, m1_num, g1_num, jumun_num) 
-		values(GIUPREVIEW_SEQ.nextval, #{req_star}, #{req_content}, #{m1_num}, #{g1_num}, #{jumun_num} )
+		values(GIUPREVIEW_SEQ.nextval, #{rep_star}, #{rep_content}, #{m1_num}, (
+			select distinct mc.g1_num from menucate mc
+			    join MAINMENU mm on mm.menuct_Num = mc.menuct_Num
+			    join mainGoods mg on mm.mainmenu_Num = mg.mainmenu_Num
+			    join jumun j on j.jumun_Num = mg.jumun_Num
+			    where j.jumun_Num = #{jumun_num}
+		), #{jumun_num} )
 </insert>
 
 <!-- 리뷰 있는지 없는지 확인 -->

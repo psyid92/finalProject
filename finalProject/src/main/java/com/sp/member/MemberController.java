@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.sp.giupReview.giupReview;
 import com.sp.giupReview.giupReviewService;
 import com.sp.jumun.JumunMember;
 import com.sp.jumun.JumunService;
@@ -525,18 +526,58 @@ public class MemberController {
 			myJumun = myJumun.substring(0, myJumun.length()-2);
 		}
 		myJumun += "<br><br>";
-		//리뷰를 이미 썼으면
 		
+		//리뷰를 이미 썼으면
 		if(getNumReview == 0){
-			myJumun += "<a href='#' class='btn btn-block btn-primary btn-success'><span class='glyphicon glyphicon-book'></span> 리뷰 남기기</a>";
+//			myJumun += "<a href='#' class='btn btn-block btn-primary btn-success'><span class='glyphicon glyphicon-book'></span> 리뷰 남기기</a>";
+			myJumun += "<button onclick='goWriteForm("+jumun_num +");' class='btn btn-block btn-primary btn-success'><span class='glyphicon glyphicon-book'></span> 리뷰 남기기</button>";
 		} else {
-			myJumun += "<a href='#' class='btn btn-block btn-primary btn-success'><span class='glyphicon glyphicon-book'></span> 내가 남긴 리뷰 보기</a>";
-			//myJumun += "<a href='"+jumun_num + "' class='btn btn-block btn-primary btn-success'><span class='glyphicon glyphicon-book'></span> 내가 남긴 리뷰 보기</a>";
+			myJumun += "<button onclick = '' class='btn btn-block btn-primary btn-success'><span class='glyphicon glyphicon-book'></span> 내가 남긴 리뷰 보기</button>";
 		}
 		
 		map.put("myJumun", myJumun);
 		return map;
+	}
+	
+	
+	
+	/*
+	 * ---------------------------------------------------------------
+	 * ---------------------------------------------------------------
+	 * ---------------------------------------------------------------
+	 * ----------------------리뷰
+	 */
+	@RequestMapping(value="/member/writeReview", method=RequestMethod.GET)
+	public String writeGiupReviewForm(Model model, @RequestParam int jumun_num, HttpSession session){
+		/*
+		if (session.getAttribute("member") == null) {
+			return ".mymem.login";
+		}
+		*/
 		
+		SessionInfo info = (SessionInfo) session.getAttribute("member");
+		model.addAttribute("jumun_num", jumun_num);
+		model.addAttribute("m1_email", info.getUserId());
+		model.addAttribute("mode", "nowCreate");
+		
+		return ".mymem.giupReview.writeGiupReview";
+	}
+	
+	@RequestMapping(value="/member/writeReview", method=RequestMethod.POST)
+	public String writeGiupReview(HttpServletRequest req, HttpSession session, Model model){
+		SessionInfo info = (SessionInfo) session.getAttribute("member");
+		
+		giupReview dto = new giupReview();
+		dto.setM1_num(info.getM1_Num());
+		dto.setRep_content(req.getParameter("rep_content"));
+		dto.setRep_star(Integer.parseInt(req.getParameter("rep_star")));
+		dto.setJumun_num(Integer.parseInt(req.getParameter("jumun_num")));
+		try {
+			review.insertReview(dto);
+		} catch (Exception e) {
+		}
+		model.addAttribute("mode", "clear");
+		return ".mymem.giupReview.writeGiupReview";
 	}
 			
 }

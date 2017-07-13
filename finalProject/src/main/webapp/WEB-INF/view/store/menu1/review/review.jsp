@@ -45,10 +45,10 @@ $.ajax({
 			       ${reviewDto.g1_Num}
 			        ${reviewDto.jumun_Num}
 			         ${reviewDto.rphoto_Savefilename}
-			          ${reviewDto.rrep_Num}
-			           ${reviewDto.rrep_Content}
-			            ${reviewDto.rreo_Created}
-			             ${reviewDto.rep_Num}
+			   ${reviewDto.rrep_Num}
+			   ${reviewDto.rrep_Content}
+			   ${reviewDto.rreo_Created}
+			   ${reviewDto.rep_Num}
 			</div>
 		</c:forEach>
 		</div>

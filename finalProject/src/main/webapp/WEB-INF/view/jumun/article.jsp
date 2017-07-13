@@ -157,7 +157,7 @@
 		tab += "<input type='hidden' name='sub_Num' value='"+sub_Num+"'></div>";
 		$("#jumunAppend").append(tab);
 		$("#total_Pay").html(total+"원");
-		
+		$(".btn").prop("disabled",false);
 		
 	}
 	function deleteJumun(juNum,pay) {
@@ -166,12 +166,17 @@
 		total = total.substring(0,total.length-1);
 		total -= pay;
 		$("#total_Pay").html(total+"원");
-		if (total == 0)
+		if (total == 0) {
 			$("#jumunAppend").html("메뉴를 선택해주세요.");
+			$(".btn").prop("disabled",true);
+		}
 	}
 	
 	
 	function totalJumun() {
+		if ($("#total_Pay").html() == "0원") {
+			return false;
+		}
 		var f = document.jumunForm;
 		var mainList = document.getElementsByName('main_Num');
 		var subList = document.getElementsByName('sub_Num');
@@ -193,14 +198,14 @@
 	}
 		
 </script>
-<div style="width: 1000px; height: 730px;">
+<div style="width: 1000px; height: 730px; margin-top: 100px;">
 	<div id="giupMenu" style="width: 680px; margin-bottom: 50px; float: left;">
 		<c:forEach var="cateDto" items="${cateList}">
-		<div style="margin-bottom: 20px;">
-			<div id="cate${cateDto.menuct_Num}" class="cateMenu" style="cursor: pointer; width: 680px; height: 50px; background-color: #cccccc">${cateDto.menuct_Title}</div>
-			<div id="main${cateDto.menuct_Num}" class="mainMenu" style="cursor: pointer;"></div>
-		</div>
+			<div style="margin-bottom: 20px;">
+				<div id="cate${cateDto.menuct_Num}" class="cateMenu" style="cursor: pointer; width: 680px; height: 50px; background-color: #cccccc">${cateDto.menuct_Title}</div>
+				<div id="main${cateDto.menuct_Num}" class="mainMenu" style="cursor: pointer;"></div>
+			</div>
 		</c:forEach>
 	</div>
-<div id="totalJumun" style="font-size: 15px; margin: 100px 0;"></div>
+	<div id="totalJumun" style="font-size: 15px; margin: 0; float: right; width: 300px; height: 102px;"></div>
 </div>

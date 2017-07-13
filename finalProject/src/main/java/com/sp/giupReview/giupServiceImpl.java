@@ -30,9 +30,10 @@ public class giupServiceImpl implements giupReviewService {
 			// 사진 업로드
 			String newFilename = fileManager.doFileUpload(dto.getUpload(), pathname);
 			dto.setRphoto_SaveFilename(newFilename);
+			dto.setRphoto_OriginalFilename(dto.getUpload().getOriginalFilename());
 			
-			dao.insertData("giupreview.insertReviewPhoto", dto);
 			result = dao.insertData("giupreview.insertGiupReview", dto);
+			dao.insertData("giupreview.insertReviewPhoto", dto);
 			
 		} catch (Exception e) {
 		}

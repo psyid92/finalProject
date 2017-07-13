@@ -6,35 +6,35 @@
 		SELECT cat_Code, cat_Name FROM category
 	</select>
 	<select id="readMenuCategory" parameterType="Integer" resultType="com.sp.jumun.Jumun">
-		SELECT menuct_Num, menuct_Title, menuct_Info, g1_Num
+		SELECT menuct_Num, menuct_Title, menuct_Info, g1_Num, menuct_Enabled
 		FROM menuCate
-		WHERE g1_Num = #{g1_Num}
+		WHERE g1_Num = #{g1_Num} AND menuct_Enabled = 1
 	</select>
 	
 	<select id="readMainMenu" parameterType="Integer" resultType="com.sp.jumun.Jumun">
 		SELECT mainmenu_Num, mainmenu_Title, mainmenu_Content, mainmenu_Photo,
 			mainmenu_Pay, mainmenu_Enabled, menuct_Num
 		FROM mainmenu
-		WHERE menuct_Num = #{menuct_Num}
+		WHERE menuct_Num = #{menuct_Num} AND mainmenu_Enabled = 1
 	</select>
 	
 	<select id="readSubMenu" parameterType="Integer" resultType="com.sp.jumun.Jumun">
 		SELECT submenu_Num, submenu_Title, submenu_Pay, submenu_Enabled, mainmenu_Num
 		FROM submenu
-		WHERE mainmenu_Num = #{mainmenu_Num}
+		WHERE mainmenu_Num = #{mainmenu_Num} AND submenu_Enabled = 1
 	</select>
 	
 	<select id="mainJumunMenu" parameterType="String" resultType="com.sp.jumun.Jumun">
 		SELECT mainmenu_Num, mainmenu_Title, mainmenu_Content, mainmenu_Photo,
 			mainmenu_Pay, mainmenu_Enabled, menuct_Num
 		FROM mainmenu
-		WHERE mainmenu_Num = #{mainmenu_Num}
+		WHERE mainmenu_Num = #{mainmenu_Num} AND mainmenu_Enabled = 1
 	</select>
 	
 	<select id="subJumunMenu" parameterType="String" resultType="com.sp.jumun.Jumun">
 		SELECT submenu_Num, submenu_Title, submenu_Pay, submenu_Enabled, mainmenu_Num
 		FROM submenu
-		WHERE submenu_Num = #{submenu_Num}
+		WHERE submenu_Num = #{submenu_Num} AND submenu_Enabled = 1
 	</select>
 	
 	<select id="listPayMethod" resultType="com.sp.jumun.Jumun">
@@ -78,7 +78,7 @@
 	       	LEFT OUTER JOIN giupAd ga ON g1.g1_Num = ga.g1_Num
 	       	LEFT OUTER JOIN giup3 g3 ON g1.g1_Num=g3.g3_Num
 	       	<where>
-	       		g1_Sleep = 1
+	       		g1_Sleep = 1 AND g1_Enabled = 1
 	     		<if test="category!=null and category!='' ">
 	       			AND cat_Code = #{category}
 	     		</if>
@@ -90,5 +90,35 @@
 <![CDATA[
 	    )tb WHERE distance < 5
 ]]>
+	</select>
+	
+	<select id="listReview" parameterType="map" resultType="com.sp.jumun.Review">
+		SELECT * FROM (
+			SELECT ROWNUM rnum, tb.* FROM (
+				SELECT gr.rep_Num, rep_Star, rep_Content, rep_Created, gr.m1_Num, gr.g1_Num, jumun_Num,
+					rphoto_SaveFilename, rphoto_OriginalFilename,
+					rrep_Num, rrep_Content, rrep_Created, m1_Nickname
+				FROM giupReview gr
+				LEFT OUTER JOIN reviewPhoto rp ON gr.rep_Num = rp.rep_Num
+				LEFT OUTER JOIN reviewReply rr ON gr.rep_Num = rr.rep_Num
+				LEFT OUTER JOIN member1 m1 ON gr.m1_Num = m1.m1_Num
+				WHERE gr.g1_Num = #{g1_Num}
+				ORDER BY gr.rep_Num
+<![CDATA[
+			) tb WHERE ROWNUM <= #{end}
+		) WHERE rnum >= #{start}
+]]>
+	</select>
+	
+	<insert id="insertLikeGiup" parameterType="map">
+		INSERT INTO likeGiup(g1_Num, m1_Num) VALUES(#{g1_Num}, #{m1_Num})
+	</insert>
+	
+	<delete id="deleteLikeGiup" parameterType="map">
+		DELETE FROM likeGiup WHERE g1_Num = #{g1_Num} AND m1_Num = #{m1_Num}
+	</delete>
+
+	<select id="likeGiup" parameterType="map" resultType="Integer">
+		SELECT NVL(COUNT(*), 0) FROM likeGiup WHERE g1_Num = #{g1_Num} AND m1_Num = #{m1_Num}
 	</select>
 </mapper>

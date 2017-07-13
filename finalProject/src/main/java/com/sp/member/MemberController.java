@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartRequest;
 
 import com.sp.giupReview.giupReview;
 import com.sp.giupReview.giupReviewService;
@@ -558,18 +557,20 @@ public class MemberController {
 		model.addAttribute("jumun_num", jumun_num);
 		model.addAttribute("m1_email", info.getUserId());
 		model.addAttribute("mode", "nowCreate");
-		giupReview reviewDto = new giupReview();
-		model.addAttribute("reviewDto", reviewDto);
 		
 		return ".mymem.giupReview.writeGiupReview";
 	}
 	
 	@RequestMapping(value="/member/writeReview", method=RequestMethod.POST)
 	public String writeGiupReview(giupReview reviewDto, HttpSession session, Model model){
+		if (session.getAttribute("member") == null) {
+			return ".mymem.login";
+		}
 		SessionInfo info = (SessionInfo) session.getAttribute("member");
 		
 		String root=session.getServletContext().getRealPath("/");
 		String pathname=root+File.separator+"uploads"+File.separator+"giupReview";
+		reviewDto.setM1_num(info.getM1_Num());
 		
 		try {
 			review.insertReview(reviewDto, pathname);

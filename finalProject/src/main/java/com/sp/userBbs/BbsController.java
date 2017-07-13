@@ -50,6 +50,10 @@ public class BbsController {
 			){
 		try {
 			SessionInfo info=(SessionInfo)session.getAttribute("member");
+			if(info==null){
+				return "redirect:/member/login";
+			}
+			
 			String cp=req.getContextPath();
 			
 			int rows=5;

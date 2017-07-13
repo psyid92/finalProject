@@ -46,7 +46,7 @@
 <!-- 리뷰 사진 -->
 <insert id="insertReviewPhoto" parameterType="com.sp.giupReview.giupReview">
 	insert into reviewPhoto (RPHOTO_SAVEFILENAME, RPHOTO_ORIGINALFILENAME, REP_NUM)
-		values(#{RPHOTO_SAVEFILENAME}, #{RPHOTO_ORIGINALFILENAME}, #{REP_NUM} )
+		values(#{rphoto_SaveFilename}, #{rphoto_OriginalFilename}, #{rep_num} )
 </insert>
 
 </mapper>

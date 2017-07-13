@@ -137,7 +137,7 @@ label {
 <script type="text/javascript">
 	$(function(){
 		if (${mileage} < 1000) {
-			$("#mileage").attr("readonly", true);
+			$("#mileage").prop("readonly", true);
 			$("#mileage").next().prop("disabled", true);
 		}
 		$("#mileage").next().click(function(){

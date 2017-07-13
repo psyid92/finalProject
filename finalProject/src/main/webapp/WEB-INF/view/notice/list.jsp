@@ -65,7 +65,7 @@ $('#myTab li:eq(2) a').tab('show') // Select third tab (0-indexed)
   <ul class="nav nav-tabs" role="tablist">
     <li role="presentation" class="active"><a href="<%=cp%>/notice/list" aria-controls="notice" role="tab" data-toggle="tab">공지사항</a></li>
     <li role="presentation"><a href="<%=cp%>/userEvent/list" aria-controls="userEvent" role="tab" data-toggle="tab">이벤트</a></li>
-    <li role="presentation"><a href="<%=cp%>/userFap/list" aria-controls="userFaq" role="tab" data-toggle="tab">자주찾는 질문</a></li>
+    <li role="presentation"><a href="<%=cp%>/userFaq/main" aria-controls="userFaq" role="tab" data-toggle="tab">자주찾는 질문</a></li>
     <li role="presentation"><a href="<%=cp%>/userQna/created" aria-controls="userQna" role="tab" data-toggle="tab">그것이 알고싶다</a></li>
     <li role="presentation"><a href="<%=cp%>/userBbs/list" aria-controls="userBbs" role="tab" data-toggle="tab">우리끼리소담소담</a></li>
     
@@ -88,7 +88,7 @@ $('#myTab li:eq(2) a').tab('show') // Select third tab (0-indexed)
 <c:if test="${dataCount!=0}">   
       <div style="clear: both; height: 30px; line-height: 30px;">
         <div style="float: left;">${dataCount}개(${page}/${total_page}페이지)</div>
-        <div style="float: right;">/&nbsp;</div>
+       
       </div>
     <div class="table-responsive" style="clear: both;">
       <table class="table">
@@ -107,7 +107,7 @@ $('#myTab li:eq(2) a').tab('show') // Select third tab (0-indexed)
              <td class="text-center"><span style="display: inline-block;width: 28px;height:18px;line-height:18px; background: #ED4C00;color: #FFFFFF">공지</span></td>
              <td><a href="${articleUrl}&noti_Num=${dto.noti_Num}">${dto.noti_Title}</a></td>
              <td class="text-center">관리자</td>
-             <td class="text-center">${dto.noti_Created}</td>
+             <td class="text-center" style="width: 140px;">${dto.noti_Created}</td>
              <td class="text-center">${dto.noti_Count}</td>
            </tr>   
          </c:forEach>

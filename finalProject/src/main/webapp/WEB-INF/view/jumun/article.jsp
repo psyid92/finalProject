@@ -327,4 +327,4 @@
 		</table>
 	</div>
 </div>
-<div id="totalJumun" style="font-size: 15px; margin-top: 100px; float: right; width: 300px;"></div>
+<div id="totalJumun" style="font-size: 15px; float: right; width: 300px;"></div>

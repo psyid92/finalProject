@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="storStat">
+
+<select id="paySum" parameterType="map" resultType="com.sp.store.mystore.MyStoreStat">
+SELECT DISTINCT 
+  SUM(pay_pay) OVER(PARTITION BY g1.g1_num, TO_CHAR(pay_created,'YY/MM/DD')) AS pay_pay,
+  TO_CHAR(pay_created,'YY/MM/DD') AS pay_created,
+  G1.g1_num, g1_name
+  FROM pay P
+  LEFT OUTER JOIN mainGoods MG ON P.JUMUN_NUM = MG.JUMUN_NUM 
+  LEFT OUTER JOIN mainmenu MM ON MG.MAINMENU_NUM = MM.MAINMENU_NUM
+  LEFT OUTER JOIN menucate MC ON MM.MENUCT_NUM = MC.MENUCT_NUM
+  LEFT OUTER JOIN giup1 G1 ON MC.G1_NUM = G1.G1_NUM
+  WHERE G1.g1_num = #{g1_num}
+  ORDER BY pay_created
+</select>
+
+</mapper>

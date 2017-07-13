@@ -132,8 +132,8 @@
 	
 	<!--  파일처리 : 추가구현 >> 첨부파일은 5개 까지만 첨부 가능 -->
 	<insert id="insertFile" parameterType="com.sp.giupNotice.Notice">
-		INSERT INTO giupNoticeFile(noti_FileNum, noti_Num, noti_OriginalFileName, noti_SaveFileName, noti_FileSize)
-		VALUE(#{noti_FileNum}, #{noti_Num}, #{noti_OrigianlFileName}, #{noti_SaveFileName})
+		INSERT INTO giupNoticeFile(noti_FileNum, noti_Num, noti_OrigianlFileName, noti_SaveFileName, noti_FileSize)
+		VALUES(giupNoticeFile_seq.NEXTVAL, #{noti_Num}, #{noti_OrigianlFileName}, #{noti_SaveFileName}, #{noti_FileSize})
 	</insert>
 	
 	<select id="listFile" parameterType="Integer" resultType="com.sp.giupNotice.Notice">
@@ -141,7 +141,7 @@
 		FROM giupNoticeFile WHERE noti_Num = #{noti_Num}
 	</select>
 	
-	<select id="readFile" parameterType="com.sp.giupNotice.Notice">
+	<select id="readFile" parameterType="Integer" resultType="com.sp.giupNotice.Notice">
 		SELECT noti_FileNum, noti_Num, noti_OrigianlFileName, noti_SaveFileName, noti_FileSize
 		FROM giupNoticeFile WHERE noti_FileNum = #{noti_FileNum}
 	</select>

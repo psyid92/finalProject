@@ -10,9 +10,6 @@
 
 <script type="text/javascript">
 
-// 주소로 위도 경도 구하기
-///////////////////////////////////////////////////////////////////////
-var map = new naver.maps.Map("map", {});
 
 //주소로 위도 경도 구하기
 function searchAddressToCoordinate(address) {
@@ -116,7 +113,7 @@ function memberOk() {
 }
 
 </style>
-
+ 
 <div class="body-container" style="width: 700px;">
 	<div class="body-giup2">
 		<h3>
@@ -125,7 +122,6 @@ function memberOk() {
 	</div>
 	<div>
 		<form name="giupForm2" method="post" action="<%=cp%>/store/step2">
-		<div id="map"></div>
 			<table
 				style="width: 100%; margin: 20px auto 0px; border-spacing: 0px;">
 				

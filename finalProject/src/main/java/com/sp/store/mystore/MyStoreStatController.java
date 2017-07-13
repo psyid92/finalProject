@@ -8,10 +8,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-@Controller("mystore.myStoreController")
+@Controller("mystore.myStoreStatController")
 public class MyStoreStatController {
-	@Autowired
-	private MyStoreStatService service;
 	
 	// 메뉴1
 		@RequestMapping(value = "/store/mystore", method = RequestMethod.GET)

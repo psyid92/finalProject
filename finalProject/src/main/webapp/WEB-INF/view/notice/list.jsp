@@ -62,7 +62,7 @@ $('#myTab li:eq(2) a').tab('show') // Select third tab (0-indexed)
 <div role="tabpanel">
 
   <!-- Nav tabs -->
-  <ul class="nav nav-tabs" role="tablist">
+  <ul class="nav nav-tabs" role="tablist" style="margin-top: 50px;">
     <li role="presentation" class="active"><a href="<%=cp%>/notice/list" aria-controls="notice" role="tab" data-toggle="tab">공지사항</a></li>
     <li role="presentation"><a href="<%=cp%>/userEvent/list" aria-controls="userEvent" role="tab" data-toggle="tab">이벤트</a></li>
     <li role="presentation"><a href="<%=cp%>/userFaq/main" aria-controls="userFaq" role="tab" data-toggle="tab">자주찾는 질문</a></li>
@@ -74,7 +74,7 @@ $('#myTab li:eq(2) a').tab('show') // Select third tab (0-indexed)
 
 
   <!-- Tab panes -->
-<div class="tab-content">
+<div class="tab-content" style="margin-top: 20px;">
   <div role="tabpanel" class="tab-pane active" id="notice">
     
     <div class="bodyFrame2">

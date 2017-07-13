@@ -1,5 +1,8 @@
 package com.sp.giupReview;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -53,6 +56,18 @@ public class giupServiceImpl  implements giupReviewService{
 		} catch (Exception e) {
 		}
 		return result;
+	}
+
+	// 회원 - 리뷰 리스트
+	@Override
+	public List<giupReview> getListMyReview(giupReview dto) throws Exception {
+		List<giupReview> list = new ArrayList<>();
+		try {
+			//리스트 가져오기
+			
+		} catch (Exception e) {
+		}
+		return list;
 	}
 
 }

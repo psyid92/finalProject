@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.sp.giupReview.giupReviewService;
 import com.sp.jumun.JumunMember;
 import com.sp.jumun.JumunService;
 import com.sp.mileage.Mileage;
@@ -34,6 +35,9 @@ public class MemberController {
 
 	@Autowired
 	private JumunService judao;
+	
+	@Autowired
+	private giupReviewService review;
 
 	// 로그인 폼
 	@RequestMapping(value = "/member/login", method = RequestMethod.GET)
@@ -462,6 +466,7 @@ public class MemberController {
 		return model;
 	}
 
+	
 	/*
 	 * -------------------------------------------------------------------------
 	 * ---------------
@@ -493,6 +498,7 @@ public class MemberController {
 	@ResponseBody //AJax 사용
 	public Map<String, Object> getDetailPay(HttpSession session, @RequestParam(value="mydata", defaultValue="") int jumun_num){
 		SessionInfo info = (SessionInfo)session.getAttribute("member");
+		int getNumReview = 0;
 		Map<String, Object> map = new HashMap<>();
 		map.put("jumun_num", jumun_num);
 		map.put("m1_num", info.getM1_Num());
@@ -501,6 +507,7 @@ public class MemberController {
 		String myJumun= "<br><br>";
 		try {
 			list = judao.detailmyPay(map);
+			getNumReview = dao.getNumReview(map);
 			
 			for (JumunMember jumun : list) {
 				myJumun += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + jumun.getMAINMENU_TITLE() + "&nbsp;&nbsp;&nbsp;" + jumun.getMAINGOODS_COUNT() + "&nbsp;개";
@@ -520,10 +527,11 @@ public class MemberController {
 		myJumun += "<br><br>";
 		//리뷰를 이미 썼으면
 		
-		if(myJumun == ""){
+		if(getNumReview == 0){
 			myJumun += "<a href='#' class='btn btn-block btn-primary btn-success'><span class='glyphicon glyphicon-book'></span> 리뷰 남기기</a>";
 		} else {
 			myJumun += "<a href='#' class='btn btn-block btn-primary btn-success'><span class='glyphicon glyphicon-book'></span> 내가 남긴 리뷰 보기</a>";
+			//myJumun += "<a href='"+jumun_num + "' class='btn btn-block btn-primary btn-success'><span class='glyphicon glyphicon-book'></span> 내가 남긴 리뷰 보기</a>";
 		}
 		
 		map.put("myJumun", myJumun);

@@ -33,24 +33,14 @@ public class MyStoreServiceImpl implements MyStoreService{
 	public int insertMainMenu(MyStore mystoreDto, String path) throws Exception {
 		int result = 0;
 		try {
-			System.out.println(mystoreDto.getUpload());
-			if(mystoreDto.getUpload()!=null && !mystoreDto.getUpload().isEmpty()){
 				//사진 업로드
 				String newFilename = filemanger.doFileUpload(mystoreDto.getUpload(), path);
-				
-				System.out.println("photoname:"+mystoreDto.getMainmenu_Photo());
-				System.out.println("newFilename:"+newFilename);
 				
 				result=dao.getIntValue("menu.seqmainmenu");
 				mystoreDto.setMainmenu_Num(result);
 				mystoreDto.setMainmenu_Photo(newFilename);
 				
-				System.out.println("photoname2  :"+mystoreDto.getMainmenu_Photo());
-				System.out.println("newFilename2 :"+newFilename);
-				
 				result = dao.insertData("menu.insertMainMenu", mystoreDto);
-			}else
-				System.out.println("실행안함");
 		} catch (Exception e) {
 			result = 0;
 			System.out.println(e.toString());

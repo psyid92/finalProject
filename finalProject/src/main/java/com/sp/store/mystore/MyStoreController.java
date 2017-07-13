@@ -65,9 +65,12 @@ public class MyStoreController {
 	@ResponseBody
 	public Map<String, Object> submenuList(int mainmenu_Num)throws Exception{
 		List<MyStore> submenulist = service.readSubmenu(mainmenu_Num);
-		
 		Map<String, Object> model = new HashMap<>();
+		
+		
+		
 		model.put("submenulist", submenulist);
+		
 		return model;
 	}
 	

@@ -32,32 +32,34 @@ $(function(){
 		}
 	});
 	 
-	function layout1(list, menu_on, menuct_Num, path) {
-		var s = "";
-			s+="<form name='mainmenuForm"+menuct_Num+"' method='post' enctype='multipart/form-data'";
-			s+="<div id='maininput' style='margin: 10px 3px;'>";
-			s+="<input type='text' id='mainmenu_Title"+menuct_Num+"' 	name='mainmenu_Title' class='boxTF' style='width:190px;' placeholder='메인메뉴 이름'>&nbsp;";
-			s+="<input type='text' id='mainmenu_Content"+menuct_Num+"'  name='mainmenu_Content' class='boxTF' style='width:190px;' placeholder='메인메뉴 정보'>&nbsp;";
-			s+="<input type='file' name='upload' class='boxTF'>&nbsp;";
-			s+="<input type='text' id='mainmenu_Pay"+menuct_Num+"' 		name='mainmenu_Pay' class='boxTF' style='width:190px;' placeholder='메인메뉴 가격'>&nbsp;";
-			s+="<input type='hidden' id='menuct_Num' name='menuct_Num' value="+menuct_Num+">";
-			s+="<button type='button' onclick='insertMainmenu("+menuct_Num+");' class='btn'>메인메뉴추가</button>";
-			s+="</div></form>";
-		for (var i = 0; i < list.length; i++) {
-			s += "<div id='mainmenu"+list[i].mainmenu_Num+"'><div onclick='submenu("+list[i].mainmenu_Num+")' style='width: 680px; height: 30px;  line-height: 30px; background-color: #dddddd;'><div style='float: left;'>" + list[i].mainmenu_Title+"</div>";
-			s += "<button id=main"+list[i].mainmenu_Num+" onclick='deleteMainMenu("+list[i].mainmenu_Num+")' style='float:right; height: 26px; line-height: 20px;'>삭제</button><div style='float: right;'>" + list[i].mainmenu_Pay + "</div></div>";
-			s += "<div id='sub"+list[i].mainmenu_Num+"' style='width:700px; background-color: white; display: none;'>"
-			s += "<div>"+list[i].mainmenu_Num + "</div><div class='title'>" + list[i].mainmenu_Title + "</div>";
-			s += "<div class='content'>"+list[i].mainmenu_Content + "</div><img src='<%=cp%>/uploads/photo/"+list[i].mainmenu_Photo+"' style='width:70%; height:70%;'>";
-			s += "<div class='pay'>"+list[i].mainmenu_Pay + "</div><div>" + list[i].mainmenu_Enabled + "</div>"; 
-			s += "<input type='text' id='submenu_Title"+list[i].mainmenu_Num+"' class='boxTF' style='width:190px;' placeholder='서브메뉴 이름'>&nbsp;"
-			s += "<input type='text' id='submenu_Pay"+list[i].mainmenu_Num+"' class='boxTF' style='width:190px;' placeholder='서브메뉴 가격'>&nbsp;"
-			s += "<button type='button' onclick='insertSubmenu("+list[i].mainmenu_Num+")' class='btn'>서브메뉴 추가</button><br><div id='addSubMenu"+list[i].mainmenu_Num+"'></div></div></div>";
-		}
-		$(menu_on).html(s);
-	}
 });  
 
+function layout1(list, menu_on, menuct_Num, path) {
+	var s = "";
+		s+="<form name='mainmenuForm"+menuct_Num+"' method='post' enctype='multipart/form-data'>";
+		s+="<div id='maininput' style='margin: 10px 3px;'>";
+		s+="<input type='text' id='mainmenu_Title"+menuct_Num+"' 	name='mainmenu_Title' class='boxTF' style='width:190px;' placeholder='메인메뉴 이름'>&nbsp;";
+		s+="<input type='text' id='mainmenu_Content"+menuct_Num+"'  name='mainmenu_Content' class='boxTF' style='width:190px;' placeholder='메인메뉴 정보'>&nbsp;";
+		s+="<input type='file' name='upload' class='boxTF'>&nbsp;";
+		s+="<input type='text' id='mainmenu_Pay"+menuct_Num+"' 		name='mainmenu_Pay' class='boxTF' style='width:190px;' placeholder='메인메뉴 가격'>&nbsp;";
+		s+="<input type='hidden' id='menuct_Num' name='menuct_Num' value="+menuct_Num+">";
+		s+="<button type='button' onclick='insertMainmenu("+menuct_Num+");' class='btn'>메인메뉴추가</button>";
+		s+="</div></form>";
+	for (var i = 0; i < list.length; i++) {
+		s += "<div id='mainmenu"+list[i].mainmenu_Num+"'><div onclick='submenu("+list[i].mainmenu_Num+")' style='width: 680px; height: 30px;  line-height: 30px; background-color: #dddddd;'><div style='float: left;'>" + list[i].mainmenu_Title+"</div>";
+		s += "<button id=main"+list[i].mainmenu_Num+" onclick='deleteMainMenu("+list[i].mainmenu_Num+")' style='float:right; height: 26px; line-height: 20px;'>삭제</button><div style='float: right;'>" + list[i].mainmenu_Pay + "</div></div>";
+		s += "<div id='sub"+list[i].mainmenu_Num+"' style='width:700px; background-color: white; display: none;'>"
+		s += "<div>"+list[i].mainmenu_Num + "</div><div class='title'>" + list[i].mainmenu_Title + "</div>";
+		s += "<div class='content'>"+list[i].mainmenu_Content + "</div>";
+		if(list[i].mainmenu_Photo!=null)
+		   s += "<img src='<%=cp%>/uploads/photo/"+list[i].mainmenu_Photo+"' style='width:70%; height:70%;'>";
+		s += "<div class='pay'>"+list[i].mainmenu_Pay + "</div><div>" + list[i].mainmenu_Enabled + "</div>"; 
+		s += "<input type='text' id='submenu_Title"+list[i].mainmenu_Num+"' class='boxTF' style='width:190px;' placeholder='서브메뉴 이름'>&nbsp;"
+		s += "<input type='text' id='submenu_Pay"+list[i].mainmenu_Num+"' class='boxTF' style='width:190px;' placeholder='서브메뉴 가격'>&nbsp;"
+		s += "<button type='button' onclick='insertSubMenu("+list[i].mainmenu_Num+")' class='btn'>서브메뉴 추가</button><br><div id='addSubMenu"+list[i].mainmenu_Num+"'></div></div></div>";
+	}
+	$(menu_on).html(s);
+}
 
 //메뉴 카테고리 추가하기
 function insertMenuct() {
@@ -131,13 +133,13 @@ function insertMainmenu(menuct_Num) {
 			if(state=="false"){
 				alert("게시물을 추가하지 못했습니다. !!!");
 				return;
-			}
+			} 
 			$("#mainmenu_Title"+menuct_Num).val("");
 			$("#mainmenu_Content"+menuct_Num).val("");
 			$("[name='upload']").val("");
 			$("#mainmenu_Pay"+menuct_Num).val("");
 			var s = "";
-				s+="<form name='mainmenuForm"+menuct_Num+"' method='post' enctype='multipart/form-data'";
+				s+="<form name='mainmenuForm"+menuct_Num+"' method='post' enctype='multipart/form-data'>";
 				s+="<div id='maininput' style='margin: 10px 3px;'>"; 
 				s+="<input type='text' id='mainmenu_Title"+menuct_Num+"' name='mainmenu_Title' class='boxTF' style='width:190px;' placeholder='메인메뉴 이름'>&nbsp;";
 				s+="<input type='text' id='mainmenu_Content"+menuct_Num+"' name='mainmenu_Content' class='boxTF' style='width:190px;' placeholder='메인메뉴 정보'>&nbsp;";
@@ -151,14 +153,17 @@ function insertMainmenu(menuct_Num) {
 				s += "<button onclick='deleteMainMenu("+list[i].mainmenu_Num+")' style='float:right; height: 26px; line-height: 20px;'>삭제</button><div style='float: right;'>" + list[i].mainmenu_Pay + "</div></div>";
 				s += "<div id='sub"+list[i].mainmenu_Num+"' style='width:700px; background-color: white; display: none;'>"
 				s += "<div>"+list[i].mainmenu_Num + "</div><div class='title'>" + list[i].mainmenu_Title + "</div>";
-				s += "<div class='content'>"+list[i].mainmenu_Content + "</div><img src='<%=cp%>/uploads/photo/"+list[i].mainmenu_Photo+"' style='width:70%; height:70%;'>";
+				s += "<div class='content'>"+list[i].mainmenu_Content + "</div>";  
+				if(list[i].mainmenu_Photo!=null)
+					s += "<img src='<%=cp%>/uploads/photo/"+list[i].mainmenu_Photo+"' style='width:70%; height:70%;'>";
 				s += "<div class='pay'>"+list[i].mainmenu_Pay + "</div><div>" + list[i].mainmenu_Enabled + "</div>";
 				s += "<input type='text' id='submenu_Title"+list[i].mainmenu_Num+"' class='boxTF' style='width:190px;' placeholder='서브메뉴 이름'>&nbsp;"
 				s += "<input type='text' id='submenu_Pay"+list[i].mainmenu_Num+"' class='boxTF' style='width:190px;' placeholder='서브메뉴 가격'>&nbsp;"
-				s += "<button type='button' onclick='insertSubmenu("+list[i].mainmenu_Num+")' class='btn'>서브메뉴 추가</button><br><div id='addSubMenu"+list[i].mainmenu_Num+"'></div></div>";
+				s += "<button type='button' onclick='insertSubMenu("+list[i].mainmenu_Num+")' class='btn'>서브메뉴 추가</button><br><div id='addSubMenu"+list[i].mainmenu_Num+"'></div></div>";
+				
 			}
 			$("#main"+menuct_Num).html(s); 
-			}
+		}
 		,error:function(e) {
 			console.log(e.responseText);
 		}
@@ -172,7 +177,7 @@ function submenu(mainmenu_Num) {
 		
 		var s = "";
 		for (var i = 0; i < list.length; i++) {
-			s += "<div id=submen"+list[i].submenu_Num+"><div style='float:left;'>"+list[i].submenu_Title+"</div><div style='float:left;'>("+list[i].submenu_Pay+"원 추가)</div><a onclick='deleteSubmenu("+list[i].submenu_Num+")'>삭제</a></div>";
+			s += "<div id=submen"+list[i].submenu_Num+"><div style='float:left;'>"+list[i].submenu_Title+"</div><div style='float:left;'>("+list[i].submenu_Pay+"원 추가)</div><button type='button' onclick='deleteSubMenu("+list[i].submenu_Num+")'>삭제</button></div>";
 		}
 		$("#addSubMenu"+mainmenu_Num).html(s);
 	}, "json");
@@ -184,7 +189,7 @@ function submenu(mainmenu_Num) {
 }
 
 // 서브메뉴 추가
-function insertSubmenu(mainmenu_Num) {
+function insertSubMenu(mainmenu_Num) {
 	var submenu_Title=$("#submenu_Title"+mainmenu_Num).val();
 	var submenu_Pay=$("#submenu_Pay"+mainmenu_Num).val();
 	
@@ -208,7 +213,7 @@ function insertSubmenu(mainmenu_Num) {
 		$("#submenu_Pay"+mainmenu_Num).val("");
 		var s = "";
 		for (var i = 0; i < list.length; i++) {
-			s += "<div id=submen"+list[i].submenu_Num+"><div style='float:left;'>"+list[i].submenu_Title+"</div><div style='float:left;'>("+list[i].submenu_Pay+"원 추가)</div><a onclick='deleteSubMenu("+list[i].submenu_Num+")'>삭제</a></div>";
+			s += "<div id=submen"+list[i].submenu_Num+"><div style='float:left;'>"+list[i].submenu_Title+"</div><div style='float:left;'>("+list[i].submenu_Pay+"원 추가)</div><button type='button' onclick='deleteSubMenu("+list[i].submenu_Num+")'>삭제</button></div>";
 		}
 		$("#addSubMenu"+mainmenu_Num).html(s);
 	}, "json");
@@ -241,6 +246,7 @@ function deleteMainMenu(mainmenu_Num) {
 			alert("삭제를 실패했습니다.");
 			return;
 		}
+		$("#mainmenu"+mainmenu_Num).remove();
 		$("#main"+mainmenu_Num).remove();
 		$("#sub"+mainmenu_Num).remove();
 	}, "json");

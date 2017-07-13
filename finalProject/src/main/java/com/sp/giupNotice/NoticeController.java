@@ -173,7 +173,7 @@ public class NoticeController {
 		
 		//저장 
 		String root =session.getServletContext().getRealPath("/");
-		String pathname = root+File.separator+"uploads"+File.separator+"notice";
+		String pathname = root+File.separator+"uploads"+File.separator+"giupNotice";
 		
 		dto.setAdmin_Id(info.getG1_Id());
 		service.insertNotice(dto, pathname);
@@ -234,7 +234,7 @@ public class NoticeController {
 	
 	//수정 
 	@RequestMapping(value="/giupNotice/update", method=RequestMethod.GET)
-	public String updateNotice(
+	public String updateForm(
 			@RequestParam(value="noti_Num") int num,
 			@RequestParam(value="page", defaultValue="1") int page, 
 			Model model, HttpSession session) throws Exception {
@@ -265,10 +265,9 @@ public class NoticeController {
 	}
 	
 	@RequestMapping(value="/giupNotice/update", method=RequestMethod.POST)
-	@ResponseBody
 	public String updateSubmit(
 			Notice dto, 
-			@RequestParam(value="page", defaultValue="1") int page,
+			@RequestParam int page,
 			HttpSession session
 			) throws Exception {
 		SessionInfo info = (SessionInfo)session.getAttribute("store");
@@ -359,7 +358,7 @@ public class NoticeController {
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("field", "noti_Filenum");
-		map.put("noti_Filenum", fileNum);
+		map.put("noti_Num", fileNum);
 		service.deleteFile(map);
 		
 		// 작업결과를 json으로 전송 

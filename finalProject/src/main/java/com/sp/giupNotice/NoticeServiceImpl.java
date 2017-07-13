@@ -186,8 +186,8 @@ public class NoticeServiceImpl implements NoticeService {
 			
 			// 파일 테이블 내용 지우기
 			Map<String, Object> map = new HashMap<String, Object>();
-			map.put("field", "num");
-			map.put("num", num);
+			map.put("field", "noti_Num");
+			map.put("noti_Num", num);
 			deleteFile(map);
 			
 			result = dao.deleteData("giupNotice.deleteNotice", num);

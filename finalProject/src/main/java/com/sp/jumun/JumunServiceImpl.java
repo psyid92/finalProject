@@ -149,4 +149,48 @@ public class JumunServiceImpl implements JumunService {
 		}
 		return list;
 	}
+
+	@Override
+	public List<Review> listReview(Map<String, Object> map) throws Exception {
+		List<Review> list = new ArrayList<>();
+		try {
+			list = dao.getListData("jumun.listReview", map);
+		} catch (Exception e) {
+			throw e;
+		}
+		return list;
+	}
+
+	@Override
+	public int likeGiup(Map<String, Object> map) throws Exception {
+		int result = 0;
+		try {
+			result = dao.getIntValue("jumun.likeGiup", map);
+		} catch (Exception e) {
+			throw e;
+		}
+		return result;
+	}
+
+	@Override
+	public int insertLikeGiup(Map<String, Object> map) throws Exception {
+		int result = 0;
+		try {
+			result = dao.insertData("jumun.insertLikeGiup", map);
+		} catch (Exception e) {
+			throw e;
+		}
+		return result;
+	}
+
+	@Override
+	public int deleteLikeGiup(Map<String, Object> map) throws Exception {
+		int result = 0;
+		try {
+			result = dao.deleteData("jumun.deleteLikeGiup", map);
+		} catch (Exception e) {
+			throw e;
+		}
+		return result;
+	}
 }

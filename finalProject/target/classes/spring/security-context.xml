@@ -27,6 +27,11 @@
 		<!-- spring 4.x때 추가된 옵션으로 ssl을 사용하지 않을 경우 csrf는 disalbed=true로 설정. -->
 		<csrf disabled="true"/>
 		
+        <headers>
+            <frame-options policy="SAMEORIGIN" />
+            <hsts disabled="true"/>
+        </headers>
+        		
 		<intercept-url pattern="/admin/**" access="hasAnyRole('ROLE_ADMIN')"/>
 		
 		<!-- 사용자정의 로그인 폼 -->

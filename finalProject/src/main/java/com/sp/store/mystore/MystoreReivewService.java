@@ -1,5 +1,14 @@
 package com.sp.store.mystore;
 
-public interface MystoreReivewService {
+import java.util.List;
 
+public interface MystoreReivewService {
+	public int insertReviewReply(MyStoreReview reviewDto) throws Exception;
+	
+	public int updateReviewReply(int rrep_Num) throws Exception;
+	
+	public int deleteReviewReply(int rrep_Num) throws Exception;
+	
+	public List<MyStoreReview> reviewList(int g1_Num) throws Exception;
+	public List<MyStoreReview> reviewListYed(int g1_Num) throws Exception;
 }

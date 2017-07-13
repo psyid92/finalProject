@@ -67,24 +67,29 @@ function searchList() {
     			<c:forEach var="dto" items="${noticeList}">
     				<tr>
     					<td class="text-center"> <span style="display: inline-block; width: 28px; height: 18px; line-height: 18px; background:#ED4C00; color: #FFFFFF  "> 공지</span> </td>
-    					<td><a href="${articleUrl}&num=${dto.num}">${dto.title}</a> </td>
+    					<td>
+    						<a href="${articleUrl}&noti_Num=${dto.noti_Num}">${dto.noti_Title}</a> 
+    						<c:if test="${dto.gap <1 }">
+    							<img alt="" src="<%=cp%>/resource/img/new.gif">
+    						</c:if>    					
+    					</td>
     					<td class="text-center">${dto.admin_Id} </td>
-    					<td class="text-center">${dto.created} </td>
-    					<td class="text-center">${dto.hitCount} </td>
+    					<td class="text-center">${dto.noti_Created} </td>
+    					<td class="text-center">${dto.noti_HItCount} </td>
     				</tr>
     			</c:forEach>
     			<c:forEach var="dto" items="${list}">
     				<tr>
     					<td class="text-center">${dto.listNum}</td>
     					<td>
-    						<a href="${articleUrl}&num=${dto.num}">${dto.title}</a>
+    						<a href="${articleUrl}&noti_Num=${dto.noti_Num}">${dto.noti_Title}</a>
     						<c:if test="${dto.gap <1 }">
-    							<img alt="" src="<%=cp%>/resoure/img/new.gif">
+    							<img alt="" src="<%=cp%>/resource/img/new.gif">
     						</c:if>
     					</td>
     					<td class="text-center">${dto.admin_Id}</td>
-    					<td class="text-center">${dto.created}</td>
-    					<td class="text-center">${dto.hitCount}</td>
+    					<td class="text-center">${dto.noti_Created}</td>
+    					<td class="text-center">${dto.noti_HItCount}</td>
     				
     				</tr>
     			</c:forEach>
@@ -108,15 +113,15 @@ function searchList() {
     	
     	<div style="clear: both">
     		<div style="float: left; width: 20px; min-width: 85px; ">
-    			<button type="button" class="btn btn-default btn-sm wbtn" onclick="javascript:location.href='<%=cp%>/store/giupNotice'; ">새로고침</button>
+    			<button type="button" class="btn btn-default btn-sm wbtn" onclick="javascript:location.href='<%=cp%>/giupNotice/list'; ">새로고침</button>
     		</div>
     		<div style="float: left; width: 60%; text-align: center;">
     			<form name="searchForm" class="form-inline" method="post">
     				<select name="searchKey" class="form-control input-sm">
-    					<option value="title">제목 </option>
+    					<option value="noti_Title">제목 </option>
     					<option value="admin_Id">작성자</option>
-    					<option value="content">내용 </option>
-    					<option value="created">등록일 </option>
+    					<option value="noti_Content">내용 </option>
+    					<option value="noti_Created">등록일 </option>
     				</select>
     				<input type="text" class="form-control input-sm input-search" name="searchValue">
     				<button type="button" class="btn btn-info btn-sm btn-search" onclick="searchList()"><span class="glyphicon glyphicon-search">검색</span> </button>

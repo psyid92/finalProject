@@ -10,9 +10,6 @@
 
 <script type="text/javascript">
 
-// 주소로 위도 경도 구하기
-///////////////////////////////////////////////////////////////////////
-var map = new naver.maps.Map("map", {});
 
 //주소로 위도 경도 구하기
 function searchAddressToCoordinate(address) {
@@ -116,7 +113,7 @@ function memberOk() {
 }
 
 </style>
-
+ 
 <div class="body-container" style="width: 700px;">
 	<div class="body-giup2">
 		<h3>
@@ -125,7 +122,6 @@ function memberOk() {
 	</div>
 	<div>
 		<form name="giupForm2" method="post" action="<%=cp%>/store/step2">
-		<div id="map"></div>
 			<table
 				style="width: 100%; margin: 20px auto 0px; border-spacing: 0px;">
 				
@@ -135,7 +131,7 @@ function memberOk() {
 			      </td>
 			      <td style="padding: 0 0 15px 15px;">
 			        <p style="margin-top: 1px; margin-bottom: 5px;">
-			            <input type="text" id="g3_Addr1" name="g3_Addr1" value="${dto.g3_Addr1}"
+			            <input type="text" id="g3_Addr1" name="g3_Addr1" value="${storeDto.g3_Addr1}"
 			                       class="boxTF" readonly="readonly" placeholder="우편번호">
 			            <button type="button" class="btn" onclick="sample6_execDaumPostcode()">우편번호 찾기</button>          
 			        </p>
@@ -148,11 +144,11 @@ function memberOk() {
 			      </td>
 			      <td style="padding: 0 0 15px 15px;">
 			        <p style="margin-top: 1px; margin-bottom: 5px;">
-			            <input type="text" id="g3_Addr2" name="g3_Addr2" value="${dto.g3_Addr2}" maxlength="50" 
+			            <input type="text" id="g3_Addr2" name="g3_Addr2" value="${storeDto.g3_Addr2}" maxlength="50" 
 			                       class="boxTF" style="width: 95%;" readonly="readonly" placeholder="주소">
 			        </p>
 			        <p style="margin-bottom: 5px;">
-			            <input type="text" id="g3_Addr3" name="g3_Addr3" value="${dto.g3_Addr3}" maxlength="50" 
+			            <input type="text" id="g3_Addr3" name="g3_Addr3" value="${storeDto.g3_Addr3}" maxlength="50" 
 			                       class="boxTF" style="width: 95%;" placeholder="상세주소를 입력해주세요">
 			        </p>
 			        <span id="guide" style="color:#999"></span>
@@ -165,7 +161,7 @@ function memberOk() {
 					</td>
 					<td style="padding: 0 0 15px 15px;">
 						<p style="margin-top: 1px; margin-bottom: 5px;">
-							<input type="text" name="g2_Baedal" id="g2_Baedal" value="${dto.g2_Baedal}" style="width: 95%;"
+							<input type="text" name="g2_Baedal" id="g2_Baedal" value="${storeDto.g2_Baedal}" style="width: 95%;"
 							 maxlength="15" class="boxTF" placeholder="배달 가능한 지역을 입력해 주세요">
 						</p>
 					</td>
@@ -177,7 +173,7 @@ function memberOk() {
 					</td>
 					<td style="padding: 0 0 15px 15px;">
 						<p style="margin-top: 1px; margin-bottom: 5px;">
-							<input type="text" name="g2_Opentime" id="g2_Opentime" value="${dto.g2_Opentime}" style="width: 95%;"
+							<input type="text" name="g2_Opentime" id="g2_Opentime" value="${storeDto.g2_Opentime}" style="width: 95%;"
 							 maxlength="15" class="boxTF" placeholder="배달 가능한 지역을 입력해 주세요">
 						</p>
 						<p class="help-block">예) 09:00 ~ 15:30</p>
@@ -190,7 +186,7 @@ function memberOk() {
 					</td>
 					<td style="padding: 0 0 15px 15px;">
 						<p style="margin-top: 1px; margin-bottom: 5px;">
-							<textarea id="g2_Origin" name="g2_Origin" rows="5px" cols="20px" style="resize:none; margin-left: 0px; margin-right: 0px; width: 95%;">-${dto.g2_Origin}</textarea>
+							<textarea id="g2_Origin" name="g2_Origin" rows="5px" cols="20px" style="resize:none; margin-left: 0px; margin-right: 0px; width: 95%;">-${storeDto.g2_Origin}</textarea>
 						</p>
 						<p class="help-block">음식명 옆에 원료인 농수산물과 그 원료를 표시하세요. 예)치킨(닭고기:국산)</p>
 					</td>
@@ -202,7 +198,7 @@ function memberOk() {
 					</td>
 					<td style="padding: 0 0 15px 15px;">
 						<p style="margin-top: 1px; margin-bottom: 5px;">
-							<textarea id="g2_Memo" name="g2_Memo" rows="5px" cols="20px" style="resize:none; margin-left: 0px; margin-right: 0px; width: 95%;">${dto.g2_Memo }</textarea>
+							<textarea id="g2_Memo" name="g2_Memo" rows="5px" cols="20px" style="resize:none; margin-left: 0px; margin-right: 0px; width: 95%;">${storeDto.g2_Memo }</textarea>
 						</p>
 						<p class="help-block">업소를 소개하는 말을 작성해 주세요</p>
 					</td>
@@ -214,7 +210,7 @@ function memberOk() {
 					</td>
 					<td style="padding: 0 0 15px 15px;">
 						<p style="margin-top: 1px; margin-bottom: 5px;">
-							<input type="text" name="g2_Minpay" id="g2_Minpay" value="${dto.g2_Minpay}" 
+							<input type="text" name="g2_Minpay" id="g2_Minpay" value="${storeDto.g2_Minpay}" 
 							style="text-align:right; width: 36%;" maxlength="15" class="boxTF" placeholder="최소 주문 금액을 입력해주세요"> 원
 						</p>
 					</td>

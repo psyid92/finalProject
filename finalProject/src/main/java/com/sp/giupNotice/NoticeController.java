@@ -1,5 +1,7 @@
 package com.sp.giupNotice;
 
+import java.io.File;
+import java.io.PrintWriter;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
@@ -23,6 +25,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.sp.common.FileManager;
 import com.sp.common.MyUtil;
+import com.sp.store.member.SessionInfo;
 
 @Controller("giupNotice.noticeController")
 public class NoticeController {
@@ -39,8 +42,8 @@ public class NoticeController {
 	@RequestMapping(value="/giupNotice/list")
 	public String List(
 			@RequestParam(value="page", defaultValue="1") int current_page,
-			@RequestParam(value="searchKey", defaultValue="title") String searchKey, 
-			@RequestParam(value="searchhValue", defaultValue="") String searchValue, 
+			@RequestParam(value="searchKey", defaultValue="noti_Title") String searchKey, 
+			@RequestParam(value="searchValue", defaultValue="") String searchValue, 
 			Model model, HttpServletRequest req ) throws Exception {
 		
 		String cp = req.getContextPath();
@@ -80,34 +83,34 @@ public class NoticeController {
 		
 		// 글 리스트
 		List<Notice> list = service.listNotice(map);
-		System.out.println(list.size());
+		
 		// 리스트의 번호
 		Date endDate = new Date();
 		long gap; 
 		int listNum, n =0;
 		Iterator<Notice> it = list.iterator();
-		/*while(it.hasNext()) {
+		while(it.hasNext()) {
 			Notice data =(Notice)it.next();
 			listNum =dataCount -(start +n -1);
 			data.setListNum(listNum);
 			
 			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-			Date beginDate = formatter.parse(data.getCreated());
+			Date beginDate = formatter.parse(data.getNoti_Created());
 			
 			//날짜차이(시간)
 			gap=(endDate.getTime() - beginDate.getTime()) /(60*60*1000);
 			data.setGap(gap);
 			
-			data.setCreated(data.getCreated().substring(0, 10));
+			data.setNoti_Created(data.getNoti_Created().substring(0, 10));
 			
 			n++;
-		}*/
+		}
 		
 		String query = "";
 		String listUrl = cp+"/giupNotice/list";
 		String articleUrl = cp+"/giupNotice/article?page="+current_page;
 		if(searchValue.length()!=0) {
-			query ="searchKey="+searchKey+"&searchValule="+URLEncoder.encode(searchValue,"utf-8");
+			query ="searchKey="+searchKey+"&searchValue="+URLEncoder.encode(searchValue,"utf-8");
 		}
 		
 		if(query.length() !=0) {
@@ -126,26 +129,104 @@ public class NoticeController {
 		model.addAttribute("dataCount", dataCount);
 		model.addAttribute("paging", paging);
 		model.addAttribute("mainMenu", "3");
-		model.addAttribute("subMenu", "1");
+
 		System.out.println(dataCount);
+		
 		return ".store4.menu4.giupNotice.list";
 	}
 	
 	
 	//신규 작성 
-	public String createdForm() throws Exception {
+	@RequestMapping(value="/giupNotice/created", method=RequestMethod.GET)
+	public String createdForm(
+			Model model, HttpSession session) throws Exception {
+		
+		SessionInfo info = (SessionInfo)session.getAttribute("store");
+		
+		if(info==null) {
+			return "redirect:/store/login";
+		}
+		
+		if(! info.getG1_Id().equals("admin")) {
+			return "redirect:/giupNotice/list";
+		}		
+		
+		model.addAttribute("subMenu", "1");
+		model.addAttribute("mode", "created");
 		
 		return ".store4.menu4.giupNotice.created";
 	}
 	
-	public String createdSubmit() throws Exception {
+	
+	@RequestMapping(value="/giupNotice/created", method = RequestMethod.POST)
+	public String createdSubmit(
+			Notice dto, HttpSession session) throws Exception {
+		
+		SessionInfo info = (SessionInfo)session.getAttribute("store");
+		
+		if(info==null) {
+			return "redirect:/giupNotice/list";
+		}
+		if(! info.getG1_Id().equals("admin")) {
+			return "redirect:/giupNotice/list";
+		}
+		
+		//저장 
+		String root =session.getServletContext().getRealPath("/");
+		String pathname = root+File.separator+"uploads"+File.separator+"giupNotice";
+		
+		dto.setAdmin_Id(info.getG1_Id());
+		service.insertNotice(dto, pathname);
 		
 		return "redirect:/giupNotice/list";
 	}
 	
 	
 	//상세 보기 
-	public String article() throws Exception {
+	@RequestMapping(value="/giupNotice/article", method=RequestMethod.GET)
+	public String article(
+			@RequestParam(value="noti_Num") int num,
+			@RequestParam(value="page") int page,
+			@RequestParam(value="searchKey", defaultValue="noti_Title") String searchKey,
+			@RequestParam(value="searchValue", defaultValue="") String searchValue,
+			Model model			
+			) throws Exception {
+		
+		searchValue = URLDecoder.decode(searchValue, "utf-8");
+		service.updateHit(num);
+		
+		Notice dto = service.readNotice(num);
+		if(dto ==null) 
+			return "redirect:/giupNotice/list?page="+page;		
+		
+		// dto.setContent(dto.getContent().replaceAll("\n", "<br>")); //스마트에디터 사용으로 불필요
+		
+		//이전글, 다음글
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("searchKey", searchKey);
+		map.put("searchValue", searchValue);
+		map.put("noti_Num", num);
+		
+		Notice preReadDto = service.preReadNotice(map);
+		Notice nextReadDto = service.nextReadNotice(map);
+		
+		//파일 
+		List<Notice> listFile=service.listFile(num);
+		
+		String query = "page="+page;
+		if(searchValue.length() !=0) {
+			query +="&searchKey="+searchKey+"&searchValue="+URLEncoder.encode(searchValue, "utf-8");
+		}
+		
+		model.addAttribute("subMenu","1");
+		
+		model.addAttribute("dto", dto);
+		model.addAttribute("preReadDto", preReadDto);
+		model.addAttribute("nextReadDto", nextReadDto);
+		model.addAttribute("listFile", listFile);
+		
+		model.addAttribute("page", page);
+		model.addAttribute("query", query);		
 		
 		return ".store4.menu4.giupNotice.article";
 	}
@@ -153,21 +234,57 @@ public class NoticeController {
 	
 	//수정 
 	@RequestMapping(value="/giupNotice/update", method=RequestMethod.GET)
-	public String updateNotice(
-			@RequestParam(value="num") int num,
-			@RequestParam(value="page") int page, 
+	public String updateForm(
+			@RequestParam(value="noti_Num") int num,
+			@RequestParam(value="page", defaultValue="1") int page, 
 			Model model, HttpSession session) throws Exception {
+		
+		SessionInfo info = (SessionInfo)session.getAttribute("store");
+		
+		if(info==null) {
+			return "redirect:/store/login";
+		}
+		
+		if(! info.getG1_Id().equals("admin"))
+			return "redirect:/giupNotice/list?page="+page;
+		
+		Notice dto = (Notice)service.readNotice(num);
+		if(dto==null) {
+			return "redirect:/giupNotice/list?page="+page;
+		}
+		
+		List<Notice> listFile=service.listFile(num);
+		
+		model.addAttribute("subMenu", "1");
+		model.addAttribute("mode", "update");
+		model.addAttribute("page", page);
+		model.addAttribute("dto", dto);
+		model.addAttribute("listFile", listFile);
 		
 		return ".store4.menu4.giupNotice.created";
 	}
 	
 	@RequestMapping(value="/giupNotice/update", method=RequestMethod.POST)
-	@ResponseBody
 	public String updateSubmit(
 			Notice dto, 
 			@RequestParam int page,
 			HttpSession session
 			) throws Exception {
+		SessionInfo info = (SessionInfo)session.getAttribute("store");
+		
+		if(info==null) {
+			return "redirect:/store/login";
+		}
+		
+		if(info.getG1_Id().equals("admin")){
+			return "redirect:/giupNotice/list?page="+page;
+		}
+		
+		String root = session.getServletContext().getRealPath("/");
+		String pathname = root+File.separator+"uploads"+File.separator+"giupNotice";
+		
+		dto.setAdmin_Id(info.getG1_Id());
+		service.updateNotice(dto, pathname);
 		
 		return "redirect:/giupNotice/list?page="+page;
 	}
@@ -176,26 +293,73 @@ public class NoticeController {
 	@RequestMapping(value="/giupNotice/delete", method=RequestMethod.GET)
 	public String delete(
 			Notice dto, 
-			@RequestParam int num, 
+			@RequestParam(value="noti_Num") int num, 
 			@RequestParam int page, 
 			HttpSession session) throws Exception {
 		
-		return "rediect:/giupNotice/list?page "+page;
+		String root = session.getServletContext().getRealPath("/");
+		String pathname=root+File.separator+"uploads"+File.separator+"giupNotice";
+		
+		SessionInfo info = (SessionInfo)session.getAttribute("store");
+		if(info==null) {
+			return "redirect:/store/login";
+		}
+		
+		if(! info.getG1_Id().equals("admin"))
+			return "redirect:/notice/list?page="+page;
+		
+		//내용지우기
+		service.deleteNotice(num, pathname);
+		
+		return "redirect:/giupNotice/list?page "+page;
 	}
 	
 	//다운로드 
 	@RequestMapping(value="giupNotice/download")
-	public void download() throws Exception {
+	public void download(
+			@RequestParam(value="noti_FileNum")int fileNum,
+			HttpServletResponse resp, HttpServletRequest session) throws Exception {
+		String root=session.getServletContext().getRealPath("/");
+		String pathname=root+File.separator+"uploads"+File.separator+"giupNotice";
 		
+		boolean b=false;
+		
+		Notice dto= service.readFile(fileNum);
+		if(dto !=null) {
+			String saveFilename = dto.getNoti_SaveFileName();
+			String originalFilename=dto.getNoti_OrigianlFileName();
+		
+			b=fileMangaer.doFileDownload(saveFilename, originalFilename, pathname, resp);			
+		}
+		
+		if(!b) {
+			try {
+				resp.setContentType("text/html; charset=utf-8");
+				PrintWriter out = resp.getWriter();
+				out.println("<script>alert('파일다운로드가 불가능합니다');history.back(); </script>");
+			} catch (Exception e) {
+			}
+		}
 	}
 	
+	//파일삭제 
+	@RequestMapping(value="giupNotice/deleteFile", method = RequestMethod.POST)
+	@ResponseBody
 	public Map<String, Object> deleteFile(
-			@RequestParam int fileNum,
+			@RequestParam(value="noti_FileNum") int fileNum,
 			HttpServletResponse resp, HttpSession session
 			) throws Exception {
+		String root = session.getServletContext().getRealPath("/");
+		String pathname=root+File.separator+"uploads"+File.separator+"giupNotice";
 		
+		Notice dto=service.readFile(fileNum);
+		if(dto !=null) 
+			fileMangaer.doFileDelete(dto.getNoti_SaveFileName(), pathname);
 		
-		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("field", "noti_Filenum");
+		map.put("noti_Num", fileNum);
+		service.deleteFile(map);
 		
 		// 작업결과를 json으로 전송 
 		Map<String, Object> model = new HashMap<>();
@@ -204,6 +368,7 @@ public class NoticeController {
 		return model; 
 	}
 	
+	//타일즈의 각 메뉴로 이동 
 	@RequestMapping(value = "/giupFaq/list", method = RequestMethod.GET)
 	public String faqList(Model model) {
 

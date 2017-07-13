@@ -6,13 +6,15 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.sp.common.FileManager;
 import com.sp.common.dao.CommonDAO;
 
 @Service("store.mystore.myStoreService")
 public class MyStoreServiceImpl implements MyStoreService{
 	@Autowired
 	private CommonDAO dao;
-	
+	@Autowired
+	private FileManager filemanger;
 	@Override
 	public int insertMenuCT(MyStore mystoreDto) throws Exception {
 		int result = 0;
@@ -28,12 +30,17 @@ public class MyStoreServiceImpl implements MyStoreService{
 	}
 
 	@Override
-	public int insertMainMenu(MyStore mystoreDto) throws Exception {
+	public int insertMainMenu(MyStore mystoreDto, String path) throws Exception {
 		int result = 0;
 		try {
-			result=dao.getIntValue("menu.seqmainmenu");
-			mystoreDto.setMainmenu_Num(result);
-			result = dao.insertData("menu.insertMainMenu", mystoreDto);
+				//사진 업로드
+				String newFilename = filemanger.doFileUpload(mystoreDto.getUpload(), path);
+				
+				result=dao.getIntValue("menu.seqmainmenu");
+				mystoreDto.setMainmenu_Num(result);
+				mystoreDto.setMainmenu_Photo(newFilename);
+				
+				result = dao.insertData("menu.insertMainMenu", mystoreDto);
 		} catch (Exception e) {
 			result = 0;
 			System.out.println(e.toString());

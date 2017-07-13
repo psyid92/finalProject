@@ -2,18 +2,9 @@
 
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="jumun">
-	<!-- <select id="listGiup" parameterType="String" resultType="com.sp.jumun.Jumun">
-		SELECT g1.g1_Num, g1_Id, g1_Pwd, g1_Name, g1_Sleep, cat_Code,
-			NVL(giupAd_Num, 0) giupAd_Num, g3_lati, g3_longti
-		FROM giup1 g1
-		LEFT OUTER JOIN giupAd ga ON g1.g1_Num = ga.g1_Num
-		LEFT OUTER JOIN giup3 g3 ON g1.g1_Num=g3.g3_Num
-		WHERE cat_Code = #{category} AND g1_Sleep = 1
-		ORDER BY giupAd_Num DESC, g1.g1_Num ASC
-<![CDATA[
-]]>
-	</select> -->
-	
+	<select id="listCategory" resultType="com.sp.jumun.Jumun">
+		SELECT cat_Code, cat_Name FROM category
+	</select>
 	<select id="readMenuCategory" parameterType="Integer" resultType="com.sp.jumun.Jumun">
 		SELECT menuct_Num, menuct_Title, menuct_Info, g1_Num
 		FROM menuCate
@@ -53,11 +44,12 @@
 	
 	<!-- member 결제내역 가져오기 쿼리 -->
 	<select id="getMemberPayList" parameterType="Integer" resultType="com.sp.jumun.JumunMember">
-		select distinct j.jumun_num, jumun_pay, jumun_created, jumun_addr, jumun_tel, jumun_memo, m1_num, j.orders_num, orders_state, p.pay_pay , g1_name from jumun j
+		select distinct j.jumun_num, jumun_pay, jumun_created, jumun_addr, jumun_tel, jumun_memo, m1_num, j.orders_num, orders_state, p.pay_pay , g1_name, g2_tel from jumun j
 			join maingoods mg on mg.jumun_num = j.jumun_num
 			join mainmenu mm on mm.mainmenu_num = mg.mainmenu_num
 			join menucate mc on mc.menuct_num = mm.menuct_num
 			join giup1 g on mc.g1_num = g.g1_num
+			 join giup2 g2 on g.g1_num = g2.g2_num
 			join orders o on o.orders_num = j.orders_num
 			left outer join pay p on j.jumun_num = p.jumun_num
 			where m1_num=#{m1_num}
@@ -76,6 +68,7 @@
 			order by jumun_num desc	
 	</select>
 	
+	<!-- 기업 수정 -->
 	<select id="listGiup" parameterType="map" resultType="com.sp.jumun.Jumun">
 		SELECT tb.* FROM (
 	 		SELECT g1.g1_Num, g1_Id, g1_Pwd, g1_Name, g1_Sleep, cat_Code,
@@ -84,7 +77,15 @@
 	       	FROM giup1 g1
 	       	LEFT OUTER JOIN giupAd ga ON g1.g1_Num = ga.g1_Num
 	       	LEFT OUTER JOIN giup3 g3 ON g1.g1_Num=g3.g3_Num
-	       	WHERE cat_Code = #{category} AND g1_Sleep = 1
+	       	<where>
+	       		g1_Sleep = 1
+	     		<if test="category!=null and category!='' ">
+	       			AND cat_Code = #{category}
+	     		</if>
+	     		<if test="searchValue!=null and searchValue!='' and searchValue != category">
+	     			AND INSTR(g1_Name, #{searchValue}) != 0
+	     		</if>
+	     	</where>
 	       	ORDER BY giupAd_Num DESC
 <![CDATA[
 	    )tb WHERE distance < 5

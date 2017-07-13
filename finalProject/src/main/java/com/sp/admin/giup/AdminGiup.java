@@ -12,6 +12,7 @@ public class AdminGiup {
 	private float g3_lati, g3_longti;
 	
 	private int giupad_term,ad_num;
+	private int listNum;
 	
 	public int getGiupad_term() {
 		return giupad_term;
@@ -25,8 +26,6 @@ public class AdminGiup {
 	public void setAd_num(int ad_num) {
 		this.ad_num = ad_num;
 	}
-	private int listNum;
-	
 	public int getListNum() {
 		return listNum;
 	}

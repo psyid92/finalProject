@@ -1,5 +1,7 @@
 package com.sp.store.mystore;
 
+import org.springframework.web.multipart.MultipartFile;
+
 public class MyStore {
 	private int g1_Num;
 	private int menuct_Num;
@@ -8,6 +10,7 @@ public class MyStore {
 	private String mainmenu_Title, mainmenu_Content, mainmenu_Photo, mainmenu_Pay;
 	private int submenu_Num, mainmenu_Enabled;
 	private String submenu_Title, submenu_Pay;
+	private MultipartFile upload;
 	
 	public int getMainmenu_Enabled() {
 		return mainmenu_Enabled;
@@ -111,5 +114,13 @@ public class MyStore {
 
 	public void setSubmenu_Pay(String submenu_Pay) {
 		this.submenu_Pay = submenu_Pay;
+	}
+
+	public MultipartFile getUpload() {
+		return upload;
+	}
+
+	public void setUpload(MultipartFile upload) {
+		this.upload = upload;
 	}
 }

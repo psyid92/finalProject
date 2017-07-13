@@ -18,10 +18,10 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 
 //사장님 페이지 컨트롤러
-@SessionAttributes("dto")
+@SessionAttributes("storeDto")
 @Controller("member.storeController")
 public class StoreContorller {
-	@ModelAttribute("dto")
+	@ModelAttribute("storeDto")
 	public Store command() {
 		return new Store();
 	}
@@ -43,18 +43,18 @@ public class StoreContorller {
 			HttpSession session,
 			Model model) throws Exception{
 		
-		Store dto = service.readStore(g1_Id);
+		Store store = service.readStore(g1_Id);
 		
-		if (dto == null || (!dto.getG1_Pwd().equals(g1_Pwd))){
+		if (store == null || (!store.getG1_Pwd().equals(g1_Pwd))){
 			model.addAttribute("message", "아이디 또는 패스워드가 일치하지 않습니다.");
 			return "store/store/login";
 		}
 		
 		// 로그인 정보를 세션에 저장
 		SessionInfo info = new SessionInfo();
-		info.setG1_Id(dto.getG1_Id());
-		info.setG1_Name(dto.getG1_Name());
-		info.setG1_Num(dto.getG1_Num());
+		info.setG1_Id(store.getG1_Id());
+		info.setG1_Name(store.getG1_Name());
+		info.setG1_Num(store.getG1_Num());
 		session.setAttribute("store", info);
 		
 		return ".store4.menu1.mystore.list";
@@ -70,7 +70,7 @@ public class StoreContorller {
 	
 	// 회원가입 눌렀을때
 	@RequestMapping(value = "/store/join", method = RequestMethod.GET)
-	public String storeJoinForm(@ModelAttribute("dto") Store dto, Model model) {
+	public String storeJoinForm(@ModelAttribute("storeDto") Store store, Model model) {
 
 		model.addAttribute("mode", "created");
 		return ".store.store.step1";
@@ -78,7 +78,7 @@ public class StoreContorller {
 
 	// 다음단계
 	@RequestMapping(value = "/store/step2", method = RequestMethod.POST)
-	public String storeStep2(@ModelAttribute("dto") Store dto, SessionStatus sessionstatus, Model model) {
+	public String storeStep2(@ModelAttribute("storeDto") Store store, SessionStatus sessionstatus, Model model) {
 		
 		model.addAttribute("mode", "created");
 		
@@ -86,17 +86,17 @@ public class StoreContorller {
 	}
 
 	@RequestMapping(value = "/store/complete", method = RequestMethod.POST)
-	public String storeSubmit(@ModelAttribute("dto") Store dto,
+	public String storeSubmit(@ModelAttribute("storeDto") Store store,
 			SessionStatus sessionstatus, Model model) {
 		//패스워드 암호화
 		/*ShaPasswordEncoder pe = new ShaPasswordEncoder(256);
-		String s = pe.encodePassword(dto.getG1_Pwd(), null);
-		dto.setG1_Pwd(s);*/
+		String s = pe.encodePassword(store.getG1_Pwd(), null);
+		store.setG1_Pwd(s);*/
 		StringBuffer sb = new StringBuffer();
 		
 		//위도 경도 추가
 		try {
-			service.insertStore(dto);
+			service.insertStore(store);
 			
 			sessionstatus.setComplete();
 			
@@ -106,7 +106,7 @@ public class StoreContorller {
 			sessionstatus.setComplete();
 			return ".store.store.complete";
 		}
-		sb.append(dto.getG1_Name() + "사장님의 회원 가입이 정상적으로 처리되었습니다.<br>");
+		sb.append(store.getG1_Name() + "사장님의 회원 가입이 정상적으로 처리되었습니다.<br>");
 		sb.append("메인화면으로 이동하여 로그인 하시기 바랍니다.<br>");
 		sessionstatus.setComplete();
 
@@ -122,8 +122,8 @@ public class StoreContorller {
 			@RequestParam String g1_Id
 			) throws Exception {
 		String passed="false";
-		Store dto = service.readStore(g1_Id);
-		if(dto==null)
+		Store store = service.readStore(g1_Id);
+		if(store==null)
 			passed="true";
 		
    	    // 작업 결과를 json으로 전송
@@ -138,8 +138,8 @@ public class StoreContorller {
 			@RequestParam String g2_GiupNum
 			) throws Exception {
 		String passed="false";
-		Store dto = service.readStore2(g2_GiupNum);
-		if(dto==null)
+		Store store = service.readStore2(g2_GiupNum);
+		if(store==null)
 			passed="true";
 		
    	    // 작업 결과를 json으로 전송

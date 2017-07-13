@@ -5,7 +5,7 @@
 	request.setCharacterEncoding("utf-8");
 	String cp = request.getContextPath();
 %>
-
+<script type="text/javascript" src="<%=cp%>/resource/jquery/js/jquery.form.js"></script>
 <script>
 	$(function(){
 		$(".cateMenu").click(function() {
@@ -18,6 +18,8 @@
 				$.ajax({
 					type:"post"
 					,url:url
+					/* ,processData: false  // file 전송시 필수
+			        ,contentType: false  // file 전송시 필수 */
 					,data:query
 					,dataType:"json"
 					,success:function(data) {
@@ -28,7 +30,9 @@
 					}
 				});
 			} else {
-				$(menu_on).html("");
+				if ($(menu_on).css("display") == "block")
+					$(menu_on).hide(500);
+				else $(menu_on).show(500);
 			}
 		});
 		
@@ -36,12 +40,14 @@
 			var s = "";
 			for (var i = 0; i < list.length; i++) {
 				s += "<div onclick='submenu("+list[i].mainmenu_Num+")' style='width: 680px; height: 30px;  line-height: 30px; background-color: #dddddd;'><div style='float: left;'>" + list[i].mainmenu_Title + "</div><div style='float: right;'>" + list[i].mainmenu_Pay + "</div></div>";
-				s += "<div id='sub"+list[i].mainmenu_Num+"' style='width:700px; background-color: white; display: none;'>"
+				s += "<div id='sub"+list[i].mainmenu_Num+"' style='width:680px; background-color: white; display: none;'>"
 				s += "<div>"+list[i].mainmenu_Num + "</div><div class='title'>" + list[i].mainmenu_Title + "</div>";
-				s += "<div class='content'>"+list[i].mainmenu_Content + "</div><div>" + list[i].mainmenu_Photo + "</div>";
+				s += "<div class='content'>"+list[i].mainmenu_Content + "</div><div style='width:680px; height: 180px; background-image:url("+'<%=cp%>/resource/img/chiken.jpg'+"); background-repeat: no-repeat; background-size: contain;'></div>";
 				s += "<div class='pay'>"+list[i].mainmenu_Pay + "</div><div>" + list[i].mainmenu_Enabled + "</div></div>";
 			}
 			$(menu_on).html(s);
+			$(menu_on).hide();
+			$(menu_on).show(500);
 		}
 	});
 	
@@ -65,12 +71,13 @@
 					}
 				});
 			} else {
-				$(menu_on+" div[class=jumun]").html("");
-				$(menu_on).css("display", "none");
+				
+				$(menu_on).hide(500);
 			}
 		});
 		function layout2(list, menu_on, main_Num) {
-			var s = "<div class='jumun'>";
+			var s = "<div id='jum"+main_Num+"' class='jumun'>";
+			$(menu_on+" div[class=jumun]").html("");
 			for (var i = 0; i < list.length; i++) {
 				if (i == 0)
 					s += "<div style='font-size: 10px;'>1개 까지 선택 가능</div>";
@@ -80,8 +87,11 @@
 				if (i == list.length-1)
 					s += "<br>";
 			}
-			s += "<button type='button' class='btn btn-success' onclick='damgi("+main_Num+");'>담기</button></div>";
+			s += "<div onclick='damgi("+main_Num+")' style='width:680px; height:40px; background-color: #eeeeee;'>장바구니에 담기</div></div>"
+			$(menu_on).css("display","none");
 			$(menu_on).append(s);
+			$(menu_on).show(500);
+			
 		}
 	}
 	
@@ -128,8 +138,10 @@
 		tab += "<button type='submit' class='btn btn-success' style='width: 300px; float: right;'>주문하기</button>";
 		tab += "</form>";
 		
+		$("#totalJumun").css("display","none");
 		$("#totalJumun").html(tab);
 		jumunAppend(main_Num, sub_Num, content, pay);
+		$("#totalJumun").show(500);
 	}
 	function jumunAppend(main_Num, sub_Num, content, pay) {
 		jumun_Num += 1;
@@ -145,6 +157,7 @@
 		tab += "<input type='hidden' name='sub_Num' value='"+sub_Num+"'></div>";
 		$("#jumunAppend").append(tab);
 		$("#total_Pay").html(total+"원");
+		$(".btn").prop("disabled",false);
 		
 	}
 	function deleteJumun(juNum,pay) {
@@ -153,12 +166,17 @@
 		total = total.substring(0,total.length-1);
 		total -= pay;
 		$("#total_Pay").html(total+"원");
-		if (total == 0)
+		if (total == 0) {
 			$("#jumunAppend").html("메뉴를 선택해주세요.");
+			$(".btn").prop("disabled",true);
+		}
 	}
 	
 	
 	function totalJumun() {
+		if ($("#total_Pay").html() == "0원") {
+			return false;
+		}
 		var f = document.jumunForm;
 		var mainList = document.getElementsByName('main_Num');
 		var subList = document.getElementsByName('sub_Num');
@@ -180,10 +198,14 @@
 	}
 		
 </script>
-	<div id="giupMenu" style="width: 680px; margin: 0; float: left;">
+<div style="width: 1000px; height: 730px; margin-top: 100px;">
+	<div id="giupMenu" style="width: 680px; margin-bottom: 50px; float: left;">
 		<c:forEach var="cateDto" items="${cateList}">
-			<div id="cate${cateDto.menuct_Num}" class="cateMenu" style="cursor: pointer; width: 680px; height: 50px; background-color: #cccccc">${cateDto.menuct_Title}</div>
-			<div id="main${cateDto.menuct_Num}" class="mainMenu" style="margin-bottom: 20px; cursor: pointer;"></div>
+			<div style="margin-bottom: 20px;">
+				<div id="cate${cateDto.menuct_Num}" class="cateMenu" style="cursor: pointer; width: 680px; height: 50px; background-color: #cccccc">${cateDto.menuct_Title}</div>
+				<div id="main${cateDto.menuct_Num}" class="mainMenu" style="cursor: pointer;"></div>
+			</div>
 		</c:forEach>
 	</div>
-<div id="totalJumun" style="font-size: 15px;"></div>
+	<div id="totalJumun" style="font-size: 15px; margin: 0; float: right; width: 300px; height: 102px;"></div>
+</div>

@@ -86,7 +86,6 @@ font-weight: bold;
 				$("#cur_giupAdNum").val(dto.ad_num);
 				
 				
-				
 				//현재 보고있는 글의 listNum
 				$("#cur_listNum").val(listNum);
 				
@@ -263,12 +262,12 @@ font-weight: bold;
 					<span class="giup_arti_sp">기업명 </span><input class="giup_arti_input" type="text" id="cur_giupName" value="">
 					<span class="giup_arti_sp">아이디 </span><input class="giup_arti_input" type="text" id="cur_giupId" value=""><br>
 					<span class="giup_arti_sp">운영상태 </span>
-					<select name="cur_giup_un" id="cur_giup_un" class="giup_arti_input giup_arti_select">
+					<select name="cur_giupSleep" id="cur_giupSleep" class="giup_arti_input giup_arti_select">
 						<option value="1">운영중</option>
 						<option value="0">쉬는중</option>
 					</select>
 					<span class="giup_arti_sp">휴면상태 </span>
-					<select name="cur_giup_hyu" id="cur_giup__hyu" class="giup_arti_input giup_arti_select">
+					<select name="cur_giupEnabled" id="cur_giupEnabled" class="giup_arti_input giup_arti_select">
 						<option value="1">활동</option>
 						<option value="0">휴면</option>
 					</select>
@@ -287,7 +286,7 @@ font-weight: bold;
 					<span class="giup_arti_sp">주소1 </span><input class="giup_arti_input" type="text" id="cur_giupAddr1" value="">
 					<span class="giup_arti_sp">주소2 </span><input class="giup_arti_input" type="text" id="cur_giupAddr2" value=""><br>
 					<span class="giup_arti_sp">광고여부 </span> 
-					<select name="cur_giup_ad" id="cur_giup_ad" class="giup_arti_input giup_arti_select">
+					<select name="cur_giupAdNum" id="cur_giupAdNum" class="giup_arti_input giup_arti_select">
 						<option value="1000">광고</option>
 						<option value="0">일반</option>
 					</select>

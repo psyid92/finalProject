@@ -3,6 +3,8 @@ package com.sp.member;
 import java.util.List;
 import java.util.Map;
 
+import com.sp.giupReview.giupReview;
+
 public interface MemberDAO {
 	
 //	회원
@@ -27,5 +29,9 @@ public interface MemberDAO {
 	public int insertLikeGiup(LikeGiup giup) throws Exception;
 	public int deleteLikeGiup(LikeGiup giup) throws Exception;
 	public List<LikeGiup> listLikeGiup(Map<String, Object> map) throws Exception;
+	
+	
+//	리뷰
+	public int getNumReview(giupReview dto) throws Exception;
 
 }

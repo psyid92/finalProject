@@ -23,22 +23,6 @@ public class MyStoreController {
 	@Autowired
 	private MyStoreService service;
 	
-	// 메뉴1
-	@RequestMapping(value = "/store/mystore", method = RequestMethod.GET)
-	public String mystoreForm(Model model, HttpSession session) {
-
-		model.addAttribute("mainMenu", "0");
-		model.addAttribute("subMenu", "1");
-		return ".store4.menu1.mystore.list";
-	}
-	@RequestMapping(value = "/store/review", method = RequestMethod.GET)
-	public String reviewForm(Model model, HttpSession session) {
-
-		model.addAttribute("mainMenu", "0");
-		model.addAttribute("subMenu", "2");
-		return ".store4.menu1.review.list";
-	}
-
 	@RequestMapping(value = "/store/menu", method = RequestMethod.GET)
 	public String menuForm(Model model, HttpSession session) throws Exception{
 		SessionInfo info = (SessionInfo)session.getAttribute("store");
@@ -65,9 +49,12 @@ public class MyStoreController {
 	@ResponseBody
 	public Map<String, Object> submenuList(int mainmenu_Num)throws Exception{
 		List<MyStore> submenulist = service.readSubmenu(mainmenu_Num);
-		
 		Map<String, Object> model = new HashMap<>();
+		
+		
+		
 		model.put("submenulist", submenulist);
+		
 		return model;
 	}
 	

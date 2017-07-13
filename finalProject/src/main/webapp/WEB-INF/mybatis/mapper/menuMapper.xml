@@ -22,7 +22,7 @@
 		INSERT INTO mainmenu(mainmenu_Num, mainmenu_Title, mainmenu_Content, mainmenu_Photo,
 							 mainmenu_Pay, mainmenu_Enabled, menuct_Num)
 					VALUES(${mainmenu_Num}, #{mainmenu_Title}, #{mainmenu_Content}, 
-							#{mainmenu_Photo}, #{mainmenu_Pay}, '1', #{menuct_Num} )
+							#{mainmenu_Photo, jdbcType=VARCHAR}, #{mainmenu_Pay}, '1', #{menuct_Num} )
 	</insert>
 	<insert id="insertSubMenu" parameterType="com.sp.store.mystore.MyStore">
 		INSERT INTO submenu(submenu_Num, submenu_Title, submenu_Pay, submenu_Enabled, mainmenu_Num)

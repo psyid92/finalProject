@@ -67,7 +67,12 @@ function searchList() {
     			<c:forEach var="dto" items="${noticeList}">
     				<tr>
     					<td class="text-center"> <span style="display: inline-block; width: 28px; height: 18px; line-height: 18px; background:#ED4C00; color: #FFFFFF  "> 공지</span> </td>
-    					<td><a href="${articleUrl}&noti_Num=${dto.noti_Num}">${dto.noti_Title}</a> </td>
+    					<td>
+    						<a href="${articleUrl}&noti_Num=${dto.noti_Num}">${dto.noti_Title}</a> 
+    						<c:if test="${dto.gap <1 }">
+    							<img alt="" src="<%=cp%>/resource/img/new.gif">
+    						</c:if>    					
+    					</td>
     					<td class="text-center">${dto.admin_Id} </td>
     					<td class="text-center">${dto.noti_Created} </td>
     					<td class="text-center">${dto.noti_HItCount} </td>
@@ -79,7 +84,7 @@ function searchList() {
     					<td>
     						<a href="${articleUrl}&noti_Num=${dto.noti_Num}">${dto.noti_Title}</a>
     						<c:if test="${dto.gap <1 }">
-    							<img alt="" src="<%=cp%>/resoure/img/new.gif">
+    							<img alt="" src="<%=cp%>/resource/img/new.gif">
     						</c:if>
     					</td>
     					<td class="text-center">${dto.admin_Id}</td>

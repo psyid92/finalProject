@@ -1,10 +1,14 @@
 package com.sp.giupReview;
 
+import org.springframework.web.multipart.MultipartFile;
+
 public class giupReview {
 	private String rep_created, rep_content;
 	private int rep_num,  rep_star, m1_num, g1_num, jumun_num;
 	
-	
+	//사진
+	private MultipartFile upload; // <input type='file' name='upload' ...
+	private String rphoto_SaveFilename, rphoto_OriginalFilename;
 	// Getter  ------ Setter
 	
 	
@@ -49,6 +53,25 @@ public class giupReview {
 	}
 	public void setJumun_num(int jumun_num) {
 		this.jumun_num = jumun_num;
+	}
+	//사진
+	public String getRphoto_SaveFilename() {
+		return rphoto_SaveFilename;
+	}
+	public void setRphoto_SaveFilename(String rphoto_SaveFilename) {
+		this.rphoto_SaveFilename = rphoto_SaveFilename;
+	}
+	public String getRphoto_OriginalFilename() {
+		return rphoto_OriginalFilename;
+	}
+	public void setRphoto_OriginalFilename(String rphoto_OriginalFilename) {
+		this.rphoto_OriginalFilename = rphoto_OriginalFilename;
+	}
+	public MultipartFile getUpload() {
+		return upload;
+	}
+	public void setUpload(MultipartFile upload) {
+		this.upload = upload;
 	}
 	
 	

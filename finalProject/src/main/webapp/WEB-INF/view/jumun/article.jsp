@@ -23,8 +23,6 @@
 				$.ajax({
 					type:"post"
 					,url:url
-					/* ,processData: false  // file 전송시 필수
-			        ,contentType: false  // file 전송시 필수 */
 					,data:query
 					,dataType:"json"
 					,success:function(data) {
@@ -67,7 +65,7 @@
 					         $(img_on).append("<img src='"+url+"' style='width:500px; height: 300px;'></img>")
 					    },
 					    error: function () {
-					    	 $(img_on).append("<img src='"+no_Img+"' style='width:500px; height: 300px;'></img>")
+					    	 $(img_on).append("<img src='"+no_Img+"' style='width:200px; height: 100px;'></img>")
 					    }
 					});
 				});

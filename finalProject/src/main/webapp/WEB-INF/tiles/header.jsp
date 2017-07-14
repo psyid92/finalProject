@@ -38,7 +38,8 @@
 	
 	$(function(){
 		if(getcookie()==null){
-			geoFindMe();
+			searchCoordinateToAddress(126.8959064, 37.5333968);
+			//geoFindMe();
 		}
 	});
 	

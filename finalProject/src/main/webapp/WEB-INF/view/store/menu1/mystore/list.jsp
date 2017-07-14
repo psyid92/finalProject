@@ -5,16 +5,31 @@
 <%
    String cp = request.getContextPath();
 %>
+<script type="text/javascript">
+function salesOfDay(){
+	var f=document.salesFormOfDay;
+	f.action="<%=cp%>/store/storeSales";
+	f.submit();
+}
+
+</script>
 
 <div class="storeBodyFrame2">
     <div class="body-title">
-          <h3><span class="glyphicon glyphicon-tower"></span> 마이페이지 </h3>
+          <h3><span class="glyphicon glyphicon-tower"></span> 매출현황 </h3>
     </div>
     
     <div>
-         업소 통계등의 마이페이지
+         매출현황<br>
          <c:forEach var="dto" items="${list }" >
-         	<span>${dto.pay_pay}</span>
+         	<span>${dto.g1_num }</span><br>
+         	<span>${dto.g1_name }</span><br>
+         	<span>${dto.pay_created }</span><br>
+         	<span>${dto.pay_pay}</span><br><br>
          </c:forEach>
     </div>
+    
+    <form name="salesFormOfDay">
+    	<input type="button" value="보내기" class="btn" onclick="salesOfDay();">
+    </form>
 </div>

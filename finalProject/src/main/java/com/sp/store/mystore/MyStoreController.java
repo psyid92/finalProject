@@ -111,11 +111,11 @@ public class MyStoreController {
 		return model;
 	}
 	
-	@RequestMapping(value="store/menu/deleteMenuCT", method=RequestMethod.POST)
+	@RequestMapping(value="store/menu/updateMenuCT", method=RequestMethod.POST)
 	@ResponseBody
-	public Map<String, Object> deleteMenuCT(@RequestParam int menuct_Num)throws Exception{
+	public Map<String, Object> updateMenuCT(@RequestParam int menuct_Num)throws Exception{
 		String state = "true";
-		int result = service.deleteMenuCT(menuct_Num);
+		int result = service.updateMenuCT(menuct_Num);
 		if(result == 0)
 			state = "false";
 		
@@ -124,11 +124,11 @@ public class MyStoreController {
 		return model;
 	}
 	
-	@RequestMapping(value="store/menu/deleteMainMenu", method=RequestMethod.POST)
+	@RequestMapping(value="store/menu/updateMainMenu", method=RequestMethod.POST)
 	@ResponseBody
-	public Map<String, Object> deleteMainMenu(@RequestParam int mainmenu_Num)throws Exception{
+	public Map<String, Object> updateMainMenu(@RequestParam int mainmenu_Num)throws Exception{
 		String state = "true";
-		int result = service.deleteMainMenu(mainmenu_Num);
+		int result = service.updateMainMenu(mainmenu_Num);
 		if(result == 0)
 			state = "false";
 		
@@ -137,11 +137,11 @@ public class MyStoreController {
 		return model;
 	}
 	
-	@RequestMapping(value="store/menu/deleteSubMenu", method=RequestMethod.POST)
+	@RequestMapping(value="store/menu/updateSubMenu", method=RequestMethod.POST)
 	@ResponseBody
-	public Map<String, Object> deleteSubMenu(@RequestParam int submenu_Num)throws Exception{
+	public Map<String, Object> updateSubMenu(@RequestParam int submenu_Num)throws Exception{
 		String state = "true";
-		int result = service.deleteSubMenu(submenu_Num);
+		int result = service.updateSubMenu(submenu_Num);
 		if(result == 0)
 			state = "false";
 		

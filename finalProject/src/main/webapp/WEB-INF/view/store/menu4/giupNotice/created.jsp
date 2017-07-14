@@ -54,7 +54,6 @@ function check() {
 	}
 	
 	str = f.noti_Content.value;   // str에 값이 ~~ 된다.. 
-	if(! str || str=="<p>&nbsp; </p>") {  // 값이 없거나 공백만 있으며.. 
 		f.noti_Content.focus();  // onfocus가 noti_Content 영역으로 이동
 		return false; // check() function에서 빠져나옴.. 
 	}

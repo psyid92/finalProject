@@ -59,7 +59,6 @@ public class JumunController {
 		
 		list = service.listGiup(map);
 		
-		
 		model.addAttribute("category", category);
 		model.addAttribute("mode", null);
 		model.addAttribute("list", list);

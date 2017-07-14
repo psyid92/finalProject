@@ -8,10 +8,26 @@ public class MyStore {
 	private String menuct_Title, menuct_Info;
 	private int mainmenu_Num;
 	private String mainmenu_Title, mainmenu_Content, mainmenu_Photo, mainmenu_Pay;
-	private int submenu_Num, mainmenu_Enabled;
+	private int submenu_Num, menuct_Enabled, mainmenu_Enabled, submenu_Enabled;
 	private String submenu_Title, submenu_Pay;
 	private MultipartFile upload;
 	
+	public int getMenuct_Enabled() {
+		return menuct_Enabled;
+	}
+
+	public void setMenuct_Enabled(int menuct_Enabled) {
+		this.menuct_Enabled = menuct_Enabled;
+	}
+
+	public int getSubmenu_Enabled() {
+		return submenu_Enabled;
+	}
+
+	public void setSubmenu_Enabled(int submenu_Enabled) {
+		this.submenu_Enabled = submenu_Enabled;
+	}
+
 	public int getMainmenu_Enabled() {
 		return mainmenu_Enabled;
 	}

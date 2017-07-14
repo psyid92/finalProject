@@ -23,6 +23,7 @@
 @font-face {
 	font-family: 'ice';
 	src: url('<%=cp%>/resource/fonts/ice.ttf');
+	
 }
 
 body {

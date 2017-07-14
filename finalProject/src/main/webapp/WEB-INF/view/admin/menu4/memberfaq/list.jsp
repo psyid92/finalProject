@@ -88,5 +88,8 @@ function searchList(){
            </tr>   
          </tbody>
       </table>
+      <div style="float: left; width: 20%; min-width: 85px; text-align: left;">   
+        	 <button type="button" class="btn btn-primary btn-sm bbtn" onclick="javascript:location.href='<%=cp%>/auserfaq/created';"><span class="glyphicon glyphicon glyphicon-pencil"></span> 글쓰기</button>
+      </div>
     </div>
     </div>

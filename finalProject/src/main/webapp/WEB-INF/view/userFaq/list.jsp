@@ -46,7 +46,7 @@ li {
 <div role="tabpanel">
 
 	<!-- Nav tabs -->
-	<ul class="nav nav-tabs" role="tablist">
+	<ul class="nav nav-tabs" role="tablist" style="margin-top: 50px;">     
 		<li role="presentation"><a href="<%=cp%>/notice/list"
 			aria-controls="notice" role="tab" data-toggle="tab">공지사항</a></li>
 		<li role="presentation"><a href="<%=cp%>/userEvent/list"

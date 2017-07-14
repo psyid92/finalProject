@@ -77,7 +77,7 @@ $('#myTab li:eq(2) a').tab('show') // Select third tab (0-indexed)
 <div class="tab-content" style="margin-top: 20px;">
   <div role="tabpanel" class="tab-pane active" id="notice">
     
-    <div class="bodyFrame2">
+    <div class="bodyFrame2" style="margin-top: 50px;">
     <div class="body-title">
           <h3><span class="glyphicon glyphicon-tasks"></span> 공지사항 </h3>
     </div>
@@ -141,7 +141,7 @@ $('#myTab li:eq(2) a').tab('show') // Select third tab (0-indexed)
      
      <div style="clear: both;">
         <div style="float: left; width: 20%; min-width: 85px;">
-          <button type="button" class="btn btn-default btn-sm wbtn" onclick="javascript:location.href='<%=cp%>/notice/list';">새로고침</button>
+          <button type="button" class="btn btn-default btn-sm wbtn" style="width: 55px;" onclick="javascript:location.href='<%=cp%>/notice/list';">새로고침</button>
         </div>
         <div style="float: left; width: 60%; text-align: center;">
           <form name="searchForm" method="post" class="form-inline">

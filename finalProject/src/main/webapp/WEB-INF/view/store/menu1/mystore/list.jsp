@@ -13,5 +13,8 @@
     
     <div>
          업소 통계등의 마이페이지
+         <c:forEach var="dto" items="${list }" >
+         	<span>${dto.pay_pay}</span>
+         </c:forEach>
     </div>
 </div>

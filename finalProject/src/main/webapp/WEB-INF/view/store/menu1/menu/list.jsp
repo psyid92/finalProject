@@ -47,7 +47,7 @@ function layout1(list, menu_on, menuct_Num, path) {
 		s+="</div></form>";
 	for (var i = 0; i < list.length; i++) {
 		s += "<div id='mainmenu"+list[i].mainmenu_Num+"'><div onclick='submenu("+list[i].mainmenu_Num+")' style='width: 680px; height: 30px;  line-height: 30px; background-color: #dddddd;'><div style='float: left;'>" + list[i].mainmenu_Title+"</div>";
-		s += "<button id=main"+list[i].mainmenu_Num+" onclick='deleteMainMenu("+list[i].mainmenu_Num+")' style='float:right; height: 26px; line-height: 20px;'>삭제</button><div style='float: right;'>" + list[i].mainmenu_Pay + "</div></div>";
+		s += "<button id=main"+list[i].mainmenu_Num+" onclick='updateMainMenu("+list[i].mainmenu_Num+")' style='float:right; height: 26px; line-height: 20px;'>삭제</button><div style='float: right;'>" + list[i].mainmenu_Pay + "</div></div>";
 		s += "<div id='sub"+list[i].mainmenu_Num+"' style='width:700px; background-color: white; display: none;'>"
 		s += "<div>"+list[i].mainmenu_Num + "</div><div class='title'>" + list[i].mainmenu_Title + "</div>";
 		s += "<div class='content'>"+list[i].mainmenu_Content + "</div>";
@@ -88,7 +88,7 @@ function insertMenuct() {
 		s += '<div id="cate'+menuct_Num+'" class="cateMenu" style="cursor: pointer; width: 680px; height: 50px; background-color: #cccccc">';
 		s += menuct_Title;  
 		s += '<br>'+menuct_Info;
-		s += '<button class="btnDelete" onclick="deletemenuct('+menuct_Num+')" style="float: right;">삭제</button></div>';
+		s += '<button class="btnupdate" onclick="updatemenuct('+menuct_Num+')" style="float: right;">삭제</button></div>';
 		s += '<div id="main'+menuct_Num+'" class="mainMenu" style="margin-bottom: 20px; cursor: pointer;"></div>';
 		s += "<div style='margin: 10px 3px;'>";
 		s += "</div>"; 
@@ -150,7 +150,7 @@ function insertMainmenu(menuct_Num) {
 				s+="</div></form>";
 			for (var i = 0; i < list.length; i++) {   
 				s += "<div id='mainmenu"+list[i].mainmenu_Num+"'><div id=main"+list[i].mainmenu_Num+" onclick='submenu("+list[i].mainmenu_Num+")' style='width: 680px; height: 30px;  line-height: 30px; background-color: #dddddd;'><div style='float: left;'>" + list[i].mainmenu_Title+"</div>";
-				s += "<button onclick='deleteMainMenu("+list[i].mainmenu_Num+")' style='float:right; height: 26px; line-height: 20px;'>삭제</button><div style='float: right;'>" + list[i].mainmenu_Pay + "</div></div>";
+				s += "<button onclick='updateMainMenu("+list[i].mainmenu_Num+")' style='float:right; height: 26px; line-height: 20px;'>삭제</button><div style='float: right;'>" + list[i].mainmenu_Pay + "</div></div>";
 				s += "<div id='sub"+list[i].mainmenu_Num+"' style='width:700px; background-color: white; display: none;'>"
 				s += "<div>"+list[i].mainmenu_Num + "</div><div class='title'>" + list[i].mainmenu_Title + "</div>";
 				s += "<div class='content'>"+list[i].mainmenu_Content + "</div>";  
@@ -177,7 +177,7 @@ function submenu(mainmenu_Num) {
 		
 		var s = "";
 		for (var i = 0; i < list.length; i++) {
-			s += "<div id=submen"+list[i].submenu_Num+"><div style='float:left;'>"+list[i].submenu_Title+"</div><div style='float:left;'>("+list[i].submenu_Pay+"원 추가)</div><button type='button' onclick='deleteSubMenu("+list[i].submenu_Num+")'>삭제</button></div>";
+			s += "<div id=submen"+list[i].submenu_Num+"><div style='float:left;'>"+list[i].submenu_Title+"</div><div style='float:left;'>("+list[i].submenu_Pay+"원 추가)</div><button type='button' onclick='updateSubMenu("+list[i].submenu_Num+")'>삭제</button></div>";
 		}
 		$("#addSubMenu"+mainmenu_Num).html(s);
 	}, "json");
@@ -213,7 +213,7 @@ function insertSubMenu(mainmenu_Num) {
 		$("#submenu_Pay"+mainmenu_Num).val("");
 		var s = "";
 		for (var i = 0; i < list.length; i++) {
-			s += "<div id=submen"+list[i].submenu_Num+"><div style='float:left;'>"+list[i].submenu_Title+"</div><div style='float:left;'>("+list[i].submenu_Pay+"원 추가)</div><button type='button' onclick='deleteSubMenu("+list[i].submenu_Num+")'>삭제</button></div>";
+			s += "<div id=submen"+list[i].submenu_Num+"><div style='float:left;'>"+list[i].submenu_Title+"</div><div style='float:left;'>("+list[i].submenu_Pay+"원 추가)</div><button type='button' onclick='updateSubMenu("+list[i].submenu_Num+")'>삭제</button></div>";
 		}
 		$("#addSubMenu"+mainmenu_Num).html(s);
 	}, "json");
@@ -221,11 +221,11 @@ function insertSubMenu(mainmenu_Num) {
 </script>
 <script>
 //메뉴카테 삭제
-function deletemenuct(menuct_Num) {
+function updatemenuct(menuct_Num) {
 	if(!confirm("삭제하시겠습니까?")) {
 		return;
 	}
-	$.post("<%=cp%>/store/menu/deleteMenuCT", {menuct_Num:menuct_Num}, function(data){
+	$.post("<%=cp%>/store/menu/updateMenuCT", {menuct_Num:menuct_Num}, function(data){
 		if(data.state=="false") {
 			alert("삭제를 실패했습니다.");
 			return;
@@ -237,11 +237,11 @@ function deletemenuct(menuct_Num) {
 }
  
 // 메인메뉴 삭제
-function deleteMainMenu(mainmenu_Num) {
+function updateMainMenu(mainmenu_Num) {
 	if(!confirm("삭제하시겠습니까?")) {
 		return;
 	}
-	$.post("<%=cp%>/store/menu/deleteMainMenu", {mainmenu_Num:mainmenu_Num}, function(data){
+	$.post("<%=cp%>/store/menu/updateMainMenu", {mainmenu_Num:mainmenu_Num}, function(data){
 		if(data.state=="false") { 
 			alert("삭제를 실패했습니다.");
 			return;
@@ -253,11 +253,11 @@ function deleteMainMenu(mainmenu_Num) {
 }
 
 // 서브메뉴 삭제
-function deleteSubMenu(submenu_Num) { 
+function updateSubMenu(submenu_Num) { 
 	if(!confirm("삭제하시겠습니까?")) {
 		return;
 	} 
-	$.post("<%=cp%>/store/menu/deleteSubMenu", {submenu_Num:submenu_Num}, function(data){
+	$.post("<%=cp%>/store/menu/updateSubMenu", {submenu_Num:submenu_Num}, function(data){
 		if(data.state=="false") {
 			alert("삭제를 실패했습니다.");
 			return;
@@ -284,7 +284,7 @@ function deleteSubMenu(submenu_Num) {
 				<div id="cate${mystoreDto.menuct_Num}" class="cateMenu" style="cursor: pointer; width: 680px; height: 50px; background-color: #cccccc">
 					${mystoreDto.menuct_Title}
 				<br>${mystoreDto.menuct_Info}
-				<button class='btnDelete' onclick="deletemenuct(${mystoreDto.menuct_Num})" style="float: right;">삭제</button></div>
+				<button class='btnupdate' onclick="updatemenuct(${mystoreDto.menuct_Num})" style="float: right;">삭제</button></div>
 				<div id="main${mystoreDto.menuct_Num}" class="mainMenu" style="margin-bottom: 20px; cursor: pointer;"></div>
 			</c:forEach>
 		</div>

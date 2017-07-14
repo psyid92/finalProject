@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="storerivew">
+<select id="reviewRepSeq" resultType="Integer">
+		SELECT reviewreply_seq.NEXTVAl FROM dual
+	</select>
+
+<select id="reviewlistAll" resultType="com.sp.store.mystore.MyStoreReview">
+	select * from giupreview g
+	left outer join reviewphoto r on g.rep_Num = r.rep_Num
+	left outer join reviewreply rr on g.rep_Num = rr.rep_Num
+	where g.g1_Num = #{g1_Num}
+</select>
+
+<select id="reviewlistYet" resultType="com.sp.store.mystore.MyStoreReview">
+	select * from giupreview g
+	left outer join reviewphoto r on g.rep_Num = r.rep_Num
+	left outer join reviewreply rr on g.rep_Num = rr.rep_Num
+	where rrep_Num IS NULL AND g.g1_Num = #{g1_Num} 
+</select>
+
+
+<insert id="insertReply" parameterType="com.sp.store.mystore.MyStoreReview">
+	INSERT INTO reviewreply(rrep_Num, rrep_Content, rep_Num, g1_Num)
+				 VALUES(${rrep_Num}, #{rrep_Content}, #{rep_Num}, #{g1_Num})
+</insert>
+
+<delete id="deleteReply" parameterType="Integer">
+	DELETE FROM reviewreply WHERE rrep_Num=#{rrep_Num};
+</delete>
+
+<update id="updateReply" parameterType="Integer">
+	UPDATE reviewreply SET rep_Content = #{rep_Content} where rrep_Num = #{rrep_Num}
+</update>
+</mapper>

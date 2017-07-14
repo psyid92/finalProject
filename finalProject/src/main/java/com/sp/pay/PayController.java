@@ -56,7 +56,6 @@ public class PayController {
 			service.insertMileage(map);
 			service.earnMemberMileage(map);
 		}
-		
 		return model;
 	}
 }

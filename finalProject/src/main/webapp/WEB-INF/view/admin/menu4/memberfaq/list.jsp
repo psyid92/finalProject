@@ -6,85 +6,87 @@
    String cp = request.getContextPath();
 %>
 
-<div class="adminBodyFrame2">
-    <div class="body-title">
-          <h3><span class="glyphicon glyphicon-tower"></span> 자주하는질문(회원) </h3>
-          <div class="bodyFrame2">
-    <div class="body-title">
-          <h3><span class="glyphicon glyphicon-bullhorn"></span> 그것이 알고싶다 </h3>
-    </div>
+<style type="text/css">
+.table th, .table td {
+    font-weight: normal;
+    border-top: none;
+}
+.table thead tr th{
+     border-bottom: none;
+} 
+.table thead tr{
+    border: #d5d5d5 solid 1px;
+     background: #eeeeee; color: #787878;
+} 
+.table td {
+    border-bottom: #d5d5d5 solid 1px;
+}
+.table td a{
+    color: #000;
+
+
+</style>
+
+<script type="text/javascript">
+
+function searchList(){
+	var f=document.searchForm;
+	f.action="<%=cp%>/notice/list";
+	f.submit();
+}
+
+
+</script>
+
+<!-- 마크업 -->
+  <!-- Tab panes -->
     
+    <div class="bodyFrame2">
+    <div class="body-title">
+          <h3><span class="glyphicon glyphicon-tasks"></span> 자주찾는 질문 </h3>
+    </div>
+           
     <div class="alert alert-info">
-        <i class="glyphicon glyphicon-info-sign"></i> 그런데 말입니다?? 1대1문의!!!
+        <i class="glyphicon glyphicon-saved"></i> 회원님들께서 많이 궁금해하는 질문을 정리해보았습니다. 자세한 문의는 1대1문의를 해주세요
     </div>
-<c:if test="${dataCount !=0}">
-     <div style="clear: both; height: 30px; line-height: 30px;">
-        <div style="float: left;">${dataCount}개(${page}/${total_page}페이지)</div>
-        <div style="float: right;">/&nbsp;</div>
-      </div>
-    <div class="table-responsive" style="clear: both;">
-      <table class="table table-striped">
-         <thead>
-           <tr>
-             <th class="text-center" style="width: 70px;">번호</th>
-             <th >제목</th>
-             <th class="text-center" style="width: 100px;">글쓴이</th>
-             <th class="text-center" style="width: 100px;">날짜</th>
-             <th class="text-center" style="width: 70px;">조회수</th>
-             <th class="text-center" style="width: 50px;">첨부</th>
-           </tr>
-         </thead> 
-         <tbody>
-         <c:forEach var="dto" items="${list}">
-           <tr>
-             <td class="text-center">${dto.listNum}</td>
-             <td><a href="${articleUrl}&uq_Num=${dto.uq_Num}">${dto.uq_Title}</a></td>
-             <td class="text-center">${sessionScope.member.userId}</td>
-             <td class="text-center">${dto.uq_Created}</td>
-             <td class="text-center">
-               <c:if test="${not empty dto.uq_SaveFilename}">
-                 <a href="<%=cp%>/userQna/download?uq_Num=${dto.uq_Num}"><img src="<%=cp%>/resource/images/disk.gif" border="0" style="margin-top: 1px;"></a>
-               </c:if>
-             </td>
-           </tr>   
-         </c:forEach>
-         </tbody>
-      </table>
-    </div>
-</c:if>    
-    
-     <div class="paging" style="text-align: center; min-height: 50px; line-height: 50px;">
-         <c:if test="${dataCount==0 }">
-           등록된 문의가 없습니다.
-       </c:if>
-       <c:if test="${dataCount!=0 }">
-           ${paging}
-       </c:if>
-     </div>  
-     
-     <div style="clear: both;">
-        <div style="float: left; width: 20%; min-width: 85px;">
-          <button type="button" class="btn btn-default btn-sm wbtn" onclick="javascript:location.href='<%=cp%>/userQna/list';">새로고침</button>
-        </div>
-        <div style="float: left; width: 60%; text-align: center;">
+ 
+        <div style="float: left; width: 100%; text-align: center;">
           <form name="searchForm" method="post" class="form-inline">
-			<select class="form-control input-sm" name="searchKey" >
-				<option value="uq_Title">제목</option>
-				<option value="userId">작성자</option>
-				<option value="uq_Content">내용</option>
-				<option value="uq_Created">등록일</option>
+			<select class="form-control input-sm" style="width: 15%;" name="searchKey" >
+				<option value="#">질문유형</option>
+				<option value="#">내용</option>
+				<option value="#">제목</option>
 			</select>
-			<input type="text" class="form-control input-sm input-search" name="searchValue">
+			<input type="text" class="form-control input-sm input-search" style="width: 40%;" name="searchValue">
 			<button type="button" class="btn btn-info btn-sm btn-search" onclick="searchList();"><span class="glyphicon glyphicon-search"></span> 검색</button>
           </form>
         </div>
-        <div style="float: left; width: 20%; min-width: 85px; text-align: right;">
-        		    <button type="button" class="btn btn-primary btn-sm bbtn" onclick="javascript:location.href='<%=cp%>/userQna/created';"><span class="glyphicon glyphicon glyphicon-pencil"></span> 글쓰기</button>
-        </div>
-     
-     </div>
+    
+      <div style="clear: both; height: 30px; line-height: 30px;">
+        <div style="float: left;">총 몇개(/페이지)</div>
+      </div>
+      
+    <div class="table-responsive" style="clear: both;">
+      <table class="table">
+         <thead>
+           <tr>
+             <th class="text-center" style="width: 70px;">번호</th>
+             <th class="text-center" style="width: 150px;">제목</th>
+             <th class="text-center" style="width: 70px;">글쓴이</th>
+             <th class="text-center" style="width: 50px;">질문유형</th>
+             <th class="text-center" style="width: 50px;">조회수</th>
+           </tr>
+         </thead> 
+         <tbody>
+        
+           <tr>
+             <td class="text-center">번호</td>
+             <td class="text-center"><a href="#">제목</a></td>
+             <td class="text-center">관리자</td>
+             <td class="text-center" style="width: 140px;">질문유형</td>
+             <td class="text-center">조회수</td>
+           </tr>   
+         </tbody>
+      </table>
     </div>
-          
-  </div>
-
-</div>
+    </div>

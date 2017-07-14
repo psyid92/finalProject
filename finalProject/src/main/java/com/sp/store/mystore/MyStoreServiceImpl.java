@@ -64,10 +64,10 @@ public class MyStoreServiceImpl implements MyStoreService{
 	}
 
 	@Override
-	public int deleteMenuCT(int menuct_Num) throws Exception {
+	public int updateMenuCT(int menuct_Num) throws Exception {
 		int result = 0;
 		try {
-			result = dao.deleteData("menu.deleteMenuCT", menuct_Num);
+			result = dao.updateData("menu.updateMenuCT", menuct_Num);
 		} catch (Exception e) {
 			System.out.println(e.toString());
 		}
@@ -75,10 +75,10 @@ public class MyStoreServiceImpl implements MyStoreService{
 	}
 
 	@Override
-	public int deleteMainMenu(int mainmenu_Num) throws Exception {
+	public int updateMainMenu(int mainmenu_Num) throws Exception {
 		int result = 0;
 		try {
-			result = dao.deleteData("menu.deleteMainMenu", mainmenu_Num);
+			result = dao.updateData("menu.updateMainMenu", mainmenu_Num);
 		} catch (Exception e) {
 			System.out.println(e.toString());
 		}
@@ -86,10 +86,10 @@ public class MyStoreServiceImpl implements MyStoreService{
 	}
 
 	@Override
-	public int deleteSubMenu(int submenu_Num) throws Exception {
+	public int updateSubMenu(int submenu_Num) throws Exception {
 		int result = 0;
 		try {
-			result = dao.deleteData("menu.deleteSubmenu", submenu_Num);
+			result = dao.updateData("menu.updateSubmenu", submenu_Num);
 		} catch (Exception e) {
 			System.out.println(e.toString());
 		}

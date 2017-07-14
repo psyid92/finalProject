@@ -7,9 +7,9 @@ public interface MyStoreService {
 	public int insertMainMenu(MyStore dto, String path) throws Exception;
 	public int insertSubMenu(MyStore dto) throws Exception;
 	
-	public int deleteMenuCT(int menuct_Num) throws Exception;
-	public int deleteMainMenu(int mainmenu_Num) throws Exception;
-	public int deleteSubMenu(int submenu_Num) throws Exception;
+	public int updateMenuCT(int menuct_Num) throws Exception;
+	public int updateMainMenu(int mainmenu_Num) throws Exception;
+	public int updateSubMenu(int submenu_Num) throws Exception;
 	
 	public List<MyStore> readMenuCT(int g1_Num) throws Exception;
 	public List<MyStore> readMainMenu(int menuCT_Num) throws Exception;

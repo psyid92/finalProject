@@ -13,6 +13,10 @@ public interface JumunService {
 	public List<Jumun> subJumunMenu (String submenu_Num[]) throws Exception;
 	public List<Jumun> listPayMethod() throws Exception;
 	public int readMileage(String m1_Email) throws Exception;
+	public List<Review> listReview (Map<String, Object> map) throws Exception;
+	public int likeGiup(Map<String, Object> map) throws Exception;
+	public int insertLikeGiup(Map<String, Object> map) throws Exception;
+	public int deleteLikeGiup(Map<String, Object> map) throws Exception;
 	
 	/*
 	 * ---------- Member - 주문내역 가져오기

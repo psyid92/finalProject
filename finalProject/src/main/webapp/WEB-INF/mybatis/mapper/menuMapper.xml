@@ -30,20 +30,20 @@
 					 #{mainmenu_Num} )
 	</insert>
 	
-	<delete id="deleteMenuCT" parameterType="Integer">
-		DELETE FROM menucate WHERE menuct_Num=#{menuct_Num}
-	</delete>
-	<delete id="deleteMainMenu" parameterType="Integer">
-		DELETE FROM mainmenu WHERE mainmenu_Num=#{mainmenu_Num}
-	</delete>
-	<delete id="deleteSubmenu" parameterType="Integer">
-		DELETE FROM submenu WHERE submenu_Num=#{submenu_Num}
-	</delete>
+	<update id="updateMenuCT" parameterType="Integer">
+		UPDATE menucate SET menuct_Enabled = 0 WHERE menuct_Num=#{menuct_Num}
+	</update>
+	<update id="updateMainMenu" parameterType="Integer">
+		UPDATE mainmenu SET mainmenu_Enabled = 0 WHERE mainmenu_Num=#{mainmenu_Num}
+	</update>
+	<update id="updateSubmenu" parameterType="Integer">
+		UPDATE submenu SET submenu_Enabled = 0 WHERE submenu_Num=#{submenu_Num}
+	</update>
 	
 	<select id="readMenuCT" parameterType="Integer" resultType="com.sp.store.mystore.MyStore">
 		SELECT menuct_Num, menuct_Title, menuct_Info, g1_Num
 		FROM menuCate
-		WHERE g1_Num = #{g1_Num}
+		WHERE g1_Num = #{g1_Num} AND menuct_Enabled = 1
 		ORDER BY menuct_Num ASC
 	</select>
 	
@@ -51,14 +51,14 @@
 		SELECT mainmenu_Num, mainmenu_Title, mainmenu_Content, mainmenu_Photo,
 			mainmenu_Pay, mainmenu_Enabled, menuct_Num
 		FROM mainmenu
-		WHERE menuct_Num = #{menuct_Num}
+		WHERE menuct_Num = #{menuct_Num} AND mainmenu_Enabled = 1
 		ORDER BY mainmenu_Num ASC
 	</select>
 	
 	<select id="readSubMenu" parameterType="Integer" resultType="com.sp.store.mystore.MyStore">
 		SELECT submenu_Num, submenu_Title, submenu_Pay, submenu_Enabled, mainmenu_Num
 		FROM submenu
-		WHERE mainmenu_Num = #{mainmenu_Num}
+		WHERE mainmenu_Num = #{mainmenu_Num} AND submenu_Enabled = 1
 		ORDER BY submenu_Num ASC
 	</select>
 	

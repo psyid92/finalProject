@@ -32,6 +32,6 @@ public interface MemberDAO {
 	
 	
 //	리뷰
-	public int getNumReview(giupReview dto) throws Exception;
+	public int getNumReview(Map<String, Object> map) throws Exception;
 
 }

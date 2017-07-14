@@ -227,9 +227,12 @@ public class MemberImpl implements MemberDAO {
 	 */
 	
 	@Override
-	public int getNumReview(giupReview dto) throws Exception {
+	public int getNumReview(Map<String, Object> map) throws Exception {
 		int result = 0;
 		try {
+			giupReview dto = new giupReview();
+			dto.setM1_num((int) map.get("m1_num"));
+			dto.setJumun_num((int)map.get("jumun_num"));
 			result = dao.getReadData("giupreview.getNumReview", dto);
 		} catch (Exception e) {
 		}

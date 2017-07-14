@@ -8,6 +8,13 @@
 
 
 <script>
+	function goWriteForm (data){
+		location.href="<%=cp%>/member/writeReview?jumun_num="+data;
+	}
+</script>
+
+
+<script>
 function getDetail(data){
 	//주문 상세 가져오는 위치
 	

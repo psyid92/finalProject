@@ -15,7 +15,7 @@
 	<!--  sql 태그 -->
 	<sql id="where-list">
 		<if test="searchKey=='admin_Id' ">
-			admin_Id=#{searchValue};
+			admin_Id=#{searchValue}
 		</if>
 		<if test="searchKey=='noti_Title'">
 			INSTR(noti_Title, #{searchValue}) &gt; 0
@@ -120,8 +120,9 @@
 	<!-- 글 수정  -->
 	<update id="updateNotice" parameterType="com.sp.giupNotice.Notice">
 		UPDATE giupNotice 
-		SET noti_Num=#{noti_Num}, noti_Title=#{noti_Title}, noti_Content=#{noti_Content}, 
-			noti_Top=#{noti_Top}, noti_hidden=#{noti_hidden}, admin_Id=#{admin_Id}
+		SET noti_Title=#{noti_Title}, noti_Content=#{noti_Content}, 
+			noti_Top=#{noti_Top}, noti_hidden=#{noti_hidden}
+		WHERE noti_Num = #{noti_Num}
 	</update>
 	
 	<!-- 글 삭제 -->
@@ -130,7 +131,7 @@
 	
 	</delete>
 	
-	<!--  파일처리 : 추가구현 >> 첨부파일은 5개 까지만 첨부 가능 -->
+	<!--  파일처리 : 멀티파일업로드를 위해 테이블별도 처리로 필요.  추가구현 >> 첨부파일은 5개 까지만 첨부 가능 -->
 	<insert id="insertFile" parameterType="com.sp.giupNotice.Notice">
 		INSERT INTO giupNoticeFile(noti_FileNum, noti_Num, noti_OrigianlFileName, noti_SaveFileName, noti_FileSize)
 		VALUES(giupNoticeFile_seq.NEXTVAL, #{noti_Num}, #{noti_OrigianlFileName}, #{noti_SaveFileName}, #{noti_FileSize})

@@ -236,7 +236,7 @@ public class NoticeController {
 	@RequestMapping(value="/giupNotice/update", method=RequestMethod.GET)
 	public String updateForm(
 			@RequestParam(value="noti_Num") int num,
-			@RequestParam(value="page", defaultValue="1") int page, 
+			@RequestParam(value="page") int page, 
 			Model model, HttpSession session) throws Exception {
 		
 		SessionInfo info = (SessionInfo)session.getAttribute("store");
@@ -268,15 +268,15 @@ public class NoticeController {
 	public String updateSubmit(
 			Notice dto, 
 			@RequestParam int page,
-			HttpSession session
-			) throws Exception {
+			HttpSession session) throws Exception {
+		
 		SessionInfo info = (SessionInfo)session.getAttribute("store");
 		
 		if(info==null) {
 			return "redirect:/store/login";
 		}
 		
-		if(info.getG1_Id().equals("admin")){
+		if(! info.getG1_Id().equals("admin")){
 			return "redirect:/giupNotice/list?page="+page;
 		}
 		

@@ -17,10 +17,11 @@ public class MystoreReviewServiceImpl implements MystoreReivewService {
 	public int insertReviewReply(MyStoreReview reviewDto) throws Exception {
 		int result = 0;
 		try {
-			result = dao.getIntValue("storerivew.reviewRepSeq");
+			result = dao.getIntValue("storereview.reviewRepSeq");
 			reviewDto.setRrep_Num(result);
-			result = dao.insertData("storerivew.insertReply", reviewDto);
+			result = dao.insertData("storereview.insertReply", reviewDto);
 		} catch (Exception e) {
+			e.printStackTrace();
 		}
 		return result;
 	}
@@ -29,8 +30,9 @@ public class MystoreReviewServiceImpl implements MystoreReivewService {
 	public List<MyStoreReview> reviewList(int g1_Num) throws Exception {
 		List<MyStoreReview> reviewlistAll = new ArrayList<>();
 		try {
-			reviewlistAll = dao.getListData("storerivew.reviewlistAll",g1_Num);
+			reviewlistAll = dao.getListData("storereview.reviewlistAll",g1_Num);
 		} catch (Exception e) {
+			e.printStackTrace();
 		}
 		return reviewlistAll;
 	}
@@ -39,8 +41,9 @@ public class MystoreReviewServiceImpl implements MystoreReivewService {
 	public List<MyStoreReview> reviewListYed(int g1_Num) throws Exception {
 		List<MyStoreReview> reviewlistYet = new ArrayList<>();
 		try {
-			reviewlistYet = dao.getListData("storerivew.reviewlistYet",g1_Num);
+			reviewlistYet = dao.getListData("storereview.reviewlistYet",g1_Num);
 		} catch (Exception e) {
+			e.printStackTrace();
 		}
 		return reviewlistYet;
 	}
@@ -55,5 +58,14 @@ public class MystoreReviewServiceImpl implements MystoreReivewService {
 		return 0;
 	}
 
-	
+	@Override
+	public int dataCount(int g1_Num) {
+		int result = 0;
+		try {
+			result = dao.getIntValue("storereview.dataCount",g1_Num);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
 }

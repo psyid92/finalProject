@@ -61,7 +61,7 @@ $('#myTab li:eq(2) a').tab('show') // Select third tab (0-indexed)
 <div role="tabpanel">
 
   <!-- Nav tabs -->
-  <ul class="nav nav-tabs" role="tablist">
+  <ul class="nav nav-tabs" role="tablist" style="margin-top: 50px;">     
     <li role="presentation"><a href="<%=cp%>/notice/list" aria-controls="notice" role="tab" data-toggle="tab">공지사항</a></li>
     <li role="presentation"><a href="<%=cp%>/userEvent/list" aria-controls="userEvent" role="tab" data-toggle="tab">이벤트</a></li>
     <li role="presentation"><a href="<%=cp%>/userFaq/main" aria-controls="userFaq" role="tab" data-toggle="tab">자주찾는 질문</a></li>
@@ -97,11 +97,11 @@ $('#myTab li:eq(2) a').tab('show') // Select third tab (0-indexed)
            </tr>
          </thead> 
          <tbody>
-         <c:forEach var="dto" items="${list}">
+         <c:forEach var="dto" items="${list}">   
            <tr>
              <td class="text-center">${dto.listNum}</td>
              <td><a href="${articleUrl}&uq_Num=${dto.uq_Num}">${dto.uq_Title}</a></td>
-             <td class="text-center">${dto.m1_nickname}</td>
+             <td class="text-center" style="width: 130px;">${dto.m1_nickname}</td>
              <td class="text-center" style="width: 140px;">${dto.uq_Created}</td>
              <td class="text-center">
                <c:if test="${not empty dto.uq_SaveFilename}">

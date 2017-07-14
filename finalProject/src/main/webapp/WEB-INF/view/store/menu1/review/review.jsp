@@ -6,6 +6,11 @@
    String cp = request.getContextPath();
 %>
 <script>
+function insertReply(){
+	var gid="${sessionScope.store.g1_Name}"
+}
+
+
 var url = "<%=cp%>/store/reivew/reviewlistAll";
 var query = "rrep_Num="+rrep_Num;
 $.ajax({
@@ -33,28 +38,27 @@ $.ajax({
  			<li role="presentation" ><a href="<%=cp%>/store/review/reviewTalk">사장님 한마디</a></li>
 		</ul>
 		${sessionScope.store.g1_Name} <br>
-		<div style="width: 680px; margin: 0;" >
+		<div style="width: 680px; margin: 0;" > 
 		<c:forEach var="reviewDto" items="${reviewlistAll}">
 			<div>
-			 ${reviewDto.rep_Num}
-			  ${reviewDto.rep_Star}
-			   ${reviewDto.rep_Content}
-			    ${reviewDto.rep_Created}
-			     ${reviewDto.m1_Num}
-			      ${reviewDto.rep_Num}
-			       ${reviewDto.g1_Num}
-			        ${reviewDto.jumun_Num}
-			         ${reviewDto.rphoto_Savefilename}
-			   ${reviewDto.rrep_Num}
-			   ${reviewDto.rrep_Content}
-			   ${reviewDto.rreo_Created}
-			   ${reviewDto.rep_Num}
+			 ${reviewDto.rep_Num}<br>
+			  ${reviewDto.rep_Star}<br>
+			   ${reviewDto.rep_Content}<br>
+			    ${reviewDto.rep_Created}<br>
+			     ${reviewDto.m1_Num}<br>
+			      ${reviewDto.rep_Num}<br>
+			       ${reviewDto.g1_Num}<br>
+			        ${reviewDto.jumun_Num}<br>
+			         ${reviewDto.rphoto_Savefilename}<br>
+			   ${reviewDto.rrep_Num}<br>
+			   ${reviewDto.rrep_Content}<br>
+			   ${reviewDto.rrep_Created}<br>
 			</div>
 		</c:forEach>
 		</div>
 		<textarea id="g2_Memo" name="g2_Memo" rows="5px" cols="20px" style="resize:none; margin-left: 0px; margin-right: 0px; width: 95%;"></textarea>
-		
-		
+		<button	></button>
+		<div id="reviewlist"></div>
 		
 		
 		

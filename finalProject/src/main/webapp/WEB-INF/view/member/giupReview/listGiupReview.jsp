@@ -18,11 +18,12 @@
 		<tr onclick="javascript:location.href='<%=cp%>/jumun/article?g1_Num=${dto.g1_num }&g1_Name=${dto.g1_name }'">
 			<td width="20%;" style="border-right: 1px solid #cdd0d4; color: red;">${dto.g1_name }
 			</td>
+			<td><img src="">${dto.rphoto_SaveFilename } </td>
 			<td>&nbsp;&nbsp;${dto.rep_created } &nbsp;&nbsp;&nbsp;&nbsp; ${dto.myStar }<br>&nbsp;&nbsp;${dto.rep_content }<br>
 			<div style="min-height: 20px;"></div></td>
 		</tr>
 		<tr>
-			<td colspan="2"><div style="min-height: 10px;"></div>
+			<td colspan="3"><div style="min-height: 10px;"></div>
 			</td>
 		</tr>
 	</c:forEach>

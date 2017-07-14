@@ -87,10 +87,17 @@ function printReply(data){
 			var rrep_Content = data.reviewlistAll[i].rrep_Content;
 			var g1_Name = data.reviewlistAll[i].g1_Name;
 			
-			s += "["+rep_Star+","+rep_Content+","+rep_Created+","+m1_Nickname+",";
+			/* s += "["+rep_Star+","+rep_Content+","+rep_Created+","+m1_Nickname+",";
 			s +=  rrep_Created+","+rrep_Content+","+g1_Name+"]";
-			s += "<br>"
-
+			s += "<br>" */
+			s += " <div style='float: left;'>"+rep_Created+"<br>"+g1_Name+"</div>";
+			s += " <div style='float: left; margin-left: 50px;'>";
+			s += "	<div>"+rep_Star+"&nbsp;&nbsp;"+m1_Nickname+"<br>"+rep_Content+"</div>";
+			s += " 	<div>ㄴ";
+			s += " 	<div style='float: right;'>";
+			s += " 		사장님&nbsp;&nbsp;"+rrep_Created+"<br>"+rrep_Content+"<div>";
+			s += " 	</div>";
+			s += "</div>";
 			
 		}
 		s += "  </table>";
@@ -113,10 +120,10 @@ function printReply(data){
 		</ul>
 		${sessionScope.store.g1_Name} <br>
 		${sessionScope.store.g1_Num}
-		<textarea id="content" class="form-control" rows="3" required="required"></textarea>
+		<textarea id="content" class="form-control" rows="3" required="required" style="resize: none;"></textarea>
 		<button type="button" onclick="sendReply();">등록하기</button>
 		<div id="reviewlist"></div>
-		<div style="float: left;">
+		<!-- <div style="float: left;">
 		rkrkrkrkrk<br>
 		2000-10-10 09:09:01
 		</div> 
@@ -132,6 +139,6 @@ function printReply(data){
 		 		삐리리리리리
 	 		</div>
 		 	</div>
-		</div>
+		</div> -->
     </div>
 </div>

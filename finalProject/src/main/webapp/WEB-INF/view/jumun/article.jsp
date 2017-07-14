@@ -29,25 +29,52 @@
 					,dataType:"json"
 					,success:function(data) {
 						layout1(data.menuList, menu_on);
+						$("#cate"+menuct_Num).css("border-bottom-left-radius", "0");
+						$("#cate"+menuct_Num).css("border-bottom-right-radius", "0");
+						$("#main"+menuct_Num+" > div:last").prev().css("border-bottom-left-radius","5px");
+						$("#main"+menuct_Num+" > div:last").prev().css("border-bottom-right-radius","5px");
 					}
 					,error:function(e) {
 						console.log(e.responseText);
 					}
 				});
 			} else {
-				if ($(menu_on).css("display") == "block")
-					$(menu_on).hide(500);
-				else $(menu_on).show(500);
+				if ($(menu_on).css("display") == "block") {
+					$(menu_on).hide(500, function(){
+						$("#cate"+menuct_Num).css("border-bottom-left-radius", "5px");
+						$("#cate"+menuct_Num).css("border-bottom-right-radius", "5px");
+					});
+				}
+				else {
+					$("#cate"+menuct_Num).css("border-bottom-left-radius", "0");
+					$("#cate"+menuct_Num).css("border-bottom-right-radius", "0");
+					$(menu_on).show(500);
+				}
 			}
 		});
 		
 		function layout1(list, menu_on) {
 			var s = "";
 			for (var i = 0; i < list.length; i++) {
+				$(function(){
+					var url = "<%=cp%>/uploads/photo/"+list[i].mainmenu_Photo;
+					var no_Img = "<%=cp%>/resource/img/no_img.gif";
+					var img_on = "#img"+list[i].mainmenu_Num;
+					$.ajax({
+					    url: url,
+					    type: 'HEAD',
+					    success: function () {
+					         $(img_on).append("<img src='"+url+"' style='width:500px; height: 300px;'></img>")
+					    },
+					    error: function () {
+					    	 $(img_on).append("<img src='"+no_Img+"' style='width:500px; height: 300px;'></img>")
+					    }
+					});
+				});
 				s += "<div onclick='submenu("+list[i].mainmenu_Num+")' style='width: 680px; height: 30px;  line-height: 30px; background-color: #dddddd;'><div style='float: left;'>" + list[i].mainmenu_Title + "</div><div style='float: right;'>" + list[i].mainmenu_Pay + "</div></div>";
 				s += "<div id='sub"+list[i].mainmenu_Num+"' style='width:680px; background-color: white; display: none;'>"
 				s += "<div>"+list[i].mainmenu_Num + "</div><div class='title'>" + list[i].mainmenu_Title + "</div>";
-				s += "<div class='content'>"+list[i].mainmenu_Content + "</div><div><img src='<%=cp%>/uploads/photo/"+list[i].mainmenu_Photo+"' style='width:500px; height: 300px;'></img></div>";
+				s += "<div class='content'>"+list[i].mainmenu_Content + "</div><div id='img"+list[i].mainmenu_Num+"'></div>";
 				s += "<div class='pay'>"+list[i].mainmenu_Pay + "</div><div>" + list[i].mainmenu_Enabled + "</div></div>";
 			}
 			$(menu_on).html(s);
@@ -59,6 +86,9 @@
 	function submenu(main_Num) {
 		$(function(){
 			menu_on = "#sub" + main_Num;
+			$(menu_on).prev().css("border-bottom-left-radius", "0");
+			$(menu_on).prev().css("border-bottom-right-radius", "0");
+			
 			if ($(menu_on).css("display") == "none") {
 				$(menu_on).css("display", "inline-block");
 				var query = "mainmenu_Num=" + main_Num;
@@ -70,14 +100,20 @@
 					,dataType:"json"
 					,success:function(data) {
 						layout2(data.subList, menu_on, main_Num);
+						$(menu_on).parent().children().last().children().last().children().last().css("border-bottom-left-radius", "5px");
+						$(menu_on).parent().children().last().children().last().children().last().css("border-bottom-right-radius", "5px");
 					}
 					,error:function(e) {
 						console.log(e.responseText);
 					}
 				});
 			} else {
-				
-				$(menu_on).hide(500);
+				$(menu_on).hide(500,function(){
+					if ($(menu_on).parent().children().last().css("display") == "none") {
+						$(menu_on).parent().children().last().prev().css("border-bottom-left-radius", "5px");
+						$(menu_on).parent().children().last().prev().css("border-bottom-right-radius", "5px");
+					};
+				});
 			}
 		});
 		function layout2(list, menu_on, main_Num) {
@@ -85,7 +121,7 @@
 			$(menu_on+" div[class=jumun]").html("");
 			for (var i = 0; i < list.length; i++) {
 				if (i == 0)
-					s += "<div style='font-size: 10px;'>1개 까지 선택 가능</div>";
+					s += "<div id='msg' style='font-size: 12px;'>1개 까지 선택 가능</div>";
 				s += "<input type='checkbox' name='m"+main_Num+"' value='"+list[i].submenu_Pay+"'>"+list[i].submenu_Title + "(" + list[i].submenu_Pay + "원 추가)&nbsp;&nbsp;&nbsp;&nbsp;";
 				s += "<input type='hidden' name='m"+main_Num+"' value='"+list[i].submenu_Title+"'>"; 
 				s += "<input type='hidden' name='m"+main_Num+"' value='"+list[i].submenu_Num+"'>";
@@ -109,7 +145,7 @@
 			var s = "";
 			var sub_Num = "";
 			if ($("#sub"+main_Num+" input:checkbox[name='m"+main_Num+"']:checked").length >= 2) {
-				alert("1개까지만 선택 가능합니다!");
+				$("#msg").css("color","red");
 				return;
 			}
 			$("#sub"+main_Num+" input:checkbox[name='m"+main_Num+"']:checked").each(function(pi, po){
@@ -125,10 +161,8 @@
 			} else {
 				jumunAppend(main_Num,sub_Num, content, pay);
 			}
-			
+			$("#msg").css("color","black");
 		});	
-		 var offset = $("#totalJumun").offset();
-	        $('html, body').animate({scrollTop : offset.top}, 400);
 	}
 	var jumun_Num = 0;
 	function jumunTab(main_Num, sub_Num, content, pay){
@@ -284,7 +318,7 @@
 	<div id="giupMenu" style="width: 680px; margin-bottom: 50px;">
 		<c:forEach var="cateDto" items="${cateList}">
 			<div style="margin-bottom: 20px;">
-				<div id="cate${cateDto.menuct_Num}" class="cateMenu" style="cursor: pointer; width: 680px; height: 50px; background-color: #cccccc">${cateDto.menuct_Title}</div>
+				<div id="cate${cateDto.menuct_Num}" class="cateMenu" style="cursor: pointer; width: 680px; height: 50px; background-color: #cccccc; border-radius: 5px;">${cateDto.menuct_Title}</div>
 				<div id="main${cateDto.menuct_Num}" class="mainMenu" style="cursor: pointer;"></div>
 			</div>
 		</c:forEach>

@@ -3,7 +3,7 @@ package com.sp.giupReview;
 import org.springframework.web.multipart.MultipartFile;
 
 public class giupReview {
-	private String rep_created, rep_content;
+	private String rep_created, rep_content, myStar, g1_name;
 	private int rep_num,  rep_star, m1_num, g1_num, jumun_num;
 	
 	//사진
@@ -14,6 +14,18 @@ public class giupReview {
 	
 	public String getRep_created() {
 		return rep_created;
+	}
+	public String getG1_name() {
+		return g1_name;
+	}
+	public void setG1_name(String g1_name) {
+		this.g1_name = g1_name;
+	}
+	public String getMyStar() {
+		return myStar;
+	}
+	public void setMyStar(String myStar) {
+		this.myStar = myStar;
 	}
 	public void setRep_created(String rep_created) {
 		this.rep_created = rep_created;

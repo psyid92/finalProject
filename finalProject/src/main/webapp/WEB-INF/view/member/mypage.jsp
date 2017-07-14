@@ -42,7 +42,7 @@ body {
 <div id="mypage_menu" onclick="javascript:location.href='<%=cp%>/member/ilike'">찜한 가게</div>
 <div id="mypage_menu" onclick="javascript:location.href='<%=cp%>/member/payList'">결제 내역</div><br>
 <div id="mypage_menu" onclick="javascript:location.href='<%=cp%>/member/mileage'">마일리지 내역</div>
-<div id="mypage_menu" onclick="javascript:location.href='#'">내 리뷰</div>
+<div id="mypage_menu" onclick="javascript:location.href='<%=cp%>/member/listGiupReview'">내 리뷰</div>
 <div id="mypage_menu" onclick="javascript:location.href='<%=cp%>/member/memberAccount'">비밀번호 변경/탈퇴</div>
 <div id="mypage_menu" onclick="javascript:location.href='#'">1대1 문의</div>
 

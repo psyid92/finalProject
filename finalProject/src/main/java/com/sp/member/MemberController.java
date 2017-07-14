@@ -3,6 +3,7 @@ package com.sp.member;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -532,7 +533,7 @@ public class MemberController {
 //			myJumun += "<a href='#' class='btn btn-block btn-primary btn-success'><span class='glyphicon glyphicon-book'></span> 리뷰 남기기</a>";
 			myJumun += "<button onclick='goWriteForm("+jumun_num +");' class='btn btn-block btn-primary btn-success'><span class='glyphicon glyphicon-book'></span> 리뷰 남기기</button>";
 		} else {
-			myJumun += "<button onclick = '' class='btn btn-block btn-primary btn-success'><span class='glyphicon glyphicon-book'></span> 내가 남긴 리뷰 보기</button>";
+			myJumun += "<button onclick = '' class='btn btn-block btn-primary btn-info'><span class='glyphicon glyphicon-book'></span> 내가 남긴 리뷰 보기</button>";
 		}
 		
 		map.put("myJumun", myJumun);
@@ -578,6 +579,28 @@ public class MemberController {
 		}
 		model.addAttribute("mode", "clear");
 		return ".mymem.giupReview.writeGiupReview";
+	}
+	
+	@RequestMapping("/member/listGiupReview")
+	public String listGiupReview(HttpSession session,Model model){
+		if (session.getAttribute("member") == null) {
+			return ".mymem.login";
+		}
+		SessionInfo info = (SessionInfo) session.getAttribute("member");
+		List<giupReview> list = new ArrayList<>();
+
+		giupReview dto = new giupReview();
+		dto.setM1_num(info.getM1_Num());
+		try {
+			String root=session.getServletContext().getRealPath("/");
+			String pathname=root+File.separator+"uploads"+File.separator+"giupReview";
+			list = review.getListMyReview(dto, pathname);
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		model.addAttribute("ReviewList", list);
+		return ".mymem.giupReview.listGiupReview";
 	}
 			
 }

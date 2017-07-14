@@ -56,7 +56,7 @@ public class giupServiceImpl implements giupReviewService {
 	public giupReview getReview(giupReview dto) throws Exception {
 		giupReview review = new giupReview();
 		try {
-			review = dao.getReadData("giupreview.getReview", dto);
+			review = dao.getReadData("giupreview.getReviewWithPhoto", dto);
 		} catch (Exception e) {
 		}
 		return review;
@@ -75,11 +75,27 @@ public class giupServiceImpl implements giupReviewService {
 
 	// 회원 - 리뷰 리스트
 	@Override
-	public List<giupReview> getListMyReview(giupReview dto) throws Exception {
+	public List<giupReview> getListMyReview(giupReview dto, String pathname) throws Exception {
 		List<giupReview> list = new ArrayList<>();
 		try {
 			// 리스트 가져오기
-
+			list = dao.getListData("giupreview.getReviewListWithPhoto", dto);
+			
+				if(! list.isEmpty()){
+					for (giupReview rev : list) {
+						String myStar = "";
+						int star = rev.getRep_star();
+						for(int a=0; a<5; a++){
+							if(a < star){
+								myStar += "★";
+							} else {
+								myStar += "☆";
+							}
+							rev.setMyStar(myStar);
+						}
+					}
+				}
+				
 		} catch (Exception e) {
 		}
 		return list;

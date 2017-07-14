@@ -92,7 +92,6 @@ public class giupServiceImpl implements giupReviewService {
 								myStar += "☆";
 							}
 							rev.setMyStar(myStar);
-							rev.setRphoto_SaveFilename(pathname + "/" + rev.getRphoto_SaveFilename());
 						}
 					}
 				}

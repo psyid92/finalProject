@@ -9,12 +9,7 @@
 $(function(){
 	listReply(1);	
 });
-<%--  function listPage(page){
-	var url="<%=cp%>/store/review/reviewlistAll";
-	$.post(url, {pageNo:page,kasdlfjasdja:asdfasl}, function(data){
-		printReply(data); 
-	},"json");
-} --%>
+
  function listReply(page){
 	var url = "<%=cp%>/store/reivew/reviewlistAll";
 	$.ajax({
@@ -76,8 +71,6 @@ function printReply(data){
 	s += " <div style='float: right; text-align: right;'></div>";
 	s += " </div>";
 	if(dataCount!=0){
-		s += " <div class='table-responsive' style='clear: both; padding-top: 5px;'>";
-		s += "  <table class='table'>";
 		for( var i=0; i<data.reviewlistAll.length; i++){
 			var rep_Star = data.reviewlistAll[i].rep_Star;
 			var rep_Content = data.reviewlistAll[i].rep_Content;
@@ -85,23 +78,30 @@ function printReply(data){
 			var m1_Nickname = data.reviewlistAll[i].m1_Nickname;
 			var rrep_Created = data.reviewlistAll[i].rrep_Created;
 			var rrep_Content = data.reviewlistAll[i].rrep_Content;
+			var rrep_Num = data.reviewlistAll[i].rrep_Num;
 			var g1_Name = data.reviewlistAll[i].g1_Name;
 			
 			/* s += "["+rep_Star+","+rep_Content+","+rep_Created+","+m1_Nickname+",";
 			s +=  rrep_Created+","+rrep_Content+","+g1_Name+"]";
 			s += "<br>" */
+			s += " <div class='table-responsive' style='clear: both; padding-top: 5px;'>";
+			s += "  <table class='table'>";
 			s += " <div style='float: left;'>"+rep_Created+"<br>"+g1_Name+"</div>";
 			s += " <div style='float: left; margin-left: 50px;'>";
 			s += "	<div>"+rep_Star+"&nbsp;&nbsp;"+m1_Nickname+"<br>"+rep_Content+"</div>";
-			s += " 	<div>ㄴ";
-			s += " 	<div style='float: right;'>";
-			s += " 		사장님&nbsp;&nbsp;"+rrep_Created+"<br>"+rrep_Content+"<div>";
-			s += " 	</div>";
+			if(rrep_Content != null){
+				s += " 	<div>ㄴ";
+				s += " 	<div style='float: right;'>";
+				s += " 		사장님&nbsp;&nbsp;"+rrep_Created+"<br>"+rrep_Content+"</div>";
+				s += " 	</div>";
+			}
 			s += "</div>";
+			s += " <br>"; 
 			
 		}
 		s += "  </table>";
 		s += " </div>"
+		
 	}
 	$("#reviewlist").html(s); 
 }

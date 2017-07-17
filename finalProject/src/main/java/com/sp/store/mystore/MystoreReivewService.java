@@ -11,4 +11,5 @@ public interface MystoreReivewService {
 	public int dataCount(int g1_Num);
 	public List<MyStoreReview> reviewList(int g1_Num) throws Exception;
 	public List<MyStoreReview> reviewListYed(int g1_Num) throws Exception;
+	public List<MyStoreReview> reviewReplyList(int rep_Num) throws Exception;
 }

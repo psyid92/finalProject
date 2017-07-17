@@ -5,8 +5,14 @@
 	request.setCharacterEncoding("utf-8");
 	String cp = request.getContextPath();
 %>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+<link rel="stylesheet" href="<%=cp%>/resource/alertify/alertify.core.css" />
+<link rel="stylesheet" href="<%=cp%>/resource/alertify/alertify.default.css" id="toggleCSS" />
+<script src="<%=cp%>/resource/alertify/alertify.js"></script>
+<%-- <script src="<%=cp%>/resource/alertify/alertify.min.js"></script> --%>
 <script type="text/javascript" src="<%=cp%>/resource/jquery/js/jquery.form.js"></script>
 <script>
+	
 	$(function(){
 		if (${result} > 0) {
 			$("#likeGiup").hide();
@@ -23,8 +29,6 @@
 				$.ajax({
 					type:"post"
 					,url:url
-					/* ,processData: false  // file 전송시 필수
-			        ,contentType: false  // file 전송시 필수 */
 					,data:query
 					,dataType:"json"
 					,success:function(data) {
@@ -67,7 +71,7 @@
 					         $(img_on).append("<img src='"+url+"' style='width:500px; height: 300px;'></img>")
 					    },
 					    error: function () {
-					    	 $(img_on).append("<img src='"+no_Img+"' style='width:500px; height: 300px;'></img>")
+					    	 $(img_on).append("<img src='"+no_Img+"' style='width:200px; height: 100px;'></img>")
 					    }
 					});
 				});
@@ -246,32 +250,31 @@
 				location.href = "<%=cp%>/member/login";
 				return;
 			}
-		
-			if (!confirm("${g1_Name}을 찜 하시겠습니까?")) {
-				return;
-			}
-			var url = "<%=cp%>/jumun/likeGiup";
-			var query = "g1_Num="+${g1_Num}+"&m1_Num="+m1_Num;
-			$.ajax({
-				type:"post"
-				,url:url
-				,data:query
-				,dataType:"json"
-				,success:function(data) {
-					if (data.state > 0) {
-						$("#likeGiup").hide();
-						$("#deLikeGiup").show();
-					}
-				}
-				,error:function(e) {
-					console.log(e.responseText);
+			alertify.confirm("${g1_Name}을 찜 하시겠습니까?", function(e){
+				if (e) {
+					var url = "<%=cp%>/jumun/likeGiup";
+					var query = "g1_Num="+${g1_Num}+"&m1_Num="+m1_Num;
+					$.ajax({
+						type:"post"
+						,url:url
+						,data:query
+						,dataType:"json"
+						,success:function(data) {
+							if (data.state > 0) {
+								$("#likeGiup").hide();
+								$("#deLikeGiup").show();
+							}
+						}
+						,error:function(e) {
+							console.log(e.responseText);
+						}
+					});
 				}
 			});
 		});
 		$("#deLikeGiup").click(function() {
-			if (!confirm("${g1_Name}을 찜 풀기 하시겠습니까?")) {
-				return;
-			}
+			alertify.confirm("${g1_Name}을 찜 풀기 하시겠습니까?", function(e){
+			if (e) {
 			var url = "<%=cp%>/jumun/deLikeGiup";
 			var m1_Num = "${sessionScope.member.m1_Num}";
 			if (m1_Num == null || m1_Num == "") {
@@ -293,6 +296,8 @@
 				,error:function(e) {
 					console.log(e.responseText);
 				}
+			});
+			}
 			});
 		});
 	});
@@ -323,7 +328,7 @@
 			</div>
 		</c:forEach>
 	</div>
-	<div id="review" style="width:680px; height:500px; margin: 0;">
+	<div id="review" style="width:680px; margin: 0;">
 		<table style="width: 680px; border: 1px solid black;">
 			<tr style="border-bottom: 1px solid black;">
 				<th style="font-size: 40px; font-weight: 900; text-align: center;">리뷰</th>

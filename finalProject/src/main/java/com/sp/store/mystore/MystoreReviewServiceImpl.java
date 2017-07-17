@@ -49,6 +49,16 @@ public class MystoreReviewServiceImpl implements MystoreReivewService {
 	}
 	
 	@Override
+	public List<MyStoreReview> reviewReplyList(int rep_Num) throws Exception {
+		List<MyStoreReview> reviewReplyList = new ArrayList<>();
+		try {
+			reviewReplyList = dao.getListData("storereview.reviewReplylist",rep_Num);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return reviewReplyList;
+	}
+	@Override
 	public int updateReviewReply(int rrep_Num) throws Exception {
 		return 0;
 	}
@@ -68,4 +78,6 @@ public class MystoreReviewServiceImpl implements MystoreReivewService {
 		}
 		return result;
 	}
+
+	
 }

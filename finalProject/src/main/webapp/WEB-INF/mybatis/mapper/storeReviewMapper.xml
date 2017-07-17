@@ -7,25 +7,29 @@
 	</select>
 
 <select id="reviewlistAll" resultType="com.sp.store.mystore.MyStoreReview">
-	select g.rep_Num, rep_Created, rep_star, rep_content, rrep_num, rrep_Created, rrep_content, m1_Nickname, g.g1_num, g1_Name
-    from giupreview g
-	left outer join reviewphoto r on g.rep_Num = r.rep_Num
-	left outer join reviewreply r on g.rep_Num = r.rep_Num
-    left outer join member1 m on  g.m1_NUm = m.m1_Num
-    left outer join giup1 gi on g.g1_Num = gi.g1_Num
-	where g.g1_Num = #{g1_Num}
-	order by rep_created desc
+	SELECT g.rep_Num, rep_Created, rep_star, rep_content, m1_Nickname, g.g1_num, g1_Name
+    FROM giupreview g
+	LEFT OUTER JOIN reviewphoto r ON g.rep_Num = r.rep_Num
+    LEFT OUTER JOIN member1 m ON  g.m1_NUm = m.m1_Num
+    LEFT OUTER JOIN giup1 gi ON g.g1_Num = gi.g1_Num
+	WHERE g.g1_Num = #{g1_Num}
+	ORDER BY rep_created DESC
 </select>
-
+<select id="reviewReplylist" resultType="com.sp.store.mystore.MyStoreReview">
+	SELECT rrep_Num, rrep_Content, rep_Num, g1_Num, rrep_Created
+	FROM reviewreply
+	WHERE rep_Num=#{rep_Num}
+	ORDER BY rrep_Created ASC
+</select>
 <select id="reviewlistYet" resultType="com.sp.store.mystore.MyStoreReview">
-	select g.rep_Num, rep_Created, rep_star, rep_content, rrep_num, rrep_Created, rrep_content, m1_Nickname, g.g1_num, g1_Name
-    from giupreview g
-	left outer join reviewphoto r on g.rep_Num = r.rep_Num
-	left outer join reviewreply r on g.rep_Num = r.rep_Num
-    left outer join member1 m on  g.m1_NUm = m.m1_Num
-    left outer join giup1 gi on g.g1_Num = gi.g1_Num
+	SELECT g.rep_Num, rep_Created, rep_star, rep_content, rrep_num, rrep_Created, rrep_content, m1_Nickname, g.g1_num, g1_Name
+    FROM giupreview g
+	LEFT OUTER JOIN reviewphoto r ON g.rep_Num = r.rep_Num
+    LEFT OUTER JOIN member1 m ON  g.m1_NUm = m.m1_Num
+    LEFT OUTER JOIN giup1 gi ON g.g1_Num = gi.g1_Num
+    LEFT OUTER JOIN reviewreply rr ON g.rep_Num = rr.rep_Num
 	where rrep_Num IS NULL AND g.g1_Num = #{g1_Num} 
-	order by rep_created desc
+	ORDER BY rep_created DESC
 </select>
 
 
@@ -45,7 +49,6 @@
 <select id="dataCount" resultType="Integer">
 	select NVL(COUNT(*),0) from giupreview g
 	left outer join reviewphoto r on g.rep_Num = r.rep_Num
-	left outer join reviewreply rr on g.rep_Num = rr.rep_Num
 	where g.g1_Num = #{g1_Num}
 </select>
 </mapper>

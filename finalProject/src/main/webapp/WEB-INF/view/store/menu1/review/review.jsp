@@ -7,7 +7,7 @@
 %>
 <script>
 $(function(){
-	listReply(1);	
+	listReply(1);
 });
 
  function listReply(page){
@@ -25,43 +25,12 @@ $(function(){
 		}
 	});
 } 
-function sendReply(){
-	var gid="${sessionScope.store.g1_Name}";
-	
-	var content=$.trim($("#content").val());
-	
-	var query="content="+encodeURIComponent(content); //특수문자도 입력가능하게 인코딩
-	
-	$.ajax({
-		type:"post"
-		,url:"<%=cp%>/store/insertReviewReply"
-		,data:query
-		,dataType:"json"
-		,success:function(data){
-			printReply(data);
-			$("#content").val("");
-		}
-		,beforeSend:check
-		,error:function(e){
-			console.log(e.responseText);
-		}
-	});
-}
-
-function check(){
-	if(! $.trim($("#content").val()) ) {
-		$("#content").focus();
-		return false;
-	}
-	return true;
-}
-
-
+ 
 function printReply(data){
 	var total_page=data.total_page;
 	var dataCount=data.dataCount;
 	var pageNo=data.pageNo;
-	var paging=data.paging;
+	var paging=data.paging; 
 	
 	var s = "";
 	s += " <div style='clear: both; padding-top: 20px;'>";
@@ -72,39 +41,106 @@ function printReply(data){
 	s += " </div>";
 	if(dataCount!=0){
 		for( var i=0; i<data.reviewlistAll.length; i++){
+			var rep_Num = data.reviewlistAll[i].rep_Num;
 			var rep_Star = data.reviewlistAll[i].rep_Star;
 			var rep_Content = data.reviewlistAll[i].rep_Content;
 			var rep_Created = data.reviewlistAll[i].rep_Created;
 			var m1_Nickname = data.reviewlistAll[i].m1_Nickname;
-			var rrep_Created = data.reviewlistAll[i].rrep_Created;
-			var rrep_Content = data.reviewlistAll[i].rrep_Content;
-			var rrep_Num = data.reviewlistAll[i].rrep_Num;
 			var g1_Name = data.reviewlistAll[i].g1_Name;
 			
-			/* s += "["+rep_Star+","+rep_Content+","+rep_Created+","+m1_Nickname+",";
-			s +=  rrep_Created+","+rrep_Content+","+g1_Name+"]";
-			s += "<br>" */
 			s += " <div class='table-responsive' style='clear: both; padding-top: 5px;'>";
 			s += "  <table class='table'>";
 			s += " <div style='float: left;'>"+rep_Created+"<br>"+g1_Name+"</div>";
 			s += " <div style='float: left; margin-left: 50px;'>";
 			s += "	<div>"+rep_Star+"&nbsp;&nbsp;"+m1_Nickname+"<br>"+rep_Content+"</div>";
-			if(rrep_Content != null){
-				s += " 	<div>ㄴ";
-				s += " 	<div style='float: right;'>";
-				s += " 		사장님&nbsp;&nbsp;"+rrep_Created+"<br>"+rrep_Content+"</div>";
-				s += " 	</div>";
-			}
+			s += "  <div>ㄴ" 
+			s += " 	<div id='reviewreply"+rep_Num+"'>";
+			s += " 	</div>";
+			s += "  </div>";
+			s += "  <textarea id='content"+rep_Num+"' name= 'content"+rep_Num+"' class='form-control' rows='3' required='required' style='resize: none;'></textarea> ";
+			s += "  <button type='button' onclick='sendReply("+rep_Num+");'>등록하기</button>";
 			s += "</div>";
 			s += " <br>"; 
+			reviewReplyList(rep_Num);
 			
-		}
-		s += "  </table>";
+		} 
+		s +="    <tr style='height: 30px;'>";
+		s +="      <td colspan='2' style='text-align: center;'>";
+		s +=paging;
+		s +="      </td>";
+		s +="    </tr>";
+		s += "  </table>"; 
 		s += " </div>"
-		
+		  
 	}
 	$("#reviewlist").html(s); 
 }
+function reviewReplyList(rep_Num){
+	var url = "<%=cp%>/store/review/reviewReplyList";
+	
+	$.ajax({
+		type:"post"
+		,url:url
+		,data:{rep_Num:rep_Num}
+		,dataType:"json"
+		,success:function(data){
+			var list = data.reviewReplyList;
+			var s = "";
+			for(var i=0; i<list.length; i++){
+				s += "<div id='rreply"+list[i].rrep_Num+"'> ";
+				s += " 	<div>";
+				s += " 	사장님&nbsp;&nbsp;"+list[i].rrep_Created+"<br>"+list[i].rrep_Content+"</div>";
+				s += "</div>"
+			}
+			$("#reviewreply"+rep_Num).html(s);
+		}
+		,error:function(e){
+			console.log(e.responseText);
+		}
+	}); 
+}
+
+function sendReply(rep_Num){
+	
+	var content = $("#content"+rep_Num).val();
+	if(!content){
+		$("#content"+rep_Num).focus();
+		return;
+	}
+	var g1_Num="${sessionScope.store.g1_Num}"
+	
+	content=$.trim($("#content"+rep_Num).val());
+	
+	//var content=encodeURIComponent(content); 
+	 
+	$.ajax({
+		type:"post"
+		,url:"<%=cp%>/store/review/insertReviewReply"
+		,data:{rrep_Content:content, g1_Num:g1_Num, rep_Num:rep_Num}
+		,dataType:"json"
+		,success:function(data){
+			var state = data.state;
+			var list = data.reviewReplyList;
+			
+			if(state=="false"){
+				alert("추가하지 못했습니다.");
+				return;
+			}
+			$("#content"+rep_Num).val("");
+			var s = "";
+			for(var i=0; i<list.length; i++){
+				s += "<div id='rreply"+list[i].rrep_Num+"'> ";
+				s += " 	<div>";
+				s += " 	사장님&nbsp;&nbsp;"+list[i].rrep_Created+"<br>"+list[i].rrep_Content+"</div>";
+				s += "</div>"
+			}
+			$("#reviewreply"+rep_Num).html(s);
+		}
+		,error:function(e){ 
+			console.log(e.responseText);
+		}
+	});
+} 
 
 </script>
 <div class="storeReviewControll">
@@ -120,8 +156,8 @@ function printReply(data){
 		</ul>
 		${sessionScope.store.g1_Name} <br>
 		${sessionScope.store.g1_Num}
-		<textarea id="content" class="form-control" rows="3" required="required" style="resize: none;"></textarea>
-		<button type="button" onclick="sendReply();">등록하기</button>
+		<!-- <textarea id="content" class="form-control" rows="3" required="required" style="resize: none;"></textarea>
+		<button type="button" onclick="sendReply();">등록하기</button> -->
 		<div id="reviewlist"></div>
 		<!-- <div style="float: left;">
 		rkrkrkrkrk<br>

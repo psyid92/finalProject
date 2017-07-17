@@ -36,6 +36,7 @@ public class MystoreReviewController{
 	@RequestMapping(value="/store/reivew/reviewlistAll", method = RequestMethod.POST)
 	@ResponseBody
 	public Map<String, Object> reviewlistAll(
+			MyStoreReview reviewDto,
 			int g1_Num, @RequestParam(value="pageNo", defaultValue="1")int current_page
 			)throws Exception{
 		int rows = 5;
@@ -62,7 +63,9 @@ public class MystoreReviewController{
 			mDto.setList_Num(listNum);
 			n++;
 		}
+		 
 		String paging = myUtil.paging(current_page, total_page);
+		
 		
 		Map<String, Object> model = new HashMap<>();
 		
@@ -83,15 +86,40 @@ public class MystoreReviewController{
 		if(result==0)
 			state = "false";
 		
+		List<MyStoreReview> reviewReplyList = new ArrayList<>();
+		reviewReplyList = service.reviewReplyList(reviewDto.getRep_Num());
+		Iterator<MyStoreReview> it = reviewReplyList.iterator();
+		
+		while(it.hasNext()){
+			MyStoreReview mDto = it.next();
+			mDto.setRrep_Content(mDto.getRrep_Content().replaceAll("\n", "<br>"));
+		}
+		
 		Map<String, Object> model = new HashMap<>();
 		model.put("rrep_Num", reviewDto.getRrep_Num());
 		model.put("state", state);
+		model.put("reviewReplyList", reviewReplyList);
 		
 		return model;
 	}
 	
-	
-	
+	@RequestMapping(value="/store/review/reviewReplyList", method=RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> reviewReplyList(int rep_Num) throws Exception{
+		List<MyStoreReview> reviewReplyList = new ArrayList<>();
+		reviewReplyList = service.reviewReplyList(rep_Num);
+		Iterator<MyStoreReview> it = reviewReplyList.iterator();
+		
+		while(it.hasNext()){
+			MyStoreReview mDto = it.next();
+			mDto.setRrep_Content(mDto.getRrep_Content().replaceAll("\n", "<br>"));
+		}
+		
+		Map<String, Object> model = new HashMap<>();
+		
+		model.put("reviewReplyList", reviewReplyList);
+		return model;
+	}
 	
 	@RequestMapping(value = "/store/review/reviewYet", method = RequestMethod.GET)
 	public String reviewYetForm(Model model, HttpSession session) {
@@ -145,12 +173,7 @@ public class MystoreReviewController{
 		model.put("reviewlistYet", reviewlistYet);
 		return model;
 	}
-	
-	
-	
-	
-	
-	
+
 	
 	
 	@RequestMapping(value = "/store/review/reviewTalk", method = RequestMethod.GET)

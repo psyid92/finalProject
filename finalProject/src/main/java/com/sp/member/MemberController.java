@@ -533,7 +533,7 @@ public class MemberController {
 //			myJumun += "<a href='#' class='btn btn-block btn-primary btn-success'><span class='glyphicon glyphicon-book'></span> 리뷰 남기기</a>";
 			myJumun += "<button onclick='goWriteForm("+jumun_num +");' class='btn btn-block btn-primary btn-success'><span class='glyphicon glyphicon-book'></span> 리뷰 남기기</button>";
 		} else {
-			myJumun += "<button onclick = '' class='btn btn-block btn-primary btn-info'><span class='glyphicon glyphicon-book'></span> 내가 남긴 리뷰 보기</button>";
+			myJumun += "<button onclick = 'goReadForm("+jumun_num+")' class='btn btn-block btn-primary btn-info'><span class='glyphicon glyphicon-book'></span> 내가 남긴 리뷰 보기</button>";
 		}
 		
 		map.put("myJumun", myJumun);
@@ -602,5 +602,27 @@ public class MemberController {
 		model.addAttribute("ReviewList", list);
 		return ".mymem.giupReview.listGiupReview";
 	}
+	
+	@RequestMapping("/member/seeGiupReview")
+	public String seeGiupReview(HttpSession session,Model model, @RequestParam int jumun_num){
+		if (session.getAttribute("member") == null) {
+			return ".mymem.login";
+		}
+		SessionInfo info = (SessionInfo) session.getAttribute("member");
+
+		giupReview giupdto = new giupReview();
+		giupdto.setM1_num(info.getM1_Num());
+		giupdto.setJumun_num(jumun_num);
+		
+		try {
+			giupdto = review.getReview(giupdto);
+		} catch (Exception e) {
+		}
+		
+		System.out.println(giupdto.getRep_content());
+		model.addAttribute("giupdto",giupdto);
+		return ".mymem.giupReview.listGiupReview";
+	}
+	
 			
 }

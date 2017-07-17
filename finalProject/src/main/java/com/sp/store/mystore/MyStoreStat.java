@@ -1,8 +1,16 @@
 package com.sp.store.mystore;
 
 public class MyStoreStat {
-	private int pay_pay, g1_num;
+	private int pay_pay, g1_num, orders_num;
+	
 	private String pay_created, g1_name;
+	
+	public int getOrders_num() {
+		return orders_num;
+	}
+	public void setOrders_num(int orders_num) {
+		this.orders_num = orders_num;
+	}
 	
 	public int getPay_pay() {
 		return pay_pay;

@@ -4,17 +4,22 @@
 <mapper namespace="storStat">
 
 <select id="paySum" parameterType="map" resultType="com.sp.store.mystore.MyStoreStat">
-SELECT DISTINCT 
-  SUM(pay_pay) OVER(PARTITION BY g1.g1_num, TO_CHAR(pay_created,'YY/MM/DD')) AS pay_pay,
-  TO_CHAR(pay_created,'YY/MM/DD') AS pay_created,
-  G1.g1_num, g1_name
+SELECT DISTINCT jumun_num,
+  SUM(pay_pay) OVER(PARTITION BY g1.g1_num, 
+  TO_CHAR(pay_created,'YYYY/MM/DD'), MAINMENU_TITLE, SUBMENU_TITLE, jumun_num) AS pay_pay,
+  TO_CHAR(pay_created,'YYYY/MM/DD') AS pay_created,
+  G1.g1_num, g1_name,JU.ORDERS_NUM
   FROM pay P
   LEFT OUTER JOIN mainGoods MG ON P.JUMUN_NUM = MG.JUMUN_NUM 
   LEFT OUTER JOIN mainmenu MM ON MG.MAINMENU_NUM = MM.MAINMENU_NUM
   LEFT OUTER JOIN menucate MC ON MM.MENUCT_NUM = MC.MENUCT_NUM
   LEFT OUTER JOIN giup1 G1 ON MC.G1_NUM = G1.G1_NUM
+  LEFT OUTER JOIN jumun JU ON JU.JUMUN_NUM = P.JUMUN_NUM
+  LEFT OUTER JOIN orders OD ON OD.ORDERS_NUM = JU.ORDERS_NUM
+  LEFT OUTER JOIN subgoods SG ON MG.MAINGOODS_NUM = SG.MAINGOODS_NUM
+  LEFT OUTER JOIN submenu SM ON SM.SUBMENU_NUM = SG.SUBMENU_NUM
   WHERE G1.g1_num = #{g1_num}
-  ORDER BY pay_created
+  ORDER BY pay_created ASC
 </select>
 
 </mapper>

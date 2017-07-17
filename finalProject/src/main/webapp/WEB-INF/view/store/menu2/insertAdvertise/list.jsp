@@ -8,10 +8,10 @@
 
 <div class="storeBodyFrame2">
     <div class="body-title">
-          <h3><span class="glyphicon glyphicon-tower"></span> 마이페이지 </h3>
+          <h3><span class="glyphicon glyphicon-tower"></span> 광고 추가 </h3>
     </div>
     
     <div>
-       쿠폰관리게시판3
+       광고 추가 게시판(admin계정만 가능)
     </div>
 </div>

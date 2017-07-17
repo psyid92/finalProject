@@ -315,7 +315,7 @@ public class NoticeController {
 	}
 	
 	//다운로드 
-	@RequestMapping(value="giupNotice/download")
+	@RequestMapping(value="/giupNotice/download")
 	public void download(
 			@RequestParam(value="noti_FileNum")int fileNum,
 			HttpServletResponse resp, HttpServletRequest session) throws Exception {
@@ -343,7 +343,7 @@ public class NoticeController {
 	}
 	
 	//파일삭제 
-	@RequestMapping(value="giupNotice/deleteFile", method = RequestMethod.POST)
+	@RequestMapping(value="/giupNotice/deleteFile", method = RequestMethod.POST)
 	@ResponseBody
 	public Map<String, Object> deleteFile(
 			@RequestParam(value="noti_FileNum") int fileNum,

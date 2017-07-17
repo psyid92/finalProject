@@ -4,10 +4,14 @@
 <mapper namespace="giupQna">
 
 	<!-- 신규추가 -->
+	<select id="maxNum" resultType="Integer">
+		SELECT NVL(MAX(q_Num), 0) FROM giupQna
+	</select>
+	
 	<insert id="insertQna" parameterType="com.sp.giupQna.Qna">
 		INSERT INTO giupQna(q_Num, q_Title, q_Content, q_OriginalFileName, q_SaveFileName, 
 			q_GroupNum, q_Depth, q_OrderNo, q_Parent, g1_Num)
-		VALUES(giupQna_seq.NEXTVAL, #{q_Title}, #{q_Content}, #{q_OriginalFileName}, #{q_SaveFileName},
+		VALUES(#{q_Num}, #{q_Title}, #{q_Content}, #{q_OriginalFileName}, #{q_SaveFileName},
 			#{q_GroupNum},#{q_Depth}, #{q_OrderNo},#{q_Parent},#{g1_Num})
 	</insert>
 	
@@ -17,41 +21,115 @@
 			g1_id=#{g1_id}
 		</if>
 		<if test="searchKey=='q_Title'">
-			q_Title=#{q_Title}
+			INSTR(q_Title, #{searchValue}) &gt; 0
 		</if>
 		<if test="searchKey=='q_Content'">
-			q_Content=#{q_Content}
+			DBMS_LOB.INSTR(, #{searchValue}) &gt; 0
 		</if>
 		<if test="searchKey=='q_Created'">
-			q_Created=#{q_Created}
+			TO_CHAR(q_Created,'yyyy-mm-dd')	= #{searchValue}
 		</if>
 		
 	</sql>	
 	
-	<!-- 글리스트, 글 개수 -->
-	
-	
+	<!-- 글리스트, 글 개수 -->	
 	<select id="listQna" parameterType="map" resultType="com.sp.giupQna.Qna">
-		
+		SELECT * FROM (
+			SELECT ROWNUM rnum, tb.* FROM(
+				SELECT q_Num, q_Title, q_OriginalFileName, q_SaveFileName, q_Created,
+					q_GroupNum, q_Depth, q_OrderNo, q_Parent, q_HitCount, gq.g1_Num, admin_Id
+				FROM giupQna gq 
+				JOIN giup1 g1 ON gq.g1_Num=g1.g1_Num
+				<where>
+					<if test="searchValue !=null and searchValue !='' ">
+						<include refid="where-list"/>
+					</if>
+				</where>
+				ORDER BY q_GroupNum DESC, q_OrderNo ASC
+		<![CDATA[				
+			)tb FROM ROWNUN <= #{end} 
+		) FROM rnum >= #{start}
+		]]>
+		 	
 	</select>	
 	
 	<select id="dataCount" parameterType="map" resultType="Integer">
-	
-	
+		SELECT NVL(COUNT(*), 0) FROM giupQna gq
+		JOIN giup1 g1 ON gq.g1_Num=g1.g1_Num
+		<where>
+			<if test="searchValue !=null and searchValue !='' ">
+				<include refid="where-list"></include>
+			</if>
+		</where>	
 	</select>
 	
 	<!-- 상세보기  : 조회수 증가 -->
+	<select id="readQna" resultType="com.sp.giupQna.Qna" parameterType="Integer">
+		SELECT q_Num, q_Title, q_Content, q_OriginalFileName, q_SaveFileName, q_Created,
+			q_GroupNum, q_Depth, q_OrderNo, q_Parent, q_HitCount, gq.g1_Num, admin_Id
+		FROM giupQna gq JOIN giup1 g1 ON gq.g1_Num=g1.g1_Num
+		WHERE gq.g1_Num=#{gq.g1_Num}		
+	</select>
 	
+	<update id="updateHitCount" parameterType="Integer">
+		UPDATE giupQna SET q_HitCount=q_HitCount+1 WHERE q_Num=#{q_Num}
+	</update>
 	
-	<!-- 이전글, 다음글 -->
+	<!-- 이전글, 다음글  : q_Num은 현행,  #{q_Num} map으로 끌어오는 것 -->
+	<select id="preReadQna" resultType="com.sp.giupQna.Qna" parameterType="map">
+		SELECT tb.* FROM (
+			SELECT q_Num, q_Title
+			FROM giupQna 
+			<where>
+				<if test="searcaValue !=null and searchValue !='' ">
+					<include refid="where-list"></include>
+				</if>			
+			<![CDATA[
+			AND ((q_GroupNum = #{q_GroupNum} AND q_OrderNo < #{q_OrderNo}) 
+			OR (q_GroupNum > #{q_GroupNum} ))
+			]]>
+			</where>
+			ORDER BY q_GroupNum ASC, q_OrderNo DESC
+		) tb WHERE ROWNUM = 1
+		
+	</select>
+	
+	<select id="nextReadQna" resultType="com.sp.giupQna.Qna" parameterType="map">
+		SELECT tb.* FROM (
+			SELECT q_Num, q_Title
+			FROM giupQna
+			<where>
+			<if test="searchValue !=null and searchValue !=''">
+				<include refid="where-list"></include>
+			</if>
+			<![CDATA[
+			AND ((q_GroupNum =  #{q_GroupNum} AND q_OrderNo > #{q_OrderNo})
+			OR (q_GroupNum < #{q_GroupNum} ))
+			]]>
+			</where>
+			ORDER BY q_GroupNum DESC, q_orderNo ASC		
+		) tb WHERE ROWNUM=1
+	</select>
 	
 	
 	<!-- 글 수정  -->
+	<update id="updateQna" parameterType="com.sp.giupQna.Qna">
+		UPDATE giupQna SET q_Title=#{q_Title}, q_Content=#{q_Content},
+			q_OriginalFileName=#{q_OriginalFileName,jdbcType=VARCHAR}, 
+			q_SaveFileName=#{q_SaveFileName, jdbcType=VARCHAR}
+		WHERE q_Num=#{q_Num}
+	</update>
 	
+	<!-- 글 삭제, 넘버순서 조정-->
+	<delete id="deleteQna" parameterType="Integer">
+		DELETE FROM giupQna where q_Num IN 
+			(SELECT q_Num FROM giupQna START WITH q_Num=#{q_Num}
+			CONNECT BY PRIOR q_Num = q_Parent) 
+	</delete>
 	
-	<!-- 글 삭제 -->
-	
-	
-	<!-- 대댓글 넘버 증가 -->
+	<update id="updateOrderNo" parameterType="map">
+		UPDATE giupQna SET q_OrderNo=q_OrderNo+1
+		WHERE q_GroupNum = #{q_GroupNum} AND q_OrderNo > {q_OrderNo}
+	</update>
 
 </mapper>

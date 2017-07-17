@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="stats">
+
+<!-- visitCount : 오늘의 방문자 수 -->
+<select id="visitCounter" parameterType="Integer" resultType="com.sp.stats.VisitCount">
+	select * from (
+  select rownum rnum, tb.* from (
+  select visit_date, visit_Count
+  from visitcount
+  order by visit_date desc
+  )tb
+  <![CDATA[ where rownum <= #{num} ]]>
+)
+</select>
+
+<!-- 총 방문자 수 -->
+<select id="allVisitCounter" resultType="Integer">
+	select sum(visit_count) from visitcount
+</select>
+
+
+
+</mapper>

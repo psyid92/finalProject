@@ -36,14 +36,19 @@ public class MystoreReviewController{
 	@RequestMapping(value="/store/reivew/reviewlistAll", method = RequestMethod.POST)
 	@ResponseBody
 	public Map<String, Object> reviewlistAll(
-			MyStoreReview reviewDto,
-			int g1_Num, @RequestParam(value="pageNo", defaultValue="1")int current_page
+			MyStoreReview reviewDto, int g1_Num,
+			 @RequestParam(value="pageNo", defaultValue="1")int current_page
 			)throws Exception{
-		int rows = 5;
-		int dataCount = service.dataCount(g1_Num);
-		int total_page = myUtil.pageCount(rows, dataCount);
+		
+		int rows = 3;
+		int total_page = 0;
+		int dataCount = 0;
+		
+		dataCount = service.dataCount(g1_Num);
+		total_page = myUtil.pageCount(rows, dataCount);
+		
 		if(current_page>total_page)
-			current_page=total_page;
+			current_page=total_page; 
 		
 		int start = (current_page-1)*rows+1;
 		int end = current_page*rows;
@@ -51,10 +56,11 @@ public class MystoreReviewController{
 		Map<String, Object> map = new HashMap<>();
 		map.put("start", start);
 		map.put("end", end);
-		
+		map.put("g1_Num", g1_Num);
 		int listNum, n=0;
-		List<MyStoreReview> reviewlistAll = new ArrayList<>();
+		List<MyStoreReview> reviewlistAll = service.reviewList(map);
 		Iterator<MyStoreReview> it = reviewlistAll.iterator();
+		
 		while(it.hasNext()){
 			MyStoreReview mDto = it.next();
 			mDto.setRep_Content(mDto.getRep_Content().replaceAll("\n", "<br>"));
@@ -63,13 +69,14 @@ public class MystoreReviewController{
 			mDto.setList_Num(listNum);
 			n++;
 		}
-		 
+		
+		
 		String paging = myUtil.paging(current_page, total_page);
 		
 		
 		Map<String, Object> model = new HashMap<>();
 		
-		reviewlistAll = service.reviewList(g1_Num);
+		
 		model.put("total_page", total_page);
 		model.put("dataCount", dataCount);
 		model.put("pageNo", current_page);
@@ -116,11 +123,26 @@ public class MystoreReviewController{
 		}
 		
 		Map<String, Object> model = new HashMap<>();
-		
 		model.put("reviewReplyList", reviewReplyList);
 		return model;
 	}
 	
+	@RequestMapping(value="/store/review/deleteReply", method=RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> deleteReply(
+			@RequestParam(value="rrep_Num") int rrep_Num,
+			@RequestParam(value="pageNo") int pageNo,
+			MyStoreReview reviewDto,
+			int g1_Num
+			)throws Exception{
+		Map<String, Object> map = new HashMap<>();
+		map.put("rrep_Num", rrep_Num);
+		map.put("pageNo", pageNo);
+		service.deleteReviewReply(map);
+		
+		return reviewlistAll(reviewDto, g1_Num, 1);
+	}
+		
 	@RequestMapping(value = "/store/review/reviewYet", method = RequestMethod.GET)
 	public String reviewYetForm(Model model, HttpSession session) {
 
@@ -147,10 +169,11 @@ public class MystoreReviewController{
 		Map<String, Object> map = new HashMap<>();
 		map.put("start", start);
 		map.put("end", end);
+		map.put("g1_Num", g1_Num);
 		
 		int listNum, n=0;
 		
-		List<MyStoreReview> reviewlistYet = new ArrayList<>();
+		List<MyStoreReview> reviewlistYet = service.reviewListYet( map);
 		
 		Iterator<MyStoreReview> it = reviewlistYet.iterator();
 		while(it.hasNext()){
@@ -164,7 +187,6 @@ public class MystoreReviewController{
 		String paging = myUtil.paging(current_page, total_page);
 		
 		Map<String, Object> model = new HashMap<>();
-		reviewlistYet = service.reviewListYed(g1_Num);
 		
 		model.put("total_page", total_page);
 		model.put("dataCount", dataCount);

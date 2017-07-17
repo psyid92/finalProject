@@ -7,10 +7,10 @@
 %>
 <script>
 $(function(){
-	listReply(1);
+	listPage(1);
 });
 
- function listReply(page){
+ function listPage(page){
 	var url = "<%=cp%>/store/reivew/reviewlistAll";
 	$.ajax({
 		type:"post"
@@ -25,7 +25,7 @@ $(function(){
 		}
 	});
 } 
- 
+  
 function printReply(data){
 	var total_page=data.total_page;
 	var dataCount=data.dataCount;
@@ -51,34 +51,33 @@ function printReply(data){
 			s += " <div class='table-responsive' style='clear: both; padding-top: 5px;'>";
 			s += "  <table class='table'>";
 			s += " <div style='float: left;'>"+rep_Created+"<br>"+g1_Name+"</div>";
-			s += " <div style='float: left; margin-left: 50px;'>";
+			s += " <div style='float: left; margin-left: 50px; width: 500px;'>";
 			s += "	<div>"+rep_Star+"&nbsp;&nbsp;"+m1_Nickname+"<br>"+rep_Content+"</div>";
 			s += "  <div>ㄴ" 
 			s += " 	<div id='reviewreply"+rep_Num+"'>";
 			s += " 	</div>";
 			s += "  </div>";
 			s += "  <textarea id='content"+rep_Num+"' name= 'content"+rep_Num+"' class='form-control' rows='3' required='required' style='resize: none;'></textarea> ";
-			s += "  <button type='button' onclick='sendReply("+rep_Num+");'>등록하기</button>";
+			s += "  <button type='button' onclick='sendReply("+rep_Num+","+pageNo+");'>등록하기</button>";
 			s += "</div>";
-			s += " <br>"; 
+			s += " <br>";
 			reviewReplyList(rep_Num);
-			
 		} 
 		s +="    <tr style='height: 30px;'>";
 		s +="      <td colspan='2' style='text-align: center;'>";
-		s +=paging;
+		s += 	"<div  id='page'>"+paging+"</div>";
 		s +="      </td>";
 		s +="    </tr>";
 		s += "  </table>"; 
 		s += " </div>"
-		  
+		   
 	}
 	$("#reviewlist").html(s); 
 }
 function reviewReplyList(rep_Num){
 	var url = "<%=cp%>/store/review/reviewReplyList";
-	
-	$.ajax({
+	var g1_Num = ${sessionScope.store.g1_Num};
+	$.ajax({ 
 		type:"post"
 		,url:url
 		,data:{rep_Num:rep_Num}
@@ -89,8 +88,10 @@ function reviewReplyList(rep_Num){
 			for(var i=0; i<list.length; i++){
 				s += "<div id='rreply"+list[i].rrep_Num+"'> ";
 				s += " 	<div>";
-				s += " 	사장님&nbsp;&nbsp;"+list[i].rrep_Created+"<br>"+list[i].rrep_Content+"</div>";
-				s += "</div>"
+				s += " 	사장님&nbsp;&nbsp;"+list[i].rrep_Created+"<br>"+list[i].rrep_Content;
+				s += "<button type='button' onclick='deleteReply("+list[i].rrep_Num+", 1 ,"+g1_Num+")'>삭제</button>";
+				s += "</div>";
+				s += "</div>";
 			}
 			$("#reviewreply"+rep_Num).html(s);
 		}
@@ -100,8 +101,8 @@ function reviewReplyList(rep_Num){
 	}); 
 }
 
-function sendReply(rep_Num){
-	
+function sendReply(rep_Num,pageNo){
+	var g1_Num = ${sessionScope.store.g1_Num};
 	var content = $("#content"+rep_Num).val();
 	if(!content){
 		$("#content"+rep_Num).focus();
@@ -131,8 +132,10 @@ function sendReply(rep_Num){
 			for(var i=0; i<list.length; i++){
 				s += "<div id='rreply"+list[i].rrep_Num+"'> ";
 				s += " 	<div>";
-				s += " 	사장님&nbsp;&nbsp;"+list[i].rrep_Created+"<br>"+list[i].rrep_Content+"</div>";
-				s += "</div>"
+				s += " 	사장님&nbsp;&nbsp;"+list[i].rrep_Created+"<br>"+list[i].rrep_Content;
+				s += "<button type='button' onclick='deleteReply("+list[i].rrep_Num+","+pageNo+","+g1_Num+")'>삭제</button>";
+				s += "</div>";
+				s += "</div>";
 			}
 			$("#reviewreply"+rep_Num).html(s);
 		}
@@ -141,7 +144,23 @@ function sendReply(rep_Num){
 		}
 	});
 } 
-
+function deleteReply(rrep_Num, pageNo, g1_Num){
+	if(confirm("게시물을 삭제하시겠습니까?")){
+		var url = "<%=cp%>/store/review/deleteReply";
+		$.ajax({
+			type:"post"
+			,url:url
+			,data:{rrep_Num:rrep_Num, pageNo:pageNo, g1_Num:g1_Num}
+			,dataType:"json"
+			,success:function(data){
+				printReply(data);
+			}
+			,error:function(e){
+				console.log(e.responseText);
+			}
+		});
+	}
+}
 </script>
 <div class="storeReviewControll">
     <div class="body-title">
@@ -154,6 +173,7 @@ function sendReply(rep_Num){
   			<li role="presentation" ><a href="<%=cp%>/store/review/reviewYet">미답변 리뷰</a></li>
  			<li role="presentation" ><a href="<%=cp%>/store/review/reviewTalk">사장님 한마디</a></li>
 		</ul>
+		
 		${sessionScope.store.g1_Name} <br>
 		${sessionScope.store.g1_Num}
 		<!-- <textarea id="content" class="form-control" rows="3" required="required" style="resize: none;"></textarea>

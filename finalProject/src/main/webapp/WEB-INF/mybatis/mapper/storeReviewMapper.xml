@@ -6,14 +6,20 @@
 		SELECT reviewreply_seq.NEXTVAl FROM dual
 	</select>
 
-<select id="reviewlistAll" resultType="com.sp.store.mystore.MyStoreReview">
-	SELECT g.rep_Num, rep_Created, rep_star, rep_content, m1_Nickname, g.g1_num, g1_Name
-    FROM giupreview g
-	LEFT OUTER JOIN reviewphoto r ON g.rep_Num = r.rep_Num
-    LEFT OUTER JOIN member1 m ON  g.m1_NUm = m.m1_Num
-    LEFT OUTER JOIN giup1 gi ON g.g1_Num = gi.g1_Num
-	WHERE g.g1_Num = #{g1_Num}
-	ORDER BY rep_created DESC
+<select id="reviewlistAll" resultType="com.sp.store.mystore.MyStoreReview" parameterType="map">
+	SELECT * FROM (
+	    SELECT ROWNUM rnum, tb.* FROM (
+			SELECT g.rep_Num, rep_Created, rep_star, rep_content, m1_Nickname, g.g1_num, g1_Name
+		    FROM giupreview g
+			LEFT OUTER JOIN reviewphoto r ON g.rep_Num = r.rep_Num
+		    LEFT OUTER JOIN member1 m ON  g.m1_NUm = m.m1_Num
+		    LEFT OUTER JOIN giup1 gi ON g.g1_Num = gi.g1_Num
+			WHERE g.g1_Num = #{g1_Num}
+			ORDER BY rep_created DESC
+	<![CDATA[
+	        ) tb WHERE ROWNUM <= #{end}
+	    ) WHERE rnum >= #{start}
+	]]>
 </select>
 <select id="reviewReplylist" resultType="com.sp.store.mystore.MyStoreReview">
 	SELECT rrep_Num, rrep_Content, rep_Num, g1_Num, rrep_Created
@@ -21,15 +27,21 @@
 	WHERE rep_Num=#{rep_Num}
 	ORDER BY rrep_Created ASC
 </select>
-<select id="reviewlistYet" resultType="com.sp.store.mystore.MyStoreReview">
-	SELECT g.rep_Num, rep_Created, rep_star, rep_content, rrep_num, rrep_Created, rrep_content, m1_Nickname, g.g1_num, g1_Name
-    FROM giupreview g
-	LEFT OUTER JOIN reviewphoto r ON g.rep_Num = r.rep_Num
-    LEFT OUTER JOIN member1 m ON  g.m1_NUm = m.m1_Num
-    LEFT OUTER JOIN giup1 gi ON g.g1_Num = gi.g1_Num
-    LEFT OUTER JOIN reviewreply rr ON g.rep_Num = rr.rep_Num
-	where rrep_Num IS NULL AND g.g1_Num = #{g1_Num} 
-	ORDER BY rep_created DESC
+<select id="reviewlistYet" resultType="com.sp.store.mystore.MyStoreReview" parameterType="map">
+	SELECT * FROM (
+  		SELECT ROWNUM rnum, tb.* FROM (
+			SELECT g.rep_Num, rep_Created, rep_star, rep_content, m1_Nickname, g.g1_num, g1_Name
+		    FROM giupreview g
+			LEFT OUTER JOIN reviewphoto r ON g.rep_Num = r.rep_Num
+		    LEFT OUTER JOIN member1 m ON  g.m1_NUm = m.m1_Num
+		    LEFT OUTER JOIN giup1 gi ON g.g1_Num = gi.g1_Num
+		    LEFT OUTER JOIN reviewreply rr ON g.rep_Num = rr.rep_Num
+			where rrep_Num IS NULL AND g.g1_Num = #{g1_Num} 
+			ORDER BY rep_created DESC
+	<![CDATA[
+	        ) tb WHERE ROWNUM <= #{end}
+	    ) WHERE rnum >= #{start}
+	]]>
 </select>
 
 
@@ -39,7 +51,7 @@
 </insert>
 
 <delete id="deleteReply" parameterType="Integer">
-	DELETE FROM reviewreply WHERE rrep_Num=#{rrep_Num};
+	DELETE FROM reviewreply WHERE rrep_Num=#{rrep_Num}
 </delete>
 
 <update id="updateReply" parameterType="Integer">

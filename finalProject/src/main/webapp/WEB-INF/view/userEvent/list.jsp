@@ -8,6 +8,23 @@
 
 <style type="text/css">
 
+.table th, .table td {
+    font-weight: normal;
+    border-top: none;
+}
+.table thead tr th{
+     border-bottom: none;
+} 
+.table thead tr{
+    border: #d5d5d5 solid 1px;
+     background: #eeeeee; color: #787878;
+} 
+.table td {
+    border-bottom: #d5d5d5 solid 1px;
+}
+.table td a{
+    color: #000;
+}
 
 li{
   width: 20%;  
@@ -38,7 +55,7 @@ $('#myTab li:eq(2) a').tab('show') // Select third tab (0-indexed)
 <div role="tabpanel">
 
   <!-- Nav tabs -->
-  <ul class="nav nav-tabs" role="tablist">
+  <ul class="nav nav-tabs" role="tablist" style="margin-top: 50px;">
     <li role="presentation"><a href="<%=cp%>/notice/list" aria-controls="notice" role="tab" data-toggle="tab">공지사항</a></li>
     <li role="presentation" class="active"><a href="<%=cp%>/userEvent/list" aria-controls="userEvent" role="tab" data-toggle="tab">이벤트</a></li>
     <li role="presentation"><a href="<%=cp%>/userFaq/main" aria-controls="userFaq" role="tab" data-toggle="tab">자주찾는 질문</a></li>

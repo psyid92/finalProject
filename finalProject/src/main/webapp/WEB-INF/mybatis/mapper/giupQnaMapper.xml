@@ -29,7 +29,9 @@
 	</sql>	
 	
 	<!-- 글리스트, 글 개수 -->
-	<select id="listQna" parameterMap="map" resultType="com.sp.giupQna.Qna">
+	
+	
+	<select id="listQna" parameterType="map" resultType="com.sp.giupQna.Qna">
 		
 	</select>	
 	

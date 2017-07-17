@@ -1,9 +1,10 @@
 package com.sp.store.mystore;
 
 public class MyStoreReview {
-	private int rep_Num, rep_Star;
+	private int rep_Num, rep_Star, list_Num;
 	private String rep_Content, rep_Created;
 	private int m1_Num, g1_Num, jumun_Num;
+	private String m1_Nickname, g1_Name;
 	private String rphoto_Savefilename, rphoto_Originalfilename;
 	private int rrep_Num;
 	private String rrep_Content, rrep_Created;
@@ -79,6 +80,22 @@ public class MyStoreReview {
 	public void setRrep_Created(String rrep_Created) {
 		this.rrep_Created = rrep_Created;
 	}
-	
-	
+	public int getList_Num() {
+		return list_Num;
+	}
+	public void setList_Num(int list_Num) {
+		this.list_Num = list_Num;
+	}
+	public String getM1_Nickname() {
+		return m1_Nickname;
+	}
+	public void setM1_Nickname(String m1_Nickname) {
+		this.m1_Nickname = m1_Nickname;
+	}
+	public String getG1_Name() {
+		return g1_Name;
+	}
+	public void setG1_Name(String g1_Name) {
+		this.g1_Name = g1_Name;
+	}
 }

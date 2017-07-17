@@ -63,7 +63,7 @@ function searchList(){
 <div role="tabpanel" >
 
   <!-- Nav tabs -->
-  <ul class="nav nav-tabs" role="tablist">
+  <ul class="nav nav-tabs" role="tablist" style="margin-top: 50px;">
     <li role="presentation"><a href="<%=cp%>/notice/list" aria-controls="notice" role="tab" data-toggle="tab">공지사항</a></li>
     <li role="presentation"><a href="<%=cp%>/userEvent/list" aria-controls="userEvent" role="tab" data-toggle="tab">이벤트</a></li>
     <li role="presentation"><a href="<%=cp%>/userFaq/main" aria-controls="userFaq" role="tab" data-toggle="tab">자주찾는 질문</a></li>
@@ -110,7 +110,7 @@ function searchList(){
                     <tr>
                         <td class="text-center">${dto.listNum}</td>
                         <td><a href="${articleUrl}&bbs_Num=${dto.bbs_Num}">${dto.bbs_Subject}</a></td>
-                        <td class="text-center">${dto.m1_nickname}</td>
+                        <td class="text-center" style="width: 140px;">${dto.m1_nickname}</td>
                         <td class="text-center" style="width: 140px;">${dto.bbs_Created}</td>
                         <td class="text-center">${dto.bbs_Count}</td>
                         <td class="text-center">

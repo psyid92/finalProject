@@ -1,8 +1,16 @@
 package com.sp.store.advertise;
 
 public class Advertise {
-	private int ad_Num, giupAd_Num, giupAd_Term, g1_Num;
+	private int ad_Num, giupAd_Num, giupAd_Term, g1_Num, listNum;
 	private String ad_Title, giupAd_PayDate, endAd, stated;
+
+	public int getListNum() {
+		return listNum;
+	}
+
+	public void setListNum(int listNum) {
+		this.listNum = listNum;
+	}
 
 	public String getStated() {
 		return stated;

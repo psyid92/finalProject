@@ -79,11 +79,6 @@ $(function(){
 	});
 	
 	$("#jumun button").click(function(){
-		if(${adState} > 0) {
-			alert("이미 등록 한 상품입니다.\n상품 기간이 끝난 후 구매해주세요.");
-			return;
-		}
-		
 		var imp_init = $("#imp_init").val();
 		var pay_Method = $("#select option:selected").attr("class");
 		var name = $("#ad_Title option:selected").val();

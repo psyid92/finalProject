@@ -69,4 +69,15 @@ public class AdvertiseServiceImpl implements AdvertiseService {
  		}
 		return list;
 	}
+
+	@Override
+	public int dataCount(int g1_Num) throws Exception {
+		int result = 0;
+		try {
+			result = dao.getIntValue("advertise.dataCount",g1_Num);
+		} catch (Exception e) {
+			throw e;
+		}
+		return result;
+	}
 }

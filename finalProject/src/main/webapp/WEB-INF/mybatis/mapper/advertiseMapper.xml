@@ -38,4 +38,10 @@
 		WHERE giupAd_PayDate + giupAd_Term &gt;= SYSDATE
 		AND g1_Num = #{g1_Num}
 	</select>
+	
+	<select id="dataCount" parameterType="Integer" resultType="Integer">
+		SELECT NVL(COUNT(*), 0) FROM giupAd
+		WHERE g1_Num = #{g1_Num}
+	</select>
+	
 </mapper>

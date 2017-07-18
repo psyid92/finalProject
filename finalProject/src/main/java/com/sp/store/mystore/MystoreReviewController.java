@@ -71,10 +71,6 @@ public class MystoreReviewController{
 			n++;
 			
 		}
-		
-		
-		
-		
 		String paging = myUtil.paging(current_page, total_page);
 		
 		Map<String, Object> model = new HashMap<>();
@@ -202,10 +198,6 @@ public class MystoreReviewController{
 		model.put("reviewlistYet", reviewlistYet);
 		return model;
 	}
-	
-	
-	
-	
 	
 	
 	

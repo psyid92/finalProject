@@ -70,12 +70,6 @@ function sendDateData() {
 								},
 							},
 							series:csv.series
-<<<<<<< HEAD
-							
-=======
->>>>>>> branch 'master' of https://github.com/psyid92/finalProject.git
-				});
-<<<<<<< HEAD
 				console.log(csv.list);
 				console.log(csv.daySalesMonth);
 				console.log(csv.totalDaySalesMonth);
@@ -85,10 +79,8 @@ function sendDateData() {
 				//$("#cur_Year").children().text(csv[0].ajaxYear);
 			});
 			
-=======
 				monthList(csv.list, csv.daySalesMonth, csv.totalDaySalesMonth);
 			});
->>>>>>> branch 'master' of https://github.com/psyid92/finalProject.git
 	});
 }
 
@@ -146,11 +138,8 @@ function monthList(list, daySalesMonth, totalDaySalesMonth){
 	</div>
 	
 	<div>
-<<<<<<< HEAD
 		<div id="totalList">매출현황</div><br>
 		
-=======
 		<div id="totalList"></div><br>
->>>>>>> branch 'master' of https://github.com/psyid92/finalProject.git
 	</div>
 </div>

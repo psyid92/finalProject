@@ -48,12 +48,10 @@ function printReply(data){
 			var g1_Name = data.reviewlistAll[i].g1_Name;
 			var star ="";
 			
-<<<<<<< HEAD
 			s += " <div class='table-responsive' style='clear: both;'>";
 			s += "  <table class='table'>";
 			s += " <hr style='margin-top:5px; margin-bottom:10px;'>"
 			s += " <div style='float: left;'>"+rep_Created+"<br>"+g1_Name+"</div>";
-=======
 			for(a=0; a<rep_Star; a++){
 				star += "★";
 			}
@@ -105,13 +103,12 @@ function reviewReplyList(rep_Num, pageNo){
 			for(var i=0; i<list.length; i++){
 				s += "<div id='rreply"+list[i].rrep_Num+"' style='margin-top:10px; margin-bottom:5px;'> ";
 				s += " 	<div>";
-<<<<<<< HEAD
 				s += " 	사장님&nbsp;&nbsp;"+list[i].rrep_Created+"<button type='button' class='btn btn-danger' onclick='deleteReply("+list[i].rrep_Num+","+pageNo+" ,"+g1_Num+")'style='float:right;'><span class='glyphicon glyphicon-remove'></span></button>";
 				s += "<br>"+list[i].rrep_Content;
-=======
 				s += " <span style='font-weight:bold; font-size:15px;'>사장님</span>&nbsp;&nbsp;<span style='font-size:13px;'>"+list[i].rrep_Created+"</span><button type='button' class='btn btn-danger' onclick='deleteReply("+list[i].rrep_Num+","+pageNo+" ,"+g1_Num+")'style='float:right;'><span class='glyphicon glyphicon-remove'></span></button>";
 				s += "<br><span>"+list[i].rrep_Content+"</span>";
->>>>>>> branch 'master' of https://github.com/psyid92/finalProject.git
+				s += " <span style='font-weight:bold; font-size:15px;'>사장님</span>&nbsp;&nbsp;<span style='font-size:13px;'>"+list[i].rrep_Created+"</span><button type='button' class='btn btn-danger' onclick='deleteReply("+list[i].rrep_Num+","+pageNo+" ,"+g1_Num+")'style='float:right;'><span class='glyphicon glyphicon-remove'></span></button>";
+				s += "<br><span>"+list[i].rrep_Content+"</span>";
 				s += "</div>";
 				s += "</div>";
 			}

@@ -16,6 +16,7 @@
 <div align="center" style="margin: auto;">
 <h3>내 리뷰</h3>
 </div>
+<br><br>
 
 <div align="center" style="margin: auto; border: 1px solid; border-radius: 5px;">
 <br><br>
@@ -32,7 +33,7 @@
 			<div style="min-height: 20px;"></div></td>
 		</tr>
 		<tr>
-			<td colspan="3"><div style="min-height: 10px;"></div>
+			<td colspan="3"><div style="min-height: 30px;"></div>
 			</td>
 		</tr>
 	</c:forEach>
@@ -40,10 +41,10 @@
 </table>
 
 </c:if>
-
-
-<c:if test="${giupdto ne null }">
-	${giupdto.myStar }
+<c:if test="${ReviewList == null }">
+	<div style="margin: auto;" align="center">
+		<h4>남긴 리뷰가 없습니다.</h4>
+	</div>
 </c:if>
 
 </div>

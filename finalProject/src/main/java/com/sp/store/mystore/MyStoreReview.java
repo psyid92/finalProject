@@ -8,6 +8,14 @@ public class MyStoreReview {
 	private String rphoto_Savefilename, rphoto_Originalfilename;
 	private int rrep_Num;
 	private String rrep_Content, rrep_Created;
+	private int star;
+	
+	public int getStar() {
+		return star;
+	}
+	public void setStar(int star) {
+		this.star = star;
+	}
 	public int getRep_Num() {
 		return rep_Num;
 	}

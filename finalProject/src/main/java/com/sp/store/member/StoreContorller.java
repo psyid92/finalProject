@@ -57,7 +57,7 @@ public class StoreContorller {
 		info.setG1_Num(store.getG1_Num());
 		session.setAttribute("store", info);
 		
-		return ".store4.menu1.mystore.list";
+		return "redirect:/store/mystore";
 	}
 
 	@RequestMapping(value="/store/logout")

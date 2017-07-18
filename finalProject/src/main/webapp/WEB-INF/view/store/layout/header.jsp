@@ -41,13 +41,9 @@
 			<c:if test="${not empty sessionScope.store}">
 			<ul class="nav navbar-nav"> 
 				<li class="list-menu"><a href="<%=cp%>/store/mystore">업체관리</a></li>
-				<c:if test="${sessionScope.store.g1_Id == 'admin'}">
-					<li class="list-menu"><a href="<%=cp%>/store/insertAdvertise">광고관리</a></li>
-				</c:if>
-				<c:if test="${sessionScope.store.g1_Id != 'admin'}">
-					<li class="list-menu"><a href="<%=cp%>/store/jumunAdvertise">광고관리</a></li>
-				</c:if>
+				<li class="list-menu"><a href="<%=cp%>/store/jumunAdvertise">광고관리</a></li>
 				<li class="list-menu"><a href="<%=cp%>/giupEvent/list">이벤트</a></li> 
+				<li class="list-menu"><a href="<%=cp%>/store/event1">이벤트</a></li> 
 				<li class="list-menu"><a href="<%=cp%>/giupNotice/list">고객센터</a></li>
 			</ul>
 			<ul class="nav navbar-nav navbar-right">

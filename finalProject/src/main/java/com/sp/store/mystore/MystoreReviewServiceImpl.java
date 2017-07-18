@@ -85,4 +85,17 @@ public class MystoreReviewServiceImpl implements MystoreReivewService {
 		}
 		return result;
 	}
+
+	@Override
+	public int dataCountYet(int g1_Num) {
+		int result = 0;
+		try {
+			result = dao.getIntValue("storereview.dataCountYet",g1_Num);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}	
+	
+	
 }

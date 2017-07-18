@@ -7,6 +7,7 @@
          VALUES(userNotice_seq.NEXTVAL, #{admin_Id}, #{noti_Title}, #{noti_Content}, #{noti_Top})
   </insert>
   
+  
   <sql id="where-list">
     <if test="searchKey=='m1_nickname'">
       m1_nickname=#{searchvalue}

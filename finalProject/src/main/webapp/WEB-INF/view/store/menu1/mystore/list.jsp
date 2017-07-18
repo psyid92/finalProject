@@ -70,17 +70,9 @@ function sendDateData() {
 								},
 							},
 							series:csv.series
-							
 				});
-				console.log(csv.list);
-				console.log(csv.daySalesMonth);
-				console.log(csv.totalDaySalesMonth);
 				monthList(csv.list, csv.daySalesMonth, csv.totalDaySalesMonth);
-				//console.log(csv [0].ajaxMonth+1);
-				//console.log(csv[0].ajaxYear);
-				//$("#cur_Year").children().text(csv[0].ajaxYear);
 			});
-			
 	});
 }
 
@@ -138,7 +130,6 @@ function monthList(list, daySalesMonth, totalDaySalesMonth){
 	</div>
 	
 	<div>
-		<div id="totalList">매출현황</div><br>
-		
+		<div id="totalList"></div><br>
 	</div>
 </div>

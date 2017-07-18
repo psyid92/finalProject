@@ -1,6 +1,9 @@
 package com.sp.store.advertise;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -74,14 +77,9 @@ public class AdvertiseController {
 		Map<String, Object> map = new HashMap<>();
 		SessionInfo info = (SessionInfo) session.getAttribute("store");
 		int g1_Num = info.getG1_Num();
-		int adState = 0;
 		int rows = 10;
 		int total_page = 0;
 		int dataCount = 0;
-		
-		adState = service.readGiupAd(g1_Num);
-		if (adState == 0) {
-		}
 		
 		
 		dataCount = service.dataCount(g1_Num);
@@ -98,6 +96,31 @@ public class AdvertiseController {
 		map.put("end", end);
 		
 		list = service.listGiupAd(map);
+		
+		
+		SimpleDateFormat transFormat = new SimpleDateFormat("yyyy-MM-dd");
+		Calendar cal = Calendar.getInstance();
+		int num = 0;
+		for (int i = list.size()-1; i >= 0; i--) {
+			String endAd = list.get(i).getEndAd();
+			Date to = transFormat.parse(endAd);
+			Date sys = cal.getTime();
+			if (num == 0 && to.compareTo(sys) <= 0) {
+				list.get(i).setStated("기간만료");
+				continue;
+			}
+			num++;
+			if (num == 1) {
+				list.get(i).setStated("적용중");
+				continue;
+			}
+			to = transFormat.parse(list.get(i+1).getEndAd());
+			cal.setTime(to);
+			cal.add(Calendar.DATE, list.get(i).getGiupAd_Term());
+			list.get(i).setEndAd(transFormat.format(cal.getTime()));
+			endAd = list.get(i).getEndAd();
+			list.get(i).setStated("적용 대기");
+		}
 		
 		int listNum, n = 0;
 		Iterator<Advertise> it = list.iterator();

@@ -17,15 +17,11 @@
 			SELECT ROWNUM rnum, tb.* FROM (
 				SELECT giupAd_Num, giupAd_Term, ga.ad_Num, g1_Num, ad_Title,
 				TO_CHAR(giupAd_PayDate + giupAd_Term - 1, 'YYYY-MM-DD') endAd,
-				TO_CHAR(giupAd_PayDate,'YYYY-MM-DD') giupAd_PayDate,
-				CASE 
-         	 		WHEN TO_CHAR(giupAd_PayDate + giupAd_Term - 1, 'YYYY-MM-DD') >= TO_CHAR(SYSDATE,'YYYY-MM-DD') THEN '적용중'
-          			ELSE '기간만료'
-        		END AS stated
+				TO_CHAR(giupAd_PayDate,'YYYY-MM-DD') giupAd_PayDate
 				FROM giupAd ga
 				LEFT OUTER JOIN advertise ad ON ga.ad_Num = ad.ad_Num
 				WHERE g1_Num = #{g1_Num}
-				ORDER BY endAd DESC
+				ORDER BY giupAd_Num DESC
 <![CDATA[
 			) tb WHERE ROWNUM <= #{end}
 		) WHERE rnum >= #{start} 

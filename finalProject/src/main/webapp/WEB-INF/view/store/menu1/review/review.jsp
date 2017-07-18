@@ -33,7 +33,7 @@ function printReply(data){
 	var paging=data.paging; 
 	
 	var s = "";
-	s += " <div style='clear: both; padding-top: 20px;'>";
+	s += " <div style='clear: both; padding-top: 20px; float:right;'>";
 	s += "	<span style='color: black; font-weight:bold;'>전체 리뷰 "+dataCount+"개</span>";
 	s += "	<span>[목록, "+pageNo+"/"+total_page+" 페이지]</span>";
 	s += " </div>";
@@ -48,20 +48,22 @@ function printReply(data){
 			var m1_Nickname = data.reviewlistAll[i].m1_Nickname;
 			var g1_Name = data.reviewlistAll[i].g1_Name;
 			
-			s += " <div class='table-responsive' style='clear: both; padding-top: 5px;'>";
+			s += " <div class='table-responsive' style='clear: both;'>";
 			s += "  <table class='table'>";
+			s += " <hr style='margin-top:5px; margin-bottom:10px;'>"
 			s += " <div style='float: left;'>"+rep_Created+"<br>"+g1_Name+"</div>";
 			s += " <div style='float: left; margin-left: 50px; width: 500px;'>";
 			s += "	<div>"+rep_Star+"&nbsp;&nbsp;"+m1_Nickname+"<br>"+rep_Content+"</div>";
-			s += "  <div>ㄴ" 
+			s += "  <div>" 
 			s += " 	<div id='reviewreply"+rep_Num+"'>";
 			s += " 	</div>";
 			s += "  </div>";
-			s += "  <textarea id='content"+rep_Num+"' name= 'content"+rep_Num+"' class='form-control' rows='3' required='required' style='resize: none;'></textarea> ";
-			s += "  <button type='button' onclick='sendReply("+rep_Num+","+pageNo+");'>등록하기</button>";
+			s += "  <textarea id='content"+rep_Num+"' name= 'content"+rep_Num+"' class='form-control' rows='3' required='required' style='resize: none; margin-top: 15px;'></textarea> ";
+			s += "  <button type='button' onclick='sendReply("+rep_Num+","+pageNo+");' class='btn btn-primary' style='float:right; margin-top:10px; margin-bottom:10px;'>등록하기 <span class='glyphicon glyphicon-ok'></span></button>";
 			s += "</div>";
 			s += " <br>";
-			reviewReplyList(rep_Num);
+			
+			reviewReplyList(rep_Num, pageNo);
 		} 
 		s +="    <tr style='height: 30px;'>";
 		s +="      <td colspan='2' style='text-align: center;'>";
@@ -74,22 +76,23 @@ function printReply(data){
 	}
 	$("#reviewlist").html(s); 
 }
-function reviewReplyList(rep_Num){
+ 
+function reviewReplyList(rep_Num, pageNo){
 	var url = "<%=cp%>/store/review/reviewReplyList";
 	var g1_Num = ${sessionScope.store.g1_Num};
-	$.ajax({ 
-		type:"post"
+	$.ajax({    
+		type:"post"  
 		,url:url
 		,data:{rep_Num:rep_Num}
-		,dataType:"json"
+		,dataType:"json" 
 		,success:function(data){
 			var list = data.reviewReplyList;
 			var s = "";
 			for(var i=0; i<list.length; i++){
 				s += "<div id='rreply"+list[i].rrep_Num+"'> ";
 				s += " 	<div>";
-				s += " 	사장님&nbsp;&nbsp;"+list[i].rrep_Created+"<br>"+list[i].rrep_Content;
-				s += "<button type='button' onclick='deleteReply("+list[i].rrep_Num+", 1 ,"+g1_Num+")'>삭제</button>";
+				s += " 	사장님&nbsp;&nbsp;"+list[i].rrep_Created+"<button type='button' class='btn btn-danger' onclick='deleteReply("+list[i].rrep_Num+","+pageNo+" ,"+g1_Num+")'style='float:right;'><span class='glyphicon glyphicon-remove'></span></button>";
+				s += "<br>"+list[i].rrep_Content;
 				s += "</div>";
 				s += "</div>";
 			}
@@ -105,7 +108,7 @@ function sendReply(rep_Num,pageNo){
 	var g1_Num = ${sessionScope.store.g1_Num};
 	var content = $("#content"+rep_Num).val();
 	if(!content){
-		$("#content"+rep_Num).focus();
+		$("#content"+rep_Num).focus();  
 		return;
 	}
 	var g1_Num="${sessionScope.store.g1_Num}"
@@ -132,8 +135,8 @@ function sendReply(rep_Num,pageNo){
 			for(var i=0; i<list.length; i++){
 				s += "<div id='rreply"+list[i].rrep_Num+"'> ";
 				s += " 	<div>";
-				s += " 	사장님&nbsp;&nbsp;"+list[i].rrep_Created+"<br>"+list[i].rrep_Content;
-				s += "<button type='button' onclick='deleteReply("+list[i].rrep_Num+","+pageNo+","+g1_Num+")'>삭제</button>";
+				s += " 	사장님&nbsp;&nbsp;"+list[i].rrep_Created+"<button type='button' class='btn btn-danger' onclick='deleteReply("+list[i].rrep_Num+","+pageNo+" ,"+g1_Num+")' style='float:right;'><span class='glyphicon glyphicon-remove'></span></button>";
+				s += "<br>"+list[i].rrep_Content;
 				s += "</div>";
 				s += "</div>";
 			}
@@ -145,7 +148,7 @@ function sendReply(rep_Num,pageNo){
 	});
 } 
 function deleteReply(rrep_Num, pageNo, g1_Num){
-	if(confirm("게시물을 삭제하시겠습니까?")){
+	if(confirm("답변을 삭제하시겠습니까?")){
 		var url = "<%=cp%>/store/review/deleteReply";
 		$.ajax({
 			type:"post"
@@ -169,32 +172,12 @@ function deleteReply(rrep_Num, pageNo, g1_Num){
     
     <div>
         <ul class="nav nav-tabs nav-justified">
-  			<li role="presentation" class="active"><a href="<%=cp%>/store/review">전체 리뷰 보기</a></li>
+  			<li role="presentation" class="active"><a>전체 리뷰 보기</a></li>
   			<li role="presentation" ><a href="<%=cp%>/store/review/reviewYet">미답변 리뷰</a></li>
  			<li role="presentation" ><a href="<%=cp%>/store/review/reviewTalk">사장님 한마디</a></li>
 		</ul>
 		
 		${sessionScope.store.g1_Name} <br>
-		${sessionScope.store.g1_Num}
-		<!-- <textarea id="content" class="form-control" rows="3" required="required" style="resize: none;"></textarea>
-		<button type="button" onclick="sendReply();">등록하기</button> -->
 		<div id="reviewlist"></div>
-		<!-- <div style="float: left;">
-		rkrkrkrkrk<br>
-		2000-10-10 09:09:01
-		</div> 
-		<div style="float: left; margin-left: 50px;">
-			<div>
-			 	별별별별별&nbsp;&nbsp;닉네임<br>
-		 		음식맛은 더럽게 맛있구만!
-		 	</div>
-		 	<div> 
-		 	ㄴ
-		 	<div style="float: right;">
-		 		사장님&nbsp;&nbsp;2019-09-01 19:02:00<br>
-		 		삐리리리리리
-	 		</div>
-		 	</div>
-		</div> -->
     </div>
 </div>

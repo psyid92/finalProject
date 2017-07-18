@@ -134,7 +134,7 @@ function searchList() {
         		</div>
         		<div style="float: left; width: 20%; min-width: 85px; text-align: right;">
 
-        		    <button type="button" class="btn btn-primary btn-sm bbtn" onclick="javascript:location.href='<%=cp%>/menu4/memberfaq/created';"><span class="glyphicon glyphicon glyphicon-pencil"></span> 등록하기 </button>
+        		    <button type="button" class="btn btn-primary btn-sm bbtn" onclick="javascript:location.href='<%=cp%>/auserfaq/created';"><span class="glyphicon glyphicon glyphicon-pencil"></span> 등록하기 </button>
       		    
         		</div>
         </div>

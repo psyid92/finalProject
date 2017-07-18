@@ -188,7 +188,7 @@
 			
      	var sid="s"+ca_Num;
      	var str="<span id='"+sid+"'><a href='javascript:deleteCategory("+ca_Num+");'>";
-     	str+="<img src='<%=cp%>/resource/images/icon-minus.png' border='0'></a>&nbsp;";
+     	str+="<img src='<%=cp%>/resource/images/aaa.png' border='0'></a>&nbsp;";
      	str+=ca_class+"</span><br>";
 			
      	values+=str;

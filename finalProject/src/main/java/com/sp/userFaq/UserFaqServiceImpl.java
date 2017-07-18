@@ -87,20 +87,41 @@ public class UserFaqServiceImpl implements UserFaqService{
 
 	@Override
 	public List<UserFaq> listCategory() {
-		// TODO Auto-generated method stub
-		return null;
+		List<UserFaq> list=null;
+		
+		try {
+			list=dao.getListData("userFaq.listCategory");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
 	}
 
 	@Override
 	public int dataCountCategory() {
-		// TODO Auto-generated method stub
-		return 0;
+		int result=0;
+		
+		try {
+			result=dao.getIntValue("userFaq.dataCountCategory");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
 	}
 
 	@Override
 	public int deleteCategory(int ca_Num) {
-		// TODO Auto-generated method stub
-		return 0;
+		int result=0;
+		
+		try {
+			dao.deleteData("userFaq.deleteCategory", ca_Num);
+			result=1;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
 	}
 	
 	

@@ -7,5 +7,17 @@
     <insert id="insertCategory" parameterType="com.sp.userFaq.UserFaq">
       INSERT INTO faqCategory (ca_Num, ca_class) VALUES (faqCategory_seq.NEXTVAL, #{ca_class})
     </insert>
-
+    
+    <select id="dataCountCategory" resultType="Integer" parameterType="String">
+      SELECT NVL(COUNT(ca_Num),0) FROM faqCategory
+    </select>
+    
+    <select id="listCategory" resultType="com.sp.userFaq.UserFaq" parameterType="String">
+      SELECT ca_Num, ca_class FROM faqCategory ORDER BY ca_Num DESC
+    </select>
+    
+    <delete id="deleteCategory" parameterType="Integer">
+      DELETE FROM faqCategory WHERE ca_Num=#{ca_Num}
+    </delete>
+    
 </mapper>

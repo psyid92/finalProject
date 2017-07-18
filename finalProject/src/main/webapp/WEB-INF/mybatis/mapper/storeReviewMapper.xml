@@ -59,8 +59,14 @@
 </update>
 
 <select id="dataCount" resultType="Integer">
-	select NVL(COUNT(*),0) from giupreview g
-	left outer join reviewphoto r on g.rep_Num = r.rep_Num
-	where g.g1_Num = #{g1_Num}
+	SELECT NVL(COUNT(*),0) from giupreview g
+	LEFT OUTER JOIN reviewphoto r ON g.rep_Num = r.rep_Num
+	WHERE g.g1_Num = #{g1_Num}
+</select>
+<select id="dataCountYet" resultType="Integer">
+	SELECT NVL(COUNT(*),0) from giupreview g
+	LEFT OUTER JOIN reviewphoto r ON g.rep_Num = r.rep_Num
+	LEFT OUTER JOIN reviewreply rr ON g.rep_Num = rr.rep_Num
+	where g.g1_Num = #{g1_Num} AND rrep_Num IS NULL
 </select>
 </mapper>

@@ -25,7 +25,7 @@
 				FROM giupAd ga
 				LEFT OUTER JOIN advertise ad ON ga.ad_Num = ad.ad_Num
 				WHERE g1_Num = #{g1_Num}
-				ORDER BY giupad_Num DESC
+				ORDER BY endAd DESC
 <![CDATA[
 			) tb WHERE ROWNUM <= #{end}
 		) WHERE rnum >= #{start} 

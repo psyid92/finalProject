@@ -5,7 +5,9 @@
 <%
    String cp = request.getContextPath();
 %>
+<script>
 
+</script>
 <div class="storeBodyFrame2">
     <div class="body-title">
           <h3><span class="glyphicon glyphicon-tower"></span> 리뷰관리하기 </h3>

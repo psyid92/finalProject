@@ -68,7 +68,10 @@ public class MystoreReviewController{
 			listNum = dataCount - (start + n -1);
 			mDto.setList_Num(listNum);
 			n++;
+			
 		}
+		
+		
 		
 		
 		String paging = myUtil.paging(current_page, total_page);
@@ -121,7 +124,6 @@ public class MystoreReviewController{
 			MyStoreReview mDto = it.next();
 			mDto.setRrep_Content(mDto.getRrep_Content().replaceAll("\n", "<br>"));
 		}
-		
 		Map<String, Object> model = new HashMap<>();
 		model.put("reviewReplyList", reviewReplyList);
 		return model;
@@ -140,9 +142,14 @@ public class MystoreReviewController{
 		map.put("pageNo", pageNo);
 		service.deleteReviewReply(map);
 		
-		return reviewlistAll(reviewDto, g1_Num, 1);
+		return reviewlistAll(reviewDto, g1_Num, pageNo);
 	}
 		
+	
+	
+	
+	
+	
 	@RequestMapping(value = "/store/review/reviewYet", method = RequestMethod.GET)
 	public String reviewYetForm(Model model, HttpSession session) {
 
@@ -196,6 +203,10 @@ public class MystoreReviewController{
 		return model;
 	}
 
+	
+	
+	
+	
 	
 	
 	@RequestMapping(value = "/store/review/reviewTalk", method = RequestMethod.GET)

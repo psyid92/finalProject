@@ -12,4 +12,36 @@
 		VALUES (giupAd_seq.NEXTVAL, #{giupAd_Term}, #{ad_Num}, #{g1_Num}) 
 	</insert>
 	
+	<select id="listGiupAd" parameterType="map" resultType="com.sp.store.advertise.Advertise">
+		SELECT * FROM (
+			SELECT ROWNUM rnum, tb.* FROM (
+				SELECT giupAd_Num, giupAd_Term, ga.ad_Num, g1_Num, ad_Title,
+				TO_CHAR(giupAd_PayDate + giupAd_Term - 1, 'YYYY-MM-DD') endAd,
+				TO_CHAR(giupAd_PayDate,'YYYY-MM-DD') giupAd_PayDate,
+				CASE 
+         	 		WHEN TO_CHAR(giupAd_PayDate + giupAd_Term - 1, 'YYYY-MM-DD') >= TO_CHAR(SYSDATE,'YYYY-MM-DD') THEN '적용중'
+          			ELSE '기간만료'
+        		END AS stated
+				FROM giupAd ga
+				LEFT OUTER JOIN advertise ad ON ga.ad_Num = ad.ad_Num
+				WHERE g1_Num = #{g1_Num}
+				ORDER BY giupad_Num DESC
+<![CDATA[
+			) tb WHERE ROWNUM <= #{end}
+		) WHERE rnum >= #{start} 
+]]>
+	</select>
+	
+	<select id="readGiupAd" parameterType="Integer" resultType="Integer">
+		SELECT COUNT(*)
+		FROM giupAd
+		WHERE giupAd_PayDate + giupAd_Term &gt;= SYSDATE
+		AND g1_Num = #{g1_Num}
+	</select>
+	
+	<select id="dataCount" parameterType="Integer" resultType="Integer">
+		SELECT NVL(COUNT(*), 0) FROM giupAd
+		WHERE g1_Num = #{g1_Num}
+	</select>
+	
 </mapper>

@@ -27,20 +27,11 @@ public class MyStoreStatController {
 	// 메뉴1(통계)
 	@RequestMapping(value = "/store/mystore")
 	public String mystoreForm(Model model, HttpSession session) {
-		SessionInfo info = (SessionInfo)session.getAttribute("store");
-		List<MyStoreStat> list=new ArrayList<>();
-		try {
-			list = service.paySumList(info.getG1_Num());
-		} catch (Exception e) { 
-			System.out.println(e.toString());
-		}
 		
 		Calendar cal=Calendar.getInstance();
 		
 		int cur_Year=cal.get(Calendar.YEAR);
 		int cur_Month=cal.get(Calendar.MONTH)+1;	
-		
-		model.addAttribute("list", list);
 		
 		model.addAttribute("mainMenu", "0");
 		model.addAttribute("subMenu", "1");
@@ -49,7 +40,7 @@ public class MyStoreStatController {
 		return ".store4.menu1.mystore.list";
 	}
 	
-	@RequestMapping(value="/store/storeSales")
+	@RequestMapping(value="/store/storeSales", produces="application/json; charset=utf-8")
 	@ResponseBody
 	public String storeSales(Model model, HttpSession session
 			,@RequestParam(value="cur_Year", defaultValue="0") int cur_Year
@@ -92,29 +83,54 @@ public class MyStoreStatController {
 		// y년 m월의 마지막 날짜
 		int end=cal.getActualMaximum(Calendar.DATE);
 		
-		// hichart로 보낼 날짜별 총 매출을 담을 배열
+		// highchart로 보낼 날짜별 총 매출을 담을 배열 (1~최고 31일까지)
 		int daySales[] = new int[end];
+		int daySalesMonth=0;
+		// 판매 총액
+		int totalDaySales[] = new int[end];
+		int totalDaySalesMonth=0;
 		
 		Iterator<MyStoreStat> it=list.iterator();
 		while(it.hasNext()){
 			dayOfList[dayOfListNum]=it.next();
-			realDateSales[dayOfListNum]=dayOfList[dayOfListNum].getPay_created().split("/");
+			
+			//realDateSales[][0] : 년도(4자리)  ,  realDateSales[][1] : 월  ,  realDateSales[][2] : 일
+			
+			realDateSales[dayOfListNum]=dayOfList[dayOfListNum].getPay_created().substring(0, 10).split("/");
 			
 			//일매출이 있을때 해당 날짜에 매출액 넣기
-			if(Integer.parseInt(realDateSales[dayOfListNum][0])==year && Integer.parseInt(realDateSales[dayOfListNum][1])==(month+1))
+			//고객이 결제한 금액
+			if(Integer.parseInt(realDateSales[dayOfListNum][0])==year && Integer.parseInt(realDateSales[dayOfListNum][1])==(month+1)){
 				daySales[Integer.parseInt(realDateSales[dayOfListNum][2])-1]+=dayOfList[dayOfListNum].getPay_pay();
-			
-			dayOfListNum++;
+				totalDaySales[Integer.parseInt(realDateSales[dayOfListNum][2])-1]+=dayOfList[dayOfListNum].getMenuTotalPay();
+				daySalesMonth+=dayOfList[dayOfListNum].getPay_pay();
+				totalDaySalesMonth+=dayOfList[dayOfListNum].getMenuTotalPay();
+				dayOfListNum++;
+			} else {
+				it.remove();
+			}
 		}
-
+		
 		JSONArray arr=new JSONArray();
-		JSONObject ob=new JSONObject();
-		ob.put("name", "date");
+		JSONObject ob;
+		ob=new JSONObject();
+		ob.put("name", "결제금액");
 		ob.put("data", daySales);
-		ob.put("ajaxYear", year);
-		ob.put("ajaxMonth", month);
+		//ob.put("ajaxYear", year);
+		//ob.put("ajaxMonth", month);
+		arr.add(ob);
+		ob=new JSONObject();
+		ob.put("name", "판매총액");
+		ob.put("data", totalDaySales);
 		arr.add(ob);
 		
-		return arr.toString();
+		JSONObject job=new JSONObject();
+		job.put("year", year);
+		job.put("series", arr);
+		job.put("list", list);
+		job.put("daySalesMonth", daySalesMonth);
+		job.put("totalDaySalesMonth", totalDaySalesMonth);
+		
+		return job.toString();
 	}
 }

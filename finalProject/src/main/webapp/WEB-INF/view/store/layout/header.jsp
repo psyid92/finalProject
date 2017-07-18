@@ -52,7 +52,6 @@
 				<span>${sessionScope.store.g1_Name}</span>&nbsp;ªÁ¿Â¥‘
 			</p>
 			</c:if>
-			
 		</div>
 	</div>
 </nav>

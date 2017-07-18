@@ -4,17 +4,34 @@
 <mapper namespace="storStat">
 
 <select id="paySum" parameterType="map" resultType="com.sp.store.mystore.MyStoreStat">
-SELECT DISTINCT 
-  SUM(pay_pay) OVER(PARTITION BY g1.g1_num, TO_CHAR(pay_created,'YY/MM/DD')) AS pay_pay,
-  TO_CHAR(pay_created,'YY/MM/DD') AS pay_created,
-  G1.g1_num, g1_name
-  FROM pay P
-  LEFT OUTER JOIN mainGoods MG ON P.JUMUN_NUM = MG.JUMUN_NUM 
-  LEFT OUTER JOIN mainmenu MM ON MG.MAINMENU_NUM = MM.MAINMENU_NUM
-  LEFT OUTER JOIN menucate MC ON MM.MENUCT_NUM = MC.MENUCT_NUM
-  LEFT OUTER JOIN giup1 G1 ON MC.G1_NUM = G1.G1_NUM
-  WHERE G1.g1_num = #{g1_num}
-  ORDER BY pay_created
+SELECT jumun_num, pay_created, menuct_title, mainmenu_title, submenu_title, orders_num, 
+pay_pay/pay_count AS pay_pay, menuct_count, menuTotalPay, g1_num, g1_name FROM(
+  SELECT jumun_num, pay_created, menuct_title, mainmenu_title, submenu_title, orders_num,
+  COUNT(pay_pay) OVER(PARTITION BY jumun_num, pay_pay) pay_count,
+  menuct_count,
+   pay_pay, menuct_count*menusumpay AS menuTotalPay, g1_num, g1_name FROM(
+    SELECT DISTINCT JU.JUMUN_NUM,TO_CHAR(pay_created,'YYYY/MM/DD hh24:mi:ss') AS pay_created,
+      MC.MENUCT_TITLE,
+      MM.MAINMENU_TITLE, NVL(SM.SUBMENU_TITLE,0) AS submenu_title,
+      COUNT(MC.MENUCT_TITLE)
+      OVER(PARTITION BY MC.MENUCT_TITLE, JU.JUMUN_NUM, MM.MAINMENU_TITLE, SM.SUBMENU_TITLE)
+      AS menuct_count,
+      SUM(pay_pay) OVER(PARTITION BY g1.g1_num, 
+      TO_CHAR(pay_created,'YYYY/MM/DD'), MAINMENU_TITLE, SUBMENU_TITLE, jumun_num, MG.MAINGOODS_NUM) AS pay_pay,
+      (MM.MAINMENU_PAY+NVL(SM.SUBMENU_PAY,0)) AS menuSumPay,
+      JU.ORDERS_NUM, G1.g1_num, g1_name
+      FROM pay P
+      LEFT OUTER JOIN mainGoods MG ON P.JUMUN_NUM = MG.JUMUN_NUM 
+      LEFT OUTER JOIN mainmenu MM ON MG.MAINMENU_NUM = MM.MAINMENU_NUM
+      LEFT OUTER JOIN menucate MC ON MM.MENUCT_NUM = MC.MENUCT_NUM
+      LEFT OUTER JOIN giup1 G1 ON MC.G1_NUM = G1.G1_NUM
+      LEFT OUTER JOIN jumun JU ON JU.JUMUN_NUM = P.JUMUN_NUM
+      LEFT OUTER JOIN orders OD ON OD.ORDERS_NUM = JU.ORDERS_NUM
+      LEFT OUTER JOIN subgoods SG ON MG.MAINGOODS_NUM = SG.MAINGOODS_NUM
+      LEFT OUTER JOIN submenu SM ON SM.SUBMENU_NUM = SG.SUBMENU_NUM
+      WHERE G1.g1_num = #{g1_num} AND JU.ORDERS_NUM != 5
+    )
+)tb ORDER BY pay_created ASC
 </select>
 
 </mapper>

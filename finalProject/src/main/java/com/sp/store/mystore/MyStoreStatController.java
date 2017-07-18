@@ -11,7 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.sp.store.member.SessionInfo;
@@ -25,25 +25,30 @@ public class MyStoreStatController {
 	MyStoreStatService service;
 	
 	// 메뉴1(통계)
-	@RequestMapping(value = "/store/mystore", method = RequestMethod.GET)
+	@RequestMapping(value = "/store/mystore")
 	public String mystoreForm(Model model, HttpSession session) {
-		SessionInfo info = (SessionInfo)session.getAttribute("store");
-		List<MyStoreStat> list=new ArrayList<>();
-		try {
-			list = service.paySumList(info.getG1_Num());
-		} catch (Exception e) { 
-			System.out.println(e.toString());
-		}
-		model.addAttribute("list", list);
+		
+		Calendar cal=Calendar.getInstance();
+		
+		int cur_Year=cal.get(Calendar.YEAR);
+		int cur_Month=cal.get(Calendar.MONTH)+1;	
 		
 		model.addAttribute("mainMenu", "0");
 		model.addAttribute("subMenu", "1");
+		model.addAttribute("cur_Year",cur_Year);
+		model.addAttribute("cur_Month",cur_Month);
 		return ".store4.menu1.mystore.list";
 	}
 	
-	@RequestMapping(value="/store/storeSales")
+	@RequestMapping(value="/store/storeSales", produces="application/json; charset=utf-8")
 	@ResponseBody
-	public String storeSales(Model model, HttpSession session) throws Exception {
+	public String storeSales(Model model, HttpSession session
+			,@RequestParam(value="cur_Year", defaultValue="0") int cur_Year
+			,@RequestParam(value="cur_Month", defaultValue="0") int cur_Month
+			) throws Exception {
+		
+		System.out.println(cur_Year);
+		System.out.println(cur_Month);
 		
 		SessionInfo info = (SessionInfo)session.getAttribute("store");
 		List<MyStoreStat> list=new ArrayList<>();
@@ -60,22 +65,17 @@ public class MyStoreStatController {
 		
 		
 		// dayOfList의 개수(실제 매출이 있는 날짜의 개수)
-		int realDaySales[] = new int[list.size()];
-		String realDateInList[] = new String [3];
+		String realDateSales[][] = new String[list.size()][3];
 		
 		int dayOfListNum=0;
-		Iterator<MyStoreStat> it=list.iterator();
-		while(it.hasNext()){
-			
-			dayOfList[dayOfListNum]=it.next();
-			realDateInList=dayOfList[dayOfListNum].getPay_created().split("/");
-			//realDaySales[dayOfListNum++]=dayOfList[dayOfListNum];
-		}
 		
 		Calendar cal=Calendar.getInstance();
+		int year, month;
 		
-		int year=cal.get(Calendar.YEAR);
-		int month=cal.get(Calendar.MONTH);	
+		//년도 선택을 안했으면 현재년도
+		year=cur_Year==0?cal.get(Calendar.YEAR):cur_Year;
+		//달 선택을 안했으면 현재 달
+		month=cur_Month==0?month=cal.get(Calendar.MONTH):cur_Month-1;
 		
 		// year년 month월 1일로 날짜를 설정
 		cal.set(year, month,1);
@@ -83,16 +83,54 @@ public class MyStoreStatController {
 		// y년 m월의 마지막 날짜
 		int end=cal.getActualMaximum(Calendar.DATE);
 		
-		// hichart로 보낼 날짜별 총 매출을 담을 배열
+		// highchart로 보낼 날짜별 총 매출을 담을 배열 (1~최고 31일까지)
 		int daySales[] = new int[end];
+		int daySalesMonth=0;
+		// 판매 총액
+		int totalDaySales[] = new int[end];
+		int totalDaySalesMonth=0;
 		
-		
+		Iterator<MyStoreStat> it=list.iterator();
+		while(it.hasNext()){
+			dayOfList[dayOfListNum]=it.next();
+			
+			//realDateSales[][0] : 년도(4자리)  ,  realDateSales[][1] : 월  ,  realDateSales[][2] : 일
+			
+			realDateSales[dayOfListNum]=dayOfList[dayOfListNum].getPay_created().substring(0, 10).split("/");
+			
+			//일매출이 있을때 해당 날짜에 매출액 넣기
+			//고객이 결제한 금액
+			if(Integer.parseInt(realDateSales[dayOfListNum][0])==year && Integer.parseInt(realDateSales[dayOfListNum][1])==(month+1)){
+				daySales[Integer.parseInt(realDateSales[dayOfListNum][2])-1]+=dayOfList[dayOfListNum].getPay_pay();
+				totalDaySales[Integer.parseInt(realDateSales[dayOfListNum][2])-1]+=dayOfList[dayOfListNum].getMenuTotalPay();
+				daySalesMonth+=dayOfList[dayOfListNum].getPay_pay();
+				totalDaySalesMonth+=dayOfList[dayOfListNum].getMenuTotalPay();
+				dayOfListNum++;
+			} else {
+				it.remove();
+			}
+		}
 		
 		JSONArray arr=new JSONArray();
-		JSONObject ob=new JSONObject();
-		ob.put("name", "일매출");
-		//ob.put("data", )
+		JSONObject ob;
+		ob=new JSONObject();
+		ob.put("name", "결제금액");
+		ob.put("data", daySales);
+		//ob.put("ajaxYear", year);
+		//ob.put("ajaxMonth", month);
+		arr.add(ob);
+		ob=new JSONObject();
+		ob.put("name", "판매총액");
+		ob.put("data", totalDaySales);
+		arr.add(ob);
 		
-		return arr.toString();
+		JSONObject job=new JSONObject();
+		job.put("year", year);
+		job.put("series", arr);
+		job.put("list", list);
+		job.put("daySalesMonth", daySalesMonth);
+		job.put("totalDaySalesMonth", totalDaySalesMonth);
+		
+		return job.toString();
 	}
 }

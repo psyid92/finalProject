@@ -4,9 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.sp.common.dao.CommonDAO;
 
+@Service("Statservice")
 public class StaticsServiceImpl implements StaticsService{
 
 	@Autowired

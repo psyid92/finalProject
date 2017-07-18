@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="advertise">
+
+	<select id="listAdvertise" resultType="com.sp.store.advertise.Advertise">
+		SELECT ad_Num, ad_Title FROM advertise
+	</select>
+	
+	<insert id="insertGiupAd" parameterType="com.sp.store.advertise.Advertise">
+		INSERT INTO giupAd (giupAd_Num, giupAd_Term, ad_Num, g1_Num)
+		VALUES (giupAd_seq.NEXTVAL, #{giupAd_Term}, #{ad_Num}, #{g1_Num}) 
+	</insert>
+	
+</mapper>

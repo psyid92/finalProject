@@ -7,12 +7,12 @@
 <select id="visitCounter" parameterType="Integer" resultType="com.sp.stats.VisitCount">
 	select * from (
   select rownum rnum, tb.* from (
-  select visit_date, visit_Count
+  select to_char(visit_date, 'YYYY-MM-DD') visit_date, visit_Count
   from visitcount
   order by visit_date desc
   )tb
   <![CDATA[ where rownum <= #{num} ]]>
-)
+) order by rnum desc
 </select>
 
 <!-- 총 방문자 수 -->

@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-@Service("Statservice")
+
 public interface StaticsService {
 	
 	/* 방문자 수 가져오기 */

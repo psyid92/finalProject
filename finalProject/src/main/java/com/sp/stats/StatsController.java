@@ -19,17 +19,19 @@ public class StatsController {
 	
 	@RequestMapping("/stats/visitCounter")
 	@ResponseBody
-	public Map<String, Object> visitCounter(@RequestParam int num){
+	public Map<String, Object> visitCounter(@RequestParam int mydata){
 		Map<String, Object> map = new Hashtable<>();
 		try {
-			List<VisitCount> list = service.getVisitCount(num);
-			map.put("visitList", list);
+			List<VisitCount> list = service.getVisitCount(mydata);
 			int totalCount = 0;
 			if(! list.isEmpty()){
-				for (VisitCount count : list) {
-					totalCount += count.getVisit_count();
+				for (VisitCount listcount : list) {
+					totalCount += listcount.getVisit_count();
 				}
+				
 			}
+			
+			map.put("visitList", list);
 			map.put("totalCount", totalCount);
 			
 		} catch (Exception e) {
@@ -46,15 +48,11 @@ public class StatsController {
 			List<VisitCount> list = service.getVisitCount(7);
 			model.addAttribute("visitList", list);
 			int totalCount = 0;
-			String data = "";
 			if(! list.isEmpty()){
 				for (VisitCount count : list) {
 					totalCount += count.getVisit_count();
-					data += count.getVisit_count() + ", ";
 				}
 			}
-			data = data.substring(0, data.length()-2);
-			model.addAttribute("data", data);
 			model.addAttribute("totalCount", totalCount);
 			
 		} catch (Exception e) {

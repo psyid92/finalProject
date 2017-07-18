@@ -13,15 +13,17 @@ public class UserFaqServiceImpl implements UserFaqService{
     
 	@Autowired
 	private CommonDAO dao;
-	
+
 	@Override
-	public void insertUserFaq(UserFaq dto) throws Exception {
-		try {
-			dao.insertData("userFaq.insertUserFaq", dto);
-		} catch (Exception e) {
-			throw e;
-		}
+	public int insertUserFaq(UserFaq dto) {
+		int result=0;
 		
+		try {
+			result=dao.insertData("userFaq.insertUserFaq", dto);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
 	}
 
 	@Override
@@ -37,9 +39,9 @@ public class UserFaqServiceImpl implements UserFaqService{
 	}
 
 	@Override
-	public int updateCount(int faq_Num) throws Exception {
+	public List<UserFaq> listUserFaqCategory() {
 		// TODO Auto-generated method stub
-		return 0;
+		return null;
 	}
 
 	@Override
@@ -71,5 +73,36 @@ public class UserFaqServiceImpl implements UserFaqService{
 		// TODO Auto-generated method stub
 		
 	}
+
+	@Override
+	public int insertCategory(UserFaq dto) {
+		int result=0;
+		try {
+			result=dao.insertData("userFaq.insertCategory", dto);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+
+	@Override
+	public List<UserFaq> listCategory() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int dataCountCategory() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int deleteCategory(int ca_Num) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+	
+	
 
 }

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="userFaq">
+
+    <!-- 카테로리 -->
+    <insert id="insertCategory" parameterType="com.sp.userFaq.UserFaq">
+      INSERT INTO faqCategory (ca_Num, ca_class) VALUES (faqCategory_seq.NEXTVAL, #{ca_class})
+    </insert>
+
+</mapper>

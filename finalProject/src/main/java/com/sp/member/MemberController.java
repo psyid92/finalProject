@@ -25,6 +25,8 @@ import com.sp.jumun.JumunService;
 import com.sp.mileage.Mileage;
 import com.sp.mileage.MileageDAO;
 
+import ch.qos.logback.core.net.SyslogOutputStream;
+
 @Controller("member.memberController")
 public class MemberController {
 
@@ -608,8 +610,8 @@ public class MemberController {
 		if (session.getAttribute("member") == null) {
 			return ".mymem.login";
 		}
-		SessionInfo info = (SessionInfo) session.getAttribute("member");
 
+		SessionInfo info = (SessionInfo) session.getAttribute("member");
 		giupReview giupdto = new giupReview();
 		giupdto.setM1_num(info.getM1_Num());
 		giupdto.setJumun_num(jumun_num);
@@ -619,9 +621,8 @@ public class MemberController {
 		} catch (Exception e) {
 		}
 		
-		System.out.println(giupdto.getRep_content());
 		model.addAttribute("giupdto",giupdto);
-		return ".mymem.giupReview.listGiupReview";
+		return ".mymem.giupReview.seeReview";
 	}
 	
 			

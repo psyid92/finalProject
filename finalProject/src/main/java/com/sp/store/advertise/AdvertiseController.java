@@ -95,6 +95,7 @@ public class AdvertiseController {
 		map.put("start", start);
 		map.put("end", end);
 		
+//		리스트 가져오기
 		list = service.listGiupAd(map);
 		
 		

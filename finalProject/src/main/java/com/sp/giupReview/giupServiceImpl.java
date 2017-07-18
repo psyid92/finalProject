@@ -3,6 +3,8 @@ package com.sp.giupReview;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.plaf.synth.SynthSpinnerUI;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -57,6 +59,20 @@ public class giupServiceImpl implements giupReviewService {
 		giupReview review = new giupReview();
 		try {
 			review = dao.getReadData("giupreview.getReviewWithPhoto", dto);
+			
+			if(review != null){
+					String myStar = "";
+					int star = review.getRep_star();
+					for(int a=0; a<5; a++){
+						if(a < star){
+							myStar += "★";
+						} else {
+							myStar += "☆";
+						}
+						review.setMyStar(myStar);
+
+				}
+			}
 		} catch (Exception e) {
 		}
 		return review;

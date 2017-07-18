@@ -7,122 +7,153 @@
 <tiles-definitions>
 	<!-- 4단 관리자 -->
 	<definition name=".admin4Layout" template="/WEB-INF/view/admin/layout/layout4.jsp">
-	    <put-attribute name="title" value="spring" />
-	  	<put-attribute name="header" value="/WEB-INF/view/admin/layout/header.jsp" />
-	  	<put-attribute name="left" value="/WEB-INF/view/admin/menu1/left.jsp" />
+		<put-attribute name="title" value="spring" />
+		<put-attribute name="header"
+			value="/WEB-INF/view/admin/layout/header.jsp" />
+		<put-attribute name="left" value="/WEB-INF/view/admin/menu1/left.jsp" />
 		<put-attribute name="body" value="/WEB-INF/view/admin/admin/main.jsp" />
-		<put-attribute name="footer" value="/WEB-INF/view/admin/layout/footer.jsp" />
+		<put-attribute name="footer"
+			value="/WEB-INF/view/admin/layout/footer.jsp" />
 	</definition>
 	<definition name=".admin4.*.*.*" extends=".admin4Layout">
-	  	<put-attribute name="left" value="/WEB-INF/view/admin/{1}/left.jsp" />
-		<put-attribute name="body" value="/WEB-INF/view/admin/{1}/{2}/{3}.jsp"/>
+		<put-attribute name="left" value="/WEB-INF/view/admin/{1}/left.jsp" />
+		<put-attribute name="body"
+			value="/WEB-INF/view/admin/{1}/{2}/{3}.jsp" />
 	</definition>
 	<definition name=".admin4.*.*" extends=".admin4Layout">
-	  	<put-attribute name="left" value="/WEB-INF/view/admin/{1}/left.jsp" />
-		<put-attribute name="body" value="/WEB-INF/view/admin/{1}/{2}.jsp"/>
+		<put-attribute name="left" value="/WEB-INF/view/admin/{1}/left.jsp" />
+		<put-attribute name="body" value="/WEB-INF/view/admin/{1}/{2}.jsp" />
 	</definition>
 	<definition name=".admin4.*" extends=".admin4Layout">
-	  	<put-attribute name="left" value="/WEB-INF/view/admin/{1}/left.jsp" />
-   	    <put-attribute name="body" value="/WEB-INF/view/admin/{1}.jsp" />
+		<put-attribute name="left" value="/WEB-INF/view/admin/{1}/left.jsp" />
+		<put-attribute name="body" value="/WEB-INF/view/admin/{1}.jsp" />
 	</definition>
 
-	
+
 
 	<!-- 4단 사장님 페이지 -->
 	<definition name=".store4Layout" template="/WEB-INF/view/store/layout/layout4.jsp">
-	    <put-attribute name="title" value="spring" />
-	  	<put-attribute name="header" value="/WEB-INF/view/store/layout/header.jsp" />
-	  	<put-attribute name="left" value="/WEB-INF/view/store/menu1/left.jsp" />
+		<put-attribute name="title" value="spring" />
+		<put-attribute name="header"
+			value="/WEB-INF/view/store/layout/header.jsp" />
+		<put-attribute name="left" value="/WEB-INF/view/store/menu1/left.jsp" />
 		<put-attribute name="body" value="/WEB-INF/view/store/store/main.jsp" />
-		<put-attribute name="footer" value="/WEB-INF/view/store/layout/footer.jsp" />
+		<put-attribute name="footer"
+			value="/WEB-INF/view/store/layout/footer.jsp" />
 	</definition>
 	<definition name=".store4.*.*.*" extends=".store4Layout">
-	  	<put-attribute name="left" value="/WEB-INF/view/store/{1}/left.jsp" />
-		<put-attribute name="body" value="/WEB-INF/view/store/{1}/{2}/{3}.jsp"/>
+		<put-attribute name="left" value="/WEB-INF/view/store/{1}/left.jsp" />
+		<put-attribute name="body"
+			value="/WEB-INF/view/store/{1}/{2}/{3}.jsp" />
 	</definition>
 	<definition name=".store4.*.*" extends=".store4Layout">
-	  	<put-attribute name="left" value="/WEB-INF/view/store/{1}/left.jsp" />
-		<put-attribute name="body" value="/WEB-INF/view/store/{1}/{2}.jsp"/>
+		<put-attribute name="left" value="/WEB-INF/view/store/{1}/left.jsp" />
+		<put-attribute name="body" value="/WEB-INF/view/store/{1}/{2}.jsp" />
 	</definition>
 	<definition name=".store4.*" extends=".store4Layout">
-	  	<put-attribute name="left" value="/WEB-INF/view/store/{1}/left.jsp" />
-   	    <put-attribute name="body" value="/WEB-INF/view/store/{1}.jsp" />
+		<put-attribute name="left" value="/WEB-INF/view/store/{1}/left.jsp" />
+		<put-attribute name="body" value="/WEB-INF/view/store/{1}.jsp" />
 	</definition>
 
-		<!-- 프론트페이지 -->
+	<!-- 프론트페이지 -->
 	<definition name=".mainLayout" template="/WEB-INF/tiles/layout3.jsp">
-	    <put-attribute name="title" value="배달행" />
-	  	<put-attribute name="header" value="/WEB-INF/tiles/header.jsp" />
+		<put-attribute name="title" value="배달행" />
+		<put-attribute name="header" value="/WEB-INF/tiles/header.jsp" />
 		<put-attribute name="body" value="/WEB-INF/view/main/usermain.jsp" />
-		<put-attribute name="footer" value="/WEB-INF/tiles/footer.jsp" />
+		<!-- <put-attribute name="footer" value="/WEB-INF/tiles/footer.jsp" /> -->
+		<put-attribute name="footer" value="/WEB-INF/view/stats/visitCount.jsp" />
 	</definition>
 
 
 
-
-   <!-- 관리자 -->
+	<!-- 관리자 -->
 	<definition name=".adminLayout" template="/WEB-INF/view/admin/layout/layout3.jsp">
-	    <put-attribute name="title" value="배달행 관리자 페이지" />
-	  	<put-attribute name="header" value="/WEB-INF/view/admin/layout/header.jsp" />
+		<put-attribute name="title" value="배달행 관리자 페이지" />
+		<put-attribute name="header"
+			value="/WEB-INF/view/admin/layout/header.jsp" />
 		<put-attribute name="body" value="/WEB-INF/view/admin/main.jsp" />
 	</definition>
 	<definition name=".admin.*.*.*" extends=".adminLayout">
-		<put-attribute name="body" value="/WEB-INF/view/admin/{1}/{2}/{3}.jsp"/>
+		<put-attribute name="body"
+			value="/WEB-INF/view/admin/{1}/{2}/{3}.jsp" />
 	</definition>
 	<definition name=".admin.*.*" extends=".adminLayout">
-		<put-attribute name="body" value="/WEB-INF/view/admin/{1}/{2}.jsp"/>
+		<put-attribute name="body" value="/WEB-INF/view/admin/{1}/{2}.jsp" />
 	</definition>
 	<definition name=".admin.*" extends=".adminLayout">
-    	<put-attribute name="body" value="/WEB-INF/view/admin/{1}.jsp" />
+		<put-attribute name="body" value="/WEB-INF/view/admin/{1}.jsp" />
 	</definition>
-	
+
 	<!-- 사장님 3단 -->
 	<definition name=".storeLayout" template="/WEB-INF/view/store/layout/layout3.jsp">
-	    <put-attribute name="title" value="배달행 관리자 페이지" />
-	  	<put-attribute name="header" value="/WEB-INF/view/store/layout/header.jsp" />
+		<put-attribute name="title" value="배달행 관리자 페이지" />
+		<put-attribute name="header"
+			value="/WEB-INF/view/store/layout/header.jsp" />
 		<put-attribute name="body" value="/WEB-INF/view/store/main.jsp" />
-		<put-attribute name="footer" value="/WEB-INF/view/store/layout/footer.jsp" />
+		<put-attribute name="footer"
+			value="/WEB-INF/view/store/layout/footer.jsp" />
 	</definition>
 	<definition name=".store.*.*.*" extends=".storeLayout">
-		<put-attribute name="body" value="/WEB-INF/view/store/{1}/{2}/{3}.jsp"/>
+		<put-attribute name="body"
+			value="/WEB-INF/view/store/{1}/{2}/{3}.jsp" />
 	</definition>
 	<definition name=".store.*.*" extends=".storeLayout">
-		<put-attribute name="body" value="/WEB-INF/view/store/{1}/{2}.jsp"/>
+		<put-attribute name="body" value="/WEB-INF/view/store/{1}/{2}.jsp" />
 	</definition>
 	<definition name=".store.*" extends=".storeLayout">
-    	<put-attribute name="body" value="/WEB-INF/view/store/{1}.jsp" />
+		<put-attribute name="body" value="/WEB-INF/view/store/{1}.jsp" />
 	</definition>
-	
-	 <!-- 회원 -->
+
+	<!-- 회원 -->
 	<definition name=".mymemLayout" template="/WEB-INF/view/member/layout/layout3.jsp">
-	    <put-attribute name="title" value="내 정보" />
-	  	<put-attribute name="header" value="/WEB-INF/view/member/layout/header.jsp" />
+		<put-attribute name="title" value="내 정보" />
+		<put-attribute name="header"
+			value="/WEB-INF/view/member/layout/header.jsp" />
 		<put-attribute name="body" value="/WEB-INF/view/member/main.jsp" />
 	</definition>
 	<definition name=".mymem.*.*.*" extends=".mymemLayout">
-		<put-attribute name="body" value="/WEB-INF/view/member/{1}/{2}/{3}.jsp"/>
+		<put-attribute name="body"
+			value="/WEB-INF/view/member/{1}/{2}/{3}.jsp" />
 	</definition>
 	<definition name=".mymem.*.*" extends=".mymemLayout">
-		<put-attribute name="body" value="/WEB-INF/view/member/{1}/{2}.jsp"/>
+		<put-attribute name="body" value="/WEB-INF/view/member/{1}/{2}.jsp" />
 	</definition>
 	<definition name=".mymem.*" extends=".mymemLayout">
-    	<put-attribute name="body" value="/WEB-INF/view/member/{1}.jsp" />
+		<put-attribute name="body" value="/WEB-INF/view/member/{1}.jsp" />
 	</definition>
-	
-	
 
-	
+
+
+	<!-- 기타 소개 -->
+	<definition name=".Intro" template="/WEB-INF/view/member/layout/layout3.jsp">
+		<put-attribute name="title" value="정보" />
+		<put-attribute name="header"
+			value="/WEB-INF/view/member/layout/header.jsp" />
+		<put-attribute name="body" value="/WEB-INF/view/main/Intro.jsp" />
+		<put-attribute name="footer" value="/WEB-INF/tiles/footer.jsp" />
+	</definition>
+	<definition name=".Intro.*.*.*" extends=".Intro">
+		<put-attribute name="body"
+			value="/WEB-INF/view/main/{1}/{2}/{3}.jsp" />
+	</definition>
+	<definition name=".Intro.*.*" extends=".Intro">
+		<put-attribute name="body" value="/WEB-INF/view/main/{1}/{2}.jsp" />
+	</definition>
+	<definition name=".Intro.*" extends=".Intro">
+		<put-attribute name="body" value="/WEB-INF/view/main/{1}.jsp" />
+	</definition>
+
 	<!-- 순서가 바뀌면 안됨(* 많은것이 위에) -->
 	<definition name=".*.*.*" extends=".mainLayout">
-		<put-attribute name="body" value="/WEB-INF/view/{1}/{2}/{3}.jsp"/>
+		<put-attribute name="body" value="/WEB-INF/view/{1}/{2}/{3}.jsp" />
 	</definition>
 	<definition name=".*.*" extends=".mainLayout">
-		<put-attribute name="body" value="/WEB-INF/view/{1}/{2}.jsp"/>
+		<put-attribute name="body" value="/WEB-INF/view/{1}/{2}.jsp" />
 	</definition>
 	<definition name=".*" extends=".mainLayout">
-    	  <put-attribute name="body" value="/WEB-INF/view/{1}.jsp" />
+		<put-attribute name="body" value="/WEB-INF/view/{1}.jsp" />
 	</definition>
 
 
-	
+
 </tiles-definitions>

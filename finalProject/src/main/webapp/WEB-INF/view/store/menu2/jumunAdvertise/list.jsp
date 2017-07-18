@@ -65,8 +65,10 @@
 <div id="jumun">
 	<button type="button" class="btn" disabled="disabled" style="width: 300px;">구매</button>
 </div>
+<input id="imp_init" type="hidden" value="${IMP_init}">
 <script type="text/javascript" src="https://service.iamport.kr/js/iamport.payment-1.1.2.js"></script>
 <script>
+
 $(function(){
 	$("#select").change(function(){
 		if ($("#select option:selected").attr("id") != "way") {
@@ -76,7 +78,13 @@ $(function(){
 		}
 	});
 	
-	$("#jumun").click(function(){
+	$("#jumun button").click(function(){
+		if(${adState} > 0) {
+			alert("이미 등록 한 상품입니다.\n상품 기간이 끝난 후 구매해주세요.");
+			return;
+		}
+		
+		var imp_init = $("#imp_init").val();
 		var pay_Method = $("#select option:selected").attr("class");
 		var name = $("#ad_Title option:selected").val();
 		var amount = $("#pay").html();
@@ -85,23 +93,9 @@ $(function(){
 		var ad_Num = $("#ad_Title option:selected").attr("id");
 		var g1_Num = ${sessionScope.store.g1_Num}
 		
-		var url = "<%=cp%>/store/jumunAdvertise";
-	    var query = "giupAd_Term=" + giupAd_Term + "&ad_Num=" + ad_Num + "&g1_Num=" + g1_Num;
-	    $.ajax({
-			type:"post"
-			,url:url
-			,data:query
-			,success:function(data) {
-				alert("결제성공!");
-			}
-			,error:function(e) {
-				console.log(e.responseText);
-			}
-		});
-	    return;
 	    
 		var IMP = window.IMP; // 생략가능
-		IMP.init('${IMP_init}'); // 'iamport' 대신 부여받은 "가맹점 식별코드"를 사용
+		IMP.init(imp_init); // 부여받은 "가맹점 식별코드"를 사용
 		
 		IMP.request_pay({
 		    pg : 'inicis', // version 1.1.0부터 지원.

@@ -2,7 +2,24 @@ package com.sp.store.advertise;
 
 public class Advertise {
 	private int ad_Num, giupAd_Num, giupAd_Term, g1_Num;
-	private String ad_Title, giupAd_PayDate;
+	private String ad_Title, giupAd_PayDate, endAd, stated;
+
+	public String getStated() {
+		return stated;
+	}
+
+	public void setStated(String stated) {
+		this.stated = stated;
+	}
+
+	public String getEndAd() {
+		return endAd;
+	}
+
+	public void setEndAd(String endAd) {
+		this.endAd = endAd;
+	}
+
 	public int getAd_Num() {
 		return ad_Num;
 	}

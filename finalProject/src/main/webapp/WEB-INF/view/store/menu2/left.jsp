@@ -28,13 +28,8 @@
 		</div>
 		<div id="collapseThree" class="panel-collapse collapse in"
 			role="tabpanel" aria-labelledby="headingThree">
-					<c:if test="${sessionScope.store.g1_Id == 'admin'}">
-						<a href="<%=cp%>/store/insertAdvertise" class="list-group-item">광고 추가</a>
-					</c:if>
-					<c:if test="${sessionScope.store.g1_Id != 'admin'}">
-						<a href="<%=cp%>/store/jumunAdvertise" class="list-group-item">광고 구매</a>
-						<a href="<%=cp%>/store/listAdvertise" class="list-group-item">광고 구매 내역</a>
-					</c:if>
+				<a href="<%=cp%>/store/jumunAdvertise" class="list-group-item">광고 구매</a>
+				<a href="<%=cp%>/store/listAdvertise" class="list-group-item">광고 구매 내역</a>
 			</div>
 		</div>
 	</div>

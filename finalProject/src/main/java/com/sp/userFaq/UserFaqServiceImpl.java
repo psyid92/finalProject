@@ -27,25 +27,44 @@ public class UserFaqServiceImpl implements UserFaqService{
 	}
 
 	@Override
-	public int dataCount(Map<String, Object> map) throws Exception {
-		// TODO Auto-generated method stub
-		return 0;
+	public int dataCount(Map<String, Object> map) {
+		int result=0;
+		try {
+			result=dao.getIntValue("userFaq.dataCount", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
 	}
 
 	@Override
-	public List<UserFaq> listUserFaq(Map<String, Object> map) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+	public List<UserFaq> listUserFaq(Map<String, Object> map) {
+		List<UserFaq> list =null;
+		
+		try {
+			list=dao.getListData("userFaq.listUserFaq", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return list;
 	}
 
 	@Override
 	public List<UserFaq> listUserFaqCategory() {
-		// TODO Auto-generated method stub
-		return null;
+        List<UserFaq> list =null;
+		
+		try {
+			list=dao.getListData("userFaq.listUserFaqCategory");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return list;
 	}
 
 	@Override
-	public UserFaq readUserFaq(int faq_Num) throws Exception {
+	public UserFaq readUserFaq(int faq_Num){
 		// TODO Auto-generated method stub
 		return null;
 	}

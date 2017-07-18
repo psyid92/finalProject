@@ -107,15 +107,15 @@ function searchList() {
 	    <div role="tabpanel">
 			  <ul class="nav nav-tabs" role="tablist">
 			      <li role="presentation" class="active"><a href="#tabContent0" aria-controls="0" role="tab" data-toggle="tab">전체</a></li>
-		          <c:forEach var="dto" items="">
-			          <li role="presentation"><a href="#tabContent${dto.categoryNum}" aria-controls="${dto.categoryNum}" role="tab" data-toggle="tab">${dto.classify}</a></li>
+		          <c:forEach var="dto" items="${listUserFaqCategory}">
+			          <li role="presentation"><a href="#tabContent${dto.ca_Num}" aria-controls="${dto.ca_Num}" role="tab" data-toggle="tab">${dto.ca_class}</a></li>
 			      </c:forEach>
 			  </ul>
 			
 			  <div class="tab-content" style="padding: 5px; margin-top: 15px;">
 			      <div role="tabpanel" class="tab-pane active" id="tabContent0"></div>
-			      <c:forEach var="dto" items="${listFaqCategory}">
-			          <div role="tabpanel" class="tab-pane" id="tabContent${dto.categoryNum}"></div>
+			      <c:forEach var="dto" items="${listUserFaqCategory}">
+			          <div role="tabpanel" class="tab-pane" id="tabContent${dto.ca_Num}"></div>
 			      </c:forEach>
 			  </div>
 	    </div>

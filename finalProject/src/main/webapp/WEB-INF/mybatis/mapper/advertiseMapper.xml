@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="advertise">
+
+	<select id="listAdvertise" resultType="com.sp.store.advertise.Advertise">
+		SELECT ad_Num, ad_Title FROM advertise
+	</select>
+	
+	<insert id="insertGiupAd" parameterType="com.sp.store.advertise.Advertise">
+		INSERT INTO giupAd (giupAd_Num, giupAd_Term, ad_Num, g1_Num)
+		VALUES (giupAd_seq.NEXTVAL, #{giupAd_Term}, #{ad_Num}, #{g1_Num}) 
+	</insert>
+	
+	<select id="listGiupAd" parameterType="map" resultType="com.sp.store.advertise.Advertise">
+		SELECT * FROM (
+			SELECT ROWNUM rnum, tb.* FROM (
+				SELECT giupAd_Num, giupAd_Term, ga.ad_Num, g1_Num, ad_Title,
+				TO_CHAR(giupAd_PayDate + giupAd_Term - 1, 'YYYY-MM-DD') endAd,
+				TO_CHAR(giupAd_PayDate,'YYYY-MM-DD') giupAd_PayDate,
+				CASE 
+         	 		WHEN TO_CHAR(giupAd_PayDate + giupAd_Term - 1, 'YYYY-MM-DD') >= TO_CHAR(SYSDATE,'YYYY-MM-DD') THEN '적용중'
+          			ELSE '기간만료'
+        		END AS stated
+				FROM giupAd ga
+				LEFT OUTER JOIN advertise ad ON ga.ad_Num = ad.ad_Num
+				WHERE g1_Num = #{g1_Num}
+				ORDER BY endAd DESC
+<![CDATA[
+			) tb WHERE ROWNUM <= #{end}
+		) WHERE rnum >= #{start} 
+]]>
+	</select>
+	
+	<select id="readGiupAd" parameterType="Integer" resultType="Integer">
+		SELECT COUNT(*)
+		FROM giupAd
+		WHERE giupAd_PayDate + giupAd_Term &gt;= SYSDATE
+		AND g1_Num = #{g1_Num}
+	</select>
+</mapper>

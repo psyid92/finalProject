@@ -49,7 +49,7 @@
 		<property name="viewClass" value="org.springframework.web.servlet.view.JstlView" />
 		<property name="prefix" value="/WEB-INF/view/" />
 		<property name="suffix" value=".jsp" />
-	</bean>
+	</bean>         
 	<!-- 사장님 인터셉터 -->
 	<mvc:interceptors>
 		<mvc:interceptor>

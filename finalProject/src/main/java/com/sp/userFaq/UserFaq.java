@@ -1,12 +1,23 @@
 package com.sp.userFaq;
 
 public class UserFaq {
-    private int faq_Num, listNum;
+    private int faq_Num, listNum, ca_Num;
     private String admin_Id;
-    private String faq_Title, faq_Content, faq_Created;
-    private int faq_Type, faq_Count;
+    private String faq_Title, faq_Content, faq_Created, ca_class;
+    private int faq_Count;
     
-    
+	public int getCa_Num() {
+		return ca_Num;
+	}
+	public void setCa_Num(int ca_Num) {
+		this.ca_Num = ca_Num;
+	}
+	public String getCa_class() {
+		return ca_class;
+	}
+	public void setCa_class(String ca_class) {
+		this.ca_class = ca_class;
+	}
 	public int getFaq_Num() {
 		return faq_Num;
 	}
@@ -43,12 +54,7 @@ public class UserFaq {
 	public void setFaq_Created(String faq_Created) {
 		this.faq_Created = faq_Created;
 	}
-	public int getFaq_Type() {
-		return faq_Type;
-	}
-	public void setFaq_Type(int faq_Type) {
-		this.faq_Type = faq_Type;
-	}
+	
 	public int getFaq_Count() {
 		return faq_Count;
 	}

@@ -14,7 +14,7 @@
 
 function searchList(){
 	var f=document.searchForm;
-	f.action="<%=cp%>/notice/list";
+	f.action="<%=cp%>/anotice/list";
 	f.submit();
 }
 

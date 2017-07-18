@@ -54,9 +54,11 @@
 
 <!-- 사진과 리뷰 가져오기 -->
 <select id="getReviewWithPhoto" parameterType="com.sp.giupReview.giupReview" resultType="com.sp.giupReview.giupReview">
-	select giupReview.rep_num, rep_star, rep_created, rep_content, m1_num, g1_num, jumun_num, rp.rphoto_OriginalFilename, rp.rphoto_SaveFilename from giupReview
-		join reviewphoto rp on rp.rep_num = giupReview.rep_num 
-		where m1_num = #{m1_num} and jumun_num=  #{jumun_num}
+	select gr.rep_num, rep_star, rep_content, rep_created, m1_num, g1_num, jumun_num, rp.rphoto_SaveFilename, rp.rphoto_OriginalFilename
+		from giupReview gr
+		left outer join reviewphoto rp on gr.rep_num = rp.rep_num
+		where m1_num= #{m1_num} and jumun_num= #{jumun_num}
+
 </select>
 
 <!-- 사진과 리뷰 리스트 가져오기 -->

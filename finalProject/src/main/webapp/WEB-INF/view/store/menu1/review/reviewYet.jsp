@@ -14,7 +14,7 @@
     <div>
         <ul class="nav nav-tabs nav-justified">
   			<li role="presentation"><a href="<%=cp%>/store/review">전체 리뷰 보기</a></li>
-  			<li role="presentation" class="active"><a href="<%=cp%>/store/review/reviewYet">미답변 리뷰</a></li>
+  			<li role="presentation" class="active"><a>미답변 리뷰</a></li>
  			<li role="presentation" ><a href="<%=cp%>/store/review/reviewTalk">사장님 한마디</a></li>
 		</ul>
     </div>

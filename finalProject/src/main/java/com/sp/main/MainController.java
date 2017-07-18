@@ -40,6 +40,11 @@ public class MainController {
 		return ".mainLayout";
 	}
 	
+	@RequestMapping("/baedalIntro")
+	public String goBaedalIntro(){
+		return ".Intro";
+	}
+	
 	
 	@RequestMapping(value="/getcookie")
 	public void getCookie(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException  {

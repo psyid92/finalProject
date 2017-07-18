@@ -9,7 +9,7 @@
 <hr>
 <div style="width: 979px; height: 300px; margin: 50px auto 50px; font-family: arial;">
    <div style="float: left; font-size: 12px;">
-      <a>배달행 소개</a> | 바로결제란 | 이용약관 | 전자금융거래 이용약관 |<br><br>
+      <a href="<%=cp%>/baedalIntro">배달행 소개</a> | 바로결제란 | 이용약관 | 전자금융거래 이용약관 |<br><br>
       개인정보처리방침 | 광고신청 | 문의하기 | 회사소개 | <a href="<%=cp %>/store/mystore">판매자사이트</a> |<br><br>
     | 블로그 바로가기 | 페이스북 바로가기 | <a href="<%=cp %>/admin/membercontroll">관리자사이트</a> |<br><br>
       배달행은 통신판매 중개자이며 통신판매의 당사자가 아닙니다.<br><br>

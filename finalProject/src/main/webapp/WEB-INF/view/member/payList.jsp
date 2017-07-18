@@ -11,6 +11,9 @@
 	function goWriteForm (data){
 		location.href="<%=cp%>/member/writeReview?jumun_num="+data;
 	}
+	function goReadForm(data){
+		location.href= "<%=cp%>/member/seeGiupReview?jumun_num="+data;
+	}
 </script>
 
 

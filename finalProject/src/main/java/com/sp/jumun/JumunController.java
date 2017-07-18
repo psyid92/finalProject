@@ -39,7 +39,16 @@ public class JumunController {
 		List<Jumun> list = new ArrayList<>();
 		List<Jumun> clist = new ArrayList<>();
 		Map<String, Object> map = new HashMap<>();
-		
+		for (int i = 0, n = 0; i < searchValue.length(); i++) {
+			if (searchValue.charAt(i) == ' ') {
+				if (i == searchValue.length()-1 && n == i) {
+					searchValue = "";
+				}
+				n++;
+				continue;
+			}
+			break;
+		}
 		JSONObject job = myMath.getCookie(req, resp);
 		double cur_lat = Double.parseDouble((String) job.get("lat"));
 		double cur_lng = Double.parseDouble((String) job.get("lng"));

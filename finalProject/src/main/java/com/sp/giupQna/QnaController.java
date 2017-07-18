@@ -1,5 +1,7 @@
 package com.sp.giupQna;
 
+import java.io.File;
+import java.io.PrintWriter;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.HashMap;
@@ -11,7 +13,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.springframework.aop.ThrowsAdvice;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.sp.common.FileManager;
 import com.sp.common.MyUtil;
+import com.sp.store.member.SessionInfo;
 
 @Controller("giupQna.qnaController")
 public class QnaController {
@@ -85,7 +87,7 @@ public class QnaController {
 		
 		String query ="";
 		String listUrl = cp+"/giupQna/list";
-		String articleUrl = cp+"giupQna/article?page="+current_page;
+		String articleUrl = cp+"/giupQna/article?page="+current_page;
 		if(searchValue.length() !=0) {
 			query = "searchkey="+searchkey+"&searchValue="
 					+URLEncoder.encode(searchValue, "utf-8");
@@ -100,12 +102,12 @@ public class QnaController {
 		
 		model.addAttribute("subMenu", "3");
 		
-		model.addAttribute("", list);
-		model.addAttribute("", articleUrl);
+		model.addAttribute("list", list);
+		model.addAttribute("articleUrl", articleUrl);
 		model.addAttribute("page", current_page);
-		model.addAttribute("", dataCount);
-		model.addAttribute("", total_page);
-		model.addAttribute("", paging);
+		model.addAttribute("dataCount", dataCount);
+		model.addAttribute("total_page", total_page);
+		model.addAttribute("paging", paging);
 		model.addAttribute("mainMenu", "3");
 		
 		return ".store4.menu4.giupQna.list";
@@ -117,6 +119,14 @@ public class QnaController {
 	public String createForm(
 			Model model, HttpSession session) throws Exception {
 		
+		SessionInfo info = (SessionInfo)session.getAttribute("store");
+		if(info ==null){
+			return "redirect:/store/login";
+		}
+		
+		model.addAttribute("subMenu", "3");
+		model.addAttribute("mode", "created");
+		
 		return ".store4.menu4.giupQna.created";
 	}
 	
@@ -124,6 +134,17 @@ public class QnaController {
 	@RequestMapping(value="/giupQna/created", method=RequestMethod.POST)
 	public String createdSubmit(
 			Qna dto, HttpSession session) throws Exception {
+		
+		SessionInfo info = (SessionInfo)session.getAttribute("store");
+		if(info==null){
+			return "redirect:/store/loging";
+		}
+		
+		String root =session.getServletContext().getRealPath("/") ;
+		String pathname = root+File.separator+"uploads"+File.separator+"giupQna"; 
+		
+		dto.setG1_Name(info.getG1_Name());		
+		service.insertQna(dto, "created", pathname);
 		
 		return "redirect:/giupQna/list";
 	}
@@ -138,6 +159,40 @@ public class QnaController {
 			@RequestParam(value="searchValue", defaultValue="") String searchValue,
 			Model model) throws Exception {
 		
+		searchValue = URLDecoder.decode(searchValue, "utf-8");
+		service.updateHitCount(q_Num);
+		
+		// 해당 레코드 가져 오기
+		Qna dto = service.readQna(q_Num);
+		if(dto ==null)
+			return "redirect:/giupQna/list?page="+page;
+		
+		// dto.setContent(dto.getContent().replaceAll("\n", "<br>")); //스마트에디터 사용으로 불필요
+		
+		//이전글, 다음글
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("searchKey", searchKey);
+		map.put("searchValue", searchValue);
+		map.put("q_GroupNum", dto.getQ_GroupNum());
+		map.put("q_OrderNo", dto.getQ_OrderNo());
+		
+		Qna preReadDto = service.preReadQna(map);
+		Qna nextReadDto = service.nextReadQna(map);
+		
+		String query = "page=" + page;
+		if(searchValue.length()!=0) {
+			query +="&searchKey="+searchKey+"&searchValue="
+				+URLEncoder.encode(searchValue, "utf-8");
+		}
+		
+		model.addAttribute("subMenu", "3");
+		
+		model.addAttribute("dto", dto);
+		model.addAttribute("preReadDto", preReadDto);
+		model.addAttribute("nextReadDto", nextReadDto);
+		model.addAttribute("page", page);
+		model.addAttribute("query", query);		
+		
 		return ".store4.menu4.giupQna.article";
 	}
 	
@@ -149,6 +204,24 @@ public class QnaController {
 			@RequestParam(value="page") String page,
 			Model model, HttpSession session) throws Exception {
 		
+		SessionInfo info = (SessionInfo)session.getAttribute("store");
+		if(info==null) {
+			return "redirect:/store/login";
+		}
+		
+		Qna dto = service.readQna(q_Num);
+		if(dto==null) {
+			return "redirect:/giupQna/list";
+		}
+		
+		if (info.getG1_Name()==dto.getG1_Name()) {
+			return "redirect:/giupQna/list";
+		}
+		
+		model.addAttribute("subMenu", "3");
+		model.addAttribute("page", page);
+		model.addAttribute("dto", dto);
+		model.addAttribute("mode", "update");
 		
 		return ".store4.menu4.giupQna.created";		
 	}
@@ -159,6 +232,16 @@ public class QnaController {
 			Qna dto, 
 			@RequestParam String page, HttpSession session) throws Exception {
 		
+		SessionInfo info = (SessionInfo)session.getAttribute("store");
+		if(info==null) {
+			return "redirect:/store/login";
+		}
+		
+		String root = session.getServletContext().getRealPath("/");
+		String pathname = root+File.separator+"uploads"+File.separator+"giupQna"; 
+		
+		service.updateQna(dto, pathname);
+		
 		return "redirect:/giupQna/list?page="+page;
 	}
 	
@@ -166,7 +249,25 @@ public class QnaController {
 	// 삭제 
 	@RequestMapping(value="/giupQna/delete")
 	public String delete(
-			int q_Num, String page, HttpSession session) throws Exception {
+			@RequestParam int q_Num, 
+			@RequestParam(value ="page", defaultValue ="1") String page, HttpSession session) throws Exception {
+		
+		SessionInfo info = (SessionInfo)session.getAttribute("store");
+		if(info == null) {
+			return "redirect:/store/login";
+		}
+		
+		Qna dto = service.readQna(q_Num);
+		if(dto==null)
+			return "redirect:/giupQna/list";
+		
+		if(info.getG1_Num()== dto.getG1_Num() || info.getG1_Id().equals("admin"))
+			return "redirect:/giupQna/list";
+		
+		String root = session.getServletContext().getRealPath("/"); 
+		String pathname = root+File.separator+"uploads"+File.separator+"giupQna"; 		
+		
+		service.deleteQna(q_Num, dto.getQ_SaveFileName(), pathname);
 		
 		return "redirect:/giupQna/list?page="+page;
 		
@@ -180,7 +281,32 @@ public class QnaController {
 			HttpServletResponse resp,  
 			HttpSession session) throws Exception {
 		
-
+		String cp = req.getContextPath();
+		
+		SessionInfo info = (SessionInfo)session.getAttribute("store");
+		if(info == null) {
+			resp.sendRedirect(cp+"/store/login");
+			return;
+		}
+		
+		String root = session.getServletContext().getRealPath("/") ;
+		String pathname = root+File.separator+"uploads"+File.separator+"giupQna";
+		Qna dto = service.readQna(q_Num);
+		boolean flag = false; 
+		
+		if(dto !=null) {
+			String saveFileName = dto.getQ_SaveFileName();
+			String originalFileName = dto.getQ_OriginalFileName();
+			
+			flag=fileManager.doFileDownload(saveFileName, originalFileName, pathname, resp);
+		}
+		
+		if(! flag) {
+			resp.setContentType("text/html; charset=utf-8");
+			PrintWriter out = resp.getWriter();
+			out.print("<script> alert('파일 다운로드 실패했습니다.');history.back(); </script>");
+		}
+			
 	}
 	
 	// 파일 삭제
@@ -189,6 +315,27 @@ public class QnaController {
 			@RequestParam int q_Num, 
 			@RequestParam String page, 
 			HttpSession session) throws Exception {
+		SessionInfo info = (SessionInfo)session.getAttribute("store");
+		if(info==null)
+			return "redirect:/store/login";
+		
+		Qna dto = service.readQna(q_Num);
+		if(dto ==null) 
+			return "redirect:/giupQna/list";
+		
+		if(info.getG1_Num() != dto.getG1_Num() || info.getG1_Id().equals("admin"))
+			return "redirect:/giupQna/list";
+		
+		
+		String root = session.getServletContext().getRealPath("/");
+		String pathname = root+File.separator+"uploads"+File.separator+"giupQna";
+		
+		if(dto.getQ_SaveFileName() !=null && dto.getQ_SaveFileName().length()!=0) {
+			fileManager.doFileDelete(dto.getQ_SaveFileName(), pathname);
+			dto.setQ_SaveFileName("");
+			dto.setQ_OriginalFileName("");
+			service.updateQna(dto, pathname);
+		}
 		
 		return "redirect:/giupQna/update?q_Num="+q_Num+"&page="+page;
 	}
@@ -202,6 +349,18 @@ public class QnaController {
 			Model model, 
 			HttpSession session
 			) throws Exception {
+		SessionInfo info =(SessionInfo)session.getAttribute("store");
+		if(info ==null) 
+			return "redirect:/store/login";
+		
+		Qna dto = service.readQna(q_Num);
+		if(dto==null) 
+			return "redirect:/giupQna/list";
+		
+		model.addAttribute("subMenu", "3");
+		model.addAttribute("mode", "reply");
+		model.addAttribute("page", page);
+		model.addAttribute("dto", dto);
 		
 		return ".store4.menu4.giupQna.created";
 	}
@@ -211,13 +370,22 @@ public class QnaController {
 			Qna dto, 
 			@RequestParam String page, 
 			HttpSession session) throws Exception {
+		SessionInfo info = (SessionInfo)session.getAttribute("store");
+		if(info ==null)
+			return "redirect:/store/login";
+		
+		String root = session.getServletContext().getRealPath("/");
+		String pathname = root+File.separator+"uploads"+File.separator+"giupQna";
+		
+		dto.setG1_Name(info.getG1_Name());
+		service.insertQna(dto, "reply", pathname);
 		
 		return "redirect:/giupQna/list?page="+page;
 	}
 	
-	// 타일즈의 각 메뉴로 이동
+	/*// 타일즈의 각 메뉴로 이동
 	@RequestMapping(value="/giupNotice/list", method=RequestMethod.GET)
-	public String giupNoticeList(Model model) {
+	public String giupNoticeList(Model model) throws Exception{
 		model.addAttribute("mainMenu", "3");
 		model.addAttribute("subMenu", "1");
 		
@@ -225,11 +393,11 @@ public class QnaController {
 	}
 	
 	@RequestMapping(value="/giupFaq/list", method=RequestMethod.GET)
-	public String giupFaqList(Model model) {
+	public String giupFaqList(Model model) throws Exception{
 		model.addAttribute("mainMenu", "3");
 		model.addAttribute("subMenu", "2");
 		
 		return ".store4.menu4.giupFaq.list";
-	}
+	}*/
 	
 }

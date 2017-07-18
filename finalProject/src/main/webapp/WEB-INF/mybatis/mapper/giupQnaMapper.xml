@@ -36,7 +36,7 @@
 	<select id="listQna" parameterType="map" resultType="com.sp.giupQna.Qna">
 		SELECT * FROM (
 			SELECT ROWNUM rnum, tb.* FROM(
-				SELECT q_Num, q_Title, q_OriginalFileName, q_SaveFileName, q_Created,
+				SELECT q_Num, q_Title, q_OriginalFileName, q_SaveFileName, To_CHAR(q_Created,'yyyy-mm-dd') q_Created,
 					q_GroupNum, q_Depth, q_OrderNo, q_Parent, q_HitCount, gq.g1_Num, admin_Id
 				FROM giupQna gq 
 				JOIN giup1 g1 ON gq.g1_Num=g1.g1_Num
@@ -47,8 +47,8 @@
 				</where>
 				ORDER BY q_GroupNum DESC, q_OrderNo ASC
 		<![CDATA[				
-			)tb FROM ROWNUN <= #{end} 
-		) FROM rnum >= #{start}
+			)tb WHERE ROWNUM <= #{end} 
+		) WHERE rnum >= #{start}
 		]]>
 		 	
 	</select>	

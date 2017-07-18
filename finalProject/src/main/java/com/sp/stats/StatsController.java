@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -40,24 +41,26 @@ public class StatsController {
 	
 	
 	@RequestMapping("/stats/visitMain")
-	@ResponseBody
-	public Map<String, Object> visitMain(){
-		Map<String, Object> map = new Hashtable<>();
+	public String visitMain(Model model){
 		try {
-			List<VisitCount> list = service.getVisitCount(10);
-			map.put("visitList", list);
+			List<VisitCount> list = service.getVisitCount(7);
+			model.addAttribute("visitList", list);
 			int totalCount = 0;
+			String data = "";
 			if(! list.isEmpty()){
 				for (VisitCount count : list) {
 					totalCount += count.getVisit_count();
+					data += count.getVisit_count() + ", ";
 				}
 			}
-			map.put("totalCount", totalCount);
+			data = data.substring(0, data.length()-2);
+			model.addAttribute("data", data);
+			model.addAttribute("totalCount", totalCount);
 			
 		} catch (Exception e) {
 		}
 		
-		return map;
+		return "";
 	}
 	
 	

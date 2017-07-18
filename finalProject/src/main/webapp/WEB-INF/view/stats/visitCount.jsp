@@ -13,13 +13,6 @@
 
 
 <script type="text/javascript">
-$(function(){
-	$.ajax()
-});
-
-
-
-
 
 Highcharts.chart('container', {
 
@@ -42,7 +35,7 @@ Highcharts.chart('container', {
     },
 
     series: [{
-        data: [1, 2, 4, 8, 16, 32, 60, 60, 256, 512],
+        data: [ ${data} ],
         pointStart: 1
     }]
 });

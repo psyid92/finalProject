@@ -41,26 +41,14 @@ public class StatsController {
 	}
 
 	
-	
+	/*
 	@RequestMapping("/stats/visitMain")
 	public String visitMain(Model model){
-		try {
-			List<VisitCount> list = service.getVisitCount(7);
-			model.addAttribute("visitList", list);
-			int totalCount = 0;
-			if(! list.isEmpty()){
-				for (VisitCount count : list) {
-					totalCount += count.getVisit_count();
-				}
-			}
-			model.addAttribute("totalCount", totalCount);
-			
-		} catch (Exception e) {
-		}
-		
-		return "";
+		model.addAttribute("mainMenu", "0");
+		model.addAttribute("subMenu", "4");
+		return ".admin4.menu1.membercscentercontroll.visitCount";
 	}
-	
+	*/
 	
 	
 }

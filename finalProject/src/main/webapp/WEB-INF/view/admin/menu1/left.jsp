@@ -20,5 +20,5 @@
        <a href="<%=cp%>/admin/membercontroll" class="list-group-item">회원정보관리</a>
        <a href="<%=cp%>/admin/memberreviewcontroll" class="list-group-item">리뷰관리</a>
        <a href="<%=cp%>/auserQna/list" class="list-group-item">회원1:1문의관리</a>
-       <a href="#" class="list-group-item">방문자 수 조회</a>
+       <a href="<%=cp %>/stats/visitMain" class="list-group-item">방문자 수 조회</a>
 </div>

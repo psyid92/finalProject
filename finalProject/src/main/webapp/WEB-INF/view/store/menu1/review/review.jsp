@@ -51,7 +51,6 @@ function printReply(data){
 			s += " <div class='table-responsive' style='clear: both;'>";
 			s += "  <table class='table'>";
 			s += " <hr style='margin-top:5px; margin-bottom:10px;'>"
-			s += " <div style='float: left;'>"+rep_Created+"<br>"+g1_Name+"</div>";
 			for(a=0; a<rep_Star; a++){
 				star += "★";
 			}
@@ -60,7 +59,6 @@ function printReply(data){
 			}
 			
 			s += " <div class='table-responsive' style='clear: both;'>";
-			s += " <hr style='margin-top:5px; margin-bottom:10px;'>"
 			s += " <div style='float: left;'><span>"+rep_Created+"</span><br><span style='color:gray; font-size:10px;'>"+g1_Name+"</span></div>";
 			s += " <div style='float: left; margin-left: 50px; width: 500px;'>";
 			s += "	<div>"+rep_Star+"&nbsp;&nbsp;"+m1_Nickname+"<br>"+rep_Content+"</div>";
@@ -70,8 +68,7 @@ function printReply(data){
 			s += " 	<div id='reviewreply"+rep_Num+"'>";
 			s += " 	</div>";
 			s += "  </div>";
-			s += "  <textarea id='content"+rep_Num+"' name= 'content"+rep_Num+"' class='form-control' rows='3' required='required' style='resize: none; margin-top: 15px;'></textarea> ";
-			s += "  <button type='button' onclick='sendReply("+rep_Num+","+pageNo+");' class='btn btn-primary' style='float:right; margin-top:10px; margin-bottom:10px;'>등록하기 <span class='glyphicon glyphicon-ok'></span></button>";
+			s += "  <textarea id='content"+rep_Num+"' name= 'content"+rep_Num+"' class='form-control' rows='3' required='required' style='resize: none; margin-top: 15px;'>"+m1_Nickname+" 님, </textarea> ";
 			s += "  <button type='button' onclick='sendReply("+rep_Num+","+pageNo+");' class='btn btn-primary' style='float:right; margin-top:10px; margin-bottom:10px;'>답변 남기기 <span class='glyphicon glyphicon-ok'></span></button>";
 			s += "</div>";
 			s += " <br>";
@@ -103,10 +100,6 @@ function reviewReplyList(rep_Num, pageNo){
 			for(var i=0; i<list.length; i++){
 				s += "<div id='rreply"+list[i].rrep_Num+"' style='margin-top:10px; margin-bottom:5px;'> ";
 				s += " 	<div>";
-				s += " 	사장님&nbsp;&nbsp;"+list[i].rrep_Created+"<button type='button' class='btn btn-danger' onclick='deleteReply("+list[i].rrep_Num+","+pageNo+" ,"+g1_Num+")'style='float:right;'><span class='glyphicon glyphicon-remove'></span></button>";
-				s += "<br>"+list[i].rrep_Content;
-				s += " <span style='font-weight:bold; font-size:15px;'>사장님</span>&nbsp;&nbsp;<span style='font-size:13px;'>"+list[i].rrep_Created+"</span><button type='button' class='btn btn-danger' onclick='deleteReply("+list[i].rrep_Num+","+pageNo+" ,"+g1_Num+")'style='float:right;'><span class='glyphicon glyphicon-remove'></span></button>";
-				s += "<br><span>"+list[i].rrep_Content+"</span>";
 				s += " <span style='font-weight:bold; font-size:15px;'>사장님</span>&nbsp;&nbsp;<span style='font-size:13px;'>"+list[i].rrep_Created+"</span><button type='button' class='btn btn-danger' onclick='deleteReply("+list[i].rrep_Num+","+pageNo+" ,"+g1_Num+")'style='float:right;'><span class='glyphicon glyphicon-remove'></span></button>";
 				s += "<br><span>"+list[i].rrep_Content+"</span>";
 				s += "</div>";
@@ -151,8 +144,6 @@ function sendReply(rep_Num,pageNo){
 			for(var i=0; i<list.length; i++){
 				s += "<div id='rreply"+list[i].rrep_Num+"' style='margin-top:10px; margin-bottom:5px;'> ";
 				s += " 	<div>";
-				s += " 	사장님&nbsp;&nbsp;"+list[i].rrep_Created+"<button type='button' class='btn btn-danger' onclick='deleteReply("+list[i].rrep_Num+","+pageNo+" ,"+g1_Num+")' style='float:right;'><span class='glyphicon glyphicon-remove'></span></button>";
-				s += "<br>"+list[i].rrep_Content;
 				s += " <span style='font-weight:bold; font-size:15px;'>사장님</span>&nbsp;&nbsp;<span style='font-size:13px;'>"+list[i].rrep_Created+"</span><button type='button' class='btn btn-danger' onclick='deleteReply("+list[i].rrep_Num+","+pageNo+" ,"+g1_Num+")'style='float:right;'><span class='glyphicon glyphicon-remove'></span></button>";
 				s += "<br><span>"+list[i].rrep_Content+"</span>";
 				s += "</div>";
@@ -185,17 +176,14 @@ function deleteReply(rrep_Num, pageNo, g1_Num){
 </script>
 <div class="storeReviewControll">
     <div class="body-title">
-          <h3><span class="glyphicon glyphicon-tower"></span> 전체 리뷰 보기 </h3>
+          <h3><span class="glyphicon glyphicon-pencil"></span> 전체 리뷰 </h3>
     </div>
     
     <div>
         <ul class="nav nav-tabs nav-justified">
-  			<li role="presentation" class="active"><a>전체 리뷰 보기</a></li>
   			<li role="presentation" ><a href="<%=cp%>/store/review/reviewYet">미답변 리뷰</a></li>
- 			<li role="presentation" ><a href="<%=cp%>/store/review/reviewTalk">사장님 한마디</a></li>
+  			<li role="presentation" class="active"><a>전체 리뷰 보기</a></li>
 		</ul>
-		
-		${sessionScope.store.g1_Name} <br>
 		<div id="reviewlist"></div>
     </div>
 </div>

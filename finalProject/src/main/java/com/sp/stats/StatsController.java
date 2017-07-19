@@ -41,14 +41,12 @@ public class StatsController {
 	}
 
 	
-	/*
 	@RequestMapping("/stats/visitMain")
 	public String visitMain(Model model){
 		model.addAttribute("mainMenu", "0");
 		model.addAttribute("subMenu", "4");
-		return ".admin4.menu1.membercscentercontroll.visitCount";
+		return ".admin4.menu1.visitCounter.visitCount";
 	}
-	*/
 	
 	
 }

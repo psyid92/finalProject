@@ -215,7 +215,7 @@ public class QnaController {
 			return "redirect:/giupQna/list";
 		}
 		
-		if (info.getG1_Name()==dto.getG1_Name()) {
+		if (info.getG1_Num() !=dto.getG1_Num()) {
 			return "redirect:/giupQna/list";
 		}
 		
@@ -241,7 +241,7 @@ public class QnaController {
 		String root = session.getServletContext().getRealPath("/");
 		String pathname = root+File.separator+"uploads"+File.separator+"giupQna"; 
 		
-		service.updateQna(dto, "update", pathname);
+		service.updateQna(dto, pathname);
 		
 		return "redirect:/giupQna/list?page="+page;
 	}
@@ -251,7 +251,8 @@ public class QnaController {
 	@RequestMapping(value="/giupQna/delete")
 	public String delete(
 			@RequestParam int q_Num, 
-			@RequestParam(value ="page", defaultValue ="1") String page, HttpSession session) throws Exception {
+			@RequestParam(value ="page", defaultValue ="1") String page, 
+			HttpSession session) throws Exception {
 		
 		SessionInfo info = (SessionInfo)session.getAttribute("store");
 		if(info == null) {
@@ -260,10 +261,10 @@ public class QnaController {
 		
 		Qna dto = service.readQna(q_Num);
 		if(dto==null)
-			return "redirect:/giupQna/list";
+			return "redirect:/giupQna/list="+page;
 		
-		if(info.getG1_Num()== dto.getG1_Num() || info.getG1_Id().equals("admin"))
-			return "redirect:/giupQna/list";
+		if(info.getG1_Num() != dto.getG1_Num() && !  info.getG1_Id().equals("admin"))
+			return "redirect:/giupQna/list="+page;
 		
 		String root = session.getServletContext().getRealPath("/"); 
 		String pathname = root+File.separator+"uploads"+File.separator+"giupQna"; 		
@@ -324,7 +325,7 @@ public class QnaController {
 		if(dto ==null) 
 			return "redirect:/giupQna/list";
 		
-		if(info.getG1_Num() != dto.getG1_Num() || info.getG1_Id().equals("admin"))
+		if(info.getG1_Num() != dto.getG1_Num() || ! info.getG1_Id().equals("admin"))
 			return "redirect:/giupQna/list";
 		
 		
@@ -335,7 +336,7 @@ public class QnaController {
 			fileManager.doFileDelete(dto.getQ_SaveFileName(), pathname);
 			dto.setQ_SaveFileName("");
 			dto.setQ_OriginalFileName("");
-			service.updateQna(dto, "update", pathname);
+			service.updateQna(dto, pathname);
 		}
 		
 		return "redirect:/giupQna/update?q_Num="+q_Num+"&page="+page;
@@ -358,6 +359,9 @@ public class QnaController {
 		if(dto==null) 
 			return "redirect:/giupQna/list";
 		
+		String str = "["+dto.getQ_Title()+"] 답변.\n";
+		dto.setQ_Content(str);
+		
 		model.addAttribute("subMenu", "3");
 		model.addAttribute("mode", "reply");
 		model.addAttribute("page", page);
@@ -379,6 +383,7 @@ public class QnaController {
 		String pathname = root+File.separator+"uploads"+File.separator+"giupQna";
 		
 		dto.setG1_Name(info.getG1_Name());
+		dto.setG1_Num(info.getG1_Num());
 		service.insertQna(dto, "reply", pathname);
 		
 		return "redirect:/giupQna/list?page="+page;

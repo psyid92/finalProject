@@ -11,6 +11,6 @@ public interface QnaService {
 	public int updateHitCount(int q_Num);
 	public Qna preReadQna(Map<String, Object> map); // search등이 필요
 	public Qna nextReadQna(Map<String, Object> map);
-	public int updateQna(Qna dto, String mode, String pathname);
+	public int updateQna(Qna dto, String pathname);
 	public int deleteQna(int q_Num, String q_SaveFileName, String pathname); // map으로 가져와도 됨. save~는 data, path~ 물리파일.. 
 }

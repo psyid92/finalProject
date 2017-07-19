@@ -130,7 +130,7 @@
 	<update id="updateOrderNo" parameterType="map">
 		UPDATE giupQna SET q_OrderNo=q_OrderNo+1
 	<![CDATA[
-		WHERE q_GroupNum = #{q_GroupNum} AND q_OrderNo > {q_OrderNo}
+		WHERE q_GroupNum = #{q_GroupNum} AND q_OrderNo > #{q_OrderNo}
 	]]>
 	
 	</update>

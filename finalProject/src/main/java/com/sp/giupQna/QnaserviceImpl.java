@@ -127,19 +127,21 @@ public class QnaserviceImpl implements QnaService{
 	}
 
 	@Override
-	public int updateQna(Qna dto, String mode, String pathname) {
+	public int updateQna(Qna dto, String pathname) {
 		int result=0; 
 		try {
-			// 이전파일 지우기
-			if(dto.getQ_SaveFileName().length() !=0)
-				fileManager.doFileDelete(dto.getQ_SaveFileName(), pathname);
 			
-			String saveFileName=fileManager.doFileUpload(dto.getUpload(), pathname);
-			if (saveFileName !=null) {
-				dto.setQ_OriginalFileName(dto.getUpload().getOriginalFilename());
-				dto.setQ_SaveFileName(saveFileName);
+			if(dto.getUpload()!=null && !dto.getUpload().isEmpty()) {
+				// 이전파일 지우기
+				if(dto.getQ_SaveFileName().length() !=0)
+					fileManager.doFileDelete(dto.getQ_SaveFileName(), pathname);
+			
+				String newFileName=fileManager.doFileUpload(dto.getUpload(), pathname);
+				if (newFileName !=null) {
+					dto.setQ_OriginalFileName(dto.getUpload().getOriginalFilename());
+					dto.setQ_SaveFileName(newFileName);
+				}
 			}
-			
 			dao.updateData("giupQna.updateQna", dto);
 			result =1; 
 		} catch (Exception e) {

@@ -136,7 +136,7 @@ function check() {
 								<input type="hidden" name="q_SaveFileName" value="${dto.q_SaveFileName}">
 								
 							</c:if>
-							<c:if test="${mode='update'}">
+							<c:if test="${mode=='update'}">
 								<input type="hidden" name="page" value="${page}">
 								<input type="hidden" name="q_Num" value="${dto.q_Num}">
 								<input type="hidden" name="q_OriginalFileName" value="${dto.q_OriginalFileName}">

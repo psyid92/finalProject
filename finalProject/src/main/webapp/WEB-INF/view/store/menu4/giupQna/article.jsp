@@ -46,7 +46,7 @@ function deleteQna() {
 	var url = "<%=cp%>/giupQna/delete?"+query;
 
 	if(confirm("자료를 삭제하시겠습니까?"))
-		loacation.href = url; 
+		location.href = url; 
 </c:if>	
 	
 <c:if test="${sessionScope.store.g1_Num!=dto.g1_Num && sessionScope.store.g1_Id !='admin'}">

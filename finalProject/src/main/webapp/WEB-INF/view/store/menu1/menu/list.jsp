@@ -268,8 +268,8 @@ function updateSubMenu(submenu_Num) {
 
 </script>
 <div class="storeBodyFrame2">
-    <div class="body-title"> 
-          <h3>메뉴 관리 </h3>
+    <div class="body-title">
+          <h3><span class="glyphicon glyphicon-cutlery"></span> 메뉴관리 </h3>
     </div>
     <div>
     	내 업소 명 <br>

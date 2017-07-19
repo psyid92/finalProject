@@ -69,7 +69,7 @@ function printReply(data){
 			s += " 			<div id='reviewreply"+rep_Num+"'>";
 			s += " 		</div>";
 			s += "  </div>";
-			s += "  <textarea id='content"+rep_Num+"' name= 'content"+rep_Num+"' class='form-control' rows='3' required='required' style='resize: none; margin-top: 15px;'></textarea> ";
+			s += "  <textarea id='content"+rep_Num+"' name= 'content"+rep_Num+"' class='form-control' rows='3' required='required' style='resize: none; margin-top: 15px;'>"+m1_Nickname+" 님, </textarea> ";
 			s += "  <button type='button' onclick='sendReply("+rep_Num+","+pageNo+");' class='btn btn-primary' style='float:right; margin-top:10px; margin-bottom:10px;'>답변 남기기 <span class='glyphicon glyphicon-ok'></span></button>";
 			s += "</div>";
 			s += " <br>";
@@ -139,14 +139,13 @@ function deleteReply(rrep_Num, pageNo, g1_Num){
 </script>
 <div class="storeBodyFrame2">
     <div class="body-title">
-          <h3><span class="glyphicon glyphicon-tower"></span>미답변 리뷰 보기</h3>
+          <h3><span class="glyphicon glyphicon-pencil"></span>미답변 리뷰</h3>
     </div>
     
     <div>
         <ul class="nav nav-tabs nav-justified">
   			<li role="presentation" class="active"><a>미답변 리뷰</a></li>
   			<li role="presentation"><a href="<%=cp%>/store/review">전체 리뷰 보기</a></li>
- 			<li role="presentation" ><a href="<%=cp%>/store/review/reviewTalk">사장님 한마디</a></li>
 		</ul>
 		<div id="reviewlist"></div>  
     </div>

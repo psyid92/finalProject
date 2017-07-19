@@ -117,4 +117,21 @@ public class giupServiceImpl implements giupReviewService {
 		return list;
 	}
 
+	
+	
+	/*----------------------------------------------------------------------------
+	 *----------------------------------------------------------------------------
+	 *                            모든 리뷰 - Admin 
+	 * ---------------------------------------------------------------------------
+	 */
+	@Override
+	public List<giupReview> getListAllReview() throws Exception {
+		List<giupReview> list = new ArrayList<>();
+		try {
+			dao.getListData("giupreview.getReviewAllList");
+		} catch (Exception e) {
+		}
+		return list;
+	}
+
 }

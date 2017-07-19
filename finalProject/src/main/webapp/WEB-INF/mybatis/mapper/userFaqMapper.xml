@@ -7,5 +7,74 @@
     <insert id="insertCategory" parameterType="com.sp.userFaq.UserFaq">
       INSERT INTO faqCategory (ca_Num, ca_class) VALUES (faqCategory_seq.NEXTVAL, #{ca_class})
     </insert>
-
+    
+    <select id="dataCountCategory" resultType="Integer" parameterType="String">
+      SELECT NVL(COUNT(ca_Num),0) FROM faqCategory
+    </select>
+    
+    <select id="listCategory" resultType="com.sp.userFaq.UserFaq" parameterType="String">
+      SELECT ca_Num, ca_class FROM faqCategory ORDER BY ca_Num DESC
+    </select>
+    
+    <delete id="deleteCategory" parameterType="Integer">
+      DELETE FROM faqCategory WHERE ca_Num=#{ca_Num}
+    </delete>
+    
+    
+    <!-- fqa질문 -->
+    <insert id="insertUserFaq" parameterType="com.sp.userFaq.UserFaq">
+       INSERT INTO userFaq (faq_Num, ca_Num, admin_Id, faq_Title, faq_Content, faq_Count)
+                           VALUES (userFaq_seq.NEXTVAL, #{ca_Num}, #{admin_Id}, #{faq_Title}, #{faq_Content}, 0)
+    </insert>
+    
+    <select id="dataCount" parameterType="map" resultType="Integer">
+      SELECT NVL(COUNT(*), 0) FROM userFaq uf 
+                               JOIN faqCategory fc ON uf.ca_Num=fc.ca_Num
+                               JOIN admin ad ON uf.admin_Id=ad.admin_Id
+                               <where>
+                                 <if test="ca_Num !=0">
+                                  uf.ca_Num=#{ca_Num}
+                                 </if>
+                                 <if test="searchValue !=null and searchValue !='' ">
+                                   AND (faq_Title LIKE '%' || #{searchValue} || '%' OR
+                                   faq_Content LIKE '%' || #{searchValue} || '%')
+                                 </if>
+                               </where>               
+    </select>
+    
+    <select id="listUserFaq" parameterType="map" resultType="com.sp.userFaq.UserFaq">
+      SELECT * FROM (
+        SELECT ROWNUM rnum, tb.* FROM(
+           SELECT faq_Num, uf.ca_Num, ca_class, uf.admin_Id, faq_Title, faq_Content, faq_Count
+                  FROM userFaq uf
+                  JOIN faqCategory fc ON uf.ca_Num=fc.ca_Num
+                  JOIN admin ad ON uf.admin_Id=ad.admin_Id
+                  <where>
+                    <if test="ca_Num !=0">
+                      uf.ca_Num = #{ca_Num}
+                    </if>
+                    <if test="searchValue !=null and searchValue!='' ">
+                     AND (faq_Title LIKE '%' || #{searchValue} || '%' OR
+                     faq_Content LIKE '%' || #{searchValue} || '%')
+                    </if>
+                  </where>
+                  ORDER BY faq_Num DESC
+    <![CDATA[              
+        ) tb WHERE ROWNUM <= #{end}
+      )WHERE rnum >= #{start}
+      ]]>
+    </select>
+    
+    <select id="listUserFaqCategory" resultType="com.sp.userFaq.UserFaq">
+      SELECT DISTINCT uf.ca_Num, ca_class 
+            FROM userFaq uf
+            JOIN faqCategory fc ON uf.ca_Num=fc.ca_Num
+            ORDER BY ca_Num DESC
+    </select>
+    
+    
+    
+    
+    
+    
 </mapper>

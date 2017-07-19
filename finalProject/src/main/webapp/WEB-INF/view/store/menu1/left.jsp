@@ -18,19 +18,15 @@
 <div class="list-group panel-group" id="accordion" role="tablist"
 	aria-multiselectable="true">
 	<div class="list-group-item lefthead">
-		<i></i> 마이페이지
+		<i></i> 업체관리
 	</div>
 	<div class="panel panel-default">
-		<div class="panel-heading" role="tab" id="headingThree">
-			<h4 class="panel-title">
-				<a class="FirstMenu" aria-expanded="true" aria-controls="collapseThree" > 내 업소 관리 </a>
-			</h4>
-		</div>
 		<div id="collapseThree" class="panel-collapse collapse in"
 			role="tabpanel" aria-labelledby="headingThree">
 					<a href="<%=cp%>/store/mystore" class="list-group-item">매출현황</a>
-					<a href="<%=cp%>/store/review" class="list-group-item">리뷰관리</a>
+					<a href="<%=cp%>/store/review/reviewYet" class="list-group-item">리뷰관리</a>
 					<a href="<%=cp%>/store/menu" class="list-group-item">메뉴관리</a>
+					<a href="<%=cp%>/store/mypage" class="list-group-item">업체정보수정</a>
 			</div>
 		</div>
 	</div>

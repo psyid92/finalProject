@@ -52,6 +52,7 @@ function searchList() {
 	    					<th>상품명</th>
 	    					<th class="text-center" style="width: 100px;">결제금액</th>
 	    					<th class="text-center" style="width: 100px;">구매일</th>
+	    					<th class="text-center" style="width: 100px;">시작일</th>
 	    					<th class="text-center" style="width: 100px;">종료일</th>
 	    					<th class="text-center" style="width: 100px;">상태</th>
 	    				</tr>    			
@@ -76,8 +77,17 @@ function searchList() {
 						       </c:otherwise>
 						   </c:choose>
 	    					<td class="text-center">${dto.giupAd_PayDate}</td>
-	    					<td class="text-center">${dto.endAd}</td>
-	    					<td class="text-center">${dto.stated}</td>
+	    					<td class="text-center">${dto.giupAd_StartDate}</td>
+	    					<td class="text-center">${dto.giupAd_EndDate}</td>
+	    					<c:if test="${dto.giupAd_State == 0}">
+	    						<td class="text-center">기간 만료</td>
+	    					</c:if>
+	    					<c:if test="${dto.giupAd_State == 1}">
+	    						<td class="text-center">적용중</td>
+	    					</c:if>
+	    					<c:if test="${dto.giupAd_State == 2}">
+	    						<td class="text-center">대기</td>
+	    					</c:if>
 	    				</tr>
 	    			</c:forEach>
 	    			</tbody>

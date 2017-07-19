@@ -6,6 +6,7 @@ import java.util.Map;
 public interface CommonDAO {
 	public int insertData(String id, Object value) throws Exception;
 	
+	public int updateData(String id) throws Exception;
 	public int updateData(String id, Object pData) throws Exception;
 	public int updateData(String id, Map<String, Object> map) throws Exception;
 	
@@ -26,6 +27,7 @@ public interface CommonDAO {
 	public <T> T getReadData(String id, Map<String, Object> map) throws Exception;
 	
 	// INSERT, UPDATE, DELETE 프로시져(IN)
+	public void callUpdateProcedure(String id) throws Exception;
 	public void callUpdateProcedure(String id, Object value) throws Exception;
 	
 	// SELECT(OUT)

@@ -22,7 +22,7 @@ $(function(){
 	text-align:center;
 	width: 300px;
 	float: left;
-	margin: 0 12.5px 15px;
+	margin: 7.5px 12.5px;
 	border-radius: 8px;
 	background-color: #eeeeee;
 	transition: all 0.2s, transform 0.2s;
@@ -41,14 +41,13 @@ $(function(){
 <table style="margin-bottom: 100px; width: 1000px;">
 	<tr id="giup" style="width: 310px; height: 195px;">
 		<c:forEach var="dto" items="${list}">
-			<c:if test="${dto.giupAd_Num ne 0}">
-				<td id="giup${dto.g1_Num}" rowspan="2" style="display:none; height: 190px; line-height: 190px; background-image: url('<%=cp%>/resource/img/background2.png'); background-repeat: no-repeat; background-position: center center; background-size: 105% 105%;">${dto.g1_Name}
-				광고구매기업</td>
+			<c:if test="${dto.giupAd_State >= 1}">
+				<td id="giup${dto.g1_Num}" rowspan="2" style="display:none; height: 205px; line-height: 205px; background-image: url('<%=cp%>/resource/img/background2.png'); background-repeat: no-repeat; background-position: center center; background-size: 105% 105%;">${dto.g1_Name}</td>
 				<input type="hidden" name="g1_Name" value="${dto.g1_Name}">
 				
 			</c:if>
-			<c:if test="${dto.giupAd_Num eq 0}">
-				<td id="giup${dto.g1_Num}" style="display:none; height: 95px; line-height: 95px;">${dto.g1_Name}<br></td>
+			<c:if test="${dto.giupAd_State == 0}">
+				<td id="giup${dto.g1_Num}" style="display:none; height: 95px; line-height: 95px;">${dto.g1_Name}</td>
 				<input type="hidden" name="g1_Name" value="${dto.g1_Name}">
 			</c:if>
 		</c:forEach>

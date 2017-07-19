@@ -40,14 +40,14 @@ $(function(){
 	$('a[data-toggle="tab"]').each(function(){
 		var c=$(this).attr("aria-controls");
 		
-		if(category==c) {
+		if(category==c) {	
 			$(this).parent().addClass("active");
 			$("#tabContent"+c).addClass("active");
 		} else {
 			$(this).parent().removeClass("active");
 		}
 	});
-
+	
 	listPage(page);
 });
 
@@ -69,12 +69,14 @@ $(function(){
 function listPage(page) {
     var url="<%=cp%>/auserfaq/list";
 
-	var query="pageNo="+page+"&category="+category+"&searchValue="+searchValue;
+	var query="pageNo="+page+"&category="+category+"&searchValue="+searchValue+"&mode=faqlist";
+
 	$.ajax({
 		type:"post"
 		,url:url
 		,data:query
 		,success:function(data) {
+			console.log(data);
 			var id="#tabContent"+category;
 			$(id).html(data);
 		}

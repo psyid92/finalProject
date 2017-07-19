@@ -198,14 +198,4 @@ public class MystoreReviewController{
 		model.put("reviewlistYet", reviewlistYet);
 		return model;
 	}
-	
-	
-	
-	@RequestMapping(value = "/store/review/reviewTalk", method = RequestMethod.GET)
-	public String reviewTalkForm(Model model, HttpSession session) {
-
-		model.addAttribute("mainMenu", "0");
-		model.addAttribute("subMenu", "2");
-		return ".store4.menu1.review.reviewTalk";
-	}
 }

@@ -28,9 +28,7 @@
 		</div>
 		<div id="collapseThree" class="panel-collapse collapse in"
 			role="tabpanel" aria-labelledby="headingThree">
-					<a href="<%=cp%>/store/event1" class="list-group-item">이벤트게시판1</a>
-					<a href="<%=cp%>/store/event2" class="list-group-item">이벤트게시판2</a>
-					<a href="<%=cp%>/store/event3" class="list-group-item">이벤트게시판3</a>
+					<a href="<%=cp%>/store/event1" class="list-group-item">진행중 이벤트</a>
 			</div>
 		</div>
 	</div>

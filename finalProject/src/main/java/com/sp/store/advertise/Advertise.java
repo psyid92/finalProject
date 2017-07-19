@@ -1,8 +1,32 @@
 package com.sp.store.advertise;
 
 public class Advertise {
-	private int ad_Num, giupAd_Num, giupAd_Term, g1_Num, listNum;
-	private String ad_Title, giupAd_PayDate, endAd, stated;
+	private int ad_Num, giupAd_Num, giupAd_Term, g1_Num, listNum, giupAd_State;
+	private String ad_Title, giupAd_PayDate, giupAd_StartDate, giupAd_EndDate;
+
+	public String getGiupAd_StartDate() {
+		return giupAd_StartDate;
+	}
+
+	public void setGiupAd_StartDate(String giupAd_StartDate) {
+		this.giupAd_StartDate = giupAd_StartDate;
+	}
+
+	public String getGiupAd_EndDate() {
+		return giupAd_EndDate;
+	}
+
+	public void setGiupAd_EndDate(String giupAd_EndDate) {
+		this.giupAd_EndDate = giupAd_EndDate;
+	}
+
+	public int getGiupAd_State() {
+		return giupAd_State;
+	}
+
+	public void setGiupAd_State(int giupAd_State) {
+		this.giupAd_State = giupAd_State;
+	}
 
 	public int getListNum() {
 		return listNum;
@@ -10,22 +34,6 @@ public class Advertise {
 
 	public void setListNum(int listNum) {
 		this.listNum = listNum;
-	}
-
-	public String getStated() {
-		return stated;
-	}
-
-	public void setStated(String stated) {
-		this.stated = stated;
-	}
-
-	public String getEndAd() {
-		return endAd;
-	}
-
-	public void setEndAd(String endAd) {
-		this.endAd = endAd;
 	}
 
 	public int getAd_Num() {

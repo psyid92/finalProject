@@ -36,6 +36,19 @@ public class MyBatisDaoImpl implements CommonDAO {
     
 	// ******************************************************************
 	// 데이터 수정
+    public int updateData(String id) throws Exception {
+		int result = 0;
+		
+		try {
+	   	    result = sqlSession.update(id);
+		} catch (Exception e) {
+			System.out.println(e.toString());
+			
+			throw e;
+		}
+		
+		return result;
+    }
     public int updateData(String id, Object value) throws Exception {
 		int result = 0;
 		
@@ -216,6 +229,15 @@ public class MyBatisDaoImpl implements CommonDAO {
 	// 프로시져
 	// INSERT, UPDATE, DELETE
 	@Override
+	public void callUpdateProcedure(String id) throws Exception{
+		try {
+			sqlSession.update(id);
+		} catch (Exception e) {
+			System.out.println(e.toString());
+			
+			throw e;
+		}
+	}
 	public void callUpdateProcedure(String id, Object value) throws Exception{
 		try {
 			sqlSession.update(id, value);

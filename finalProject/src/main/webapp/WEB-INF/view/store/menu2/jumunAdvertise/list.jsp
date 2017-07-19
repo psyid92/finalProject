@@ -89,6 +89,21 @@ $(function(){
 		var g1_Num = ${sessionScope.store.g1_Num}
 		
 	    
+		var url = "<%=cp%>/store/jumunAdvertise";
+        var query = "giupAd_Term=" + giupAd_Term + "&ad_Num=" + ad_Num + "&g1_Num=" + g1_Num;
+        $.ajax({
+			type:"post"
+			,url:url
+			,data:query
+			,success:function(data) {
+				alert("결제성공!");
+			}
+			,error:function(e) {
+				console.log(e.responseText);
+			}
+		});
+        return;
+		
 		var IMP = window.IMP; // 생략가능
 		IMP.init(imp_init); // 부여받은 "가맹점 식별코드"를 사용
 		

@@ -9,5 +9,8 @@ public interface giupReviewService {
 	public giupReview getReview(giupReview dto) throws Exception;
 	public int deleteReview(giupReview dto) throws Exception;
 	public List<giupReview> getListMyReview(giupReview dto,String pathname) throws Exception;
+	
+	//모든 리뷰 - Admin 
+	public List<giupReview> getListAllReview() throws Exception;
 
 }

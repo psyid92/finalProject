@@ -128,7 +128,23 @@ public class giupServiceImpl implements giupReviewService {
 	public List<giupReview> getListAllReview() throws Exception {
 		List<giupReview> list = new ArrayList<>();
 		try {
-			dao.getListData("giupreview.getReviewAllList");
+			list = dao.getListData("giupreview.getReviewAllList");
+			
+			if(! list.isEmpty()){
+				for (giupReview rev : list) {
+					String myStar = "";
+					int star = rev.getRep_star();
+					for(int a=0; a<5; a++){
+						if(a < star){
+							myStar += "★";
+						} else {
+							myStar += "☆";
+						}
+						rev.setMyStar(myStar);
+					}
+				}
+			}
+			
 		} catch (Exception e) {
 		}
 		return list;

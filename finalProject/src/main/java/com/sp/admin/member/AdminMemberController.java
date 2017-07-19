@@ -37,6 +37,7 @@ public class AdminMemberController {
 		} catch (Exception e) {
 		}
 		model.addAttribute("reviewList", reviewList);
+		model.addAttribute("dataCount", reviewList.size());
 		model.addAttribute("mainMenu", "0");
 		model.addAttribute("subMenu", "2");
 		return ".admin4.menu1.memberreviewcontroll.list";

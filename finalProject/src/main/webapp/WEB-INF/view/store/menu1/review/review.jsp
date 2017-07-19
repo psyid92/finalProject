@@ -61,7 +61,6 @@ function printReply(data){
 			s += " <div class='table-responsive' style='clear: both;'>";
 			s += " <div style='float: left;'><span>"+rep_Created+"</span><br><span style='color:gray; font-size:10px;'>"+g1_Name+"</span></div>";
 			s += " <div style='float: left; margin-left: 50px; width: 500px;'>";
-			s += "	<div>"+rep_Star+"&nbsp;&nbsp;"+m1_Nickname+"<br>"+rep_Content+"</div>";
 			s += "	<div style='font-size:20px;'><span style='color:#3DB7CC;'>"+star+"</span>";
 			s += "&nbsp;&nbsp;<span style='font-weight:bold;'>"+m1_Nickname+"</span><br><span style='font-weight:100;'>"+rep_Content+"</span></div>";
 			s += "  <div>" 

@@ -11,7 +11,6 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -34,12 +33,19 @@ public class UserFaqController {
 	@RequestMapping(value={"/userFaq/faq", "/auserfaq/faq"})
 	public String faq(
 			HttpSession session,
+			@RequestParam(value="category", defaultValue="0")int ca_Num,
+			@RequestParam(value="pageNo", defaultValue="1")int current_page,
 			Model model)throws Exception{
 		try {
 			SessionInfo info=(SessionInfo)session.getAttribute("member");
+			List<UserFaq>listUserFaqCategory=service.listUserFaqCategory();
 			
 			if(info.getUserId().equals("admin")){
+				model.addAttribute("pageNo", current_page);
 				model.addAttribute("mainMenu", "3");
+				model.addAttribute("category", ca_Num);
+				model.addAttribute("listUserFaqCategory", listUserFaqCategory);
+				
 				return ".admin4.menu4.memberfaq.faq";
 			}
 		} catch (Exception e) {
@@ -56,6 +62,7 @@ public class UserFaqController {
 			@RequestParam(value="category", defaultValue="0")int ca_Num,
 			@RequestParam(value="pageNo", defaultValue="1")int current_page,
 			@RequestParam(value="searchValue", defaultValue="")String searchValue,
+			@RequestParam(value="mode", defaultValue="")String mode,
 			HttpServletRequest req
 			)throws Exception{
 		try {
@@ -100,6 +107,9 @@ public class UserFaqController {
 			model.addAttribute("category", ca_Num);
 			model.addAttribute("paging", myUtil.paging(current_page, total_page));
 			
+			if(mode.equals("faqlist"))
+				return "admin/menu4/memberfaq/list";
+			
 			if(info.getUserId().equals("admin")){
 				model.addAttribute("mainMenu", "3");
 				return ".admin4.menu4.memberfaq.list";
@@ -107,8 +117,11 @@ public class UserFaqController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		
+		
 		return ".userFaq.list";
 	}
+	
 	
 	
 	
@@ -143,7 +156,7 @@ public class UserFaqController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return "redirect:/auserfaq/faq";
+		return "redirect:/auserfaq/faq?category="+dto.getCa_Num();
 	}
 		
 	

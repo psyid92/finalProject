@@ -2,6 +2,7 @@ package com.sp.giupReview;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.swing.plaf.synth.SynthSpinnerUI;
 
@@ -125,10 +126,10 @@ public class giupServiceImpl implements giupReviewService {
 	 * ---------------------------------------------------------------------------
 	 */
 	@Override
-	public List<giupReview> getListAllReview() throws Exception {
+	public List<giupReview> getListAllReview(Map<String, Object> map) throws Exception {
 		List<giupReview> list = new ArrayList<>();
 		try {
-			list = dao.getListData("giupreview.getReviewAllList");
+			list = dao.getListData("giupreview.getReviewAllList", map);
 			
 			if(! list.isEmpty()){
 				for (giupReview rev : list) {
@@ -148,6 +149,17 @@ public class giupServiceImpl implements giupReviewService {
 		} catch (Exception e) {
 		}
 		return list;
+	}
+
+	//데이터 수 가져오기
+	@Override
+	public int dataCount(Map<String, Object> map) throws Exception {
+		int result = 0;
+		try {
+			result = dao.getReadData("giupreview.getDataCount", map);
+		} catch (Exception e) {
+		}
+		return result;
 	}
 
 }

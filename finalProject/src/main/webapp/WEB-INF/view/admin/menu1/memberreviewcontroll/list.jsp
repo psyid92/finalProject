@@ -6,6 +6,14 @@
 	String cp = request.getContextPath();
 %>
 
+<script>
+function searchList() {
+	var f=document.searchForm;
+	f.action="<%=cp%>/admin/memberreviewcontroll";
+	f.submit();
+}
+</script>
+
 <div class="adminBodyFrame2">
 	<div class="body-title">
 		<h3>
@@ -24,11 +32,11 @@
 		<table class="table table-hover">
 			<thead>
 				<tr>
-					<th class="text-center" style="width: 70px;">회원 아이디</th>
-					<th class="text-center" style="width: 70px;">기업이름</th>
-					<th class="text-center" style="width: 70px;">별점</th>
-					<th class="text-center" style="width: 70px;">내용</th>
-					<th class="text-center" style="width: 70px;">사진</th>
+					<th class="text-center" style="width: 25%;">회원 아이디</th>
+					<th class="text-center" style="width: 25%;">기업이름</th>
+					<th class="text-center" style="width: 15%;">별점</th>
+					<th class="text-center" style="width: *">내용</th>
+					<th class="text-center" style="width: 10%;">사진</th>
 				</tr>
 			<tbody id="giup_list">
 			<c:forEach var="review" items="${reviewList }">
@@ -37,7 +45,7 @@
     				<td>${review.g1_name}</td>
     				<td>${review.myStar}</td>
     				<td>${ review.rep_content}</td>
-    				<td align="center">${review.rphoto_SaveFilename ne null ? '있음' : '-' }</td>
+    				<td align="center" width="10%;">${review.rphoto_SaveFilename ne null ? '있음' : '-' }</td>
     			</tr>
 			</c:forEach>
 			</tbody>
@@ -61,15 +69,13 @@
 			<tr height="40">
 				<td align="left" width="100">
 					<button type="button" class="btn"
-						onclick="javascript:location.href='<%=cp%>/admin/giupcontroll/list';">새로고침</button>
+						onclick="javascript:location.href='<%=cp%>/admin/memberreviewcontroll';">새로고침</button>
 				</td>
 				<td align="center">
 					<form name="searchForm" action="" method="post">
 						<select name="searchKey" class="selectField">
 							<option value="giupName">기업명</option>
-							<option value="giupId">기업아이디</option>
-							<option value="giupCate">기업카테고리</option>
-							<option value="giupNum">기업번호</option>
+							<option value="m1Eamil">회원이메일</option>
 						</select> <input type="text" name="searchValue" class="boxTF">
 						<button type="button" class="btn" onclick="searchList()">검색</button>
 					</form>

@@ -4,7 +4,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 public class giupReview {
 	private String rep_created, rep_content, myStar, g1_name, m1_email;
-	private int rep_num,  rep_star, m1_num, g1_num, jumun_num;
+	private int rep_num,  rep_star, m1_num, g1_num, jumun_num, listNum;
 	
 	//사진
 	private MultipartFile upload; // <input type='file' name='upload' ...
@@ -14,6 +14,12 @@ public class giupReview {
 	
 	public String getRep_created() {
 		return rep_created;
+	}
+	public int getListNum() {
+		return listNum;
+	}
+	public void setListNum(int listNum) {
+		this.listNum = listNum;
 	}
 	public String getM1_email() {
 		return m1_email;

@@ -37,21 +37,24 @@
 </style>
 
 <script type="text/javascript">
-function deleteBoard() {
-<c:if test="${sessionScope.store.g1_Num==dto.g1_Num ||sessionScope.store.g1_Id=='admin'}>
+function deleteQna() {
+
+<c:if test="${sessionScope.store.g1_Num==dto.g1_Num ||sessionScope.store.g1_Id=='admin'}">
 	var q_Num = "${dto.q_Num}";
 	var page = "${page}";
 	var query = "q_Num="+q_Num+"&page="+page;
 	var url = "<%=cp%>/giupQna/delete?"+query;
-</c:if>	
+
 	if(confirm("자료를 삭제하시겠습니까?"))
 		loacation.href = url; 
+</c:if>	
+	
 <c:if test="${sessionScope.store.g1_Num!=dto.g1_Num && sessionScope.store.g1_Id !='admin'}">
 	alert("게시물을 삭제할 수 없습니다.");
 </c:if>
 }	
 
-function updateBoard() {
+function updateQna() {
 <c:if test="${sessionScope.store.g1_Num == dto.g1_Num}">	
 	var q_Num = "${dto.q_Num}";
 	var page = "${page}";
@@ -61,11 +64,10 @@ function updateBoard() {
 	location.href = url;
 </c:if>
 
-<c:if test ="${sessionScope.stor.g1_Num != dto.g1_Num}">
+<c:if test ="${sessionScope.store.g1_Num != dto.g1_Num}">
 	alert("게시물을 수정할 수 없습니다.");
 </c:if>
 }
-
 </script>
 
 <div class="bodyFrame2">
@@ -132,10 +134,10 @@ function updateBoard() {
 				 		<td>
 				 			<button type="button" class="btn btn-default btn-sm wbtn" onclick="javascript:location.href='<%=cp%>/giupQna/reply?q_Num=${dto.q_Num}&page=${page}';">답변</button>
 				 	<c:if test="${sessionScope.store.g1_Num==dto.g1_Num}">
-				 			<button type="button" class="btn btn-default btn-sm wbtn" onclick="updateBoard();">수정</button>
+				 			<button type="button" class="btn btn-default btn-sm wbtn" onclick="updateQna();">수정</button>
 				 	</c:if>
-				 	<c:if test="${sessionScope.store.g1_Num==dto.g1_Num || sessionScope.store.g1_Id='admin'}">
-				 			<button type="button" class="btn btn-default btn-sm wbtn" onclick="deleteBoard();">삭제</button>
+				 	<c:if test="${sessionScope.store.g1_Num==dto.g1_Num || sessionScope.store.g1_Id=='admin'}">
+				 			<button type="button" class="btn btn-default btn-sm wbtn" onclick="deleteQna();">삭제</button>
 				 	</c:if>
 				 		</td>
 				 		<td align="right">

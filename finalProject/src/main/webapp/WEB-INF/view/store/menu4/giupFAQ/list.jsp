@@ -6,12 +6,15 @@
    String cp = request.getContextPath();
 %>
 
-<div class="storeBodyFrame2">
-    <div class="body-title">
-          <h3><span class="glyphicon glyphicon-tower"></span> 마이페이지 </h3>
-    </div>
+<style type="text/css"> 
+
+</style>
+
+<script type="text/javascript">
+
+
+</script>
+
+<div class="paging" style="">
     
-    <div>
-       쿠폰관리게시판3
-    </div>
 </div>

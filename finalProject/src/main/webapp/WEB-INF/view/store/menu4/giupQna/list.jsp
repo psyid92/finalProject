@@ -105,7 +105,7 @@ function searchList() {
     				<option value="q_Created">등록일</option>
     			</select>
     			<input type="text" name="searchValue" class="form-control input-sm input-search">
-    			<button type="button" class="btn btn-info btn-sm btn-search" onclick="searchList();"><span class="glyphicon glyphicon-search"></span>검색</button>
+    			<button type="button" class="btn btn-info btn-sm btn-search" onclick="searchList();"><span class="glyphicon glyphicon-search">검색</span></button>
     		</form>
     	</div>
     	<div style="float:left; width: 20%; min-width: 85px; text-align: right; ">

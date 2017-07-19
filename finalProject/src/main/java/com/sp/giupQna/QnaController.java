@@ -40,7 +40,7 @@ public class QnaController {
 	@RequestMapping(value="/giupQna/list")
 	public String list(
 			@RequestParam(value="page", defaultValue = "1") int current_page, 
-			@RequestParam(value="searchkey", defaultValue="q_Title") String searchkey, 
+			@RequestParam(value="searchKey", defaultValue="q_Title") String searchkey, 
 			@RequestParam(value="searchValue", defaultValue="") String searchValue,
 			Model model, HttpServletRequest req
 			) throws Exception {
@@ -55,7 +55,7 @@ public class QnaController {
 		
 		//전체 페이지 수 
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("searchkey", searchkey);
+		map.put("searchKey", searchkey);
 		map.put("searchValue", searchValue);
 		
 		dataCount=service.dataCount(map);
@@ -137,13 +137,14 @@ public class QnaController {
 		
 		SessionInfo info = (SessionInfo)session.getAttribute("store");
 		if(info==null){
-			return "redirect:/store/loging";
+			return "redirect:/store/login";
 		}
 		
 		String root =session.getServletContext().getRealPath("/") ;
 		String pathname = root+File.separator+"uploads"+File.separator+"giupQna"; 
 		
 		dto.setG1_Name(info.getG1_Name());		
+		dto.setG1_Num(info.getG1_Num());
 		service.insertQna(dto, "created", pathname);
 		
 		return "redirect:/giupQna/list";
@@ -240,7 +241,7 @@ public class QnaController {
 		String root = session.getServletContext().getRealPath("/");
 		String pathname = root+File.separator+"uploads"+File.separator+"giupQna"; 
 		
-		service.updateQna(dto, pathname);
+		service.updateQna(dto, "update", pathname);
 		
 		return "redirect:/giupQna/list?page="+page;
 	}
@@ -334,7 +335,7 @@ public class QnaController {
 			fileManager.doFileDelete(dto.getQ_SaveFileName(), pathname);
 			dto.setQ_SaveFileName("");
 			dto.setQ_OriginalFileName("");
-			service.updateQna(dto, pathname);
+			service.updateQna(dto, "update", pathname);
 		}
 		
 		return "redirect:/giupQna/update?q_Num="+q_Num+"&page="+page;

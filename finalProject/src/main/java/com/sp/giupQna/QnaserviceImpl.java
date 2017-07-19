@@ -29,10 +29,12 @@ public class QnaserviceImpl implements QnaService{
 				dto.setQ_GroupNum(dto.getQ_Num());
 				
 				if(dto.getUpload() !=null && !dto.getUpload().isEmpty()) { // 업로드할 파일이 있을 경우
+					
 					String saveFileName = fileManager.doFileUpload(dto.getUpload(), pathname);
 					dto.setQ_SaveFileName(saveFileName);
 					dto.setQ_OriginalFileName(dto.getUpload().getOriginalFilename());
 				}
+				
 			} else if(mode.equals("reply")) {
 				// orderNo 변경
 				Map<String, Object> map = new HashMap<String, Object>();
@@ -125,7 +127,7 @@ public class QnaserviceImpl implements QnaService{
 	}
 
 	@Override
-	public int updateQna(Qna dto, String pathname) {
+	public int updateQna(Qna dto, String mode, String pathname) {
 		int result=0; 
 		try {
 			// 이전파일 지우기

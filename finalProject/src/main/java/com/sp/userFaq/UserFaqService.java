@@ -9,10 +9,8 @@ public interface UserFaqService {
     public List<UserFaq> listUserFaq(Map<String, Object>map)throws Exception;
     public List<UserFaq> listUserFaqCategory();
     public UserFaq readUserFaq(int faq_Num)throws Exception;
-    public UserFaq preReadUserFaq(Map<String, Object>map)throws Exception;
-    public UserFaq nextReadUserFaq(Map<String, Object>map)throws Exception;
-    public void updateUserFaq(UserFaq dto)throws Exception;
-    public void deleteUserFaq(int Faq_Num)throws Exception;
+    public int updateUserFaq(UserFaq dto)throws Exception;
+    public int deleteUserFaq(int faq_Num)throws Exception;
     
     public int insertCategory(UserFaq dto);
     public List<UserFaq> listCategory();

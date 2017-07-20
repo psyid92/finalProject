@@ -10,7 +10,7 @@
 
 <script>
 	$(function() {
-		$("input[name=searchValue]").focus();
+		$("input[id=serVa]").focus();
 		$("#category").children().click(function(){
 			var category = $(this).attr("id");
 			location.href = '<%=cp%>/jumun/jumunList?category=' + category;
@@ -225,7 +225,7 @@
       <button class="btn btn-default" type="button" style="background-image: url('<%=cp%>/resource/img/where.png');" onclick="geoFindMe(); "></button>
     </span>
     
-    <input type="text" class="form-control" name="searchValue" placeholder="업소명을 입력 해 주세요.">
+    <input type="text" class="form-control" id="serVa" name="searchValue" placeholder="업소명을 입력 해 주세요.">
     <span class="input-group-btn">
       <input class="btn btn-default" type="submit" style="background-image: url('<%=cp%>/resource/img/search.png');" value="">	
     </span>

@@ -60,14 +60,14 @@ $(function(){
 	$('a[data-toggle="tab"]').each(function(){
 		var c=$(this).attr("aria-controls");
 		
-		if(category==c) {
+		if(category==c) {	
 			$(this).parent().addClass("active");
 			$("#tabContent"+c).addClass("active");
 		} else {
 			$(this).parent().removeClass("active");
 		}
 	});
-
+	
 	listPage(page);
 });
 
@@ -87,14 +87,17 @@ $(function(){
 });
 
 function listPage(page) {
+	
     var url="<%=cp%>/userFaq/list";
 
-	var query="pageNo="+page+"&category="+category+"&searchValue="+searchValue;
+	var query="pageNo="+page+"&category="+category+"&searchValue="+searchValue+"&mode=faqlist";
+
 	$.ajax({
 		type:"post"
 		,url:url
 		,data:query
 		,success:function(data) {
+			console.log(data);
 			var id="#tabContent"+category;
 			$(id).html(data);
 		}
@@ -129,10 +132,10 @@ function searchList() {
 
 
   <!-- Tab panes -->
-<div class="tab-content">
+<div class="tab-content1" style="margin-top: 50px;">
   <div role="tabpanel" class="tab-pane active" id="userFaq">
     
-    <div class="bodyFrame2" style="margin-top: 50px;">
+    <div class="bodyFrame2">
     <div class="body-title">
           <h3><span class="glyphicon glyphicon-tasks"></span> 자주찾는 질문 </h3>
     </div>
@@ -145,15 +148,15 @@ function searchList() {
 	    <div role="tabpanel">
 			  <ul class="nav nav-tabs" role="tablist">
 			      <li role="presentation" class="active"><a href="#tabContent0" aria-controls="0" role="tab" data-toggle="tab">전체</a></li>
-		          <c:forEach var="dto" items="">
-			          <li role="presentation"><a href="#tabContent${dto.categoryNum}" aria-controls="${dto.categoryNum}" role="tab" data-toggle="tab">${dto.classify}</a></li>
+		          <c:forEach var="dto" items="${listUserFaqCategory}">
+			          <li role="presentation"><a href="#tabContent${dto.ca_Num}" aria-controls="${dto.ca_Num}" role="tab" data-toggle="tab">${dto.ca_class}</a></li>
 			      </c:forEach>
 			  </ul>
 			
 			  <div class="tab-content" style="padding: 5px; margin-top: 15px;">
 			      <div role="tabpanel" class="tab-pane active" id="tabContent0"></div>
-			      <c:forEach var="dto" items="${listFaqCategory}">
-			          <div role="tabpanel" class="tab-pane" id="tabContent${dto.categoryNum}"></div>
+			      <c:forEach var="dto" items="${listUserFaqCategory}">
+			          <div role="tabpanel" class="tab-pane" id="tabContent${dto.ca_Num}"></div>
 			      </c:forEach>
 			  </div>
 	    </div>

@@ -127,5 +127,51 @@ where m.m1_email=#{m1_email} and m2.m2_tel=#{m2_tel}
 
 
 
+<!-- Admin 계정에서 쓰는 메소드 -->
+
+<sql id="where-list">
+	<if test="searchKey=='m1Email'">
+		m1_email=#{searchValue}
+	</if>
+	<if test="searchKey=='m1Nickname'">
+		m1_nickname=#{searchValue}
+	</if>
+	<if test="searchKey=='m1State'">
+		<if test="searchValue=='휴면'">
+		m1_enabled = 1
+		</if>
+	</if>
+</sql>
+
+
+<!-- MemberList - Admin에서 보기 위함 -->
+<select id="getAllListMember" resultType="com.sp.member.Member1" parameterType="map">
+select * from (
+	SELECT ROWNUM rnum, tb.* FROM (	
+		select m1_nickname, m1_email, to_char(m1_created, 'YYYY-MM-DD') m1_created, to_char(m1_lastlogin,'YYYY-MM-DD') m1_lastlogin, m1_enabled, 
+		CASE WHEN m1_enabled = 0 THEN '-'
+		ELSE '휴면' END as m1_state
+		from member1
+		<where>
+			<if test="searchValue!=null and searchValue!='' ">
+				<include refid="where-list"/>
+			</if>
+		</where>
+	   	order by m1_num desc
+   	 <![CDATA[
+	        ) tb WHERE ROWNUM <= #{end}
+        ) WHERE rnum >= #{start}    
+      ]]>
+</select>
+
+<select id="getAllMemberNum" parameterType="map" resultType="Integer">
+	select nvl(count(*), 0) from member1
+	<where>
+		<if test="searchValue!=null and searchValue!='' ">
+			<include refid="where-list"/>
+		</if>
+	</where>
+</select>
+
 
 </mapper>

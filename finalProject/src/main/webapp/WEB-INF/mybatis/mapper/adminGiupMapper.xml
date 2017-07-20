@@ -40,7 +40,7 @@
 		        FROM giup1 g1
 		        LEFT OUTER JOIN giup2 g2 ON g1.g1_num=g2.g2_num
 		        LEFT OUTER JOIN giup3 g3 ON g1.g1_num=g3.g3_num
-                LEFT OUTER JOIN giupad ad ON g1.g1_num=ad.g1_num
+                LEFT OUTER JOIN giupAd ad ON g1.g1_num=ad.g1_num
                 <where>
 					<if test="searchValue!=null and searchValue!='' ">
 						<include refid="where-list"/>

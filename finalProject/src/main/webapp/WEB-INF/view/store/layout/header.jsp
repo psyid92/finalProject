@@ -86,22 +86,41 @@ function bgLabel(ob, id) {
 }
 
 function sendOk() {
-        var f = document.confirmForm;
-
-    	var str = f.g1_Id.value;
-        if(!str) {
-            f.g1_Id.focus();
+    	var g1_Id = $("#g1_Id").val();
+        if(!g1_Id) {
+        	$("#g1_Id").focus();
             return false;
         }
 
-        str = f.g1_Pwd.value;
-        if(!str) {
-            f.g1_Pwd.focus();
+        var g1_pwd = $("#g1_pwd").val();
+        if(!g1_pwd) {
+        	$("#g1_pwd").focus();
             return false;
         }
-
-        f.action = "<%=cp%>/store/storeout";
-        f.submit();
+        if(confirm("탈퇴하시겠습니까??")){
+        $.ajax({
+        	type:"post"
+        	,url:"<%=cp%>/store/storeout"
+        	,data:{g1_Id:g1_Id, g1_Num:${sessionScope.store.g1_Num}, g1_pwd:g1_pwd}
+        	,dataType:"json"
+        	,success:function(data){
+        		var state = data.state;
+        		var message = data.message;
+        		var title = data.title;
+        		var mainMenu = data.mainMenu;
+        		var s = "";
+        		if(state=="false"){
+        			s += "패스워드가 일치하지 않습니다.";
+        			$("#pwdWrong").html(s);
+        		}else{
+        			location.href="<%=cp%>/store/storeoutComplete";
+        		}
+        	}
+        	,error:function(e){
+        		console.log(e.responseText);
+        	}
+        });
+        }
 }
 </script>
 <nav class="navbar navbar-inverse navbar-fixed-top">
@@ -141,28 +160,31 @@ function sendOk() {
 </nav>
 	<!-- Modal -->
 	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-	  <div class="modal-dialog">
-	    <div class="modal-content">
+	  <div class="modal-dialog" style="width: 500px;">
+	    <div class="modal-content" >
 	      <div class="modal-header">
 	        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-	        <h4 class="modal-title" id="myModalLabel">회원 탈퇴</h4>
+	        <h4 class="modal-title" id="myModalLabel" style="text-align: center;">회원 탈퇴</h4>
 	      </div>
-	        <form class="form-signin" name="confirmForm" method="post">
 	      <div class="modal-body">
+	      	<span class="glyphicon glyphicon-info-sign"></span><span> 탈퇴 후에는 아이디 <span style="color: blue;">${sessionScope.store.g1_Id}</span>로 다시 가입할 수 없습니다<br></span>
+	      	<span class="glyphicon glyphicon-info-sign" style="color: red;"></span>
+	      	<span  style="color: red">이후 삭제된 데이터는 복구되지 않습니다.</span>
 	        <input type="text" id="g1_Id" name="g1_Id" class="form-control loginTF"
 	              value="${sessionScope.store.g1_Id}"
                   readonly="readonly"
+                  style="margin-top: 15px;"
 	              >
             <label for="userPwd" id="lblUserPwd" class="lbl">패스워드</label>
-            <input type="password" id="g1_Pwd" name="g1_Pwd" class="form-control loginTF" autofocus="autofocus"
+            <input type="password" id="g1_pwd" name="g1_pwd" class="form-control loginTF" autofocus="autofocus"
                   onfocus="document.getElementById('lblUserPwd').style.display='none';"
 	              onblur="bgLabel(this, 'lblUserPwd');">
+	      <div id="pwdWrong" style="margin-top:10px; text-align: center;"></div>
             <input type="hidden" name="mode" value="update">
             <input type="hidden" name="g1_Num" value="${sessionScope.store.g1_Num}">
 	      </div>
-	      </form>
 	      <div class="modal-footer">
-	        <button type="button" class="btn btn-primary" onclick="sendOk();">회원탈퇴</button>
+	        <button type="button" class="btn btn-danger" onclick="sendOk();">회원탈퇴</button>
 	        <button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
 	      </div>
 	    </div>

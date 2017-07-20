@@ -95,13 +95,16 @@ public class StoreServiceImpl implements StoreService {
 	}
 
 	@Override
-	public void deleteStore(int g1_Num) throws Exception {
+	public int deleteStore(int g1_Num) throws Exception {
+		int result = 0;
 		try {
-			dao.updateData("store.deleteStore", g1_Num);
+			result = dao.updateData("store.deleteStore", g1_Num);
 		} catch (Exception e) {
+			result = 0;
 			e.printStackTrace();
 			throw e;
 		}
+		return result;
 	}
 
 }

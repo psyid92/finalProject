@@ -45,7 +45,7 @@
 					<if test="searchValue!=null and searchValue!='' ">
 						<include refid="where-list"/>
 					</if>
-					 AND g1.g1_num != 1
+					 AND g1.g1_num != 1 AND (giupAd_State = 1 OR giupAd_State IS NULL)
 				</where>
                 ORDER BY g1_num ASC
       <![CDATA[

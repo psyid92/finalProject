@@ -32,46 +32,44 @@ public class StoreContorller {
 	// 로그인창으로 이동
 	@RequestMapping(value = "/store/login", method = RequestMethod.GET)
 	public String storeLoginForm(String login_error, Model model) {
-		
+
 		return "store/store/login";
 	}
+
 	// 로그인시 이동할 페이지로 리턴
 	@RequestMapping(value = "/store/login", method = RequestMethod.POST)
-	public String storeLoginSubmit(
-			@RequestParam String g1_Id,
-			@RequestParam String g1_Pwd,
-			HttpSession session,
-			Model model) throws Exception{
-		
+	public String storeLoginSubmit(@RequestParam String g1_Id, @RequestParam String g1_Pwd, HttpSession session,
+			Model model) throws Exception {
+
 		Store store = service.readStore(g1_Id);
-		
-		if (store == null || (!store.getG1_Pwd().equals(g1_Pwd))){
+
+		if (store == null || (!store.getG1_Pwd().equals(g1_Pwd))) {
 			model.addAttribute("message", "아이디 또는 패스워드가 일치하지 않습니다.");
 			return "store/store/login";
 		}
-		
+
 		// 로그인 정보를 세션에 저장
 		SessionInfo info = new SessionInfo();
 		info.setG1_Id(store.getG1_Id());
 		info.setG1_Name(store.getG1_Name());
 		info.setG1_Num(store.getG1_Num());
 		session.setAttribute("store", info);
-		
+
 		return "redirect:/store/mystore";
 	}
 
-	@RequestMapping(value="/store/logout")
-	public String logout(HttpServletRequest req, HttpSession session, Model model){
-		session.removeAttribute("store");
+	@RequestMapping(value = "/store/logout")
+	public String logout(HttpServletRequest req, HttpSession session, Model model, SessionStatus sessionstatus) {
+		session.removeAttribute("storeDto");
 		session.invalidate();
-		
+		sessionstatus.setComplete();
+
 		return "store/store/login";
 	}
-	
+
 	// 회원가입 눌렀을때
 	@RequestMapping(value = "/store/join", method = RequestMethod.GET)
 	public String storeJoinForm(@ModelAttribute("storeDto") Store store, Model model) {
-
 		model.addAttribute("mode", "created");
 		return ".store.store.step1";
 	}
@@ -79,27 +77,22 @@ public class StoreContorller {
 	// 다음단계
 	@RequestMapping(value = "/store/step2", method = RequestMethod.POST)
 	public String storeStep2(@ModelAttribute("storeDto") Store store, SessionStatus sessionstatus, Model model) {
-		
 		model.addAttribute("mode", "created");
-		
+
 		return ".store.store.step2";
 	}
 
 	@RequestMapping(value = "/store/complete", method = RequestMethod.POST)
-	public String storeSubmit(@ModelAttribute("storeDto") Store store,
-			SessionStatus sessionstatus, Model model) {
-		//패스워드 암호화
-		/*ShaPasswordEncoder pe = new ShaPasswordEncoder(256);
-		String s = pe.encodePassword(store.getG1_Pwd(), null);
-		store.setG1_Pwd(s);*/
+	public String storeSubmit(@ModelAttribute("storeDto") Store store, SessionStatus sessionstatus, Model model) {
+
 		StringBuffer sb = new StringBuffer();
-		
-		//위도 경도 추가
+
+		// 위도 경도 추가
 		try {
 			service.insertStore(store);
-			
+
 			sessionstatus.setComplete();
-			
+
 		} catch (Exception e) {
 			model.addAttribute("message", "회원가입이 실패했습니다. 다른 아이디로 다시 가입하시기 바랍니다.");
 			model.addAttribute("mode", "created");
@@ -112,40 +105,135 @@ public class StoreContorller {
 
 		model.addAttribute("title", "회원 가입");
 		model.addAttribute("message", sb.toString());
-		
+
 		return ".store.store.complete";
 	}
-	
-	@RequestMapping(value="/store/g1_IdCheck")
+
+	@RequestMapping(value = "/store/g1_IdCheck")
 	@ResponseBody
-	public Map<String, Object> g1_IdCheck(
-			@RequestParam String g1_Id
-			) throws Exception {
-		String passed="false";
+	public Map<String, Object> g1_IdCheck(@RequestParam String g1_Id) throws Exception {
+		String passed = "false";
 		Store store = service.readStore(g1_Id);
-		if(store==null)
-			passed="true";
-		
-   	    // 작업 결과를 json으로 전송
-		Map<String, Object> map = new HashMap<>(); 
+		if (store == null)
+			passed = "true";
+
+		// 작업 결과를 json으로 전송
+		Map<String, Object> map = new HashMap<>();
 		map.put("passed", passed);
 		return map;
 	}
-	
-	@RequestMapping(value="/store/g2_GiupNumCheck")
+
+	@RequestMapping(value = "/store/g2_GiupNumCheck")
 	@ResponseBody
-	public Map<String, Object> g2_GiupNumCheck(
-			@RequestParam String g2_GiupNum
-			) throws Exception {
-		String passed="false";
+	public Map<String, Object> g2_GiupNumCheck(@RequestParam String g2_GiupNum) throws Exception {
+		String passed = "false";
 		Store store = service.readStore2(g2_GiupNum);
-		if(store==null)
-			passed="true";
-		
-   	    // 작업 결과를 json으로 전송
-		Map<String, Object> map = new HashMap<>(); 
+		if (store == null)
+			passed = "true";
+
+		// 작업 결과를 json으로 전송
+		Map<String, Object> map = new HashMap<>();
 		map.put("passed", passed);
 		return map;
 	}
-	
+
+	// -----------------------------------------------------------------------------------------------------------
+	// 회원정보수정
+	@RequestMapping(value = "/store/mypage", method = RequestMethod.GET)
+	public String pwdForm(Model model) {
+
+		model.addAttribute("mainMenu", "8");
+		model.addAttribute("mode", "update");
+		return ".store.menu1.mypage.pwd";
+	}
+
+	@RequestMapping(value = "/store/update", method = RequestMethod.POST)
+	public String pwdSubmit(@RequestParam String g1_Pwd, @RequestParam String mode, Model model, HttpSession session) {
+		SessionInfo info = (SessionInfo) session.getAttribute("store");
+
+		Store storeDto = service.readStore(info.getG1_Id());
+		if (storeDto == null) {
+			session.invalidate();
+			return "redirect:/";
+		}
+		if (!storeDto.getG1_Pwd().equals(g1_Pwd)) {
+			if (mode.equals("update")) {
+				model.addAttribute("mainMenu", "8");
+				model.addAttribute("mode", "update");
+			}
+			model.addAttribute("mainMenu", "8");
+			model.addAttribute("message", "패스워드가 일치하지 않습니다.");
+
+			return ".store.menu1.mypage.pwd";
+		}
+		// 회원정보 수정폼
+		model.addAttribute("mainMenu", "8");
+		model.addAttribute("storeDto", storeDto);
+		model.addAttribute("mode", "update");
+
+		return ".store.store.step1";
+	}
+
+	@RequestMapping(value = "/store/update", method = RequestMethod.GET)
+	public String storeUpdateForm(@ModelAttribute("storeDto") Store storeDto, Model model) {
+		model.addAttribute("mode", "update");
+		return ".store.store.step1";
+	}
+
+	// 다음단계
+	@RequestMapping(value = "/store/update2", method = RequestMethod.POST)
+	public String storUpdateStep2(@ModelAttribute("storeDto") Store storeDto, SessionStatus sessionstatus,
+			Model model) {
+		model.addAttribute("mode", "update");
+		return ".store.store.step2";
+	}
+
+	@RequestMapping(value = "/store/updatecomplete", method = RequestMethod.POST)
+	public String updateSubmit(@ModelAttribute("storeDto") Store storeDto, Model model, SessionStatus sessionstatus) {
+		try {
+			service.updateStore(storeDto);
+			sessionstatus.setComplete();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			model.addAttribute("message", "회원정보 수정에 실패했습니다. 다시 시도해주세요.");
+			model.addAttribute("mode", "update");
+			return ".store.store.complete";
+		}
+		StringBuffer sb = new StringBuffer();
+		sb.append(storeDto.getG1_Name() + "사장님의 회원정보 수정이 정상적으로 처리되었습니다.<br>");
+		sb.append("다시 로그인 하시기 바랍니다.<br>");
+
+		model.addAttribute("title", "회원정보 수정");
+		model.addAttribute("message", sb.toString());
+		return ".store.store.complete";
+	}
+
+	// 회원 탈퇴일 경우
+	@RequestMapping(value = "/store/storeout", method=RequestMethod.POST)
+	public String deleteStore(@RequestParam String mode, @RequestParam String g1_Pwd, Model model, HttpSession session,
+			SessionStatus sessionstatus,@ModelAttribute("storeDto") Store storeDto, @RequestParam int g1_Num) {
+		
+			StringBuffer sb = new StringBuffer();
+			try {
+				service.deleteStore(g1_Num);
+			} catch (Exception e) {
+				e.printStackTrace();
+				model.addAttribute("mainMenu", "8");
+				model.addAttribute("message", "회원정보 수정에 실패했습니다. 다시 시도해주세요.");
+				model.addAttribute("mode", "update");
+				return ".store.store.complete";
+			}
+			
+			session.removeAttribute("store");
+			session.invalidate();
+			sb.append(storeDto.getG1_Name() + "님의 회원 탈퇴 처리가 정상적으로 처리되었습니다.<br>");
+			sb.append("메인화면으로 이동하세요");
+
+			model.addAttribute("mainMenu", "8");
+			model.addAttribute("title", "회원탈퇴");
+			model.addAttribute("message", sb.toString());
+
+			return ".store.store.complete";
+	}
 }

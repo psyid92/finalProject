@@ -41,10 +41,10 @@ function searchList() {
 			<tbody id="giup_list">
 			<c:forEach var="review" items="${reviewList }">
     			<tr>
-    				<td align="center">${review.m1_email}</td>
-    				<td>${review.g1_name}</td>
-    				<td>${review.myStar}</td>
-    				<td>${ review.rep_content}</td>
+    				<td align="center" style="width: 25%;">${review.m1_email}</td>
+    				<td  style="width: 25%;">${review.g1_name}</td>
+    				<td style="width: 15%;">${review.myStar}</td>
+    				<td style="width: *">${ review.rep_content}</td>
     				<td align="center" width="10%;">${review.rphoto_SaveFilename ne null ? '있음' : '-' }</td>
     			</tr>
 			</c:forEach>

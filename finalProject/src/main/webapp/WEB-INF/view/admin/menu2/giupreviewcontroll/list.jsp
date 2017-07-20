@@ -1,75 +1,17 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ page trimDirectiveWhitespaces="true"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%><%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%
 	String cp = request.getContextPath();
 %>
 
-<style>
-
-
-.img_button {
-	width: 50px;
-	height: 50px;
+<script>
+function searchList() {
+	var f=document.searchForm;
+	f.action="<%=cp%>/admin/giupreviewcontroll/list";
+	f.submit();
 }
-
-.giup_arti_left {
-	display: inline-block;
-	cursor: pointer;
-}
-
-.giup_arti_right { 
-	display: inline-block;
-	cursor: pointer;
-	margin-right: 28%;
-}
-
-.giup_arti_sp {
-	display: inline-block;
-	width: 12%; 
-	text-align: center;
-    margin-top: 10px;
-    margin-bottom: 10px;
-    margin-left: 10px;
-    margin-right: 10px;
-    
-}
-
-.giup_arti_input {
-	width:30%;   
-}
-
-.giup_arti_select {
- margin-left: -5px;
-}
-
-.giup_arti_sp {
-font-weight: bold;
-}
-</style>
-
-<script type="text/javascript"
-	src="<%=cp%>/resource/jquery/js/jquery-1.12.4.min.js"></script>
-
-<script type="text/javascript"
-   src="https://openapi.map.naver.com/openapi/v3/maps.js?clientId=WlJc9L4f0E6oaul2CL2b&submodules=geocoder"></script>
-
-
-<script type="text/javascript">
-	function searchList() {
-		var f=document.searchForm;
-		f.action="<%=cp%>/admin/giupreviewcontroll/list";
-		f.submit();
-	}
-	
-	$(function(){
-		$("#giup_list").children().click(function(){
-			var giupNum = $(this).find("td:first").text();
-			
-		});
-	});
 </script>
 
 <div class="adminBodyFrame2">
@@ -79,35 +21,33 @@ font-weight: bold;
 		</h3>
 	</div>
 
-
 	<div style="clear: both; height: 30px; line-height: 30px;">
 		<div style="float: left;">${dataCount }개(${page }/${total_page }
 			페이지)</div>
 	</div>
 
+
+
 	<div class="table-responsive" style="clear: both;">
 		<table class="table table-hover">
 			<thead>
 				<tr>
-					<th class="text-center" style="width: 70px;">기업번호</th>
-					<th class="text-center" style="width: 70px;">기업상태</th>
-					<th class="text-center" style="width: 70px;">기업카테고리</th>
-					<th class="text-center" style="width: 70px;">기업아이디</th>
-					<th class="text-center" style="width: 70px;">기업명</th>
-					<th class="text-center" style="width: 70px;">광고기간</th>
+					<th class="text-center" style="width: 23%;">기업명</th>
+					<th class="text-center" style="width: 15%;">회원 아이디</th>
+					<th class="text-center" style="width: 25%">회원 댓글내용</th>
+					<th class="text-center" style="width: 12%;">기업 아이디</th>
+					<th class="text-center" style="width: 25%;">기업 댓글내용</th>
 				</tr>
 			<tbody id="giup_list">
-				<c:forEach var="dto" items="${list}">
-					<tr style="cursor: pointer"> 
-						<td id="giup_list${dto.listNum}" class="text-center">${dto.g1_num}</td>
-						<td class="text-center">${dto.g1_sleep }</td>
-						<td class="text-center">${dto.cat_code }</td> 
-						<td class="text-center">${dto.g1_id }</td>
-						<td class="text-center">${dto.g1_name }</td>
-						<td class="text-center">${dto.giupAd_Term }</td>
-					</tr>
-					<input type="hidden" id="giup_listNum${dto.listNum}" value="${dto.listNum}">
-				</c:forEach>
+			<c:forEach var="review" items="${reviewList }">
+    			<tr>
+    				<td  style="width: 23%;">${review.g1_name}</td>
+    				<td align="center" style="width: 15%;">${review.m1_Email}</td>
+    				<td style="width: 25%;">${review.rep_Content}</td>
+    				<td style="width: 12%;">${ review.g1_id}</td>
+    				<td align="center" width="25%;">${review.rrep_Content}</td>
+    			</tr>
+			</c:forEach>
 			</tbody>
 		</table>
 	</div>
@@ -134,10 +74,9 @@ font-weight: bold;
 				<td align="center">
 					<form name="searchForm" action="" method="post">
 						<select name="searchKey" class="selectField">
-							<option value="giupName">기업명</option>
-							<option value="giupId">기업아이디</option>
-							<option value="giupCate">기업카테고리</option>
-							<option value="giupNum">기업번호</option>
+							<option value="g1_name">기업명</option>
+							<option value="m1_Eamil">회원 아이디</option>
+							<option value="g1_id">기업 아이디</option>
 						</select> <input type="text" name="searchValue" class="boxTF">
 						<button type="button" class="btn" onclick="searchList()">검색</button>
 					</form>
@@ -145,4 +84,6 @@ font-weight: bold;
 			</tr>
 		<tfoot>
 	</table>
+
 </div>
+

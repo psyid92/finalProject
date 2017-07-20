@@ -65,4 +65,53 @@
                 LEFT OUTER JOIN giupad ad ON g1.g1_num=ad.g1_num
                 WHERE g1.g1_num = #{num} AND (giupAd_State = 1 OR giupAd_State IS NULL)
 	</select>
+	
+	<select id="countGiupReview" resultType="Integer" parameterType="map">
+		SELECT NVL(COUNT(rrep_Num), 0)
+			FROM reviewReply rr
+			LEFT OUTER JOIN giup1 g1 ON rr.g1_Num = g1.g1_Num
+			LEFT OUTER JOIN giupReview gr ON rr.rep_Num = gr.rep_Num
+			LEFT OUTER JOIN member1 m1 ON gr.m1_Num = m1.m1_Num
+			<where>
+				<if test="searchValue!=null and searchValue!='' ">
+					<if test="searchKey=='g1_name'">
+						INSTR(g1_name, #{searchValue}) &gt; 0
+					</if>
+					<if test="searchKey=='m1_Eamil'">
+						INSTR(m1_Email, #{searchValue}) &gt; 0
+					</if>
+					<if test="searchKey=='g1_id'">
+						INSTR(g1_id, #{searchValue}) &gt; 0
+					</if>
+				</if>
+			</where>
+	</select>
+	
+	<select id="listGiupReview" resultType="com.sp.admin.giup.AdminGiup" parameterType="map">
+	SELECT * FROM (
+		SELECT ROWNUM rnum, tb.* FROM (
+			SELECT g1.g1_Num, g1_Name, gr.m1_Num, m1_Email, rep_Content, g1_Id, rrep_Content
+				FROM reviewReply rr
+				LEFT OUTER JOIN giup1 g1 ON rr.g1_Num = g1.g1_Num
+				LEFT OUTER JOIN giupReview gr ON rr.rep_Num = gr.rep_Num
+				LEFT OUTER JOIN member1 m1 ON gr.m1_Num = m1.m1_Num
+				<where>
+					<if test="searchValue!=null and searchValue!='' ">
+						<if test="searchKey=='g1_name'">
+							INSTR(g1_name, #{searchValue}) &gt; 0
+						</if>
+						<if test="searchKey=='m1_Eamil'">
+							INSTR(m1_Email, #{searchValue}) &gt; 0
+						</if>
+						<if test="searchKey=='g1_id'">
+							INSTR(g1_id, #{searchValue}) &gt; 0
+						</if>
+					</if>
+				</where>
+	    		ORDER BY g1.g1_Num
+<![CDATA[	    	
+	    	) tb WHERE ROWNUM <= #{end}
+		) WHERE rnum >= #{start}
+]]>
+	</select>
 </mapper>

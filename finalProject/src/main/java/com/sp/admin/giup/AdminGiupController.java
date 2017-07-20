@@ -3,6 +3,7 @@ package com.sp.admin.giup;
 import java.io.PrintWriter;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -134,70 +135,72 @@ public class AdminGiupController {
 			HttpServletRequest req
 			) throws Exception {
 		
+		List<AdminGiup> reviewList = new ArrayList<>();
 		String cp = req.getContextPath();
-		
 		int rows = 10;
 		int total_page = 0;
 		int dataCount = 0;
 		
-		if(req.getMethod().equalsIgnoreCase("GET")) {
-			searchValue = URLDecoder.decode(searchValue, "utf-8");
+		try {
+			if(req.getMethod().equalsIgnoreCase("GET")) {
+				searchValue =URLDecoder.decode(searchValue, "utf-8"); 
+			}
+			
+			//전체 페이지 수
+			Map<String, Object> map = new HashMap<>();
+			map.put("searchKey", searchKey);
+			map.put("searchValue", searchValue);
+			
+			dataCount = service.countGiupReview(map);
+			if(dataCount != 0)
+				total_page = myUtil.pageCount(rows, dataCount);
+			
+			if(total_page < current_page)
+				current_page = total_page;
+			
+			int start = (current_page - 1) * rows + 1;
+			int end = current_page * rows;
+			map.put("start", start);
+			map.put("end", end); 
+			
+			//리스트 가져오기
+			reviewList = service.listGiupReview(map);
+			
+			int listNum, n = 0;
+			Iterator<AdminGiup> it=reviewList.iterator();
+			while(it.hasNext()) {
+				AdminGiup data = it.next();
+				listNum = dataCount - (start + n - 1);
+				data.setListNum(listNum);
+				n++;
+			}
+			
+			String query = "";
+			String listUrl = cp+"/admin/giupreviewcontroll/list";
+			if(searchValue.length()!=0) {
+				query = "searchKey=" + searchKey +
+						"&searchValue=" + URLEncoder.encode(searchValue, "utf-8");
+			}
+			
+			if(query.length()!=0) {
+				listUrl = cp+"/admin/giupreviewcontroll/list?" + query;
+			}
+			
+			String paging = myUtil.paging(current_page, total_page, listUrl);
+			
+			model.addAttribute("total_page", total_page);
+			model.addAttribute("page", current_page);
+			model.addAttribute("reviewList", reviewList);
+			model.addAttribute("dataCount", dataCount);
+			model.addAttribute("paging", paging);
+			model.addAttribute("mainMenu", "1");
+			model.addAttribute("subMenu", "2");
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
-		
-		//전체 페이지 수
-		Map<String, Object> map = new HashMap<>();
-		System.out.println(searchValue);
-		map.put("searchKey", searchKey);
-		map.put("searchValue", searchValue);
-		
-		dataCount = service.dataCount(map);
-		if(dataCount != 0)
-			total_page = myUtil.pageCount(rows, dataCount);
-		
-		if(total_page < current_page)
-			current_page = total_page;
-		
-		int start = (current_page - 1) * rows + 1;
-		int end = current_page * rows;
-		map.put("start", start);
-		map.put("end", end); 
-		
-		List<AdminGiup> list = service.listAdminGiup(map);
-		
-		int listNum, n = 0;
-		Iterator<AdminGiup> it=list.iterator();
-		while(it.hasNext()) {
-			AdminGiup data = it.next();
-			listNum = dataCount - (start + n - 1);
-			data.setListNum(listNum);
-			n++;
-		}
-		
-		String query = "";
-		String listUrl = cp+"/admin/giupreviewcontroll/list";
-		String articleUrl = cp+"/admin/giupreviewcontroll/article?page=" + current_page;
-		if(searchValue.length()!=0) {
-			query = "searchKey=" + searchKey +
-					"&searchValue=" + URLEncoder.encode(searchValue, "utf-8");
-		}
-		
-		if(query.length()!=0) {
-			listUrl = cp+"/admin/giupreviewcontroll/list?" + query;
-			articleUrl = cp+"/admin/giupreviewcontroll/article?page=" + current_page + "&" + query;
-		}
-		
-		String paging = myUtil.paging(current_page, total_page, listUrl);
-		
-		model.addAttribute("list", list);
-		model.addAttribute("articleUrl", articleUrl);
-		model.addAttribute("page", current_page);
-		model.addAttribute("dataCount", dataCount);
-		model.addAttribute("total_page", total_page);
-		model.addAttribute("paging", paging);
-		model.addAttribute("mainMenu", "1");
-		model.addAttribute("subMenu", "2");
 		return ".admin4.menu2.giupreviewcontroll.list";
 	}
+	
 	
 	@RequestMapping(value="/admin/giupreviewcontroll/article")
 	public void giupControllArticle () throws Exception {

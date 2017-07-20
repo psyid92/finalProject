@@ -14,6 +14,41 @@ public class AdminGiup {
 	private int giupAd_Term, giupAd_State;
 	private int listNum;
 
+	private int m1_Num;
+	private String m1_Email, rep_Content, rrep_Content;
+
+	public int getM1_Num() {
+		return m1_Num;
+	}
+
+	public void setM1_Num(int m1_Num) {
+		this.m1_Num = m1_Num;
+	}
+
+	public String getM1_Email() {
+		return m1_Email;
+	}
+
+	public void setM1_Email(String m1_Email) {
+		this.m1_Email = m1_Email;
+	}
+
+	public String getRep_Content() {
+		return rep_Content;
+	}
+
+	public void setRep_Content(String rep_Content) {
+		this.rep_Content = rep_Content;
+	}
+
+	public String getRrep_Content() {
+		return rrep_Content;
+	}
+
+	public void setRrep_Content(String rrep_Content) {
+		this.rrep_Content = rrep_Content;
+	}
+
 	public int getGiupAd_Term() {
 		return giupAd_Term;
 	}

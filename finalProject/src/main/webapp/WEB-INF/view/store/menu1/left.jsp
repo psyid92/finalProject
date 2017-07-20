@@ -26,7 +26,6 @@
 					<a href="<%=cp%>/store/mystore" class="list-group-item">매출현황</a>
 					<a href="<%=cp%>/store/review/reviewYet" class="list-group-item">리뷰관리</a>
 					<a href="<%=cp%>/store/menu" class="list-group-item">메뉴관리</a>
-					<a href="<%=cp%>/store/mypage" class="list-group-item">업체정보수정</a>
 			</div>
 		</div>
 	</div>

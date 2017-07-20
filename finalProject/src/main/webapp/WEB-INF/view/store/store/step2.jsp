@@ -95,7 +95,8 @@ function memberOk() {
     if(mode=="created") {
     	f.action = "<%=cp%>/store/complete";
     } else if(mode=="update") {
-    	f.action = "<%=cp%>/";
+    	alert(mode);
+    	f.action = "<%=cp%>/store/updatecomplete";
 		}
 
 		f.submit();
@@ -121,7 +122,7 @@ function memberOk() {
 		</h3>
 	</div>
 	<div>
-		<form name="giupForm2" method="post" action="<%=cp%>/store/step2">
+		<form name="giupForm2" method="post">
 			<table
 				style="width: 100%; margin: 20px auto 0px; border-spacing: 0px;">
 				
@@ -224,16 +225,20 @@ function memberOk() {
 							onclick="memberOk();">${mode=="created"?"회원가입":"정보수정"}</button>
 						<button type="reset" class="btn">다시입력</button>
 						<button type="button" class="btn" onclick="javascript:location.href='<%=cp%>/store/join'">이전단계</button>
-						<button type="button" class="btn"
-							onclick="javascript:location.href='<%=cp%>/store/login';">${mode=="created"?"가입취소":"수정취소"}</button>
+						<c:if test="${mode=='created'}">
+						<button type="button" class="btn"onclick="javascript:location.href='<%=cp%>/store/logout';">가입취소</button>
+						</c:if>
+						<c:if test="${mode=='update'}">
+						<button type="button" class="btn"onclick="javascript:location.href='<%=cp%>/store/mypage';">수정취소</button>
+						</c:if>
 					</td>
 				</tr>
 				<tr height="30">
 					<td align="center" style="color: blue;">${msg}</td>
 				</tr>
 			</table>
-			<input id="g3_Lati" name="g3_Lati" type="hidden">
-			<input id="g3_Longti" name="g3_Longti" type="hidden">
+			<input id="g3_Lati" name="g3_Lati" type="hidden" value="${storeDto.g3_Lati}">
+			<input id="g3_Longti" name="g3_Longti" type="hidden" value="${storeDto.g3_Longti}">
 		</form>
 	</div>
 

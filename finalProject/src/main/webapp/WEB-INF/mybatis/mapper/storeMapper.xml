@@ -5,8 +5,8 @@
 
 <!-- 기업 회원가입 -->
 <insert id="insertStore1"  parameterType="com.sp.store.member.Store">
-	INSERT INTO giup1(g1_Num, g1_Id, g1_Pwd, g1_Name, cat_Code, g1_Enabled)
-	VALUES(giup1_seq.NEXTVAL, #{g1_Id}, #{g1_Pwd}, #{g1_Name}, #{category}, 1)
+	INSERT INTO giup1(g1_Num, g1_Id, g1_Pwd, g1_Name, cat_Code)
+	VALUES(giup1_seq.NEXTVAL, #{g1_Id}, #{g1_Pwd}, #{g1_Name}, #{category})
 </insert>
 
 <insert id="insertStore2" parameterType="com.sp.store.member.Store">
@@ -21,7 +21,7 @@
 
 <!-- 회원 정보 가져오기 -->
 <select id="readStore" resultType="com.sp.store.member.Store">
-	SELECT g1_Num, g1.g1_Id, g1_Pwd, g1_Name, cat_Code, g1_created, g2_Baedal,
+	SELECT g1_Num, g2_Num, g3_Num, g1.g1_Id, g1_Pwd, g1_Name, cat_Code, g1_created, g2_Baedal,
 			g2_Tel, g2_Giupnum, g2_Origin, g2_Memo, g2_Opentime,
 			g2_Minpay, g3_Addr1, g3_Addr2, g3_Addr3
 	FROM giup1 g1 LEFT OUTER JOIN giup2 g2 on g1.g1_Num=g2.g2_Num
@@ -30,12 +30,41 @@
 </select>
 
 <select id="readStore2" resultType="com.sp.store.member.Store">
-	SELECT g1.g1_Id, g1_Pwd, g1_Name, cat_Code, g1_created, g2_Baedal,
+	SELECT g1_Num, g2_Num, g3_Num, g1.g1_Id, g1_Pwd, g1_Name, cat_Code, g1_created, g2_Baedal,
 			g2_Tel, g2_Giupnum, g2_Origin, g2_Memo, g2_Opentime,
-			g2_Minpay, g3_Addr1, g3_Addr2, g3_Addr3
+			g2_Minpay, g3_Addr1, g3_Addr2, g3_Addr3, g3_Lati, g3_Longti
 	FROM giup1 g1 LEFT OUTER JOIN giup2 g2 on g1.g1_Num=g2.g2_Num
             LEFT OUTER JOIN giup3 g3 on g1.g1_Num=g3.g3_Num
     WHERE g2_Giupnum=#{g2_Giupnum} AND g1_Enabled != 0 
 </select>
+
+<!-- 회원정보 수정 -->
+<update id="updateStore1" parameterType="com.sp.store.member.Store">
+	UPDATE giup1 
+	SET g1_Pwd = #{g1_Pwd}, g1_Name = #{g1_Name}, cat_Code = #{category} 
+	WHERE g1_Num = #{g1_Num}
+</update>
+
+<update id="updateStore2" parameterType="com.sp.store.member.Store">
+	UPDATE giup2
+	SET g2_Baedal = #{g2_Baedal}, g2_Tel = #{g2_Tel}, g2_GiupNum =  #{g2_GiupNum},
+			g2_Origin = #{g2_Origin}, g2_Memo = #{g2_Memo, jdbcType=VARCHAR}, g2_Opentime = #{g2_Opentime},
+			g2_Minpay =  #{g2_Minpay}
+	WHERE g2_Num = #{g2_Num}
+</update>
+	
+<update id="updateStore3" parameterType="com.sp.store.member.Store">
+	UPDATE giup3 
+	SET g3_Addr1 = #{g3_Addr1}, g3_Addr2 = #{g3_Addr2},
+		 g3_Addr3 = #{g3_Addr3}, g3_Lati = #{g3_Lati}, g3_Longti = #{g3_Longti}
+	WHERE g3_Num = #{g3_Num}
+</update>
+
+<!-- 회원 탈퇴 -->
+<update id="deleteStore" parameterType="com.sp.store.member.Store">
+	UPDATE giup1
+	SET g1_Enabled = 0
+	WHERE g1_Num = #{g1_Num}
+</update>
 
 </mapper>

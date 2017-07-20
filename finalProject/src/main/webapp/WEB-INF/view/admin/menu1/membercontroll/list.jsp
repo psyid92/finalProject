@@ -6,6 +6,14 @@
    String cp = request.getContextPath();
 %>
 
+
+<script type="text/javascript"
+	src="<%=cp%>/resource/jquery/js/jquery-1.12.4.min.js"></script>
+
+<script type="text/javascript"
+   src="https://openapi.map.naver.com/openapi/v3/maps.js?clientId=WlJc9L4f0E6oaul2CL2b&submodules=geocoder"></script>
+   
+   
 <script>
 
 function searchList() {
@@ -16,6 +24,53 @@ function searchList() {
 
 
 </script>
+
+
+<style>
+
+
+.img_button {
+	width: 50px;
+	height: 50px;
+}
+
+.giup_arti_left {
+	display: inline-block;
+	cursor: pointer;
+}
+
+.giup_arti_right { 
+	display: inline-block;
+	cursor: pointer;
+	margin-right: 28%;
+}
+
+.giup_arti_sp {
+	display: inline-block;
+	width: 12%; 
+	text-align: center;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
+    
+}
+
+.giup_arti_input {
+	width:30%;   
+}
+
+.giup_arti_select {
+ margin-left: -5px;
+}
+
+.giup_arti_sp {
+font-weight: bold;
+}
+</style>
+
+
+
 
 <div class="adminBodyFrame2">
     <div class="body-title">
@@ -76,7 +131,6 @@ function searchList() {
 					<form name="searchForm" action="" method="post">
 						<select name="searchKey" class="selectField">
 							<option value="m1Nickname">닉네임</option>
-							<option value="m1Email">이메일</option>
 							<option value="m1State">휴면상태</option>
 						</select> <input type="text" name="searchValue" class="boxTF">
 						<button type="button" class="btn" onclick="searchList()">검색</button>
@@ -107,30 +161,10 @@ function searchList() {
 					</select>
 					<span class="giup_arti_sp">휴면상태 </span>
 					<select name="cur_giupEnabled" id="cur_giupEnabled" class="giup_arti_input giup_arti_select">
-						<option value="1">활동</option>
-						<option value="0">휴면</option>
-					</select>
-					<span class="giup_arti_sp">카테고리 </span>
-					<select name="cur_giupCatCode" id="cur_giupCatCode" class="giup_arti_input giup_arti_select">
-						<option value="chicken">치킨</option>
-						<option value="china">중국집</option>
-						<option value="pizza">피자</option>
-						<option value="bunsik">분식</option>
-						<option value="bossam">족발,보쌈</option>
-						<option value="ya">야식</option>
-						<option value="zzim">찜,탕</option>
-						<option value="don">돈까스</option>
+						<option value="0">활동</option>
+						<option value="1">휴면</option>
 					</select>
 					<span class="giup_arti_sp">가입시간 </span><input class="giup_arti_input" type="text" id="cur_giupCreated" value=""><br>
-					<span class="giup_arti_sp">주소1 </span><input class="giup_arti_input" type="text" id="cur_giupAddr1" value="">
-					<span class="giup_arti_sp">주소2 </span><input class="giup_arti_input" type="text" id="cur_giupAddr2" value=""><br>
-					<span class="giup_arti_sp">광고여부 </span> 
-					<select name="cur_giupAdNum" id="cur_giupAdNum" class="giup_arti_input giup_arti_select">
-						<option value="1000">광고</option>
-						<option value="0">일반</option>
-					</select>
-					<span class="giup_arti_sp">광고일수 </span><input class="giup_arti_input text_write" type="text" id="cur_giupAdTerm" value=""><br>
-					<input type="hidden" id="cur_listNum">
 				</div> 
 				<div class="modal-footer">
 					<div id="article_left" class="giup_arti_left img_button"><img src="<%=cp%>/resource/img/button_left.png" class="img_button"/></div>

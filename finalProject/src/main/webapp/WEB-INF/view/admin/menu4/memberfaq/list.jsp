@@ -25,12 +25,9 @@
 
 							<div style="padding-top: 5px;">
 								<hr>
-								<a
-									href="<%=cp%>/auserfaq/update?faq_Num=${dto.faq_Num}&pageNo=${pageNo}&category=${category}">수정</a>&nbsp;|
-								<a
-									href="<%=cp%>/auserfaq/delete?faq_Num=${dto.faq_Num}&pageNo=${pageNo}&category=${category}">삭제</a>
+								<a href="<%=cp%>/auserfaq/update?faq_Num=${dto.faq_Num}&pageNo=${pageNo}&category=${category}">수정</a>&nbsp;|
+								<a href="<%=cp%>/auserfaq/delete?faq_Num=${dto.faq_Num}&pageNo=${pageNo}&category=${category}">삭제</a>
 							</div>
-
 						</div>
 					</div>
 				</div>

@@ -130,9 +130,6 @@ where m.m1_email=#{m1_email} and m2.m2_tel=#{m2_tel}
 <!-- Admin 계정에서 쓰는 메소드 -->
 
 <sql id="where-list">
-	<if test="searchKey=='m1Email'">
-		m1_email=#{searchValue}
-	</if>
 	<if test="searchKey=='m1Nickname'">
 		m1_nickname=#{searchValue}
 	</if>

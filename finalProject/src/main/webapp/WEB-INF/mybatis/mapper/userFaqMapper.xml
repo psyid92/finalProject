@@ -72,6 +72,28 @@
             ORDER BY ca_Num DESC
     </select>
     
+    <select id="readUserFaq" resultType="com.sp.userFaq.UserFaq" parameterType="Integer">
+      SELECT faq_Num, uf.ca_Num, ca_class, ad.admin_Id, faq_Title, faq_Content,  faq_Count
+             FROM userFaq uf
+             JOIN faqCategory fc ON uf.ca_Num=fc.ca_Num
+             JOIN admin ad ON uf.admin_Id=ad.admin_Id
+             WHERE faq_Num=#{faq_Num}
+    </select>
+    
+    <update id="updateCount" parameterType="Integer">
+      UPDATE userFaq SET faq_Count=faq_Count+1 WHERE faq_Num=#{faq_Num}
+    </update>
+    
+    <update id="updateUserFaq" parameterType="com.sp.userFaq.UserFaq">
+      UPDATE userFaq SET faq_Title=#{faq_Title}, faq_Content=#{faq_Content}, ca_Num=#{ca_Num}
+             WHERE faq_Num = #{faq_Num} 
+    </update>
+    
+    <delete id="deleteUserFaq" parameterType="Integer">
+      DELETE FROM userFaq WHERE faq_Num=#{faq_Num}
+    </delete>
+    
+    
     
     
     

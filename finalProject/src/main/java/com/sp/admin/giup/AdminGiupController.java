@@ -32,7 +32,7 @@ public class AdminGiupController {
 	@Autowired
 	private MyUtil myUtil;
 	
-	@RequestMapping(value="/admin/giupcontroll/list")
+	@RequestMapping("/admin/giupcontroll/list")
 	public String giupControllList(
 			@RequestParam(value="page", defaultValue="1") int current_page,
 			@RequestParam(value="searchKey", defaultValue="giupName") String searchKey,

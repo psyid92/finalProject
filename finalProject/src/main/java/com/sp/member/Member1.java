@@ -1,11 +1,11 @@
 package com.sp.member;
 
 public class Member1 {
-	private String m1_pwd, m1_created, m1_lastLogin, m1_email, m1_nickname;
+	private String m1_pwd, m1_created, m1_lastLogin, m1_email, m1_nickname, m1_state;
 	
 	private String m2_birth, m2_gender, m2_tel;
 	
-	private int m1_enabled, m1_num;
+	private int m1_enabled, m1_num, listNum;
 	
 	
 	public String getM2_birth() {
@@ -67,6 +67,18 @@ public class Member1 {
 	}
 	public void setM1_num(int m1_num) {
 		this.m1_num = m1_num;
+	}
+	public String getM1_state() {
+		return m1_state;
+	}
+	public void setM1_state(String m1_state) {
+		this.m1_state = m1_state;
+	}
+	public int getListNum() {
+		return listNum;
+	}
+	public void setListNum(int listNum) {
+		this.listNum = listNum;
 	}
 
 	

@@ -38,9 +38,7 @@ public class UserFaqController {
 			Model model)throws Exception{
 		try {
 			SessionInfo info=(SessionInfo)session.getAttribute("member");
-			if(info==null){
-				return "redirect:/member/login";
-			}
+			
 			
 			List<UserFaq>listUserFaqCategory=service.listUserFaqCategory();
 			
@@ -112,17 +110,18 @@ public class UserFaqController {
 			model.addAttribute("category", ca_Num);
 			model.addAttribute("paging", myUtil.paging(current_page, total_page));
 			
-			if(mode.equals("faqlist") && info.getUserId().equals("admin")){
+			/*if(mode.equals("faqlist") && info.getUserId().equals("admin")){
 				model.addAttribute("mainMenu", "3");
 				return "admin/menu4/memberfaq/list";
-			} 
+			} */
+			
 			
 			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		
-		return ".userFaq.list";
+		return "userFaq/list";
 	}
 	
 	

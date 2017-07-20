@@ -35,14 +35,10 @@ public class AdvertiseController {
 		
 		List<Advertise> listAdvertise = new ArrayList<>();
 		List<Jumun> wayList = new ArrayList<>();
-		int adState = 0;
-		SessionInfo info = (SessionInfo)session.getAttribute("store");
 		
 		listAdvertise = service.listAdvertise();
 		wayList = service.wayList();
-		adState = service.readGiupAd(info.getG1_Num()); 
 		
-		model.addAttribute("adState",adState);
 		model.addAttribute("mainMenu", "1");
 		model.addAttribute("subMenu", "1");
 		model.addAttribute("listAdvertise",listAdvertise);
@@ -53,11 +49,22 @@ public class AdvertiseController {
 	
 	@RequestMapping(value = "/store/jumunAdvertise", method = RequestMethod.POST)
 	@ResponseBody
-	public Map<String, Object> jumunAdvertiseSubmit(Advertise dto) {
+	public Map<String, Object> jumunAdvertiseSubmit(Advertise dto, HttpSession session) {
 		Map<String, Object> model = new HashMap<>();
 		String state = "fail";
+		SessionInfo info = (SessionInfo) session.getAttribute("store");
 		try {
-			service.insertGiupAd(dto);
+			int count = service.countGiupAd(info.getG1_Num());
+			if (count == 0) {
+				dto.setGiupAd_State(1);
+				service.insertNewGiupAd(dto);
+			} else if (count == 1) {
+				String endDate = service.readGiupAd(info.getG1_Num());
+				dto.setGiupAd_StartDate(endDate); // 최대 endDate+1
+				dto.setGiupAd_EndDate(endDate); // 최대 endDate + 텀
+				dto.setGiupAd_State(2);
+				service.insertAddGiupAd(dto);
+			}
 			state = "success";
 		} catch (Exception e) {
 		}
@@ -74,14 +81,9 @@ public class AdvertiseController {
 		Map<String, Object> map = new HashMap<>();
 		SessionInfo info = (SessionInfo) session.getAttribute("store");
 		int g1_Num = info.getG1_Num();
-		int adState = 0;
 		int rows = 10;
 		int total_page = 0;
 		int dataCount = 0;
-		
-		adState = service.readGiupAd(g1_Num);
-		if (adState == 0) {
-		}
 		
 		
 		dataCount = service.dataCount(g1_Num);
@@ -97,8 +99,9 @@ public class AdvertiseController {
 		map.put("start", start);
 		map.put("end", end);
 		
-//		리스트 가져오기
+		// 리스트 가져오기
 		list = service.listGiupAd(map);
+		
 		
 		int listNum, n = 0;
 		Iterator<Advertise> it = list.iterator();
@@ -111,7 +114,7 @@ public class AdvertiseController {
 		
 		String cp = req.getContextPath();
 		String paging = myUtil.paging(current_page, total_page,cp+"/store/listAdvertise");
-		
+		service.updateGiupAdState();
 		model.addAttribute("list",list);
 		model.addAttribute("page",current_page);
 		model.addAttribute("dataCount",dataCount);

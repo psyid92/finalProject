@@ -38,10 +38,21 @@ public class AdvertiseServiceImpl implements AdvertiseService {
 	}
 
 	@Override
-	public int insertGiupAd(Advertise dto) throws Exception {
+	public int insertNewGiupAd(Advertise dto) throws Exception {
 		int result = 0;
 		try {
-			result = dao.insertData("advertise.insertGiupAd", dto);
+			result = dao.insertData("advertise.insertNewGiupAd", dto);
+		} catch (Exception e) {
+			throw e;
+		}
+		return result;
+	}
+	
+	@Override
+	public int insertAddGiupAd(Advertise dto) throws Exception {
+		int result = 0;
+		try {
+			result = dao.insertData("advertise.insertAddGiupAd", dto);
 		} catch (Exception e) {
 			throw e;
 		}
@@ -49,10 +60,10 @@ public class AdvertiseServiceImpl implements AdvertiseService {
 	}
 
 	@Override
-	public int readGiupAd(int g1_Num) throws Exception {
+	public int countGiupAd(int g1_Num) throws Exception {
 		int result = 0;
 		try {
-			result = dao.getReadData("advertise.readGiupAd", g1_Num);
+			result = dao.getReadData("advertise.countGiupAd", g1_Num);
 		} catch (Exception e) {
 			throw e;
 		}
@@ -76,6 +87,30 @@ public class AdvertiseServiceImpl implements AdvertiseService {
 		try {
 			result = dao.getIntValue("advertise.dataCount",g1_Num);
 		} catch (Exception e) {
+			throw e;
+		}
+		return result;
+	}
+
+	@Override
+	public String readGiupAd(int g1_Num) throws Exception {
+		String result = "";
+		try {
+			result = dao.getReadData("advertise.readGiupAd",g1_Num);
+		} catch (Exception e) {
+			throw e;
+		}
+		return result;
+	}
+
+	@Override
+	public int updateGiupAdState() throws Exception {
+		int result = 0;
+		try {
+			dao.callUpdateProcedure("advertise.updateGiupAdState");
+			result = 1;
+		} catch (Exception e) {
+			System.out.println("서비스문제");
 			throw e;
 		}
 		return result;

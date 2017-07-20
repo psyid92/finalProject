@@ -1,14 +1,13 @@
 package com.sp.jumun;
 
 public class Jumun {
-	private int g1_Num, giupAd_Num, menuct_Num, menuct_Enabled, mainmenu_Num;
+	private int g1_Num, giupAd_State, menuct_Num, menuct_Enabled, mainmenu_Num;
 	private int mainmenu_Pay, mainmenu_Enabled, submenu_Num, submenu_Pay, submenu_Enabled, g1_Enabled;
 	private int payMethod_Num;
 	private String g1_Id, g1_Pwd, g1_Name, g1_Sleep, cat_Code, cat_Name, menuct_Title, menuct_Info;
 	private String mainmenu_Title, mainmenu_Content, mainmenu_Photo, submenu_Title;
 	private String payMethod_Way, payMethod_Content;
 	private double distance;
-	
 
 	public int getMenuct_Enabled() {
 		return menuct_Enabled;
@@ -188,12 +187,12 @@ public class Jumun {
 		this.menuct_Title = menuct_Title;
 	}
 
-	public int getGiupAd_Num() {
-		return giupAd_Num;
+	public int getGiupAd_State() {
+		return giupAd_State;
 	}
 
-	public void setGiupAd_Num(int giupAd_Num) {
-		this.giupAd_Num = giupAd_Num;
+	public void setGiupAd_State(int giupAd_State) {
+		this.giupAd_State = giupAd_State;
 	}
 
 	public int getG1_Num() {

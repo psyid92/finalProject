@@ -196,7 +196,6 @@ public class StoreContorller {
 		try {
 			service.updateStore(storeDto);
 			sessionstatus.setComplete();
-
 		} catch (Exception e) {
 			e.printStackTrace();
 			model.addAttribute("message", "회원정보 수정에 실패했습니다. 다시 시도해주세요.");
@@ -206,7 +205,8 @@ public class StoreContorller {
 		StringBuffer sb = new StringBuffer();
 		sb.append(info.getG1_Name() + "사장님의 회원정보 수정이 정상적으로 처리되었습니다.<br>");
 		sb.append("다시 로그인 하시기 바랍니다.<br>");
-
+		session.removeAttribute("storeDto");
+		session.invalidate();
 		model.addAttribute("title", "회원정보 수정");
 		model.addAttribute("message", sb.toString());
 		return ".store.store.complete";
@@ -257,4 +257,64 @@ public class StoreContorller {
 
 		return ".store.store.complete";
 	}
+	
+	//아이디 찾기
+	@RequestMapping(value="/store/findId")
+	public String findGiupId(Model model){
+		model.addAttribute("state", "g1_Id");
+		return ".store.forgetGiupAccount";
+	}
+	@RequestMapping(value="/store/getId")
+	public String getGiupId(
+			Model model, @RequestParam String g1_Name,
+			@RequestParam String g2_Num) throws Exception{
+		model.addAttribute("state","g1_Id");
+		Map<String, Object> map = new HashMap<>();
+		String g1_Id = "";
+		try {
+			map.put("g1_Name", g1_Name);
+			map.put("g2_Num", g2_Num);
+			g1_Id = service.findGiupId(map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		if(g1_Id == "" || g1_Id == null){
+			model.addAttribute("message", "일치하는 정보가 없습니다.");
+			return ".store.forgetGiupAccount";
+		}else{
+			model.addAttribute("g1_Id",g1_Id);
+		}
+		return ".store.foundId";
+	}
+	//비밀번호 찾기
+	@RequestMapping(value="/store/findPwd")
+	public String findGiupPwd(Model model){
+		model.addAttribute("state", "g1_Pwd");
+		return".store.forgetGiupAccount";
+	}
+	
+	//비밀번호 변경하기  전 확인
+	@RequestMapping(value="/store/changePwd")
+	public String changeGiupPwd(Model model, @RequestParam String g1_Id,
+			@RequestParam String g2_Num){
+		model.addAttribute("state","g1_Pwd");
+		Map<String, Object> map = new HashMap<>();
+		map.put("gi_Id", g1_Id);
+		map.put("g2_Num", g2_Num);
+		int result = 0; 
+		try {
+			result = service.findGiupPwd(map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		if(result == 0){
+			model.addAttribute("message", "일치하는 정보가 없습니다.");
+			return ".store.forgetGiupAccount";
+		}
+		return "store.changePwd";
+	}
+	
+	//비밀번호 변경하기
+	
+	
 }

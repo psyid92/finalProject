@@ -17,7 +17,10 @@ function searchAddressToCoordinate(address) {
 	address : address
 		}, function(status, response) {
 		if (status === naver.maps.Service.Status.ERROR) {
-		return alert('Something Wrong!');
+			$("#g3_Addr1").val("");
+			$("#g3_Addr2").val("");
+			$("#g3_Addr3").val("");
+		return alert('해당 주소는 지번으로 입력해주세요.');
 		}
 		
 		var item = response.result.items[0];

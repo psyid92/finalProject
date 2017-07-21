@@ -9,7 +9,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>spring</title>
+<title>사장님 로그인</title>
 <script type="text/javascript">
 
 	function sendLogin() {
@@ -53,20 +53,22 @@ html, body {
     				<div class="form-group">
       					<div class="col-lg-10" style="width: 100%;">
         					<input type="text" class="form-control" id="g1_Id" name="g1_Id" placeholder="아이디">
+        					<p class="help-block"></p>
       					</div>
     				</div>
     				<div class="form-group">
       					<div class="col-lg-10" style="width: 100%;">
         					<input type="password" class="form-control" id="g1_Pwd" name="g1_Pwd" placeholder="비밀번호">
+        					<p class="help-block"></p>
         				</div>
         			</div>
        			</fieldset> 
        			<nav style="width: 300px; height: 38px; display: inline-block;">
        				<button type="button" class="btn btn-default" onclick="sendLogin();" style="width: 100%;">로그인</button>
        				<div style="line-height: 38px; float: left;">
-       				<a href="#">아이디 찾기</a>
+       				<a href="<%=cp%>/store/findId">아이디 찾기</a>
        				&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
-       				<a href="#">비밀번호 찾기</a>
+       				<a href="<%=cp%>/store/findPwd">비밀번호 찾기</a>
        				&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
        				<a href="<%=cp%>/store/join">회원가입</a></div>
        				<span style="color: red;">${message}</span>

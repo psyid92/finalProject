@@ -117,18 +117,20 @@ public class StoreServiceImpl implements StoreService {
 		} catch (Exception e) { 
 			e.printStackTrace();
 		}
+		System.out.println("aaaaaaaaa"+g1_Id);
 		return g1_Id;
 	}
 
 	@Override
-	public int findGiupPwd(Map<String, Object> map) throws Exception {
-		int result = 0;
+	public String findGiupPwd(Map<String, Object> map) throws Exception {
+		String g1_Pwd = "";
 		try {
-			result = dao.getReadData("store.findGiupPwd",map);
+			g1_Pwd = dao.getReadData("store.findGiupPwd",map);
 		} catch (Exception e) { 
 			e.printStackTrace();
 		}
-		return result;
+		System.out.println(g1_Pwd+"aaaaaaaaa");
+		return g1_Pwd;
 	}
 
 	@Override

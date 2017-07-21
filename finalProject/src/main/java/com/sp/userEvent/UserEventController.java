@@ -1,4 +1,4 @@
-package com.sp.userEvent;
+/*package com.sp.userEvent;
 
 import java.io.File;
 
@@ -60,3 +60,4 @@ public class UserEventController {
 	
 	
 }
+*/

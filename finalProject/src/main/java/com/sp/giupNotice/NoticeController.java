@@ -129,8 +129,6 @@ public class NoticeController {
 		model.addAttribute("dataCount", dataCount);
 		model.addAttribute("paging", paging);
 		model.addAttribute("mainMenu", "3");
-
-		System.out.println(dataCount);
 		
 		return ".store4.menu4.giupNotice.list";
 	}
@@ -369,13 +367,13 @@ public class NoticeController {
 	}
 	
 	//타일즈의 각 메뉴로 이동 
-	@RequestMapping(value = "/giupFaq/list", method = RequestMethod.GET)
+	/*@RequestMapping(value = "/giupFaq/list", method = RequestMethod.GET)
 	public String faqList(Model model) throws Exception{
 
 		model.addAttribute("mainMenu", "3");
 		model.addAttribute("subMenu", "2");
 		return ".store4.menu4.giupFAQ.list";
-	}
+	}*/
 	
 	/*@RequestMapping(value = "/giupQna/list", method = RequestMethod.GET)
 	public String qnaList(Model model) throws Exception{

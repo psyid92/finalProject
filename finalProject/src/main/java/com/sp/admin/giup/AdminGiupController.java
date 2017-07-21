@@ -3,6 +3,7 @@ package com.sp.admin.giup;
 import java.io.PrintWriter;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -32,7 +33,7 @@ public class AdminGiupController {
 	@Autowired
 	private MyUtil myUtil;
 	
-	@RequestMapping(value="/admin/giupcontroll/list")
+	@RequestMapping("/admin/giupcontroll/list")
 	public String giupControllList(
 			@RequestParam(value="page", defaultValue="1") int current_page,
 			@RequestParam(value="searchKey", defaultValue="giupName") String searchKey,
@@ -125,13 +126,87 @@ public class AdminGiupController {
 		out.print(job.toString());
 	}
 	
-	@RequestMapping(value="/admin/giupreviewcontroll", method=RequestMethod.GET)
-	public String giupReviewList(Model model) {
+	@RequestMapping("/admin/giupreviewcontroll/list")
+	public String giupReviewList(
+			@RequestParam(value="page", defaultValue="1") int current_page,
+			@RequestParam(value="searchKey", defaultValue="giupName") String searchKey,
+			@RequestParam(value="searchValue", defaultValue="") String searchValue,
+			Model model,
+			HttpServletRequest req
+			) throws Exception {
 		
-		model.addAttribute("mainMenu", "1");
-		model.addAttribute("subMenu", "2");
+		List<AdminGiup> reviewList = new ArrayList<>();
+		String cp = req.getContextPath();
+		int rows = 10;
+		int total_page = 0;
+		int dataCount = 0;
+		
+		try {
+			if(req.getMethod().equalsIgnoreCase("GET")) {
+				searchValue =URLDecoder.decode(searchValue, "utf-8"); 
+			}
+			
+			//전체 페이지 수
+			Map<String, Object> map = new HashMap<>();
+			map.put("searchKey", searchKey);
+			map.put("searchValue", searchValue);
+			
+			dataCount = service.countGiupReview(map);
+			if(dataCount != 0)
+				total_page = myUtil.pageCount(rows, dataCount);
+			
+			if(total_page < current_page)
+				current_page = total_page;
+			
+			int start = (current_page - 1) * rows + 1;
+			int end = current_page * rows;
+			map.put("start", start);
+			map.put("end", end); 
+			
+			//리스트 가져오기
+			reviewList = service.listGiupReview(map);
+			
+			int listNum, n = 0;
+			Iterator<AdminGiup> it=reviewList.iterator();
+			while(it.hasNext()) {
+				AdminGiup data = it.next();
+				listNum = dataCount - (start + n - 1);
+				data.setListNum(listNum);
+				n++;
+			}
+			
+			String query = "";
+			String listUrl = cp+"/admin/giupreviewcontroll/list";
+			if(searchValue.length()!=0) {
+				query = "searchKey=" + searchKey +
+						"&searchValue=" + URLEncoder.encode(searchValue, "utf-8");
+			}
+			
+			if(query.length()!=0) {
+				listUrl = cp+"/admin/giupreviewcontroll/list?" + query;
+			}
+			
+			String paging = myUtil.paging(current_page, total_page, listUrl);
+			
+			model.addAttribute("total_page", total_page);
+			model.addAttribute("page", current_page);
+			model.addAttribute("reviewList", reviewList);
+			model.addAttribute("dataCount", dataCount);
+			model.addAttribute("paging", paging);
+			model.addAttribute("mainMenu", "1");
+			model.addAttribute("subMenu", "2");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return ".admin4.menu2.giupreviewcontroll.list";
 	}
+	
+	
+	@RequestMapping(value="/admin/giupreviewcontroll/article")
+	public void giupControllArticle () throws Exception {
+		
+	}
+			
 	
 	@RequestMapping(value="/admin/giupcscentercontroll", method=RequestMethod.GET)
 	public String giupcscenterList(Model model) {

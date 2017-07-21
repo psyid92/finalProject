@@ -352,7 +352,7 @@ public class MemberController {
 			dao.removeAccount(dto);
 		} catch (Exception e) {
 		}
-		return "/main";
+		return ".mainLayout";
 	}
 
 	// 회원 삭제
@@ -364,7 +364,7 @@ public class MemberController {
 			dao.deleteAccount(dto);
 		} catch (Exception e) {
 		}
-		return "/main";
+		return ".mainLayout";
 	}
 
 	/*

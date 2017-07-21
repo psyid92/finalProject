@@ -65,32 +65,41 @@ public class UserFaqServiceImpl implements UserFaqService{
 
 	@Override
 	public UserFaq readUserFaq(int faq_Num){
-		// TODO Auto-generated method stub
-		return null;
+		UserFaq dto= null;
+		try {
+			dto=dao.getReadData("userFaq.readUserFaq", faq_Num);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return dto;
 	}
 
-	@Override
-	public UserFaq preReadUserFaq(Map<String, Object> map) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 	@Override
-	public UserFaq nextReadUserFaq(Map<String, Object> map) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void updateUserFaq(UserFaq dto) throws Exception {
-		// TODO Auto-generated method stub
+	public int updateUserFaq(UserFaq dto) throws Exception {
+		int result=0;
+		
+		try {
+			result=dao.updateData("userFaq.updateUserFaq", dto);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
 		
 	}
 
 	@Override
-	public void deleteUserFaq(int Faq_Num) throws Exception {
-		// TODO Auto-generated method stub
+	public int deleteUserFaq(int faq_Num) throws Exception {
+		int result=0;
 		
+		try {
+			result=dao.deleteData("userFaq.deleteUserFaq", faq_Num);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
 	}
 
 	@Override

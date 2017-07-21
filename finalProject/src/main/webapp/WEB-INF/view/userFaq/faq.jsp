@@ -2,11 +2,38 @@
 <%@ page trimDirectiveWhitespaces="true" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+
 <%
    String cp = request.getContextPath();
 %>
 
+<link rel="stylesheet" href="<%=cp%>/resource/bootstrap/css/bootstrap.min.css" type="text/css"/>
+<link rel="stylesheet" href="<%=cp%>/resource/bootstrap/css/bootstrap-theme.min.css" type="text/css"/>
+<link rel="stylesheet" type="text/css" href="<%=cp%>/resource/bootswatch/bootstrap.css">
+
+<link rel="stylesheet" href="<%=cp%>/resource/jquery/css/smoothness/jquery-ui.min.css" type="text/css">
+<link rel="stylesheet" type="text/css" href="<%=cp%>/resource/bootswatch/bootstrap.min.css">
+
+<link rel="stylesheet" type="text/css" href="<%=cp%>/resource/css/css.css">
 <style type="text/css">
+@font-face {
+	font-family: 'ice';
+	src: url('<%=cp%>/resource/fonts/ice.ttf');
+}
+
+body {
+	font-family: ice;
+	font-size: 20px;
+}
+</style>
+<style type="text/css">
+
+body{
+ width: 100%
+}
+
+
+
 .table th, .table td {
     font-weight: normal;
     border-top: none;
@@ -26,7 +53,8 @@
 }
 
 li{
-  width: 20%;  
+  
+  width: 200px;  
   text-align: center;
   font-weight: 100;
   
@@ -39,16 +67,6 @@ li{
 
 
 
-//탭 스트립트
-$('#myTab a').click(function (e) {
-  e.preventDefault()
-  $(this).tab('show')
-})
-	
-$('#myTab a[href="#profile"]').tab('show') // Select tab by name
-$('#myTab a:first').tab('show') // Select first tab
-$('#myTab a:last').tab('show') // Select last tab
-$('#myTab li:eq(2) a').tab('show') // Select third tab (0-indexed)
 
 var category="${category}";
 var searchValue="${searchValue}";
@@ -60,20 +78,21 @@ $(function(){
 	$('a[data-toggle="tab"]').each(function(){
 		var c=$(this).attr("aria-controls");
 		
-		if(category==c) {
+		if(category==c) {	
 			$(this).parent().addClass("active");
 			$("#tabContent"+c).addClass("active");
 		} else {
 			$(this).parent().removeClass("active");
 		}
 	});
-
+	
 	listPage(page);
 });
 
 // 탭을 선택 한 경우
 $(function(){
 	$('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+		
 		category=$(this).attr("aria-controls");
 		searchValue="";
 		$("#searchValue").val("");
@@ -87,14 +106,17 @@ $(function(){
 });
 
 function listPage(page) {
+	
     var url="<%=cp%>/userFaq/list";
 
-	var query="pageNo="+page+"&category="+category+"&searchValue="+searchValue;
+	var query="pageNo="+page+"&category="+category+"&searchValue="+searchValue+"&mode=faqlist";
+
 	$.ajax({
 		type:"post"
 		,url:url
 		,data:query
 		,success:function(data) {
+			console.log(data);
 			var id="#tabContent"+category;
 			$(id).html(data);
 		}
@@ -113,26 +135,29 @@ function searchList() {
 
 </script>
 
+
+
+
 <!-- 마크업 -->
-<div role="tabpanel">
+<div style="margin: 50px auto 0; width: 1000px;  ">
 
   <!-- Nav tabs -->
-  <ul class="nav nav-tabs" role="tablist" style="margin-top: 50px;">
-    <li role="presentation"><a href="<%=cp%>/notice/list" aria-controls="notice" role="tab" data-toggle="tab">공지사항</a></li>
-    <li role="presentation"><a href="<%=cp%>/userEvent/list" aria-controls="userEvent" role="tab" data-toggle="tab">이벤트</a></li>
-    <li role="presentation" class="active"><a href="<%=cp%>/userFaq/faq" aria-controls="userFaq" role="tab" data-toggle="tab">자주찾는 질문</a></li>
-    <li role="presentation"><a href="<%=cp%>/userQna/created" aria-controls="userQna" role="tab" data-toggle="tab">그것이 알고싶다</a></li>
-    <li role="presentation"><a href="<%=cp%>/userBbs/list" aria-controls="userBbs" role="tab" data-toggle="tab">우리끼리소담소담</a></li>
+  <ul class="nav nav-tabs" >
+    <li ><a href="<%=cp%>/notice/list" >공지사항</a></li>
+    <li><a href="<%=cp%>/userEvent/list" >이벤트</a></li>
+    <li  class="active"><a href="<%=cp%>/userFaq/faq" >자주찾는 질문</a></li>
+    <li ><a href="<%=cp%>/userQna/created" >그것이 알고싶다</a></li>
+    <li ><a href="<%=cp%>/userBbs/list" >우리끼리소담소담</a></li>
     
   </ul>
 </div>
 
 
   <!-- Tab panes -->
-<div class="tab-content">
-  <div role="tabpanel" class="tab-pane active" id="userFaq">
+<div  style="margin 	: 50px auto 0; width: 1000px; ">
+  <div id="userFaq">
     
-    <div class="bodyFrame2" style="margin-top: 50px;">
+    <div class="bodyFrame2">
     <div class="body-title">
           <h3><span class="glyphicon glyphicon-tasks"></span> 자주찾는 질문 </h3>
     </div>
@@ -145,15 +170,15 @@ function searchList() {
 	    <div role="tabpanel">
 			  <ul class="nav nav-tabs" role="tablist">
 			      <li role="presentation" class="active"><a href="#tabContent0" aria-controls="0" role="tab" data-toggle="tab">전체</a></li>
-		          <c:forEach var="dto" items="">
-			          <li role="presentation"><a href="#tabContent${dto.categoryNum}" aria-controls="${dto.categoryNum}" role="tab" data-toggle="tab">${dto.classify}</a></li>
+		          <c:forEach var="dto" items="${listUserFaqCategory}">
+			          <li role="presentation"><a href="#tabContent${dto.ca_Num}" aria-controls="${dto.ca_Num}" role="tab" data-toggle="tab">${dto.ca_class}</a></li>
 			      </c:forEach>
 			  </ul>
 			
 			  <div class="tab-content" style="padding: 5px; margin-top: 15px;">
 			      <div role="tabpanel" class="tab-pane active" id="tabContent0"></div>
-			      <c:forEach var="dto" items="${listFaqCategory}">
-			          <div role="tabpanel" class="tab-pane" id="tabContent${dto.categoryNum}"></div>
+			      <c:forEach var="dto" items="${listUserFaqCategory}">
+			          <div role="tabpanel" class="tab-pane" id="tabContent${dto.ca_Num}"></div>
 			      </c:forEach>
 			  </div>
 	    </div>
@@ -175,3 +200,5 @@ function searchList() {
     </div>
   </div>
 </div>
+
+<script type="text/javascript" src="<%=cp%>/resource/bootstrap/js/bootstrap.min.js"></script>

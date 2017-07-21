@@ -46,7 +46,7 @@
 <!-- 리뷰 사진 -->
 <!-- 사진 삽입 -->
 <insert id="insertReviewPhoto" parameterType="com.sp.giupReview.giupReview">
-	insert into reviewPhoto (RPHOTO_SAVEFILENAME, RPHOTO_ORIGINALFILENAME, REP_NUM)
+	insert into reviewPhoto (rphoto_SaveFilename, rphoto_OriginalFilename, REP_NUM)
 		values(#{rphoto_SaveFilename}, #{rphoto_OriginalFilename}, #{rep_num} )
 </insert>
 
@@ -63,10 +63,62 @@
 
 <!-- 사진과 리뷰 리스트 가져오기 -->
 <select id="getReviewListWithPhoto" parameterType="com.sp.giupReview.giupReview" resultType="com.sp.giupReview.giupReview">
-	select r.rep_num, g.g1_name, rep_star, rep_created, rep_content, m1_num, g.g1_num, jumun_num, rp.RPHOTO_ORIGINALFILENAME, rp.RPHOTO_SAVEFILENAME from giupReview r
-		join reviewphoto rp on rp.rep_num = r.rep_num 
-    	join giup1 g on g.g1_num = r.g1_num
+	select r.rep_num, g.g1_name, rep_star, rep_created, rep_content, m1_num, g.g1_num, jumun_num, rp.rphoto_OriginalFilename, rp.rphoto_SaveFilename from giupReview r
+		left outer join reviewphoto rp on rp.rep_num = r.rep_num 
+    	left outer join giup1 g on g.g1_num = r.g1_num
 		where m1_num = #{m1_num} 
-</select>
+</select>  
 
+
+
+
+
+
+<!-- Admin에서 리뷰 가져오는 부분 -->
+<sql id="where-list">
+	<if test="searchKey=='giupName'">
+		INSTR(g1_name, #{searchValue}) &gt; 0
+	</if>
+	<if test="searchKey=='m1Eamil'">
+		m1_email=#{searchValue}
+	</if>
+</sql>
+
+
+
+
+<!-- 모든 리스트 가져오기 -->
+<select id="getReviewAllList" resultType="com.sp.giupReview.giupReview" parameterType="map">
+  SELECT * FROM (
+  	SELECT ROWNUM rnum, tb.* FROM (	
+		select r.rep_num, g.g1_name, rep_star, rep_created, rep_content, r.m1_num, m1_email, g.g1_num, jumun_num, rp.rphoto_OriginalFilename, rp.rphoto_SaveFilename from giupReview r
+			left outer join reviewphoto rp on rp.rep_num = r.rep_num 
+	    	left outer join giup1 g on g.g1_num = r.g1_num
+	    	left outer join member1 m1 on r.m1_num= m1.m1_num
+	    	<where>
+				<if test="searchValue!=null and searchValue!='' ">
+					<include refid="where-list"/>
+				</if>
+			</where>
+      order by r.rep_num desc
+       <![CDATA[
+	        ) tb WHERE ROWNUM <= #{end}
+        ) WHERE rnum >= #{start}    
+      ]]>
+      
+</select>
+      
+      
+<select id="getDataCount" parameterType="map" resultType="Integer">
+	select nvl(count(*), 0) from giupReview r
+	left outer join member1 m1 on r.m1_num = m1.m1_num
+	left outer join giup1 g on g.g1_num = r.g1_num
+	<where>
+		<if test="searchValue!=null and searchValue!='' ">
+			<include refid="where-list"/>
+		</if>
+	</where>
+</select>
+      
+      
 </mapper>

@@ -7,36 +7,30 @@
 		SELECT ad_Num, ad_Title FROM advertise
 	</select>
 	
-	<insert id="insertGiupAd" parameterType="com.sp.store.advertise.Advertise">
-		INSERT INTO giupAd (giupAd_Num, giupAd_Term, ad_Num, g1_Num)
-		VALUES (giupAd_seq.NEXTVAL, #{giupAd_Term}, #{ad_Num}, #{g1_Num}) 
+	<insert id="insertNewGiupAd" parameterType="com.sp.store.advertise.Advertise">
+		INSERT INTO giupAd (giupAd_Num, giupAd_Term, ad_Num, g1_Num, giupAd_StartDate, giupAd_EndDate, giupAd_State)
+		VALUES (giupAd_seq.NEXTVAL, #{giupAd_Term}, #{ad_Num}, #{g1_Num}, SYSDATE, SYSDATE+#{giupAd_Term}-1, #{giupAd_State}) 
+	</insert>
+	
+	<insert id="insertAddGiupAd" parameterType="com.sp.store.advertise.Advertise">
+		INSERT INTO giupAd (giupAd_Num, giupAd_Term, ad_Num, g1_Num, giupAd_StartDate, giupAd_EndDate, giupAd_State)
+		VALUES (giupAd_seq.NEXTVAL, #{giupAd_Term}, #{ad_Num}, #{g1_Num}, TO_DATE(#{giupAd_StartDate},'YYYY-MM-DD') + 1, TO_DATE(#{giupAd_EndDate},'YYYY-MM-DD') + #{giupAd_Term}, #{giupAd_State}) 
 	</insert>
 	
 	<select id="listGiupAd" parameterType="map" resultType="com.sp.store.advertise.Advertise">
 		SELECT * FROM (
 			SELECT ROWNUM rnum, tb.* FROM (
-				SELECT giupAd_Num, giupAd_Term, ga.ad_Num, g1_Num, ad_Title,
-				TO_CHAR(giupAd_PayDate + giupAd_Term - 1, 'YYYY-MM-DD') endAd,
-				TO_CHAR(giupAd_PayDate,'YYYY-MM-DD') giupAd_PayDate,
-				CASE 
-         	 		WHEN TO_CHAR(giupAd_PayDate + giupAd_Term - 1, 'YYYY-MM-DD') >= TO_CHAR(SYSDATE,'YYYY-MM-DD') THEN '적용중'
-          			ELSE '기간만료'
-        		END AS stated
+				SELECT giupAd_Num, giupAd_Term, giupAd_State, ga.ad_Num, g1_Num, ad_Title,
+				TO_CHAR(giupAd_PayDate,'YYYY-MM-DD') giupAd_PayDate, TO_CHAR(giupAd_StartDate,'YYYY-MM-DD') giupAd_StartDate,
+				TO_CHAR(giupAd_EndDate,'YYYY-MM-DD') giupAd_EndDate
 				FROM giupAd ga
 				LEFT OUTER JOIN advertise ad ON ga.ad_Num = ad.ad_Num
 				WHERE g1_Num = #{g1_Num}
-				ORDER BY endAd DESC
+				ORDER BY giupAd_Num DESC
 <![CDATA[
 			) tb WHERE ROWNUM <= #{end}
 		) WHERE rnum >= #{start} 
 ]]>
-	</select>
-	
-	<select id="readGiupAd" parameterType="Integer" resultType="Integer">
-		SELECT COUNT(*)
-		FROM giupAd
-		WHERE giupAd_PayDate + giupAd_Term &gt;= SYSDATE
-		AND g1_Num = #{g1_Num}
 	</select>
 	
 	<select id="dataCount" parameterType="Integer" resultType="Integer">
@@ -44,4 +38,27 @@
 		WHERE g1_Num = #{g1_Num}
 	</select>
 	
+	<select id="readGiupAd" parameterType="Integer" resultType="String">
+		SELECT * FROM (
+  			SELECT TO_CHAR(giupAd_EndDate,'YYYYMMDD') FROM GIUPAD WHERE g1_Num = #{g1_Num} ORDER BY giupAd_EndDate DESC
+		) WHERE ROWNUM = 1
+	</select>
+	
+	<select id="countGiupAd" parameterType="Integer" resultType="Integer">
+  		SELECT NVL(COUNT(*),0) FROM GIUPAD WHERE g1_Num = #{g1_Num} AND giupAd_State = 1
+	</select>
+	
+	<!-- 프로시저 -->
+	<update id="updateGiupAdState">
+		{CALL updateGiupAd()}
+	</update>
+	
+	<!-- 프로시저가 안될때 -->
+	<update id="updateGiupAdState1">
+		UPDATE giupAd SET giupAd_State = 0 WHERE giupAd_State = 1 AND TO_DATE(giupAd_EndDate,'YYYY-MM-DD') &lt; TO_DATE(SYSDATE,'YYYY-MM-DD')
+	</update>
+	
+	<update id="updateGiupAdState2">
+		UPDATE giupAd SET giupAd_State = 1 WHERE giupAd_State = 2 AND TO_DATE(giupAd_StartDate, 'YYYY-MM-DD') = TO_DATE(SYSDATE,'YYYY-MM-DD')
+	</update>
 </mapper>

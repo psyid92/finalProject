@@ -6,20 +6,6 @@
 	String cp = request.getContextPath();
 %>
 
-<style type="text/css">
-</style>
-
-<script type="text/javascript">
-	
-</script>
-
-
-
-<div class="bodyFrame2">
-	<div class="body-title">
-		<h3>
-			<span class="glyphicon glyphicon-exclamation-sign"></span> 자주찾는 질문
-		</h3>
 		<c:forEach var="dto" items="${list}">
 			<div class="panel-group" id="accordion${dto.faq_Num}" role="tablist"
 				aria-multiselectable="true" style="margin-bottom: 5px;">
@@ -39,12 +25,9 @@
 
 							<div style="padding-top: 5px;">
 								<hr>
-								<a
-									href="<%=cp%>/faq/update?faq_Num=${dto.faq_Num}&pageNo=${pageNo}&category=${category}">수정</a>&nbsp;|
-								<a
-									href="<%=cp%>/faq/delete?faq_Num=${dto.faq_Num}&pageNo=${pageNo}&category=${category}">삭제</a>
+								<a href="<%=cp%>/auserfaq/update?faq_Num=${dto.faq_Num}&pageNo=${pageNo}&category=${category}">수정</a>&nbsp;|
+								<a href="<%=cp%>/auserfaq/delete?faq_Num=${dto.faq_Num}&pageNo=${pageNo}&category=${category}">삭제</a>
 							</div>
-
 						</div>
 					</div>
 				</div>
@@ -60,6 +43,4 @@
                 ${paging}
             </c:if>
 		</div>
-	</div>
-</div>
 

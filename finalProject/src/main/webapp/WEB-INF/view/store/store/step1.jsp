@@ -180,11 +180,14 @@ function memberOk() {
     if(mode=="created") {
     	f.action = "<%=cp%>/store/step2";
     } else if(mode=="update") {
-    	f.action = "<%=cp%>/store/step2";
+    	f.action = "<%=cp%>/store/update2";
 		}
 		f.submit();
 	}
 
+function exitpage(){
+	
+}
 </script>
 
 <style type="text/css">
@@ -202,7 +205,7 @@ function memberOk() {
 		</h3>
 	</div>
 	<div>
-		<form name="giupForm" method="post" action="<%=cp%>/store/step1">
+		<form name="giupForm" method="post">
 			<table
 				style="width: 100%; margin: 20px auto 0px; border-spacing: 0px;">
 				<tr>
@@ -213,8 +216,7 @@ function memberOk() {
 						<p style="margin-top: 1px; margin-bottom: 5px;">
 							<input type="text" name="g2_GiupNum" id="g2_GiupNum"
 								value="${storeDto.g2_GiupNum}" style="width: 95%;"
-								${mode=="update" ? "readonly='readonly' ":""} maxlength="15"
-								class="boxTF" onchange="g2_GiupNumCheck()" placeholder="사업자 등록번호를 입력해주세요">
+								 maxlength="15" class="boxTF" onchange="g2_GiupNumCheck()" placeholder="사업자 등록번호를 입력해주세요">
 						</p>
 						<p class="help-block">본인가게의 사업자 등록번호를 입력해주세요</p>
 					</td>
@@ -227,7 +229,7 @@ function memberOk() {
 					<td style="padding: 0 0 15px 15px;">
 						<p style="margin-top: 1px; margin-bottom: 5px;">
 							<input type="text" name="g1_Name" id="g1_Name" value="${storeDto.g1_Name}" style="width: 95%;"
-							 ${mode=="update" ? "readonly='readonly' ":""} maxlength="15" class="boxTF" placeholder="가게의 이름을 적어주세요">
+							maxlength="15" class="boxTF" placeholder="가게의 이름을 적어주세요">
 						</p>
 						<p class="help-block">가게이름을 입력해주세요</p>
 					</td>
@@ -239,7 +241,7 @@ function memberOk() {
 					</td>
 					<td style="padding: 0 0 15px 15px;">
 						<p style="margin-top: 1px; margin-bottom: 5px;">
-							<input type="text" name="g1_Id" id="g1_Id" value="${storeDto.g1_Id}" style="width: 95%;"
+							<input type="text" name="g1_Id" id="g1_Id" ${mode=="update" ? "readonly='readonly' ":""} value="${storeDto.g1_Id}" style="width: 95%;"
 							 maxlength="15" class="boxTF" onchange="g1_IdCheck()" placeholder="아이디는 5~10자로 입력해주세요">
 						</p>
 						<p class="help-block">아이디는 5~10자로 입력해주세요</p>
@@ -313,14 +315,14 @@ function memberOk() {
 					<td style="padding: 0 0 15px 15px;">
 					<select name="category" class="selectField">
 							<option value="" selected="selected">:::선택:::</option>
-							<option value="chicken">치킨</option>
-							<option value="china">중국집</option>
-							<option value="pizza">피자</option>
-							<option value="bunsik">분식</option>
-							<option value="bossam">족발,보쌈</option>
-							<option value="ya">야식</option>
-							<option value="zzim">찜,탕</option>
-							<option value="don">돈까스</option>
+							<option value="chicken" ${storeDto.category=="chicken" ? "selected='selected'" : ""}>치킨</option>
+							<option value="china" ${storeDto.category=="china" ? "selected='selected'" : ""}>중국집</option>
+							<option value="pizza" ${storeDto.category=="pizza" ? "selected='selected'" : ""}>피자</option>
+							<option value="bunsik" ${storeDto.category=="bunsik" ? "selected='selected'" : ""}>분식</option>
+							<option value="bossam" ${storeDto.category=="bossam" ? "selected='selected'" : ""}>족발,보쌈</option>
+							<option value="ya" ${storeDto.category=="ya" ? "selected='selected'" : ""}>야식</option>
+							<option value="zzim" ${storeDto.category=="zzim" ? "selected='selected'" : ""}>찜,탕</option>
+							<option value="don" ${storeDto.category=="don" ? "selected='selected'" : ""}>돈까스</option>
 					</select>
 					<p class="help-block">카테고리를 설정해 주세요</p>
 					</td>
@@ -333,15 +335,20 @@ function memberOk() {
 					<td align="center">
 						<button type="button" name="sendButton" class="btn" onclick="memberOk()">다음단계</button>
 						<button type="reset"  class="btn">다시입력</button>
-						<button type="button" class="btn"
-							onclick="javascript:location.href='<%=cp%>/store/login';">${mode=="created"?"가입취소":"수정취소"}</button>
-						
+						<c:if test="${mode=='created'}">
+						<button type="button" class="btn"onclick="javascript:location.href='<%=cp%>/store/logout';">가입취소</button>
+						</c:if>
+						<c:if test="${mode=='update'}">
+						<button type="button" class="btn"onclick="javascript:location.href='<%=cp%>/store/mypage';">수정취소</button>
+						</c:if>
 					</td>
 				</tr>
 				<tr height="30">
 					<td align="center" style="color: blue;">${message}</td>
 				</tr>
 			</table>
+			<div style="float: right;">
+			</div>
 		</form>
 	</div>
 

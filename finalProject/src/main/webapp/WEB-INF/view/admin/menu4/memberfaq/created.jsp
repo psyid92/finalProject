@@ -105,7 +105,7 @@
   		     });
 
   		     for(var idx=0; idx<data.list.length; idx++){
- 			     var num=data.list[idx].ca_Num;
+ 			     var ca_Num=data.list[idx].ca_Num;
  			     var ca_class=data.list[idx].ca_class;
    			 var selected="";
    			 if(ca_Num==faq_Num)
@@ -257,8 +257,8 @@
                             <td colspan="3" class="td3">
                                 <div class="form-inline">
                                     <select name="ca_Num" class="form-control" id="selectCategory" style="min-width: 150px;">
-                                        <c:forEach var="dto" items="${listCategory}">
-                                            <option value="${dto.ca_Num}" ${dto.ca_Num==dto.ca_Num ? "selected='selected'" : ""}>${dto.ca_class}</option>
+                                        <c:forEach var="vo" items="${listCategory}">
+                                            <option value="${vo.ca_Num}" ${dto.ca_Num==vo.ca_Num ? "selected='selected'" : ""}>${vo.ca_class}</option>
                                         </c:forEach>
                                     </select>
                                     <button type="button" class="btn btn-default btn-sm" onclick="categoryAdd();">카테고리추가</button>
@@ -286,8 +286,8 @@
                     <tfoot>
                         <tr>
                             <td colspan="4" style="text-align: center; padding-top: 15px;">
-                                  <button type="submit" class="btn btn-primary" onclick="javascript:location.href='<%=cp%>/auserFaq/faq?category=${category}';"> 확인 <span class="glyphicon glyphicon-ok"></span></button>
-                                  <button type="button" class="btn btn-danger" onclick="javascript:location.href='<%=cp%>/auserFaq/faq?category=${category}';"> 취소 </button>
+                                  <button type="submit" class="btn btn-primary"> 확인 <span class="glyphicon glyphicon-ok"></span></button>
+                                  <button type="button" class="btn btn-danger" onclick="javascript:location.href='<%=cp%>/auserfaq/faq?category=${category}';"> 취소 </button>
                                   
                                   <c:if test="${mode=='update'}">
                                       <input type="hidden" name="num" value="${dto.faq_Num}">

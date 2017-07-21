@@ -11,7 +11,6 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -34,14 +33,24 @@ public class UserFaqController {
 	@RequestMapping(value={"/userFaq/faq", "/auserfaq/faq"})
 	public String faq(
 			HttpSession session,
+			@RequestParam(value="category", defaultValue="0")int ca_Num,
+			@RequestParam(value="pageNo", defaultValue="1")int current_page,
 			Model model)throws Exception{
 		try {
 			SessionInfo info=(SessionInfo)session.getAttribute("member");
+			
+			
+			List<UserFaq>listUserFaqCategory=service.listUserFaqCategory();
+			
+			model.addAttribute("pageNo", current_page);
+			model.addAttribute("category", ca_Num);
+			model.addAttribute("listUserFaqCategory", listUserFaqCategory);
 			
 			if(info.getUserId().equals("admin")){
 				model.addAttribute("mainMenu", "3");
 				return ".admin4.menu4.memberfaq.faq";
 			}
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -56,6 +65,7 @@ public class UserFaqController {
 			@RequestParam(value="category", defaultValue="0")int ca_Num,
 			@RequestParam(value="pageNo", defaultValue="1")int current_page,
 			@RequestParam(value="searchValue", defaultValue="")String searchValue,
+			@RequestParam(value="mode", defaultValue="")String mode,
 			HttpServletRequest req
 			)throws Exception{
 		try {
@@ -100,15 +110,20 @@ public class UserFaqController {
 			model.addAttribute("category", ca_Num);
 			model.addAttribute("paging", myUtil.paging(current_page, total_page));
 			
-			if(info.getUserId().equals("admin")){
+			/*if(mode.equals("faqlist") && info.getUserId().equals("admin")){
 				model.addAttribute("mainMenu", "3");
-				return ".admin4.menu4.memberfaq.list";
-			}
+				return "admin/menu4/memberfaq/list";
+			} */
+			
+			
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return ".userFaq.list";
+		
+		return "userFaq/list";
 	}
+	
 	
 	
 	
@@ -143,7 +158,7 @@ public class UserFaqController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return "redirect:/auserfaq/faq";
+		return "redirect:/auserfaq/faq?category="+dto.getCa_Num();
 	}
 		
 	
@@ -206,6 +221,60 @@ public class UserFaqController {
 		req.setAttribute("state", state);
 		return categoryList(req);
 	}
+	
+	@RequestMapping(value="/auserfaq/update", method=RequestMethod.GET)
+	public String updateForm(
+			@RequestParam int faq_Num,
+			@RequestParam String pageNo,
+			@RequestParam(value="category", defaultValue="0")int ca_Num,
+			Model model
+			) throws Exception{
+		
+		UserFaq dto= service.readUserFaq(faq_Num);
+		
+		if(dto==null){
+			return "redirect:/auserfaq/faq?category="+ca_Num;
+		}
+		
+		List<UserFaq> listCategory=service.listCategory();
+		List<UserFaq> listUserFaqCategory=service.listUserFaqCategory();
+		
+		model.addAttribute("category", ca_Num);
+		model.addAttribute("listCategory", listCategory);
+		model.addAttribute("listUserFaqCategory", listUserFaqCategory);
+		model.addAttribute("mode", "update");
+		model.addAttribute("pageNo", pageNo);
+		model.addAttribute("dto", dto);
+		
+		return ".admin4.menu4.memberfaq.created";
+	}
+	
+	
+	@RequestMapping(value="/auserfaq/update", method=RequestMethod.POST)
+	public String updateSubmit(
+			UserFaq dto,
+			@RequestParam String pageNo,
+			@RequestParam(value="category", defaultValue="0")int ca_Num
+			) throws Exception{
+		
+		service.updateUserFaq(dto);
+		
+		return "redirect:/auserfaq/faq?category="+ca_Num+"&pageNo="+pageNo;
+	}
+	
+	@RequestMapping(value="/auserfaq/delete")
+	public String delete(
+			@RequestParam(value="faq_Num")int faq_Num,
+			@RequestParam(value="pageNo")String pageNo,
+			@RequestParam(value="category", defaultValue="0")int ca_Num
+			)throws Exception{
+		
+		service.deleteUserFaq(faq_Num);
+		
+		return "redirect:/auserfaq/faq?category="+ca_Num+"&pageNo="+pageNo;
+	}
+	
+	
 	
 	
 	

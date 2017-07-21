@@ -76,9 +76,6 @@ $(function (){
 	
 	function visitHighchart(count, date, total) {
 		var myCount = [ count ];
-		/* alert("mycount :" + myCount); */
-		/*
-		alert("date : "+ date); */
 
 		Highcharts.chart('container', {
 
@@ -92,7 +89,7 @@ $(function (){
 
 			yAxis : {
 				type : 'logarithmic',
-				/* minorTickInterval: 0.1 */
+				/* minorTickInterval: 1,  */
 				title : {
 					text : '방문자 수'
 				}

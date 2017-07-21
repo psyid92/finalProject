@@ -78,13 +78,15 @@ font-weight: bold;
 				$("#cur_giupCreated").val(dto.g1_created);
 				$("#cur_giupAddr1").val(dto.g3_addr2);
 				$("#cur_giupAddr2").val(dto.g3_addr3);
-				$("#cur_giupAdTerm").val(dto.giupad_term);
+				$("#cur_giupAdTerm").val(dto.giupAd_Term);
 				
 				
 				$("#cur_giupSleep").val(dto.g1_sleep);
 				$("#cur_giupEnabled").val(dto.g1_enabled);
-				$("#cur_giupAdNum").val(dto.ad_num);
-				
+				if (dto.giupAd_State == 0)
+					$("#cur_giupAdNum").val("일반");
+				if (dto.giupAd_State >= 1)
+					$("#cur_giupAdNum").val("광고");
 				
 				//현재 보고있는 글의 listNum
 				$("#cur_listNum").val(listNum);
@@ -176,7 +178,7 @@ font-weight: bold;
 <div class="adminBodyFrame2">
 	<div class="body-title">
 		<h3>
-			<span class="glyphicon glyphicon-tower"></span> 업체리스트
+			<span class="glyphicon glyphicon-tower"></span> 업체정보관리
 		</h3>
 	</div>
 
@@ -205,7 +207,7 @@ font-weight: bold;
 						<td class="text-center">${dto.cat_code }</td> 
 						<td class="text-center">${dto.g1_id }</td>
 						<td class="text-center">${dto.g1_name }</td>
-						<td class="text-center">${dto.giupad_term }</td>
+						<td class="text-center">${dto.giupAd_Term }</td>
 					</tr>
 					<input type="hidden" id="giup_listNum${dto.listNum}" value="${dto.listNum}">
 				</c:forEach>
@@ -285,11 +287,11 @@ font-weight: bold;
 					<span class="giup_arti_sp">가입시간 </span><input class="giup_arti_input" type="text" id="cur_giupCreated" value=""><br>
 					<span class="giup_arti_sp">주소1 </span><input class="giup_arti_input" type="text" id="cur_giupAddr1" value="">
 					<span class="giup_arti_sp">주소2 </span><input class="giup_arti_input" type="text" id="cur_giupAddr2" value=""><br>
-					<span class="giup_arti_sp">광고여부 </span> 
-					<select name="cur_giupAdNum" id="cur_giupAdNum" class="giup_arti_input giup_arti_select">
+					<span class="giup_arti_sp">광고상태 </span><input class="giup_arti_input" type="text" id="cur_giupAdNum" value="">
+					<!-- <select name="cur_giupAdNum" id="cur_giupAdNum" class="giup_arti_input giup_arti_select">
 						<option value="1000">광고</option>
 						<option value="0">일반</option>
-					</select>
+					</select> -->
 					<span class="giup_arti_sp">광고일수 </span><input class="giup_arti_input text_write" type="text" id="cur_giupAdTerm" value=""><br>
 					<input type="hidden" id="cur_listNum">
 				</div> 

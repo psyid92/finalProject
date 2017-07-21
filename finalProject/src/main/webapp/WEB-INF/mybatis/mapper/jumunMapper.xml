@@ -93,9 +93,7 @@
 ]]>
 	</select>
 	
-	<select id="listReview" parameterType="map" resultType="com.sp.jumun.Review">
-		SELECT * FROM (
-			SELECT ROWNUM rnum, tb.* FROM (
+	<!-- <select id="listReview" parameterType="map" resultType="com.sp.jumun.Review">
 				SELECT gr.rep_Num, rep_Star, rep_Content, rep_Created, gr.m1_Num, gr.g1_Num, jumun_Num,
 					rphoto_SaveFilename, rphoto_OriginalFilename,
 					rrep_Num, rrep_Content, rrep_Created, m1_Nickname, rrep_Enable
@@ -104,10 +102,21 @@
 				LEFT OUTER JOIN reviewReply rr ON gr.rep_Num = rr.rep_Num
 				LEFT OUTER JOIN member1 m1 ON gr.m1_Num = m1.m1_Num
 				WHERE gr.g1_Num = #{g1_Num} AND gr.rep_Enable = 1
-<![CDATA[
-			) tb WHERE ROWNUM <= #{end}
-		) WHERE rnum >= #{start}
-]]>
+	</select> -->
+	<select id="listReview" parameterType="Integer" resultType="com.sp.jumun.Review">
+		SELECT gr.rep_Num, rep_Star, rep_Content, rep_Created, gr.m1_Num, gr.g1_Num, jumun_Num,
+			rphoto_SaveFilename, rphoto_OriginalFilename, m1_Nickname
+		FROM giupReview gr
+		LEFT OUTER JOIN reviewPhoto rp ON gr.rep_Num = rp.rep_Num
+		LEFT OUTER JOIN member1 m1 ON gr.m1_Num = m1.m1_Num
+		WHERE gr.g1_Num = #{g1_Num} AND gr.rep_Enable = 1
+        ORDER BY rep_Num
+	</select>
+	<select id="listGiupReview" parameterType="Integer" resultType="com.sp.jumun.Review">
+		SELECT rrep_Num, rep_Num, rrep_Content, rrep_Created, rrep_Enable
+				FROM reviewReply
+        WHERE rep_Num = #{rep_Num} AND rrep_Enable = 1
+        ORDER BY rep_Num
 	</select>
 	
 	<insert id="insertLikeGiup" parameterType="map">

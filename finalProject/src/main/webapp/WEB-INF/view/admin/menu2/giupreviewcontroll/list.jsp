@@ -12,8 +12,18 @@ function searchList() {
 	f.action="<%=cp%>/admin/giupreviewcontroll/list";
 	f.submit();
 }
+$(function(){
+	$("#giup_list tr").click(function(){
+		var rep_Num = $(this).next().val();
+		var rrep_Num = $(this).next().next().val();
+	});
+});
 </script>
-
+<style>
+#giup_list tr {
+	cursor: pointer;
+}
+</style>
 <div class="adminBodyFrame2">
 	<div class="body-title">
 		<h3>
@@ -47,6 +57,8 @@ function searchList() {
     				<td style="width: 12%;">${ review.g1_id}</td>
     				<td align="center" width="25%;">${review.rrep_Content}</td>
     			</tr>
+    			<input type="hidden" value="${review.rep_Num}">
+    			<input type="hidden" value="${review.rrep_Num}">
 			</c:forEach>
 			</tbody>
 		</table>

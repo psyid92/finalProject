@@ -90,7 +90,7 @@
 	<select id="listGiupReview" resultType="com.sp.admin.giup.AdminGiup" parameterType="map">
 	SELECT * FROM (
 		SELECT ROWNUM rnum, tb.* FROM (
-			SELECT g1.g1_Num, g1_Name, gr.m1_Num, m1_Email, rep_Content, g1_Id, rrep_Content
+			SELECT g1.g1_Num, g1_Name, gr.m1_Num, m1_Email, rep_Content, g1_Id, rrep_Content, gr.rep_Num, rrep_Num
 				FROM reviewReply rr
 				LEFT OUTER JOIN giup1 g1 ON rr.g1_Num = g1.g1_Num
 				LEFT OUTER JOIN giupReview gr ON rr.rep_Num = gr.rep_Num

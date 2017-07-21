@@ -36,16 +36,16 @@
 			SELECT g1.g1_num, g1_id, g1_name, g1_sleep, cat_code, g1_enabled, g1_created,
             NVL(g2_baedal,0), NVL(g2_tel,0), NVL(g2_giupnum,0), NVL(g2_origin,0), NVL(g2_memo,0), NVL(g2_opentime,0), NVL(g2_minpay,0),
             g3_addr1, g3_addr2, g3_addr3, g3_lati, g3_longti,
-            giupad_term, ad_num
+            ad_num, ad.giupAd_Term
 		        FROM giup1 g1
 		        LEFT OUTER JOIN giup2 g2 ON g1.g1_num=g2.g2_num
 		        LEFT OUTER JOIN giup3 g3 ON g1.g1_num=g3.g3_num
-                LEFT OUTER JOIN giupad ad ON g1.g1_num=ad.g1_num
+                LEFT OUTER JOIN giupAd ad ON g1.g1_num=ad.g1_num
                 <where>
 					<if test="searchValue!=null and searchValue!='' ">
 						<include refid="where-list"/>
 					</if>
-					 AND g1.g1_num != 1 AND (giupAd_State = 1 OR giupAd_State IS NULL)
+					 AND g1.g1_num != 1 AND giupAd_State = 1 OR giupAd_State IS NULL
 				</where>
                 ORDER BY g1_num ASC
       <![CDATA[
@@ -58,11 +58,60 @@
 		SELECT g1.g1_num, g1_id, g1_name, g1_sleep, cat_code, g1_enabled, g1_created,
             NVL(g2_baedal,0), NVL(g2_tel,0), NVL(g2_giupnum,0), NVL(g2_origin,0), NVL(g2_memo,0), NVL(g2_opentime,0), NVL(g2_minpay,0),
             g3_addr1, g3_addr2, g3_addr3, g3_lati, g3_longti,
-            giupad_term, ad_num
+            giupAd_Term, NVL(giupAd_State,0) giupAd_State
 		        FROM giup1 g1
 		        LEFT OUTER JOIN giup2 g2 ON g1.g1_num=g2.g2_num
 		        LEFT OUTER JOIN giup3 g3 ON g1.g1_num=g3.g3_num
                 LEFT OUTER JOIN giupad ad ON g1.g1_num=ad.g1_num
-                WHERE g1.g1_num = #{num}
+                WHERE g1.g1_num = #{num} AND (giupAd_State = 1 OR giupAd_State IS NULL)
+	</select>
+	
+	<select id="countGiupReview" resultType="Integer" parameterType="map">
+		SELECT NVL(COUNT(rrep_Num), 0)
+			FROM reviewReply rr
+			LEFT OUTER JOIN giup1 g1 ON rr.g1_Num = g1.g1_Num
+			LEFT OUTER JOIN giupReview gr ON rr.rep_Num = gr.rep_Num
+			LEFT OUTER JOIN member1 m1 ON gr.m1_Num = m1.m1_Num
+			<where>
+				<if test="searchValue!=null and searchValue!='' ">
+					<if test="searchKey=='g1_name'">
+						INSTR(g1_name, #{searchValue}) &gt; 0
+					</if>
+					<if test="searchKey=='m1_Eamil'">
+						INSTR(m1_Email, #{searchValue}) &gt; 0
+					</if>
+					<if test="searchKey=='g1_id'">
+						INSTR(g1_id, #{searchValue}) &gt; 0
+					</if>
+				</if>
+			</where>
+	</select>
+	
+	<select id="listGiupReview" resultType="com.sp.admin.giup.AdminGiup" parameterType="map">
+	SELECT * FROM (
+		SELECT ROWNUM rnum, tb.* FROM (
+			SELECT g1.g1_Num, g1_Name, gr.m1_Num, m1_Email, rep_Content, g1_Id, rrep_Content
+				FROM reviewReply rr
+				LEFT OUTER JOIN giup1 g1 ON rr.g1_Num = g1.g1_Num
+				LEFT OUTER JOIN giupReview gr ON rr.rep_Num = gr.rep_Num
+				LEFT OUTER JOIN member1 m1 ON gr.m1_Num = m1.m1_Num
+				<where>
+					<if test="searchValue!=null and searchValue!='' ">
+						<if test="searchKey=='g1_name'">
+							INSTR(g1_name, #{searchValue}) &gt; 0
+						</if>
+						<if test="searchKey=='m1_Eamil'">
+							INSTR(m1_Email, #{searchValue}) &gt; 0
+						</if>
+						<if test="searchKey=='g1_id'">
+							INSTR(g1_id, #{searchValue}) &gt; 0
+						</if>
+					</if>
+				</where>
+	    		ORDER BY g1.g1_Num
+<![CDATA[	    	
+	    	) tb WHERE ROWNUM <= #{end}
+		) WHERE rnum >= #{start}
+]]>
 	</select>
 </mapper>

@@ -1,7 +1,7 @@
 package com.sp.store.member;
 
 public class Store {
-	private int g1_Num;
+	private int g1_Num, g2_Num, g3_Num;
 	private String g2_GiupNum;
 	private String g1_Id, g1_Pwd, g1_Name, category;
 	private String g2_Tel, Tel1, Tel2, Tel3;
@@ -9,6 +9,18 @@ public class Store {
 	private String g3_Addr1, g3_Addr2, g3_Addr3;
 	private float g3_Lati, g3_Longti;
 	
+	public int getG2_Num() {
+		return g2_Num;
+	}
+	public void setG2_Num(int g2_Num) {
+		this.g2_Num = g2_Num;
+	}
+	public int getG3_Num() {
+		return g3_Num;
+	}
+	public void setG3_Num(int g3_Num) {
+		this.g3_Num = g3_Num;
+	}
 	public int getG1_Num() {
 		return g1_Num;
 	}

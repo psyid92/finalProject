@@ -15,4 +15,9 @@ public interface AdminGiupService {
 	public List<Member1> getAllListMember(Map<String, Object> map) throws Exception;
 	public Member1 getMemberDetail(Map<String, Object> map) throws Exception; 
 	
+	//기업리뷰 list
+	public List<AdminGiup> listGiupReview(Map<String, Object> map) throws Exception;
+	//기업리뷰 COUNT
+	public int countGiupReview(Map<String, Object> map) throws Exception;
+	
 }

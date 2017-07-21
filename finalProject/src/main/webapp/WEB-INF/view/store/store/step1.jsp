@@ -6,7 +6,8 @@
 	String cp = request.getContextPath();
 %>
 <script type="text/javascript">
-function g1_IdCheck(){
+
+function g1_IdCheck(){ 
 	var g1_Id=$("#g1_Id").val();
 	if(!/^[a-z][a-z0-9_]{4,9}$/i.test(g1_Id)) { 
 		var str="<span style='color:red;font-weight: bold;'>아이디는 5~10자 이내이며, 첫글자는 영문자로 시작해야 합니다.</span>";
@@ -19,7 +20,7 @@ function g1_IdCheck(){
 	var url="<%=cp%>/store/g1_IdCheck";
 	var query="g1_Id="+g1_Id;
 	$.ajax({
-		type:"POST"
+		type:"post"
 		,url:url
 		,data:query
 		,dataType:"JSON"
@@ -50,7 +51,7 @@ function g2_GiupNumCheck(){
 	var url="<%=cp%>/store/g2_GiupNumCheck";
 	var query="g2_GiupNum="+g2_GiupNum;
 	$.ajax({
-		type:"POST"
+		type:"post"
 		,url:url
 		,data:query
 		,dataType:"JSON"
@@ -72,50 +73,42 @@ function memberOk() {
 	var f = document.giupForm;
 	var str;
 	
-	/* str = f.g2_GiupNum.value;
+	str = f.g2_GiupNum.value;
 	str = str.trim();
- 	if(!str) {
-		alert("사업자 등록번호를 입력하세요. ");
+	if(!str){
+		var str="<span style='color:red;font-weight: bold;'>사업자 등록번호를 입력해주세요.</span>";
+		$("#g2_GiupNum").parent().next(".help-block").html(str);
 		f.g2_GiupNum.focus();
 		return;
 	}
 	
-	if(!/^(\d+){10}$/.test(str)) {
-        alert("사업자 등록번호는 10자리 숫자만 가능합니다. ");
-        f.g2_GiupNum.focus();
-        return;
-    } */
+	str = f.g1_Id.value;
+	str = str.trim();
+	if(!str){
+		var str="<span style='color:red;font-weight: bold;'>아이디를 입력해주세요.</span>";
+		$("#g1_Id").parent().next(".help-block").html(str);
+		f.g1_Id.focus();
+		return;
+	}
+	
 	str = f.g1_Name.value;
 	str = str.trim();
 	if(!str) {
-		alert("가게이름을 입력하세요. ");
+		var str="<span style='color:red;font-weight: bold;'>가게 이름을 입력해주세요.</span>";
+		$("#g1_Name").parent().next(".help-block").html(str);
 		f.g1_Name.focus();
 		return;
 	}
 	
-	/* str = f.g1_Id.value;
-	str = str.trim();
-	if(!str) {
-		alert("아이디를 입력하세요. ");
-		f.g1_Id.focus();
-		return;
-	}
-	if(!/^[a-z][a-z0-9_]{4,9}$/i.test(str)) { 
-		alert("아이디는 5~10자이며 첫글자는 영문자이어야 합니다.");
-		f.g1_Id.focus();
-		return;
-	}
-	f.g1_Id.value = str; */
-	 
 	str = f.g1_Pwd.value;
 	str = str.trim();
 	if(!str) {
-		alert("패스워드를 입력하세요. ");
+		var str="<span style='color:red;font-weight: bold;'> 패스워드를 입력해주세요. </span>";
+		$("#g1_Pwd").parent().next(".help-block").html(str);
 		f.g1_Pwd.focus();
 		return;
 	}
 	if(!/^(?=.*[a-z])(?=.*[!@#$%^*+=-]|.*[0-9]).{5,10}$/i.test(str)) { 
-		//alert("패스워드는 5~10자이며 하나 이상의 숫자나 특수문자가 포함되어야 합니다.");
 		var str="<span style='color:red;font-weight: bold;'> 패스워드는 5~10자이며 하나 이상의 숫자나 특수문자가 포함되어야 합니다. </span>";
 		$("#g1_Pwd").parent().next(".help-block").html(str);
 		f.g1_Pwd.focus();
@@ -124,7 +117,6 @@ function memberOk() {
 	
 	f.g1_Pwd.value = str;
 	if(str!= f.g1PwdCheck.value) {
-       // alert("패스워드가 일치하지 않습니다. ");
         var str="<span style='color:red;font-weight: bold;'> 패스워드가 일치하지 않습니다. </span>";
 		$("#g1PwdCheck").parent().next(".help-block").html(str);
         f.g1PwdCheck.focus();
@@ -134,44 +126,44 @@ function memberOk() {
     str = f.tel1.value;
 	str = str.trim();
     if(!str) {
-        alert("전화번호를 입력하세요. ");
+    	var str="<span style='color:red;font-weight: bold;'> 전화번호를 입력하세요. </span>";
+		$("#tel1").parent().next(".help-block").html(str);
         f.tel1.focus();
         return;
     }
-    if(!/^(\d+)$/.test(str)) {
-        alert("숫자만 가능합니다. ");
-        f.tel1.focus();
-        return;
-    }
-    
     str = f.tel2.value;
 	str = str.trim();
     if(!str) {
-        alert("전화번호를 입력하세요. ");
+    	var str="<span style='color:red;font-weight: bold;'> 전화번호를 입력하세요. </span>";
+		$("#tel2").parent().next(".help-block").html(str);
         f.tel2.focus();
         return;
     }
     if(!/^(\d+)$/.test(str)) {
-        alert("숫자만 가능합니다. ");
+    	var str="<span style='color:red;font-weight: bold;'> 숫자만 가능합니다.  </span>";
+		$("#tel2").parent().next(".help-block").html(str);
         f.tel2.focus();
         return;
     }
     str = f.tel3.value;
 	str = str.trim();
     if(!str) {
-        alert("전화번호를 입력하세요. ");
+    	var str="<span style='color:red;font-weight: bold;'> 전화번호를 입력하세요. </span>";
+		$("#tel3").parent().next(".help-block").html(str);
         f.tel3.focus();
         return;
     }
     if(!/^(\d+)$/.test(str)) {
-        alert("숫자만 가능합니다. ");
+    	var str="<span style='color:red;font-weight: bold;'> 숫자만 가능합니다.  </span>";
+		$("#tel3").parent().next(".help-block").html(str);
         f.tel3.focus();
         return;
     }
     str = f.category.value;
 	str = str.trim();
     if(!str) {
-        alert("카테고리를 선택해주세요. ");
+    	var str="<span style='color:red;font-weight: bold;'> 카테고리를 선택해주세요. </span>";
+		$("#category").parent().next(".help-block").html(str);
         f.category.focus();
         return;
     }
@@ -180,7 +172,7 @@ function memberOk() {
     if(mode=="created") {
     	f.action = "<%=cp%>/store/step2";
     } else if(mode=="update") {
-    	f.action = "<%=cp%>/store/step2";
+    	f.action = "<%=cp%>/store/update2";
 		}
 		f.submit();
 	}
@@ -202,7 +194,7 @@ function memberOk() {
 		</h3>
 	</div>
 	<div>
-		<form name="giupForm" method="post" action="<%=cp%>/store/step1">
+		<form name="giupForm" method="post">
 			<table
 				style="width: 100%; margin: 20px auto 0px; border-spacing: 0px;">
 				<tr>
@@ -211,12 +203,11 @@ function memberOk() {
 						style="font-weight: 900;">사업자 등록번호</label></td>
 					<td style="padding: 0 0 15px 15px;">
 						<p style="margin-top: 1px; margin-bottom: 5px;">
-							<input type="text" name="g2_GiupNum" id="g2_GiupNum"
+							<input autofocus="autofocus" type="text" name="g2_GiupNum" id="g2_GiupNum"
 								value="${storeDto.g2_GiupNum}" style="width: 95%;"
-								${mode=="update" ? "readonly='readonly' ":""} maxlength="15"
-								class="boxTF" onchange="g2_GiupNumCheck()" placeholder="사업자 등록번호를 입력해주세요">
+								 maxlength="15" class="boxTF" onchange="g2_GiupNumCheck()" placeholder="사업자 등록번호를 입력해주세요">
 						</p>
-						<p class="help-block">본인가게의 사업자 등록번호를 입력해주세요</p>
+						<p class="help-block"></p>
 					</td>
 				</tr>
 
@@ -227,9 +218,9 @@ function memberOk() {
 					<td style="padding: 0 0 15px 15px;">
 						<p style="margin-top: 1px; margin-bottom: 5px;">
 							<input type="text" name="g1_Name" id="g1_Name" value="${storeDto.g1_Name}" style="width: 95%;"
-							 ${mode=="update" ? "readonly='readonly' ":""} maxlength="15" class="boxTF" placeholder="가게의 이름을 적어주세요">
+							maxlength="15" class="boxTF" placeholder="가게의 이름을 적어주세요">
 						</p>
-						<p class="help-block">가게이름을 입력해주세요</p>
+						<p class="help-block"></p>
 					</td>
 				</tr>
 
@@ -239,10 +230,10 @@ function memberOk() {
 					</td>
 					<td style="padding: 0 0 15px 15px;">
 						<p style="margin-top: 1px; margin-bottom: 5px;">
-							<input type="text" name="g1_Id" id="g1_Id" value="${storeDto.g1_Id}" style="width: 95%;"
-							 maxlength="15" class="boxTF" onchange="g1_IdCheck()" placeholder="아이디는 5~10자로 입력해주세요">
+							<input type="text" name="g1_Id" id="g1_Id" ${mode=="update" ? "readonly='readonly' ":" "} value="${storeDto.g1_Id}" style="width: 95%;"
+							 maxlength="15" class="boxTF" onchange="g1_IdCheck();" placeholder="아이디는 5~10자로 입력해주세요">
 						</p>
-						<p class="help-block">아이디는 5~10자로 입력해주세요</p>
+						<p class="help-block"></p>
 					</td>
 				</tr>
 
@@ -255,9 +246,7 @@ function memberOk() {
 							<input type="password" id="g1_Pwd" name="g1_Pwd" maxlength="15" class="boxTF"
 								style="width: 95%;" placeholder="비밀번호를 입력해주세요">
 						</p>
-						<p class="help-block">
-							패스워드는 5~10자 이내로 입력해주세요<br>하나 이상의 숫자나 특수문자가 포함되어야 합니다.
-						</p>
+						<p class="help-block"></p>
 					</td>
 				</tr>
 
@@ -269,8 +258,7 @@ function memberOk() {
 							<input type="password" id="g1PwdCheck" name="g1PwdCheck" maxlength="15"
 								class="boxTF" style="width: 95%;" placeholder="다시 한 번 더 입력해주세요">
 						</p>
-						<p class="help-block">계정 혹은 전화번호와 같거나 연속된 문자열을 사용한 비밀번호는 권장하지
-							않습니다</p>
+						<p class="help-block"></p>
 					</td>
 				</tr>
 
@@ -313,16 +301,16 @@ function memberOk() {
 					<td style="padding: 0 0 15px 15px;">
 					<select name="category" class="selectField">
 							<option value="" selected="selected">:::선택:::</option>
-							<option value="chicken">치킨</option>
-							<option value="china">중국집</option>
-							<option value="pizza">피자</option>
-							<option value="bunsik">분식</option>
-							<option value="bossam">족발,보쌈</option>
-							<option value="ya">야식</option>
-							<option value="zzim">찜,탕</option>
-							<option value="don">돈까스</option>
+							<option value="chicken" ${storeDto.category=="chicken" ? "selected='selected'" : ""}>치킨</option>
+							<option value="china" ${storeDto.category=="china" ? "selected='selected'" : ""}>중국집</option>
+							<option value="pizza" ${storeDto.category=="pizza" ? "selected='selected'" : ""}>피자</option>
+							<option value="bunsik" ${storeDto.category=="bunsik" ? "selected='selected'" : ""}>분식</option>
+							<option value="bossam" ${storeDto.category=="bossam" ? "selected='selected'" : ""}>족발,보쌈</option>
+							<option value="ya" ${storeDto.category=="ya" ? "selected='selected'" : ""}>야식</option>
+							<option value="zzim" ${storeDto.category=="zzim" ? "selected='selected'" : ""}>찜,탕</option>
+							<option value="don" ${storeDto.category=="don" ? "selected='selected'" : ""}>돈까스</option>
 					</select>
-					<p class="help-block">카테고리를 설정해 주세요</p>
+					<p class="help-block"></p>
 					</td>
 				</tr>
 				
@@ -331,17 +319,22 @@ function memberOk() {
 			<table style="width: 100%; margin: 0px auto; border-spacing: 0px;">
 				<tr height="45">
 					<td align="center">
-						<button type="button" name="sendButton" class="btn" onclick="memberOk()">다음단계</button>
-						<button type="reset"  class="btn">다시입력</button>
-						<button type="button" class="btn"
-							onclick="javascript:location.href='<%=cp%>/store/login';">${mode=="created"?"가입취소":"수정취소"}</button>
-						
+						<button type="button" name="sendButton" class="btn btn-primary" onclick="memberOk()">다음단계</button>
+						<button type="reset"  class="btn btn-default">다시입력</button>
+						<c:if test="${mode=='created'}">
+						<button type="button" class="btn btn-default"onclick="javascript:location.href='<%=cp%>/store/logout';">가입취소</button>
+						</c:if>
+						<c:if test="${mode=='update'}">
+						<button type="button" class="btn btn-default"onclick="javascript:location.href='<%=cp%>/store/mypage';">수정취소</button>
+						</c:if>
 					</td>
 				</tr>
 				<tr height="30">
 					<td align="center" style="color: blue;">${message}</td>
 				</tr>
 			</table>
+			<div style="float: right;">
+			</div>
 		</form>
 	</div>
 

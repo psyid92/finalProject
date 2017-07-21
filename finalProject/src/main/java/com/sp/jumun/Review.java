@@ -1,9 +1,17 @@
 package com.sp.jumun;
 
 public class Review {
-	private int rep_Num, rep_Star, m1_Num, g1_Num, jumun_Num, rrep_Num;
+	private int rep_Num, rep_Star, m1_Num, g1_Num, jumun_Num, rrep_Num, rrep_Enable;
 	private String rep_Content, rep_Created, rrep_Content, rrep_Created, m1_Nickname;
 	private String rphoto_SaveFilename, rphoto_OriginalFilename;
+
+	public int getRrep_Enable() {
+		return rrep_Enable;
+	}
+
+	public void setRrep_Enable(int rrep_Enable) {
+		this.rrep_Enable = rrep_Enable;
+	}
 
 	public String getRrep_Created() {
 		return rrep_Created;

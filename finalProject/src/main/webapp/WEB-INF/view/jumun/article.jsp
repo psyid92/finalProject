@@ -355,15 +355,22 @@
 					</tr>
 				</c:if>
 				<c:if test="${not empty dto.rrep_Created}">
-					<tr style="border-bottom: 1px solid #cccccc;">
-						<td>${dto.rep_Content}</td>
-					</tr>
-					<tr>
-						<td>사장님 | ${dto.rrep_Created}</td>
-					</tr>
-					<tr style="border-bottom: 1px solid black;">
-						<td>${dto.rrep_Content}</td>
-					</tr>
+					<c:if test="${dto.rrep_Enable == 1}">
+						<tr style="border-bottom: 1px solid #cccccc;">
+							<td>${dto.rep_Content}</td>
+						</tr>
+						<tr>
+							<td>사장님 | ${dto.rrep_Created}</td>
+						</tr>
+						<tr style="border-bottom: 1px solid black;">
+							<td>${dto.rrep_Content}</td>
+						</tr>
+					</c:if>
+					<c:if test="${dto.rrep_Enable != 1}">
+						<tr style="border-bottom: 1px solid black;">
+							<td>${dto.rep_Content}</td>
+						</tr>
+					</c:if>
 				</c:if>
 			</c:forEach>
 		</table>

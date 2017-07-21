@@ -17,6 +17,6 @@ $(function(){
 
 <div class="list-group">
        <div class="list-group-item lefthead"><i></i> 이벤트 관리</div>
-       <a href="<%=cp%>/admin/memberevent" class="list-group-item">회원이벤트</a>
+       <a href="<%=cp%>/memberevent/list" class="list-group-item">회원이벤트</a>
        <a href="<%=cp%>/admin/giupevent" class="list-group-item">판매자이벤트</a>
 </div>

@@ -373,7 +373,7 @@ $('#myTab li:eq(2) a').tab('show') // Select third tab (0-indexed)
         <i class="glyphicon glyphicon-info-sign"></i> 우리끼리 자유롭게 이야기 해요!
     </div>
     
-    <div class="table-responsive" style="clear: both;">
+    <div class="table-responsive" style="clear: both; height:1200px; overflow: none;">
         <div class="bbs-article">
             <table class="table">
                  <thead>

@@ -103,7 +103,7 @@ $('#myTab li:eq(2) a').tab('show') // Select third tab (0-indexed)
   <ul class="nav nav-tabs" role="tablist" style="margin-top: 50px;">
     <li role="presentation"><a href="<%=cp%>/notice/list" aria-controls="notice" role="tab" data-toggle="tab">공지사항</a></li>
     <li role="presentation"><a href="<%=cp%>/userEvent/list" aria-controls="userEvent" role="tab" data-toggle="tab">이벤트</a></li>
-    <li role="presentation"><a href="<%=cp%>/userFap/faq" aria-controls="userFaq" role="tab" data-toggle="tab">자주찾는 질문</a></li>
+    <li role="presentation"><a href="<%=cp%>/userFaq/faq" aria-controls="userFaq" role="tab" data-toggle="tab">자주찾는 질문</a></li>
     <li role="presentation" class="active"><a href="<%=cp%>/userQna/created" aria-controls="userQna" role="tab" data-toggle="tab">1대1 문의</a></li>
     <li role="presentation"><a href="<%=cp%>/userBbs/list" aria-controls="userBbs" role="tab" data-toggle="tab">우리끼리소담소담</a></li>
   </ul>
@@ -113,7 +113,7 @@ $('#myTab li:eq(2) a').tab('show') // Select third tab (0-indexed)
 <div class="tab-content">
     <div role="tabpanel" class="tab-pane active" id="userQna">
 
-<div class="bodyFrame2">
+<div class="bodyFrame2" style="margin-top: 50px;">
     <div class="body-title">
           <h3><span class="glyphicon glyphicon-bullhorn"></span> 그것이 알고싶다 </h3>
     </div>

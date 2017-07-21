@@ -1,5 +1,7 @@
 package com.sp.store.member;
 
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -95,13 +97,50 @@ public class StoreServiceImpl implements StoreService {
 	}
 
 	@Override
-	public void deleteStore(int g1_Num) throws Exception {
+	public int deleteStore(int g1_Num) throws Exception {
+		int result = 0;
 		try {
-			dao.updateData("store.deleteStore", g1_Num);
+			result = dao.updateData("store.deleteStore", g1_Num);
 		} catch (Exception e) {
+			result = 0;
 			e.printStackTrace();
 			throw e;
 		}
+		return result;
 	}
+
+	@Override
+	public String findGiupId(Map<String, Object> map) throws Exception {
+		String g1_Id = "";
+		try {
+			g1_Id = dao.getReadData("store.findGiupId", map);
+		} catch (Exception e) { 
+			e.printStackTrace();
+		}
+		return g1_Id;
+	}
+
+	@Override
+	public int findGiupPwd(Map<String, Object> map) throws Exception {
+		int result = 0;
+		try {
+			result = dao.getReadData("store.findGiupPwd",map);
+		} catch (Exception e) { 
+			e.printStackTrace();
+		}
+		return result;
+	}
+
+	@Override
+	public int changeGiupPwd(Map<String, Object> map) throws Exception {
+		int result=0;
+		try{
+			result = dao.updateData("store.updateGiupPwd",map);
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+
 
 }

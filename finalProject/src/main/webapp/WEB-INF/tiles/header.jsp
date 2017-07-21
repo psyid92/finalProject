@@ -38,7 +38,9 @@
 	
 	$(function(){
 		if(getcookie()==null){
-			geoFindMe();
+			var latitude = 37.539242;
+			var longitude = 126.9003506;
+			searchCoordinateToAddress(longitude, latitude);
 		}
 	});
 	

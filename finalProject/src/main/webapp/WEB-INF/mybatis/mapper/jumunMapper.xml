@@ -71,14 +71,15 @@
 	<!-- 기업 수정 -->
 	<select id="listGiup" parameterType="map" resultType="com.sp.jumun.Jumun">
 		SELECT tb.* FROM (
-	 		SELECT g1.g1_Num, g1_Id, g1_Pwd, g1_Name, g1_Sleep, cat_Code,
-	       	NVL(giupAd_State,0) giupAd_State, g3_lati, g3_longti,
-	       	DISTNACE_WGS84(#{cur_lng},#{cur_lat},g3_longti,g3_lati) distance
+	 		SELECT DISTINCT g1.g1_Num, g1_Id, g1_Pwd, g1_Name, g1_Sleep, cat_Code,
+	       	g3_lati, g3_longti,
+	       	DISTNACE_WGS84(37.5331215,126.8935499,g3_longti,g3_lati) distance,
+	       	NVL(SUM(giupAD_State)OVER(PARTITION BY ga.G1_NUM),0) giupAD_State
 	       	FROM giup1 g1
 	       	LEFT OUTER JOIN giupAd ga ON g1.g1_Num = ga.g1_Num
-	       	LEFT OUTER JOIN giup3 g3 ON g1.g1_Num=g3.g3_Num
+	       	LEFT OUTER JOIN giup3 g3 ON g1.g1_Num = g3.g3_Num
 	       	<where>
-	       		g1_Sleep = 1 AND g1_Enabled = 1 AND (giupad_state = 1 OR giupad_state IS NULL)
+	       		g1_Sleep = 1 AND g1_Enabled = 1 AND g1.g1_Num != 1
 	     		<if test="category!=null and category!='' ">
 	       			AND cat_Code = #{category}
 	     		</if>
@@ -92,22 +93,30 @@
 ]]>
 	</select>
 	
-	<select id="listReview" parameterType="map" resultType="com.sp.jumun.Review">
-		SELECT * FROM (
-			SELECT ROWNUM rnum, tb.* FROM (
+	<!-- <select id="listReview" parameterType="map" resultType="com.sp.jumun.Review">
 				SELECT gr.rep_Num, rep_Star, rep_Content, rep_Created, gr.m1_Num, gr.g1_Num, jumun_Num,
 					rphoto_SaveFilename, rphoto_OriginalFilename,
-					rrep_Num, rrep_Content, rrep_Created, m1_Nickname
+					rrep_Num, rrep_Content, rrep_Created, m1_Nickname, rrep_Enable
 				FROM giupReview gr
 				LEFT OUTER JOIN reviewPhoto rp ON gr.rep_Num = rp.rep_Num
 				LEFT OUTER JOIN reviewReply rr ON gr.rep_Num = rr.rep_Num
 				LEFT OUTER JOIN member1 m1 ON gr.m1_Num = m1.m1_Num
-				WHERE gr.g1_Num = #{g1_Num}
-				ORDER BY gr.rep_Num
-<![CDATA[
-			) tb WHERE ROWNUM <= #{end}
-		) WHERE rnum >= #{start}
-]]>
+				WHERE gr.g1_Num = #{g1_Num} AND gr.rep_Enable = 1
+	</select> -->
+	<select id="listReview" parameterType="Integer" resultType="com.sp.jumun.Review">
+		SELECT gr.rep_Num, rep_Star, rep_Content, rep_Created, gr.m1_Num, gr.g1_Num, jumun_Num,
+			rphoto_SaveFilename, rphoto_OriginalFilename, m1_Nickname
+		FROM giupReview gr
+		LEFT OUTER JOIN reviewPhoto rp ON gr.rep_Num = rp.rep_Num
+		LEFT OUTER JOIN member1 m1 ON gr.m1_Num = m1.m1_Num
+		WHERE gr.g1_Num = #{g1_Num} AND gr.rep_Enable = 1
+        ORDER BY rep_Num
+	</select>
+	<select id="listGiupReview" parameterType="Integer" resultType="com.sp.jumun.Review">
+		SELECT rrep_Num, rep_Num, rrep_Content, rrep_Created, rrep_Enable
+				FROM reviewReply
+        WHERE rep_Num = #{rep_Num} AND rrep_Enable = 1
+        ORDER BY rep_Num
 	</select>
 	
 	<insert id="insertLikeGiup" parameterType="map">

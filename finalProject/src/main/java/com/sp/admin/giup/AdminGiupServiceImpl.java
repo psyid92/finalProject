@@ -75,4 +75,26 @@ public class AdminGiupServiceImpl implements AdminGiupService{
 		return result;
 	}
 
+	@Override
+	public List<AdminGiup> listGiupReview(Map<String, Object> map) throws Exception {
+		List<AdminGiup> list = new ArrayList<>();
+		try {
+			list = dao.getListData("admingiup.listGiupReview", map);
+		} catch (Exception e) {
+			throw e;
+		}
+		return list;
+	}
+
+	@Override
+	public int countGiupReview(Map<String, Object> map) throws Exception {
+		int result = 0;
+		try {
+			result = dao.getIntValue("admingiup.countGiupReview", map);
+		} catch (Exception e) {
+			throw e;
+		}
+		return result;
+	}
+
 }

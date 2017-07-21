@@ -25,10 +25,10 @@ import net.sf.json.JSONObject;
 @Controller("jumun.jumunController")
 public class JumunController {
 	@Autowired
-	JumunService service;
+	private JumunService service;
 	
 	@Autowired
-	MyMath myMath;
+	private MyMath myMath;
 
 	@RequestMapping("/jumun/jumunList")
 	public String payList(@RequestParam(value="category",defaultValue="") String category,

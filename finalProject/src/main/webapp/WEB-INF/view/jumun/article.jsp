@@ -422,7 +422,7 @@
 						    url: url,
 						    type: 'HEAD',
 						    success: function () {
-						         $(img_on).append("<img src="+url+">")
+						         $(img_on).append("<img style='width:100%; height:100%;' src="+url+">")
 						    },
 						    error: function () {
 						    	 $(img_on).append("<img src="+no_Img+">")

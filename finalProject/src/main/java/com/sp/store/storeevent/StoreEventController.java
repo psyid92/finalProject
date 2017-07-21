@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller("storeevent.storeEventController")
 public class StoreEventController {
-	
-	// 메뉴2
+
+	//판매자화면(기업이벤트)
 	@RequestMapping(value = "/store/event1", method = RequestMethod.GET)
 	public String event1Form(Model model) {
 
@@ -17,19 +17,14 @@ public class StoreEventController {
 		return ".store4.menu3.event1.list";
 	}
 	
-	@RequestMapping(value = "/store/event2", method = RequestMethod.GET)
-	public String event2Form(Model model) {
+	//어드민화면(기업이벤트)
+	@RequestMapping(value = "/admin/giupevent", method = RequestMethod.GET)
+	public String giupEventList(Model model) {
 
 		model.addAttribute("mainMenu", "2");
 		model.addAttribute("subMenu", "2");
-		return ".store4.menu3.event2.list";
+		return ".admin4.menu3.giupevent.list";
 	}
 	
-	@RequestMapping(value = "/store/event3", method = RequestMethod.GET)
-	public String event3Form(Model model) {
-
-		model.addAttribute("mainMenu", "2");
-		model.addAttribute("subMenu", "3");
-		return ".store4.menu3.event3.list";
-	}
+	
 }

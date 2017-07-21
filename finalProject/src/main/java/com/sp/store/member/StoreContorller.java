@@ -189,7 +189,10 @@ public class StoreContorller {
 	}
 
 	@RequestMapping(value = "/store/updatecomplete", method = RequestMethod.POST)
-	public String updateSubmit(@ModelAttribute("storeDto") Store storeDto, Model model, SessionStatus sessionstatus) {
+	public String updateSubmit(@ModelAttribute("storeDto") Store storeDto,
+			HttpSession session,
+			Model model, SessionStatus sessionstatus) {
+		SessionInfo info = (SessionInfo) session.getAttribute("store");
 		try {
 			service.updateStore(storeDto);
 			sessionstatus.setComplete();
@@ -201,7 +204,7 @@ public class StoreContorller {
 			return ".store.store.complete";
 		}
 		StringBuffer sb = new StringBuffer();
-		sb.append(storeDto.getG1_Name() + "사장님의 회원정보 수정이 정상적으로 처리되었습니다.<br>");
+		sb.append(info.getG1_Name() + "사장님의 회원정보 수정이 정상적으로 처리되었습니다.<br>");
 		sb.append("다시 로그인 하시기 바랍니다.<br>");
 
 		model.addAttribute("title", "회원정보 수정");
@@ -210,30 +213,48 @@ public class StoreContorller {
 	}
 
 	// 회원 탈퇴일 경우
-	@RequestMapping(value = "/store/storeout", method=RequestMethod.POST)
-	public String deleteStore(@RequestParam String mode, @RequestParam String g1_Pwd, Model model, HttpSession session,
-			SessionStatus sessionstatus,@ModelAttribute("storeDto") Store storeDto, @RequestParam int g1_Num) {
-		
-			StringBuffer sb = new StringBuffer();
-			try {
-				service.deleteStore(g1_Num);
-			} catch (Exception e) {
-				e.printStackTrace();
-				model.addAttribute("mainMenu", "8");
-				model.addAttribute("message", "회원정보 수정에 실패했습니다. 다시 시도해주세요.");
-				model.addAttribute("mode", "update");
-				return ".store.store.complete";
+	@RequestMapping(value = "/store/storeout", method = RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> deleteStore(@RequestParam String g1_Id, @RequestParam String g1_pwd, HttpSession session,
+			SessionStatus sessionstatus, @RequestParam int g1_Num) {
+		Map<String, Object> model = new HashMap<>();
+		String state = "true";
+		try {
+			Store store = service.readStore(g1_Id);
+
+			if (store == null || (!store.getG1_Pwd().equals(g1_pwd))) {
+				state = "false";
+
+				model.put("state", state);
+			} else {
+				int result = service.deleteStore(g1_Num);
+
+				if (result == 0)
+					state = "false";
+
+				model.put("state", state);
 			}
-			
-			session.removeAttribute("store");
-			session.invalidate();
-			sb.append(storeDto.getG1_Name() + "님의 회원 탈퇴 처리가 정상적으로 처리되었습니다.<br>");
-			sb.append("메인화면으로 이동하세요");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return model;
+	}
 
-			model.addAttribute("mainMenu", "8");
-			model.addAttribute("title", "회원탈퇴");
-			model.addAttribute("message", sb.toString());
+	@RequestMapping(value = "/store/storeoutComplete")
+	public String storeoutSubmit(HttpSession session, SessionStatus sessionstatus, Model model) {
+		StringBuffer sb = new StringBuffer();
+		SessionInfo info = (SessionInfo) session.getAttribute("store");
+		sb.append(info.getG1_Id() + "님의 회원 탈퇴 처리가 정상적으로 처리되었습니다.<br>");
+		sb.append("메인화면으로 이동하세요");
 
-			return ".store.store.complete";
+		session.removeAttribute("store");
+		session.invalidate();
+		sessionstatus.setComplete();
+
+		model.addAttribute("mainMenu", "8");
+		model.addAttribute("title", "회원탈퇴");
+		model.addAttribute("message", sb.toString());
+
+		return ".store.store.complete";
 	}
 }

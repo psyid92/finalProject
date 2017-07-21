@@ -13,6 +13,7 @@ public interface AdminGiupService {
 	//MemberList 가져오는 메소드
 	public int getAllMemberNum(Map<String, Object> map) throws Exception;
 	public List<Member1> getAllListMember(Map<String, Object> map) throws Exception;
+	public Member1 getMemberDetail(Map<String, Object> map) throws Exception; 
 	
 	//기업리뷰 list
 	public List<AdminGiup> listGiupReview(Map<String, Object> map) throws Exception;

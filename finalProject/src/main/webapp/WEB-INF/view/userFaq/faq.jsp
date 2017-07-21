@@ -166,7 +166,7 @@ function searchList() {
         <i class="glyphicon glyphicon-saved"></i> 회원님들께서 많이 궁금해하는 질문을 정리해보았습니다. 자세한 문의는 1대1문의를 해주세요
     </div>
  
-        <div>
+        <div style="margin-top: 40px;">
 	    <div role="tabpanel">
 			  <ul class="nav nav-tabs" role="tablist">
 			      <li role="presentation" class="active"><a href="#tabContent0" aria-controls="0" role="tab" data-toggle="tab">전체</a></li>

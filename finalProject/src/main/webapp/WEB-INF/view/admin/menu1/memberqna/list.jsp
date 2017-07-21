@@ -38,7 +38,7 @@
              <td class="text-center" style="width: 140px;">${dto.uq_Created}</td>
              <td class="text-center">
                <c:if test="${not empty dto.uq_SaveFilename}">
-                 <a href="<%=cp%>/userQna/download?uq_Num=${dto.uq_Num}"><img src="<%=cp%>/resource/images/disk.gif" border="0" style="margin-top: 1px;"></a>
+                 <a href="<%=cp%>/userQna/download?uq_Num=${dto.uq_Num}"><img src="<%=cp%>/resource/img/www.jpg" border="0" style="margin-top: 1px;"></a>
                </c:if>
              </td>
            </tr>   

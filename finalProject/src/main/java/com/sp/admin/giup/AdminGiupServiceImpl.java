@@ -75,4 +75,14 @@ public class AdminGiupServiceImpl implements AdminGiupService{
 		return result;
 	}
 
+	@Override
+	public Member1 getMemberDetail(Map<String, Object> map) throws Exception {
+		Member1 dto = new Member1();
+		try {
+			dto = dao.getReadData("member.getMemberAllDetal", map);
+		} catch (Exception e) {
+		}
+		return dto;
+	}
+
 }

@@ -14,6 +14,6 @@ public interface StoreService {
 	
 	
 	public String findGiupId(Map<String, Object> map) throws Exception;
-	public int findGiupPwd(Map<String, Object> map) throws Exception;
+	public String findGiupPwd(Map<String, Object> map) throws Exception;
 	public int changeGiupPwd(Map<String, Object> map) throws Exception;
 }

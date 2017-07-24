@@ -56,6 +56,11 @@
 			<mvc:mapping path="/store/**"/>
 			<!-- 제외시킬 부분 -->
 			<mvc:exclude-mapping path="/store/login"/>
+			<mvc:exclude-mapping path="/store/findId"/>
+			<mvc:exclude-mapping path="/store/getId"/>
+			<mvc:exclude-mapping path="/store/findPwd"/>
+			<mvc:exclude-mapping path="/store/foudPwd"/>
+			<mvc:exclude-mapping path="/store/pwdChangSubmit"/>
 			<mvc:exclude-mapping path="/store/join"/>
 			<mvc:exclude-mapping path="/store/step1"/>
 			<mvc:exclude-mapping path="/store/step2"/>

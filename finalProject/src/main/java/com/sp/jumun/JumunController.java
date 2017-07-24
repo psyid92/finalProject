@@ -25,10 +25,10 @@ import net.sf.json.JSONObject;
 @Controller("jumun.jumunController")
 public class JumunController {
 	@Autowired
-	JumunService service;
+	private JumunService service;
 	
 	@Autowired
-	MyMath myMath;
+	private MyMath myMath;
 
 	@RequestMapping("/jumun/jumunList")
 	public String payList(@RequestParam(value="category",defaultValue="") String category,
@@ -79,21 +79,20 @@ public class JumunController {
 	public String article(int g1_Num, String g1_Name, HttpSession session, Model model) throws Exception {
 		List<Jumun> cateList = new ArrayList<>();
 		List<Review> reviewList = new ArrayList<>();
+		Map<Integer, Object> replyListMap = new HashMap<>();
+		List<Review> replyList = new ArrayList<>();
 		Map<String, Object> likeMap = new HashMap<>();
 		SessionInfo info = (SessionInfo)session.getAttribute("member");
 				
 		int result = 0;
-		int start = 1;
-		int end = 10;
-		
 		cateList = service.readMenuCategory(g1_Num);
 		
-		Map<String, Object> map = new HashMap<>();
-		map.put("g1_Num", g1_Num);
-		map.put("start", start);
-		map.put("end", end);
-		reviewList = service.listReview(map);
-		
+		reviewList = service.listReview(g1_Num);
+		for (int i = 0; i < reviewList.size(); i++) {
+			replyList = service.listGiupReview(reviewList.get(i).getRep_Num());
+			replyListMap.put(reviewList.get(i).getRep_Num(), replyList);
+		}
+				
 		if (info != null) {
 			likeMap.put("g1_Num", g1_Num);
 			likeMap.put("m1_Num", info.getM1_Num());
@@ -103,6 +102,8 @@ public class JumunController {
 		model.addAttribute("result",result);
 		model.addAttribute("cateList", cateList);
 		model.addAttribute("reviewList", reviewList);
+		model.addAttribute("replyList", replyList);
+		model.addAttribute("replyListMap",replyListMap);
 		model.addAttribute("g1_Num", g1_Num);
 		model.addAttribute("g1_Name", g1_Name);
 

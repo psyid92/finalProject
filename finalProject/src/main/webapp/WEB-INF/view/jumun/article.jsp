@@ -62,7 +62,7 @@
 			for (var i = 0; i < list.length; i++) {
 				$(function(){
 					var url = "<%=cp%>/uploads/photo/"+list[i].mainmenu_Photo;
-					var no_Img = "<%=cp%>/resource/img/no_img.gif";
+					var no_Img = "<%=cp%>/resource/img/no_img.png";
 					var img_on = "#img"+list[i].mainmenu_Num;
 					$.ajax({
 					    url: url,
@@ -71,7 +71,7 @@
 					         $(img_on).append("<img src='"+url+"' style='width:500px; height: 300px;'></img>")
 					    },
 					    error: function () {
-					    	 $(img_on).append("<img src='"+no_Img+"' style='width:200px; height: 100px;'></img>")
+					    	 $(img_on).append("<img src='"+no_Img+"' style='width:250px; height: 250px;'></img>")
 					    }
 					});
 				});
@@ -303,7 +303,7 @@
 	});
 </script>
 <style>
-#review tr td {
+#review > div > div {
 	padding: 5px 30px;
 }
 #like {
@@ -329,14 +329,14 @@
 		</c:forEach>
 	</div>
 	<div id="review" style="width:680px; margin: 0;">
-		<table style="width: 680px; border: 1px solid black;">
+		<%-- <table style="width: 680px; border: 1px solid black;">
 			<tr style="border-bottom: 1px solid black;">
 				<th style="font-size: 40px; font-weight: 900; text-align: center;">리뷰</th>
 			</tr>
 			
 			<c:if test="${empty reviewList}">
 				<tr>
-					<td>등록 된 리뷰가 없습니다.</td>
+					<td style="width: 100%; height: 400px; background-image: url('<%=cp%>/resource/img/no_review.png'); background-repeat:no-repeat; background-position:center center;"></td>
 				</tr>
 			</c:if>
 			<c:forEach var="dto" items="${reviewList}">
@@ -349,31 +349,108 @@
 						<c:forEach begin="1" end="${5 - dto.rep_Star}">☆</c:forEach>
 					</td>
 				</tr>
-				<c:if test="${empty dto.rrep_Created}">
-					<tr style="border-bottom: 1px solid black;">
-						<td>${dto.rep_Content}</td>
+
+				<tr id="border${dto.rep_Num }" style="border-bottom: 1px solid black;">
+					<td>
+						${dto.rep_Content}
+						<c:if test="${not empty dto.rphoto_SaveFilename }">
+						<script type="text/javascript">
+						var url = "<%=cp%>/uploads/giupReview/${dto.rphoto_SaveFilename}";
+						var no_Img = "<%=cp%>/resource/img/no_img.png";
+						var img_on = "#reImg"+${dto.rep_Num};
+						$.ajax({
+						    url: url,
+						    type: 'HEAD',
+						    success: function () {
+						         $(img_on).append("<img src="+url+">")
+						    },
+						    error: function () {
+						    	 $(img_on).append("<img src="+no_Img+">")
+						    }
+						});
+						</script>
+							<div id="reImg${dto.rep_Num}"></div>
+						</c:if>
+					</td>
+				</tr>
+				
+				<c:forEach var="ddto" items="${replyListMap[dto.rep_Num]}" varStatus="status">
+					<script type="text/javascript">$(function(){$("#border"+${dto.rep_Num}).css("border-bottom","1px solid #cccccc")});</script>
+					<tr>
+						<td>사장님 | ${ddto.rrep_Created}</td>
 					</tr>
-				</c:if>
-				<c:if test="${not empty dto.rrep_Created}">
-					<c:if test="${dto.rrep_Enable == 1}">
+					<c:if test="${replyListMap[dto.rep_Num].size()-1 != status.index}">
 						<tr style="border-bottom: 1px solid #cccccc;">
-							<td>${dto.rep_Content}</td>
-						</tr>
-						<tr>
-							<td>사장님 | ${dto.rrep_Created}</td>
-						</tr>
-						<tr style="border-bottom: 1px solid black;">
-							<td>${dto.rrep_Content}</td>
+							<td>${ddto.rrep_Content}</td>
 						</tr>
 					</c:if>
-					<c:if test="${dto.rrep_Enable != 1}">
+					<c:if test="${replyListMap[dto.rep_Num].size()-1 == status.index}">
 						<tr style="border-bottom: 1px solid black;">
-							<td>${dto.rep_Content}</td>
+							<td>${ddto.rrep_Content}</td>
 						</tr>
 					</c:if>
-				</c:if>
+				</c:forEach>
 			</c:forEach>
-		</table>
+		</table> --%>
+		<div style="width: 680px; border: 1px solid black;">
+			<div style="border-bottom: 1px solid black;">
+				<div style="font-size: 40px; font-weight: 900; text-align: center;">리뷰</div>
+			</div>
+			<c:if test="${empty reviewList}">
+				<div>
+					<div style="width: 100%; height: 400px; background-image: url('<%=cp%>/resource/img/no_review.png'); background-repeat:no-repeat; background-position:center center;"></div>
+				</div>
+			</c:if>
+			<c:forEach var="dto" items="${reviewList}">
+				<div style="float: left;">
+					<div>${dto.m1_Nickname} | ${dto.rep_Created }</div>
+				</div>
+				<div style="float: right;">
+					<div style="color: orange;">
+						<c:forEach begin="1" end="${dto.rep_Star}">★</c:forEach>
+						<c:forEach begin="1" end="${5 - dto.rep_Star}">☆</c:forEach>
+					</div>
+				</div><br><br>
+				<div id="border${dto.rep_Num}" style="border-bottom: 1px solid black;">
+					<div>${dto.rep_Content}
+						<c:if test="${not empty dto.rphoto_SaveFilename }">
+						<script type="text/javascript">
+						var url = "<%=cp%>/uploads/giupReview/${dto.rphoto_SaveFilename}";
+						var no_Img = "<%=cp%>/resource/img/no_img.png";
+						var img_on = "#reImg"+${dto.rep_Num};
+						$.ajax({
+						    url: url,
+						    type: 'HEAD',
+						    success: function () {
+						         $(img_on).append("<img style='width:100%; height:100%;' src="+url+">")
+						    },
+						    error: function () {
+						    	 $(img_on).append("<img src="+no_Img+">")
+						    }
+						});
+						</script>
+							<div id="reImg${dto.rep_Num}"></div>
+						</c:if>
+					</div>
+				</div>
+				<c:forEach var="ddto" items="${replyListMap[dto.rep_Num]}" varStatus="status">
+					<script type="text/javascript">$(function(){$("#border"+${dto.rep_Num}).css("border-bottom","1px solid #cccccc")});</script>
+					<div>
+						<div>사장님 | ${ddto.rrep_Created}</div>
+					</div>
+					<c:if test="${replyListMap[dto.rep_Num].size()-1 != status.index}">
+						<div style="border-bottom: 1px solid #cccccc;">
+							<div>${ddto.rrep_Content}</div>
+						</div>
+					</c:if>
+					<c:if test="${replyListMap[dto.rep_Num].size()-1 == status.index}">
+						<div style="border-bottom: 1px solid black;">
+							<div>${ddto.rrep_Content}</div>
+						</div>
+					</c:if>
+				</c:forEach>
+			</c:forEach>
+		</div>
 	</div>
 </div>
 <div id="totalJumun" style="font-size: 15px; float: right; width: 300px;"></div>

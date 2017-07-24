@@ -121,7 +121,7 @@ $('#myTab li:eq(2) a').tab('show') // Select third tab (0-indexed)
                 </c:if>
              </td>
              <td class="text-center">관리자</td>
-             <td class="text-center">${dto.noti_Created}</td>
+             <td class="text-center" style="width: 140px;">${dto.noti_Created}</td>
              <td class="text-center">${dto.noti_Count}</td>
             </tr>
            </c:forEach>

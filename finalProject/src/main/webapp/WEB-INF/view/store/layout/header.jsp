@@ -84,11 +84,11 @@ function bgLabel(ob, id) {
 		    document.getElementById(id).style.display="none";
 	    }
 }
-
-function sendOk() {
-    	var g1_Id = $("#g1_Id").val();
+ 
+ function sendOk() {
+    	var g1_Id = $("#g1_Id2").val();
         if(!g1_Id) {
-        	$("#g1_Id").focus();
+        	$("#g1_Id2").focus();
             return false;
         }
 
@@ -97,11 +97,12 @@ function sendOk() {
         	$("#g1_pwd").focus();
             return false;
         }
+        var sg1_Num = ${sessionScope.store.g1_Num};
         if(confirm("탈퇴하시겠습니까??")){
         $.ajax({
         	type:"post"
         	,url:"<%=cp%>/store/storeout"
-        	,data:{g1_Id:g1_Id, g1_Num:${sessionScope.store.g1_Num}, g1_pwd:g1_pwd}
+        	,data:{g1_Id:g1_Id, g1_Num:sg1_Num , g1_pwd:g1_pwd}
         	,dataType:"json"
         	,success:function(data){
         		var state = data.state;
@@ -120,8 +121,8 @@ function sendOk() {
         		console.log(e.responseText);
         	}
         });
-        }
-}
+	}
+} 
 </script>
 <nav class="navbar navbar-inverse navbar-fixed-top">
 	<div class="container">
@@ -170,7 +171,7 @@ function sendOk() {
 	      	<span class="glyphicon glyphicon-info-sign"></span><span> 탈퇴 후에는 아이디 <span style="color: blue;">${sessionScope.store.g1_Id}</span>로 다시 가입할 수 없습니다<br></span>
 	      	<span class="glyphicon glyphicon-info-sign" style="color: red;"></span>
 	      	<span  style="color: red">이후 삭제된 데이터는 복구되지 않습니다.</span>
-	        <input type="text" id="g1_Id" name="g1_Id" class="form-control loginTF"
+	        <input type="text" id="g1_Id2" name="g1_Id2" class="form-control loginTF"
 	              value="${sessionScope.store.g1_Id}"
                   readonly="readonly"
                   style="margin-top: 15px;"

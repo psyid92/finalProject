@@ -189,14 +189,12 @@ public class StoreContorller {
 	}
 
 	@RequestMapping(value = "/store/updatecomplete", method = RequestMethod.POST)
-	public String updateSubmit(@ModelAttribute("storeDto") Store storeDto,
-			HttpSession session,
-			Model model, SessionStatus sessionstatus) {
+	public String updateSubmit(@ModelAttribute("storeDto") Store storeDto, HttpSession session, Model model,
+			SessionStatus sessionstatus) {
 		SessionInfo info = (SessionInfo) session.getAttribute("store");
 		try {
 			service.updateStore(storeDto);
 			sessionstatus.setComplete();
-
 		} catch (Exception e) {
 			e.printStackTrace();
 			model.addAttribute("message", "회원정보 수정에 실패했습니다. 다시 시도해주세요.");
@@ -206,7 +204,8 @@ public class StoreContorller {
 		StringBuffer sb = new StringBuffer();
 		sb.append(info.getG1_Name() + "사장님의 회원정보 수정이 정상적으로 처리되었습니다.<br>");
 		sb.append("다시 로그인 하시기 바랍니다.<br>");
-
+		session.removeAttribute("storeDto");
+		session.invalidate();
 		model.addAttribute("title", "회원정보 수정");
 		model.addAttribute("message", sb.toString());
 		return ".store.store.complete";
@@ -256,5 +255,90 @@ public class StoreContorller {
 		model.addAttribute("message", sb.toString());
 
 		return ".store.store.complete";
+	}
+
+	// 아이디 찾기
+	@RequestMapping(value = "/store/findId")
+	public String findGiupId(Model model) {
+		model.addAttribute("state", "g1_Id");
+		return ".store.store.forgetGiupAccount";
+	}
+
+	@RequestMapping(value = "/store/getId")
+	public String getGiupId(Model model, @RequestParam String g1_Name, @RequestParam String g2_Giupnum) throws Exception {
+		model.addAttribute("state", "g1_Id");
+		Map<String, Object> map = new HashMap<>();
+		String g1_Id = "";
+		try {
+			map.put("g1_Name", g1_Name);
+			map.put("g2_Giupnum", g2_Giupnum);
+			g1_Id = service.findGiupId(map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		if (g1_Id == "" || g1_Id == null) {
+			model.addAttribute("message", "일치하는 정보가 없습니다.");
+			return ".store.store.forgetGiupAccount";
+		} else {
+			model.addAttribute("g1_Id", g1_Id);
+		}
+		return ".store.store.foundId";
+	}
+
+	// 비밀번호 찾기
+	@RequestMapping(value = "/store/findPwd")
+	public String findGiupPwd(Model model) {
+		model.addAttribute("state", "g1_Pwd");
+		return ".store.store.forgetGiupAccount";
+	}
+
+	// 비밀번호 변경하기 전 확인
+	@RequestMapping(value = "/store/foudPwd")
+	public String foundGiupPwd(Model model, @RequestParam String g1_Id, @RequestParam String g2_Giupnum) {
+		model.addAttribute("state", "g1_Pwd");
+		Map<String, Object> map = new HashMap<>();
+		map.put("g1_Id", g1_Id);
+		map.put("g2_Giupnum", g2_Giupnum);
+		String result = "";
+		try {
+			result = service.findGiupPwd(map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		if (result == "" || result == null) {
+			model.addAttribute("message", "일치하는 정보가 없습니다.");
+			return ".store.store.forgetGiupAccount";
+		}
+		return ".store.store.changePwd";
+	}
+
+	// 비밀번호 변경하기
+	@RequestMapping(value = "/store/pwdChangSubmit")
+	public String changeGiupPwd(Model model, @RequestParam String g1_Id, @RequestParam String g2_Giupnum) {
+		model.addAttribute("state", "g1_Pwd");
+		Map<String, Object> map = new HashMap<>();
+		StringBuffer sb = new StringBuffer();
+		map.put("gi_Id", g1_Id);
+		map.put("g2_Giupnum", g2_Giupnum);
+		int result = 0;
+		try {
+			result = service.changeGiupPwd(map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		if (result == 0) {
+			sb.append("변경에 실패했습니다. 다시 시도해주세요.");
+			
+			model.addAttribute("title", "비밀번호 변경 실패");
+			model.addAttribute("message", sb.toString());
+			return ".store.store.complete";
+		}
+		sb.append("패스워드가 변경되었습니다.<br>");
+		sb.append("메인화면으로 이동하세요.");
+		
+		model.addAttribute("title", "패스워드 변경 성공");
+		model.addAttribute("message", sb.toString());
+		return ".store.store.complete";
+		
 	}
 }

@@ -23,7 +23,7 @@
 <select id="readStore" resultType="com.sp.store.member.Store">
 	SELECT g1_Num, g2_Num, g3_Num, g1.g1_Id, g1_Pwd, g1_Name, cat_Code, g1_created, g2_Baedal,
 			g2_Tel, g2_Giupnum, g2_Origin, g2_Memo, g2_Opentime,
-			g2_Minpay, g3_Addr1, g3_Addr2, g3_Addr3
+			g2_Minpay, g3_Addr1, g3_Addr2, g3_Addr3, g3_Lati, g3_Longti
 	FROM giup1 g1 LEFT OUTER JOIN giup2 g2 on g1.g1_Num=g2.g2_Num
             LEFT OUTER JOIN giup3 g3 on g1.g1_Num=g3.g3_Num
     WHERE g1_Id=#{g1_Id} AND g1_Enabled != 0 
@@ -67,4 +67,28 @@
 	WHERE g1_Num = #{g1_Num}
 </update>
 
+<!-- 아이디찾기 -->
+<select id="findGiupId" parameterType="map" resultType="String">
+	SELECT g1_Id
+	FROM giup1 g1
+	JOIN giup2 g2 ON g1.g1_Num = g2.g2_Num
+	WHERE g1_Name=#{g1_Name} AND g2_Giupnum = #{g2_Giupnum}
+</select>
+<!-- 비밀번호 찾아오기 -->
+<select id="findGiupPwd" parameterType="map" resultType="String">
+SELECT  g1_Pwd
+         FROM giup1 g1
+         join giup2 g2 on g1.g1_Num=g2.g2_Num
+      WHERE g1_Id=#{g1_Id} AND  g2_Giupnum=#{g2_Giupnum}
+</select>
+<!-- 비밀번호 변경하기 -->
+<update id="updateGiupPwd"  parameterType="com.sp.store.member.Store">
+	UPDATE
+    (SELECT g1_Id, g1_Pwd, g2_giupnum
+         FROM giup1 g1
+         join giup2 g2 on g1.g1_Num=g2.g2_Num
+         WHERE  g1_Id=#{g1_Id} AND  g2_Giupnum=#{g2_Giupnum}
+     )
+ SET  g1_Pwd = #{g1_pwd}
+</update>
 </mapper>

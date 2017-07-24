@@ -73,7 +73,7 @@ $('#myTab li:eq(2) a').tab('show') // Select third tab (0-indexed)
 <!-- 마크업 -->
 <div class="tab-content">
     <div role="tabpanel" class="tab-pane active" id="userQna">
-     <div class="bodyFrame2">
+     <div class="bodyFrame2" style="margin-top: 50px;">
     <div class="body-title">
           <h3><span class="glyphicon glyphicon-bullhorn"></span> 그것이 알고싶다 </h3>
     </div>
@@ -92,7 +92,7 @@ $('#myTab li:eq(2) a').tab('show') // Select third tab (0-indexed)
              <th class="text-center" style="width: 70px;">번호</th>
              <th >제목</th>
              <th class="text-center" style="width: 100px;">글쓴이</th>
-             <th class="text-center" style="width: 100px;">날짜</th>
+             <th class="text-center" style="width: 100px;">날짜</th>   
              <th class="text-center" style="width: 70px;">첨부</th>
            </tr>
          </thead> 
@@ -105,7 +105,7 @@ $('#myTab li:eq(2) a').tab('show') // Select third tab (0-indexed)
              <td class="text-center" style="width: 140px;">${dto.uq_Created}</td>
              <td class="text-center">
                <c:if test="${not empty dto.uq_SaveFilename}">
-                 <a href="<%=cp%>/userQna/download?uq_Num=${dto.uq_Num}"><img src="<%=cp%>/resource/images/disk.gif" border="0" style="margin-top: 1px;"></a>
+                 <a href="<%=cp%>/userQna/download?uq_Num=${dto.uq_Num}"><img src="<%=cp%>/resource/img/www.jpg" border="0" style="margin-top: 1px;"></a>
                </c:if>
              </td>
            </tr>   

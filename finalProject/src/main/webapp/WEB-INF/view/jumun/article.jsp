@@ -6,13 +6,8 @@
 	String cp = request.getContextPath();
 %>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-<link rel="stylesheet" href="<%=cp%>/resource/alertify/alertify.core.css" />
-<link rel="stylesheet" href="<%=cp%>/resource/alertify/alertify.default.css" id="toggleCSS" />
 <script src="<%=cp%>/resource/alertify/alertify.js"></script>
-<%-- <script src="<%=cp%>/resource/alertify/alertify.min.js"></script> --%>
-<script type="text/javascript" src="<%=cp%>/resource/jquery/js/jquery.form.js"></script>
 <script>
-	
 	$(function(){
 		if (${result} > 0) {
 			$("#likeGiup").hide();
@@ -329,79 +324,17 @@
 		</c:forEach>
 	</div>
 	<div id="review" style="width:680px; margin: 0;">
-		<%-- <table style="width: 680px; border: 1px solid black;">
-			<tr style="border-bottom: 1px solid black;">
-				<th style="font-size: 40px; font-weight: 900; text-align: center;">리뷰</th>
-			</tr>
-			
-			<c:if test="${empty reviewList}">
-				<tr>
-					<td style="width: 100%; height: 400px; background-image: url('<%=cp%>/resource/img/no_review.png'); background-repeat:no-repeat; background-position:center center;"></td>
-				</tr>
-			</c:if>
-			<c:forEach var="dto" items="${reviewList}">
-				<tr style="float: left;">
-					<td>${dto.m1_Nickname} | ${dto.rep_Created }</td>
-				</tr>
-				<tr style="float: right;">
-					<td style="color: orange;">
-						<c:forEach begin="1" end="${dto.rep_Star}">★</c:forEach>
-						<c:forEach begin="1" end="${5 - dto.rep_Star}">☆</c:forEach>
-					</td>
-				</tr>
-
-				<tr id="border${dto.rep_Num }" style="border-bottom: 1px solid black;">
-					<td>
-						${dto.rep_Content}
-						<c:if test="${not empty dto.rphoto_SaveFilename }">
-						<script type="text/javascript">
-						var url = "<%=cp%>/uploads/giupReview/${dto.rphoto_SaveFilename}";
-						var no_Img = "<%=cp%>/resource/img/no_img.png";
-						var img_on = "#reImg"+${dto.rep_Num};
-						$.ajax({
-						    url: url,
-						    type: 'HEAD',
-						    success: function () {
-						         $(img_on).append("<img src="+url+">")
-						    },
-						    error: function () {
-						    	 $(img_on).append("<img src="+no_Img+">")
-						    }
-						});
-						</script>
-							<div id="reImg${dto.rep_Num}"></div>
-						</c:if>
-					</td>
-				</tr>
-				
-				<c:forEach var="ddto" items="${replyListMap[dto.rep_Num]}" varStatus="status">
-					<script type="text/javascript">$(function(){$("#border"+${dto.rep_Num}).css("border-bottom","1px solid #cccccc")});</script>
-					<tr>
-						<td>사장님 | ${ddto.rrep_Created}</td>
-					</tr>
-					<c:if test="${replyListMap[dto.rep_Num].size()-1 != status.index}">
-						<tr style="border-bottom: 1px solid #cccccc;">
-							<td>${ddto.rrep_Content}</td>
-						</tr>
-					</c:if>
-					<c:if test="${replyListMap[dto.rep_Num].size()-1 == status.index}">
-						<tr style="border-bottom: 1px solid black;">
-							<td>${ddto.rrep_Content}</td>
-						</tr>
-					</c:if>
-				</c:forEach>
-			</c:forEach>
-		</table> --%>
-		<div style="width: 680px; border: 1px solid black;">
+		<div style="width: 680px; border-top: 1px solid black;border-left: 1px solid black;border-right: 1px solid black; border-radius: 4px;">
 			<div style="border-bottom: 1px solid black;">
 				<div style="font-size: 40px; font-weight: 900; text-align: center;">리뷰</div>
 			</div>
 			<c:if test="${empty reviewList}">
-				<div>
+				<div style="border-bottom: 1px solid black;">
 					<div style="width: 100%; height: 400px; background-image: url('<%=cp%>/resource/img/no_review.png'); background-repeat:no-repeat; background-position:center center;"></div>
 				</div>
 			</c:if>
 			<c:forEach var="dto" items="${reviewList}">
+				<div style="height: 38px;">
 				<div style="float: left;">
 					<div>${dto.m1_Nickname} | ${dto.rep_Created }</div>
 				</div>
@@ -410,7 +343,7 @@
 						<c:forEach begin="1" end="${dto.rep_Star}">★</c:forEach>
 						<c:forEach begin="1" end="${5 - dto.rep_Star}">☆</c:forEach>
 					</div>
-				</div><br><br>
+				</div></div>
 				<div id="border${dto.rep_Num}" style="border-bottom: 1px solid black;">
 					<div>${dto.rep_Content}
 						<c:if test="${not empty dto.rphoto_SaveFilename }">

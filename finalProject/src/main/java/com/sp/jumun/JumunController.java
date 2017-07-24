@@ -190,4 +190,21 @@ public class JumunController {
 		return model;
 		
 	}
+	
+	@RequestMapping(value="/jumun/refund", method=RequestMethod.GET)
+	public String JumunRefund(int jumun_Num, Model model, HttpSession session) throws Exception {
+		SessionInfo info = (SessionInfo) session.getAttribute("member");
+		JumunMember dto = new JumunMember();
+		List<JumunMember> list = new ArrayList<>();
+		dto = service.readmyPayJumunNum(jumun_Num);
+		Map<String, Object> map = new HashMap<>();
+		map.put("m1_num", info.getM1_Num());
+		map.put("jumun_num", jumun_Num);
+		list = service.detailmyPay(map);
+		
+		model.addAttribute("list",list);
+		model.addAttribute("dto",dto);
+		model.addAttribute("jumun_Num",jumun_Num);
+		return ".mymem.refund";
+	}
 }

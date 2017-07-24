@@ -23,9 +23,11 @@
 	<div class="panel panel-default">
 		<div id="collapseThree" class="panel-collapse collapse in"
 			role="tabpanel" aria-labelledby="headingThree">
-					<a href="<%=cp%>/store/mystore" class="list-group-item">매출현황</a>
+					<a href="<%=cp%>/store/jumunControll" class="list-group-item">주문관리</a>
 					<a href="<%=cp%>/store/review/reviewYet" class="list-group-item">리뷰관리</a>
 					<a href="<%=cp%>/store/menu" class="list-group-item">메뉴관리</a>
+					<a href="<%=cp%>/store/mystore" class="list-group-item">매출현황</a>
+					
 			</div>
 		</div>
 	</div>

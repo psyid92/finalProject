@@ -69,7 +69,7 @@ function printReply(data){
 			s += " 			<div id='reviewreply"+rep_Num+"'>";
 			s += " 		</div>";
 			s += "  </div>";
-			s += "  <textarea id='content"+rep_Num+"' name= 'content"+rep_Num+"' class='form-control' rows='3' required='required' style='resize: none; margin-top: 15px;'>"+m1_Nickname+" 님, </textarea> ";
+			s += "  <textarea id='content"+rep_Num+"' name= 'content"+rep_Num+"' class='form-control' rows='3' required='required' style='resize: none; margin-top: 15px;'></textarea> ";
 			s += "  <button type='button' onclick='sendReply("+rep_Num+","+pageNo+");' class='btn btn-primary' style='float:right; margin-top:10px; margin-bottom:10px;'>답변 남기기 <span class='glyphicon glyphicon-ok'></span></button>";
 			s += "</div>";
 			s += " <br>";

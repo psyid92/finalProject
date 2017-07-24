@@ -91,6 +91,7 @@
 
 			
 			// 쿠키 설정하기
+			alert(query);
 			var url = "<%=cp%>/resource/cookie/setcookie.jsp";
 
 			$.ajax({

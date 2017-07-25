@@ -44,6 +44,6 @@ body {
 <div id="mypage_menu" onclick="javascript:location.href='<%=cp%>/member/mileage'">마일리지 내역</div>
 <div id="mypage_menu" onclick="javascript:location.href='<%=cp%>/member/listGiupReview'">내 리뷰</div>
 <div id="mypage_menu" onclick="javascript:location.href='<%=cp%>/member/memberAccount'">비밀번호 변경/탈퇴</div>
-<div id="mypage_menu" onclick="javascript:location.href='#'">1대1 문의</div>
+<div id="mypage_menu" onclick="javascript:location.href='<%=cp%>/userQna/list'">1대1 문의</div>
 
 </div>

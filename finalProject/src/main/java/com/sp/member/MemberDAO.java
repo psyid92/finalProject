@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.sp.giupReview.giupReview;
 import com.sp.jumun.JumunMember;
+import com.sp.mileage.Mileage;
 import com.sp.userQna.UserQna;
 
 public interface MemberDAO {
@@ -42,4 +43,7 @@ public interface MemberDAO {
 
 //	주문
 	public List<JumunMember> getMemberOneList(int m1_num) throws Exception;
+	
+//	마일리지
+	public List<Mileage> getMileageOneList(int m1_num) throws Exception;
 }

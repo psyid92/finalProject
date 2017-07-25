@@ -180,6 +180,7 @@
 					<if test="refund_State != null and refund_State != ''">
 						refund_State = #{refund_State}
 					</if>
+					<!-- search 수정해야함 -->
 				</where>
 				ORDER BY refund_Created DESC
 <![CDATA[
@@ -188,12 +189,13 @@
 ]]>
 	</select>
 	
-	<select id="countRefund">
+	<select id="countRefund" resultType="Integer">
 		SELECT NVL(COUNT(*),0) FROM refund
 		<where>
 			<if test="refund_State != null and refund_State != ''">
 				refund_State = #{refund_State}
-			</if>		
+			</if>	
+			<!-- search 수정해야함 -->	
 		</where>
 	</select>
 </mapper>

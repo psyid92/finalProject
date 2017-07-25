@@ -20,14 +20,14 @@ function searchList(){
 
 </script>
     
-    <div class="bodyFrame2" style="padding-top: none;">
+    <div class="adminBodyFrame2" style="padding-top: none;">
     <div class="body-title">
-          <h3><span class="glyphicon glyphicon-tasks"></span> 공지사항 </h3>
+          <h3>
+          <span class="glyphicon glyphicon-tasks"></span> 공지사항 
+          </h3>
     </div>
     
-    <div class="alert alert-info">
-        <i class="glyphicon glyphicon-info-sign"></i> 중요한 일정 및 알림 등은 공지사항 통해 고객님께 알려 드립니다.
-    </div>
+    
 <c:if test="${dataCount!=0}">   
       <div style="clear: both; height: 30px; line-height: 30px;">
         <div style="float: left;">${dataCount}개(${page}/${total_page}페이지)</div>

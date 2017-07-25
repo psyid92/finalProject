@@ -25,10 +25,10 @@ import net.sf.json.JSONObject;
 @Controller("jumun.jumunController")
 public class JumunController {
 	@Autowired
-	JumunService service;
+	private JumunService service;
 	
 	@Autowired
-	MyMath myMath;
+	private MyMath myMath;
 
 	@RequestMapping("/jumun/jumunList")
 	public String payList(@RequestParam(value="category",defaultValue="") String category,
@@ -189,5 +189,39 @@ public class JumunController {
 		model.put("state", state);
 		return model;
 		
+	}
+	
+	@RequestMapping(value="/jumun/refund", method=RequestMethod.GET)
+	public String JumunRefundForm(int jumun_Num, Model model, HttpSession session) throws Exception {
+		SessionInfo info = (SessionInfo) session.getAttribute("member");
+		JumunMember dto = new JumunMember();
+		List<JumunMember> list = new ArrayList<>();
+		dto = service.readmyPayJumunNum(jumun_Num);
+		Map<String, Object> map = new HashMap<>();
+		map.put("m1_num", info.getM1_Num());
+		map.put("jumun_num", jumun_Num);
+		list = service.detailmyPay(map);
+		
+		model.addAttribute("list",list);
+		model.addAttribute("dto",dto);
+		model.addAttribute("jumun_Num",jumun_Num);
+		return ".mymem.refund";
+	}
+	
+	@RequestMapping(value="/jumun/refund", method=RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> JumunRefundSubmit(int jumun_Num, String refund_Memo) throws Exception {
+		Map<String, Object> map = new HashMap<>();
+		map.put("jumun_Num", jumun_Num);
+		map.put("refund_Memo", refund_Memo);
+		String state = "fail";
+		try {
+			service.insertRefund(map);
+		} catch (Exception e) {
+			state = "success";
+		}
+		Map<String, Object> model = new HashMap<>();
+		model.put("state", state);
+		return model;
 	}
 }

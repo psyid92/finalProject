@@ -11,7 +11,7 @@
         <div style="clear: both; border-top: #d5d5d5 solid 1px; margin-top: 7px; padding-top: 5px;">
             <div style="float: left;">${dto.m1_Email} | ${dto.rep_Created }</div>
             <div style="float: right; text-align: rigth;">
-<c:if test="${sessionScope.member.userId==userId}">   
+<c:if test="${sessionScope.member.userId==dto.m1_Email}">   
 		     <a onclick='deleteUserReply("${dto.rep_Num}", "${dto.rep_Answer}");'>삭제</a>
 </c:if>
 <c:if test="${sessionScope.member.userId!=dto.m1_Email}">   

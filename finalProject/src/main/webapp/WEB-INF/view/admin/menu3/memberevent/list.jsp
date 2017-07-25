@@ -143,15 +143,18 @@ dl, ul, ol, menu, li {
 							</dl>
 					</a></li>
 				</ul>
+                <div style="float: left; width: 20%; min-width: 85px; text-align: left;">
+        	 		<button type="button" class="btn btn-primary btn-sm bbtn" onclick="javascript:location.href='<%=cp%>/memberevent/created';"><span class="glyphicon glyphicon glyphicon-pencil"></span> 글쓰기</button>
+				</div>    
 
-					<div class="paging"
+				<div class="paging"
 					style="text-align: center; min-height: 50px; line-height: 50px;">
 					<c:if test="${dataCount==0 }">
-           등록된 문의가 없습니다.
-       </c:if>
+           			등록된 문의가 없습니다.
+       				</c:if>
 					<c:if test="${dataCount!=0 }">
-           ${paging}
-       </c:if>
+         			  ${paging}
+      				 </c:if>
 				</div>
 
 			</div>

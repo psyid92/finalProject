@@ -6,14 +6,13 @@
    String cp = request.getContextPath();
 %>
 
- <div class="bodyFrame2">
+ <div class="adminBodyFrame2">
     <div class="body-title">
-          <h3><span class="glyphicon glyphicon-bullhorn"></span> 그것이 알고싶다 </h3>
+          <h3>
+          <span class="glyphicon glyphicon-bullhorn"></span> 그것이 알고싶다 
+          </h3>
     </div>
-    
-    <div class="alert alert-info">
-        <i class="glyphicon glyphicon-info-sign"></i> 그런데 말입니다?? 1대1문의!!!
-    </div>
+  
 <c:if test="${dataCount !=0}">
      <div style="clear: both; height: 30px; line-height: 30px;">
         <div style="float: left;">${dataCount}개(${page}/${total_page}페이지)</div>

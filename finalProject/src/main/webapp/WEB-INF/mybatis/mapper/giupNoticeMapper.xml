@@ -71,7 +71,7 @@
 	
 	
 	<!-- 상세보기  -->
-	<select id="readNotice" resultType="com.sp.giupNotice.Notice">
+	<select id="readNotice" resultType="com.sp.giupNotice.Notice" parameterType="Integer">
 		SELECT noti_Num, gn.admin_Id, noti_Title, noti_Content, noti_Created, noti_HItCount, noti_Top, noti_hidden
 		FROM giupNotice gn JOIN admin a ON a.admin_Id=gn.admin_Id
 		WHERE noti_Num=#{noti_Num}

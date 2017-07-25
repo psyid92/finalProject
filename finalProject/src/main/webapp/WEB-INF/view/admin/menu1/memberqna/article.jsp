@@ -50,7 +50,7 @@ function deleteUserQna() {
 
 </script>
 
-<div class="bodyFrame2">
+<div class="adminBodyFrame2">
     <div class="body-title">
           <h3><span class="glyphicon glyphicon-book"></span> 1대1문의 </h3>
     </div>

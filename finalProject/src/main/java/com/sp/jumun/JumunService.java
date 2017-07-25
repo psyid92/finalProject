@@ -18,11 +18,12 @@ public interface JumunService {
 	public int likeGiup(Map<String, Object> map) throws Exception;
 	public int insertLikeGiup(Map<String, Object> map) throws Exception;
 	public int deleteLikeGiup(Map<String, Object> map) throws Exception;
+	public void insertRefund(Map<String, Object> map) throws Exception;
 	
 	/*
 	 * ---------- Member - 주문내역 가져오기
 	 */
-	
+	public JumunMember readmyPayJumunNum(int jumun_Num) throws Exception;
 	public List<JumunMember> listmyPay(int m1_num) throws Exception;
 	public List<JumunMember> detailmyPay(Map<String, Object> map) throws Exception;
 }

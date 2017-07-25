@@ -38,7 +38,7 @@ function updateNotice(){
 
 
 
-  <div class="bodyFrame2">
+  <div class="adminBodyFrame2">
     <div class="body-title">
           <h3><span class="glyphicon glyphicon-tasks"></span> 공지사항 </h3>
     </div>

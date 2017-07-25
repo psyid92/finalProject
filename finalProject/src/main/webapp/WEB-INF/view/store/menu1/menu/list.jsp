@@ -6,6 +6,13 @@
    String cp = request.getContextPath();
 %>
 <script type="text/javascript" src="<%=cp%>/resource/jquery/js/jquery.form.js"></script>
+<style>
+input {
+	margin-bottom: 10px;
+	margin-right: 10px;
+	height: 35px;
+}
+</style>
 <script>
 $(function(){
 	$("body").on("click", ".cateMenu", function() {
@@ -37,26 +44,29 @@ $(function(){
 function layout1(list, menu_on, menuct_Num, path) {
 	var s = "";
 		s+="<form name='mainmenuForm"+menuct_Num+"' method='post' enctype='multipart/form-data'>";
-		s+="<div id='maininput' style='margin: 10px 3px;'>";
+		s+="<div id='maininput' style='margin: 10px 3px;'>";5
 		s+="<input type='text' id='mainmenu_Title"+menuct_Num+"' 	name='mainmenu_Title' class='boxTF' style='width:190px;' placeholder='메인메뉴 이름'>&nbsp;";
 		s+="<input type='text' id='mainmenu_Content"+menuct_Num+"'  name='mainmenu_Content' class='boxTF' style='width:190px;' placeholder='메인메뉴 정보'>&nbsp;";
-		s+="<input type='file' name='upload' class='boxTF'>&nbsp;";
 		s+="<input type='text' id='mainmenu_Pay"+menuct_Num+"' 		name='mainmenu_Pay' class='boxTF' style='width:190px;' placeholder='메인메뉴 가격'>&nbsp;";
-		s+="<input type='hidden' id='menuct_Num' name='menuct_Num' value="+menuct_Num+">";
-		s+="<button type='button' onclick='insertMainmenu("+menuct_Num+");' class='btn'>메인메뉴추가</button>";
+		s+="<input type='file' name='upload' class='boxTF' style='float:left;'>&nbsp;";
+		s+="<input type='hidden' id='menuct_Num' name='menuct_Num' value="+menuct_Num+" >";
+		s+="<button type='button' class='btn btn-primary' onclick='insertMainmenu("+menuct_Num+");'>메인메뉴추가</button>";
 		s+="</div></form>";
 	for (var i = 0; i < list.length; i++) {
-		s += "<div id='mainmenu"+list[i].mainmenu_Num+"'><div onclick='submenu("+list[i].mainmenu_Num+")' style='width: 680px; height: 30px;  line-height: 30px; background-color: #dddddd;'><div style='float: left;'>" + list[i].mainmenu_Title+"</div>";
-		s += "<button id=main"+list[i].mainmenu_Num+" onclick='updateMainMenu("+list[i].mainmenu_Num+")' style='float:right; height: 26px; line-height: 20px;'>삭제</button><div style='float: right;'>" + list[i].mainmenu_Pay + "</div></div>";
-		s += "<div id='sub"+list[i].mainmenu_Num+"' style='width:700px; background-color: white; display: none;'>"
-		s += "<div>"+list[i].mainmenu_Num + "</div><div class='title'>" + list[i].mainmenu_Title + "</div>";
+		s += "<div id='mainmenu"+list[i].mainmenu_Num+"'>";
+		s += "<div onclick='submenu("+list[i].mainmenu_Num+")' style='width:550px; height: 30px;  line-height: 30px; background-color: #EAEAEA; float:left; margin-bottom:15px; margin-right:15px;'>";
+		s += "<span style='float: left;'>" + list[i].mainmenu_Title+"</span>";
+		s += "<span style='float: right;'>"+list[i].mainmenu_Pay + "<span></div></div>";
+		s += "<button class='btn btn-default' id=main"+list[i].mainmenu_Num+" onclick='updateMainMenu("+list[i].mainmenu_Num+")' style='height: 30px; line-height: 10px; margin-bottom:15px;'>삭제</button><div>";
+		s += "<div id='sub"+list[i].mainmenu_Num+"' style='width:550px; background-color: white; display: none;'>"
+		s += "<div class='title'>" + list[i].mainmenu_Title + "</div>";
 		s += "<div class='content'>"+list[i].mainmenu_Content + "</div>";
 		if(list[i].mainmenu_Photo!=null)
 		   s += "<img src='<%=cp%>/uploads/photo/"+list[i].mainmenu_Photo+"' style='width:70%; height:70%;'>";
-		s += "<div class='pay'>"+list[i].mainmenu_Pay + "</div><div>" + list[i].mainmenu_Enabled + "</div>"; 
+		s += "<div class='pay'>"+list[i].mainmenu_Pay + "</div>"; 
 		s += "<input type='text' id='submenu_Title"+list[i].mainmenu_Num+"' class='boxTF' style='width:190px;' placeholder='서브메뉴 이름'>&nbsp;"
 		s += "<input type='text' id='submenu_Pay"+list[i].mainmenu_Num+"' class='boxTF' style='width:190px;' placeholder='서브메뉴 가격'>&nbsp;"
-		s += "<button type='button' onclick='insertSubMenu("+list[i].mainmenu_Num+")' class='btn'>서브메뉴 추가</button><br><div id='addSubMenu"+list[i].mainmenu_Num+"'></div></div></div>";
+		s += "<button type='button' onclick='insertSubMenu("+list[i].mainmenu_Num+")' class='btn btn-primary'>서브메뉴 </button><br><div id='addSubMenu"+list[i].mainmenu_Num+"'></div></div></div>";
 	}
 	$(menu_on).html(s);
 }
@@ -85,11 +95,12 @@ function insertMenuct() {
 		$("#menuct_Info").val("");
 		
 		var s = "";
-		s += '<div id="cate'+menuct_Num+'" class="cateMenu" style="cursor: pointer; width: 680px; height: 50px; background-color: #cccccc">';
+		
+		s += '<div id="cate'+menuct_Num+'" class="cateMenu" style="cursor: pointer; width: 75%; height: 50px; margin-bottom:20px; margin-right:7px; background-color: #cccccc; float: left;">';
 		s += menuct_Title;  
-		s += '<br>'+menuct_Info;
-		s += '<button class="btnupdate" onclick="updatemenuct('+menuct_Num+')" style="float: right;">삭제</button></div>';
-		s += '<div id="main'+menuct_Num+'" class="mainMenu" style="margin-bottom: 20px; cursor: pointer;"></div>';
+		s += '<br>'+menuct_Info+'</div>';
+		s += '<button id="btn'+menuct_Num+'" class="btn btn-default" onclick="updatemenuct('+menuct_Num+')" style="height: 50px;">삭제</button>';
+		s += '<div id="main'+menuct_Num+'" class="mainMenu" style="margin-bottom: 20px; cursor: pointer; width:75%;"></div>';
 		s += "<div style='margin: 10px 3px;'>";
 		s += "</div>"; 
 		$("#giupMenu").append(s);
@@ -140,26 +151,29 @@ function insertMainmenu(menuct_Num) {
 			$("#mainmenu_Pay"+menuct_Num).val("");
 			var s = "";
 				s+="<form name='mainmenuForm"+menuct_Num+"' method='post' enctype='multipart/form-data'>";
-				s+="<div id='maininput' style='margin: 10px 3px;'>"; 
-				s+="<input type='text' id='mainmenu_Title"+menuct_Num+"' name='mainmenu_Title' class='boxTF' style='width:190px;' placeholder='메인메뉴 이름'>&nbsp;";
-				s+="<input type='text' id='mainmenu_Content"+menuct_Num+"' name='mainmenu_Content' class='boxTF' style='width:190px;' placeholder='메인메뉴 정보'>&nbsp;";
-				s+="<input type='file' name='upload' class='boxTF'>&nbsp;";
-				s+="<input type='text' id='mainmenu_Pay"+menuct_Num+"' name='mainmenu_Pay' class='boxTF' style='width:190px;' placeholder='메인메뉴 가격'>&nbsp;";
-				s+="<button type='button' onclick='insertMainmenu("+menuct_Num+");' class='btn'>메인메뉴추가</button>"
-				s+="<input type='hidden' id='menuct_Num'  name='menuct_Num' value="+menuct_Num+">";
+				s+="<div id='maininput' style='margin: 10px 3px;'>";
+				s+="<input type='text' id='mainmenu_Title"+menuct_Num+"' 	name='mainmenu_Title' class='boxTF' style='width:190px;' placeholder='메인메뉴 이름'>&nbsp;";
+				s+="<input type='text' id='mainmenu_Content"+menuct_Num+"'  name='mainmenu_Content' class='boxTF' style='width:190px;' placeholder='메인메뉴 정보'>&nbsp;";
+				s+="<input type='text' id='mainmenu_Pay"+menuct_Num+"' 		name='mainmenu_Pay' class='boxTF' style='width:190px;' placeholder='메인메뉴 가격'>&nbsp;";
+				s+="<input type='file' name='upload' class='boxTF' style='float:left;'>&nbsp;";
+				s+="<input type='hidden' id='menuct_Num' name='menuct_Num' value="+menuct_Num+" >";
+				s+="<button type='button' class='btn btn-primary' onclick='insertMainmenu("+menuct_Num+");'>메인메뉴추가</button>";
 				s+="</div></form>";
 			for (var i = 0; i < list.length; i++) {   
-				s += "<div id='mainmenu"+list[i].mainmenu_Num+"'><div id=main"+list[i].mainmenu_Num+" onclick='submenu("+list[i].mainmenu_Num+")' style='width: 680px; height: 30px;  line-height: 30px; background-color: #dddddd;'><div style='float: left;'>" + list[i].mainmenu_Title+"</div>";
-				s += "<button onclick='updateMainMenu("+list[i].mainmenu_Num+")' style='float:right; height: 26px; line-height: 20px;'>삭제</button><div style='float: right;'>" + list[i].mainmenu_Pay + "</div></div>";
-				s += "<div id='sub"+list[i].mainmenu_Num+"' style='width:700px; background-color: white; display: none;'>"
-				s += "<div>"+list[i].mainmenu_Num + "</div><div class='title'>" + list[i].mainmenu_Title + "</div>";
-				s += "<div class='content'>"+list[i].mainmenu_Content + "</div>";  
+				s += "<div id='mainmenu"+list[i].mainmenu_Num+"'>";
+				s += "<div onclick='submenu("+list[i].mainmenu_Num+")' style='width:550px; height: 30px;  line-height: 30px; background-color: #EAEAEA; float:left; margin-bottom:15px; margin-right:15px;'>";
+				s += "<span style='float: left;'>" + list[i].mainmenu_Title+"</span>";
+				s += "<span style='float: right;'>"+list[i].mainmenu_Pay + "<span></div></div>";
+				s += "<button class='btn btn-default' id=main"+list[i].mainmenu_Num+" onclick='updateMainMenu("+list[i].mainmenu_Num+")' style='height: 30px; line-height: 10px; margin-bottom:15px;'>삭제</button><div>";
+				s += "<div id='sub"+list[i].mainmenu_Num+"' style='width:550px; background-color: white; display: none;'>"
+				s += "<div class='title'>" + list[i].mainmenu_Title + "</div>";
+				s += "<div class='content'>"+list[i].mainmenu_Content + "</div>";
 				if(list[i].mainmenu_Photo!=null)
-					s += "<img src='<%=cp%>/uploads/photo/"+list[i].mainmenu_Photo+"' style='width:70%; height:70%;'>";
-				s += "<div class='pay'>"+list[i].mainmenu_Pay + "</div><div>" + list[i].mainmenu_Enabled + "</div>";
+				   s += "<img src='<%=cp%>/uploads/photo/"+list[i].mainmenu_Photo+"' style='width:70%; height:70%;'>";
+				s += "<div class='pay'>"+list[i].mainmenu_Pay + "</div>"; 
 				s += "<input type='text' id='submenu_Title"+list[i].mainmenu_Num+"' class='boxTF' style='width:190px;' placeholder='서브메뉴 이름'>&nbsp;"
 				s += "<input type='text' id='submenu_Pay"+list[i].mainmenu_Num+"' class='boxTF' style='width:190px;' placeholder='서브메뉴 가격'>&nbsp;"
-				s += "<button type='button' onclick='insertSubMenu("+list[i].mainmenu_Num+")' class='btn'>서브메뉴 추가</button><br><div id='addSubMenu"+list[i].mainmenu_Num+"'></div></div>";
+				s += "<button type='button' onclick='insertSubMenu("+list[i].mainmenu_Num+")' class='btn btn-primary'>서브메뉴 추가</button><br><div id='addSubMenu"+list[i].mainmenu_Num+"'></div></div></div>";
 				
 			}
 			$("#main"+menuct_Num).html(s); 
@@ -177,7 +191,8 @@ function submenu(mainmenu_Num) {
 		
 		var s = "";
 		for (var i = 0; i < list.length; i++) {
-			s += "<div id=submen"+list[i].submenu_Num+"><div style='float:left;'>"+list[i].submenu_Title+"</div><div style='float:left;'>("+list[i].submenu_Pay+"원 추가)</div><button type='button' onclick='updateSubMenu("+list[i].submenu_Num+")'>삭제</button></div>";
+			s += "<div id=submen"+list[i].submenu_Num+" style='margin-bottom:10px;'><div style='float:left;'>"+list[i].submenu_Title+"</div><div style='float:left; margin-right:10px;'>("+list[i].submenu_Pay+"원 추가)</div>";
+			s += "<button class='btn btn-default' type='button' onclick='updateSubMenu("+list[i].submenu_Num+")' style='height:25px; line-height:5px;'>삭제</button></div>";
 		}
 		$("#addSubMenu"+mainmenu_Num).html(s);
 	}, "json");
@@ -213,7 +228,8 @@ function insertSubMenu(mainmenu_Num) {
 		$("#submenu_Pay"+mainmenu_Num).val("");
 		var s = "";
 		for (var i = 0; i < list.length; i++) {
-			s += "<div id=submen"+list[i].submenu_Num+"><div style='float:left;'>"+list[i].submenu_Title+"</div><div style='float:left;'>("+list[i].submenu_Pay+"원 추가)</div><button type='button' onclick='updateSubMenu("+list[i].submenu_Num+")'>삭제</button></div>";
+			s += "<div id=submen"+list[i].submenu_Num+" style='margin-bottom:10px;'><div style='float:left;'>"+list[i].submenu_Title+"</div><div style='float:left; margin-right:10px;'>("+list[i].submenu_Pay+"원 추가)</div>";
+			s += "<button class='btn btn-default' type='button' onclick='updateSubMenu("+list[i].submenu_Num+")' style='height:25px; line-height:5px;'>삭제</button></div>";
 		}
 		$("#addSubMenu"+mainmenu_Num).html(s);
 	}, "json");
@@ -233,6 +249,7 @@ function updatemenuct(menuct_Num) {
 		   
 		$("#cate"+menuct_Num).remove();
 		$("#main"+menuct_Num).remove();  
+		$("#btn"+menuct_Num).remove();  
 	},"json");
 }
  
@@ -272,20 +289,20 @@ function updateSubMenu(submenu_Num) {
           <h3><span class="glyphicon glyphicon-cutlery"></span> 메뉴관리 </h3>
     </div>
     <div>
-    	내 업소 명 <br>
-    	${sessionScope.store.g1_Name} <br>
-	<div style="margin-top: 20px;">
-          <input type="text" id="menuct_Title" class="boxTF" style="width: 210px;" placeholder="카테고리명">
-          <input type="text" id="menuct_Info" class="boxTF" style="width: 210px;" placeholder="카테고리 정보">
-         <button type="button" onclick="insertMenuct();" class="btn">추가</button>
+	<div style="margin-top: 20px; margin-bottom: 20px;">
+         	<input type="text" id="menuct_Title" class="boxTF" style="width: 210px; height: 35px;" placeholder="카테고리명">
+         	<input type="text" id="menuct_Info" class="boxTF" style="width: 210px; height: 35px;" placeholder="카테고리 정보">
+         <button type="button" onclick="insertMenuct();" class="btn btn-primary">추가</button>
     </div> 
-         <div id="giupMenu" style="width: 680px; margin: 0; float: left;"> 
+         <div id="giupMenu" style="width: 100%; margin: 0; float: left;"> 
 			<c:forEach var="mystoreDto" items="${menuctlist}">
-				<div id="cate${mystoreDto.menuct_Num}" class="cateMenu" style="cursor: pointer; width: 680px; height: 50px; background-color: #cccccc">
-					${mystoreDto.menuct_Title}
-				<br>${mystoreDto.menuct_Info}
-				<button class='btnupdate' onclick="updatemenuct(${mystoreDto.menuct_Num})" style="float: right;">삭제</button></div>
-				<div id="main${mystoreDto.menuct_Num}" class="mainMenu" style="margin-bottom: 20px; cursor: pointer;"></div>
+				<div id="cate${mystoreDto.menuct_Num}" class="cateMenu" style="cursor: pointer; width: 75%; height: 50px; margin-bottom:20px; margin-right:7px; border-bottom:1px solid #bbb; float: left;">
+					<span style="font-weight: bold; font-size: 18px;">${mystoreDto.menuct_Title}</span>
+				<br>
+					<span style="font-size: 13px;">${mystoreDto.menuct_Info}</span>
+				</div>
+				<button id="btn${mystoreDto.menuct_Num}" class='btn btn-default' onclick="updatemenuct(${mystoreDto.menuct_Num})" style="height: 50px;">삭제</button>
+				<div id="main${mystoreDto.menuct_Num}" class="mainMenu" style="margin-bottom: 20px; cursor: pointer; width: 75%"></div>
 			</c:forEach>
 		</div>
    </div>

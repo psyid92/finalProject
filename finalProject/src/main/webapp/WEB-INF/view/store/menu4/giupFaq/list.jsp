@@ -29,12 +29,13 @@
 		
 		<div id="collapse${dto.f_Num}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading${dto.f_Num}" >
 			<div class="panel-body">
-				${dto.f_Content}
-				<c:if test="sessionScope.store.g1_Id=='admin' ">
+				${dto.f_Content} 
+				<c:if test="${sessionScope.store.g1_Id=='admin'}">
 					<div style="padding-top: 5px">
 						<hr>
-						<a href="<%=cp%>/giupFaq/update?f_Num=${dto.f_Num}&page=${page}&fCate_Num=${fCate_Num}">수정</a>&nbsp; | 
-						<a href="<%=cp%>/giupFaq/delete?f_Num=${dto.f_Num}&page=${page}&fCate_Num=${fCate_Num}">삭제</a>
+						
+						<a href="<%=cp%>/giupFaq/update?f_Num=${dto.f_Num}&pageNo=${pageNo}&fCate_Num=${dto.fCate_Num}">수정</a>&nbsp; | 
+						<a href="<%=cp%>/giupFaq/delete?f_Num=${dto.f_Num}&pageNo=${pageNo}&fCate_Num=${dto.fCate_Num}">삭제</a>
 					</div>
 				</c:if>
 			</div>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="storeCTR">
+
+<select id="jumunList" parameterType="map" resultType="com.sp.store.mystoreCTR.MyStoreCTR">
+SELECT DISTINCT m1_nickname, g1_num, g1_name, menuct_title, menu_title,
+        COUNT(jumun_num) OVER(PARTITION BY menuct_title, menu_title, jumun_num) menu_count,
+        SUM(menu_pay) OVER(PARTITION BY menuct_title, menu_title, jumun_num) menu_pay,
+        jumun_num, jumun_created, jumun_addr, jumun_tel, jumun_memo, orders_num, orders_state
+  FROM(
+    SELECT G1.g1_num, g1_name, 
+            MC.menuct_title,
+            CASE 
+            WHEN SM.SUBMENU_TITLE IS NULL 
+            THEN MM.MAINMENU_TITLE
+            ELSE MM.MAINMENU_TITLE||'/'||SM.SUBMENU_TITLE
+            END AS menu_title,
+            NVL(MM.MAINMENU_PAY,0)+NVL(SM.SUBMENU_PAY,0) menu_pay,
+            JU.jumun_num, JU.jumun_created, JU.jumun_addr, JU.jumun_tel, JU.jumun_memo,
+            JU.orders_num, orders_state, m1_nickname
+      FROM jumun JU
+      LEFT OUTER JOIN mainGoods MG ON JU.JUMUN_NUM = MG.JUMUN_NUM 
+      LEFT OUTER JOIN mainmenu MM ON MG.MAINMENU_NUM = MM.MAINMENU_NUM
+      LEFT OUTER JOIN menucate MC ON MM.MENUCT_NUM = MC.MENUCT_NUM
+      LEFT OUTER JOIN giup1 G1 ON MC.G1_NUM = G1.G1_NUM
+      LEFT OUTER JOIN orders OD ON OD.ORDERS_NUM = JU.ORDERS_NUM
+      LEFT OUTER JOIN subgoods SG ON MG.MAINGOODS_NUM = SG.MAINGOODS_NUM
+      LEFT OUTER JOIN submenu SM ON SM.SUBMENU_NUM = SG.SUBMENU_NUM
+      LEFT OUTER JOIN member1 M1 ON JU.M1_NUM = M1.M1_NUM
+      WHERE G1.G1_NUM=#{g1_num} AND OD.ORDERS_NUM = #{orders_num}
+  )tb
+ORDER BY jumun_created, menuct_title ASC
+</select>
+
+</mapper>

@@ -76,7 +76,7 @@ function searchList(){
 <div class="tab-content">
   <div role="tabpanel" class="tab-pane active" id="userBbs">
     
-    <div class="bodyFrame2">
+    <div class="bodyFrame2" style="margin-top: 50px;">
     <div class="body-title">
             <h3><span class="glyphicon glyphicon-pencil"></span> 우리끼리 소담소담 </h3>
 
@@ -115,7 +115,7 @@ function searchList(){
                         <td class="text-center">${dto.bbs_Count}</td>
                         <td class="text-center">
                             <c:if test="${not empty dto.bbs_SaveFilename}">
-                                <a href="<%=cp%>/userBbs/download?bbs_Num=${dto.bbs_Num}"><img src="<%=cp%>/resource/images/disk.gif" border="0" style="margin-top: 1px;"></a>
+                                <a href="<%=cp%>/userBbs/download?bbs_Num=${dto.bbs_Num}"><img src="<%=cp%>/resource/img/www.jpg" border="0" style="margin-top: 1px;"></a>
                             </c:if>
                         </td>
                     </tr>

@@ -11,8 +11,8 @@
 				<div class="panel panel-default">
 					<div class="panel-heading" role="tab" id="heading${dto.faq_Num}">
 						<h4 class="panel-title" style="font-size: 14px;">
-							<span style="display: inline-block; width: 80px;">${dto.ca_class}</span>
-							| <a data-toggle="collapse" data-parent="#accordion${dto.faq_Num}"
+							<span style="display: inline-block; width: 100px;">${dto.ca_class}</span>&nbsp;
+							&nbsp;|&nbsp;&nbsp; <a data-toggle="collapse" data-parent="#accordion${dto.faq_Num}"
 								href="#collapse${dto.faq_Num}" aria-expanded="true"
 								aria-controls="collapse${dto.faq_Num}"> ${dto.faq_Title} </a>
 						</h4>

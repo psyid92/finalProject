@@ -19,10 +19,12 @@
 
 <script type="text/javascript" src="<%=cp%>/resource/jquery/js/jquery-1.12.4.min.js"></script>
 <link rel="stylesheet" type="text/css" href="<%=cp%>/resource/css/css.css">
+<link rel="stylesheet" href="<%=cp%>/resource/alertify/alertify.core.css" />
+<link rel="stylesheet" href="<%=cp%>/resource/alertify/alertify.default.css" id="toggleCSS" />
 <style type="text/css">
 @font-face {
 	font-family: 'ice';
-	src: url('<%=cp%>/resource/fonts/ice.ttf');
+	src: url("<%=cp%>/resource/fonts/ice.ttf");
 }
 
 body {

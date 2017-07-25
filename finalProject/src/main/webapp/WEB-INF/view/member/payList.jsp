@@ -54,7 +54,10 @@ function getDetail(data){
 	}
 
 }
-
+	function refund(jumun_Num) {
+		location.href="<%=cp%>/jumun/refund?jumun_Num="+jumun_Num;
+	}
+	
 </script>
 
 <style>

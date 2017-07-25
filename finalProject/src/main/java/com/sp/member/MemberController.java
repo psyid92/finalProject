@@ -528,7 +528,7 @@ public class MemberController {
 		if(myJumun.length() > 0){
 			myJumun = myJumun.substring(0, myJumun.length()-2);
 		}
-		myJumun += "<br><br>";
+		myJumun += "<br><a onclick='refund("+jumun_num+");' style='float:right;'>환불신청</a><br>";
 		
 		//리뷰를 이미 썼으면
 		if(getNumReview == 0){

@@ -110,10 +110,10 @@ public class UserFaqController {
 			model.addAttribute("category", ca_Num);
 			model.addAttribute("paging", myUtil.paging(current_page, total_page));
 			
-			/*if(mode.equals("faqlist") && info.getUserId().equals("admin")){
+			if(mode.equals("faqlist") && info.getUserId().equals("admin")){
 				model.addAttribute("mainMenu", "3");
 				return "admin/menu4/memberfaq/list";
-			} */
+			} 
 			
 			
 			

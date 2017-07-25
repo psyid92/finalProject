@@ -44,21 +44,21 @@ function searchList() {
 		<table class="table table-hover">
 			<thead>
 				<tr>
-					<th class="text-center" style="width: 10%;">닉네임</th>
+					<th class="text-center" style="width: *;">닉네임</th>
 					<th class="text-center" style="width: 30%;">이메일</th>
 					<th class="text-center" style="width: 15%;">가입일</th>
 					<th class="text-center" style="width: 15%;">마지막 로그인</th>
-					<th class="text-center" style="width: 70px;">탈퇴</th>
+					<th class="text-center" style="width: 15%;">탈퇴</th>
 				</tr>
 			<tbody id="member_list">
 				<c:forEach items="${memberList }" var="dto">
 					<%-- <tr onclick="callModal(${dto.m1_num})"> --%>
 					<tr>
-						<td>${dto.m1_nickname }</td>
-						<td>${dto.m1_email }</td>
-						<td>${dto.m1_created }</td>
-						<td>${dto.m1_lastLogin }</td>
-						<td>${dto.m1_state }</td>
+						<td width="*">${dto.m1_nickname }</td>
+						<td width="30%">${dto.m1_email }</td>
+						<td width="15%">${dto.m1_created }</td>
+						<td width="15%">${dto.m1_lastLogin }</td>
+						<td align="center" width="15%">${dto.m1_state }</td>
 					</tr>
 				</c:forEach>
 			</tbody>

@@ -29,7 +29,7 @@
 		<div id="collapseThree" class="panel-collapse collapse in"
 			role="tabpanel" aria-labelledby="headingThree">
 					<a href="<%=cp%>/giupNotice/list" class="list-group-item">공지사항</a>
-					<a href="<%=cp%>/giupFaq/list" class="list-group-item">FAQ</a>
+					<a href="<%=cp%>/giupFaq/faq" class="list-group-item">FAQ</a>
 					<a href="<%=cp%>/giupQna/list" class="list-group-item">Q&amp;A</a>
 			</div>
 		</div> 

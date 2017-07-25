@@ -76,7 +76,7 @@
 </select>
 <!-- 비밀번호 찾아오기 -->
 <select id="findGiupPwd" parameterType="map" resultType="String">
-SELECT g1_Id, g1_Pwd, g2_giupnum
+SELECT  g1_Pwd
          FROM giup1 g1
          join giup2 g2 on g1.g1_Num=g2.g2_Num
       WHERE g1_Id=#{g1_Id} AND  g2_Giupnum=#{g2_Giupnum}

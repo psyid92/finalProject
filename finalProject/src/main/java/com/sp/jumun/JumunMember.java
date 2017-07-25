@@ -7,7 +7,7 @@ public class JumunMember {
 	
 	//detail 디테일 부분 : 주문 상세
 	private String MAINMENU_TITLE, SUBMENU_TITLE;
-	private int mainmenu_num, MAINGOODS_COUNT, submenu_num, SUBGOODS_NUM;
+	private int mainmenu_num, MAINGOODS_COUNT, submenu_num, SUBGOODS_NUM, mainmenu_pay, submenu_pay;
 	
 	
 	
@@ -131,6 +131,18 @@ public class JumunMember {
 	}
 	public void setSUBGOODS_NUM(int sUBGOODS_NUM) {
 		SUBGOODS_NUM = sUBGOODS_NUM;
+	}
+	public int getMainmenu_pay() {
+		return mainmenu_pay;
+	}
+	public void setMainmenu_pay(int mainmenu_pay) {
+		this.mainmenu_pay = mainmenu_pay;
+	}
+	public int getSubmenu_pay() {
+		return submenu_pay;
+	}
+	public void setSubmenu_pay(int submenu_pay) {
+		this.submenu_pay = submenu_pay;
 	}
 	
 	

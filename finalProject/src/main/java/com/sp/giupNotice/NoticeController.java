@@ -129,8 +129,6 @@ public class NoticeController {
 		model.addAttribute("dataCount", dataCount);
 		model.addAttribute("paging", paging);
 		model.addAttribute("mainMenu", "3");
-
-		System.out.println(dataCount);
 		
 		return ".store4.menu4.giupNotice.list";
 	}
@@ -315,7 +313,7 @@ public class NoticeController {
 	}
 	
 	//다운로드 
-	@RequestMapping(value="giupNotice/download")
+	@RequestMapping(value="/giupNotice/download")
 	public void download(
 			@RequestParam(value="noti_FileNum")int fileNum,
 			HttpServletResponse resp, HttpServletRequest session) throws Exception {
@@ -343,7 +341,7 @@ public class NoticeController {
 	}
 	
 	//파일삭제 
-	@RequestMapping(value="giupNotice/deleteFile", method = RequestMethod.POST)
+	@RequestMapping(value="/giupNotice/deleteFile", method = RequestMethod.POST)
 	@ResponseBody
 	public Map<String, Object> deleteFile(
 			@RequestParam(value="noti_FileNum") int fileNum,
@@ -369,20 +367,20 @@ public class NoticeController {
 	}
 	
 	//타일즈의 각 메뉴로 이동 
-	@RequestMapping(value = "/giupFaq/list", method = RequestMethod.GET)
-	public String faqList(Model model) {
+	/*@RequestMapping(value = "/giupFaq/list", method = RequestMethod.GET)
+	public String faqList(Model model) throws Exception{
 
 		model.addAttribute("mainMenu", "3");
 		model.addAttribute("subMenu", "2");
 		return ".store4.menu4.giupFAQ.list";
-	}
+	}*/
 	
-	@RequestMapping(value = "/giupQna/list", method = RequestMethod.GET)
-	public String qnaList(Model model) {
+	/*@RequestMapping(value = "/giupQna/list", method = RequestMethod.GET)
+	public String qnaList(Model model) throws Exception{
 
 		model.addAttribute("mainMenu", "3");
 		model.addAttribute("subMenu", "3");
 		return ".store4.menu4.giupQna.list";
-	}
+	}*/
 	
 }

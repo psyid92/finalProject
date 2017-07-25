@@ -22,7 +22,7 @@ public interface JumunService {
 	/*
 	 * ---------- Member - 주문내역 가져오기
 	 */
-	
+	public JumunMember readmyPayJumunNum(int jumun_Num) throws Exception;
 	public List<JumunMember> listmyPay(int m1_num) throws Exception;
 	public List<JumunMember> detailmyPay(Map<String, Object> map) throws Exception;
 }

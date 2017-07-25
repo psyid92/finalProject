@@ -34,7 +34,7 @@ public class MyStoreStatController {
 		int cur_Month=cal.get(Calendar.MONTH)+1;	
 		
 		model.addAttribute("mainMenu", "0");
-		model.addAttribute("subMenu", "1");
+		model.addAttribute("subMenu", "4");
 		model.addAttribute("cur_Year",cur_Year);
 		model.addAttribute("cur_Month",cur_Month);
 		return ".store4.menu1.mystore.list";

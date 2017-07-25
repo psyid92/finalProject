@@ -104,6 +104,16 @@ public class JumunServiceImpl implements JumunService {
 	 * 			MEMBER : GetList
 	 */
 	//회원 - 
+	@Override
+	public JumunMember readmyPayJumunNum(int jumun_Num) throws Exception {
+		JumunMember dto = new JumunMember();
+		try {
+			dto = dao.getReadData("jumun.getMemberPayJumunNum", jumun_Num);
+		} catch (Exception e) {
+			throw e;
+		}
+		return dto;
+	}
 	
 	@Override
 	public List<JumunMember> listmyPay(int m1_num) throws Exception {

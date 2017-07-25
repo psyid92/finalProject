@@ -214,4 +214,13 @@ public class JumunServiceImpl implements JumunService {
 		}
 		return result;
 	}
+
+	@Override
+	public void insertRefund(Map<String, Object> map) throws Exception {
+		try {
+			dao.insertData("jumun.insertRefund", map);
+		} catch (Exception e) {
+			throw e;
+		}
+	}
 }

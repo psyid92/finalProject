@@ -108,16 +108,6 @@
 ]]>
 	</select>
 	
-	<!-- <select id="listReview" parameterType="map" resultType="com.sp.jumun.Review">
-				SELECT gr.rep_Num, rep_Star, rep_Content, rep_Created, gr.m1_Num, gr.g1_Num, jumun_Num,
-					rphoto_SaveFilename, rphoto_OriginalFilename,
-					rrep_Num, rrep_Content, rrep_Created, m1_Nickname, rrep_Enable
-				FROM giupReview gr
-				LEFT OUTER JOIN reviewPhoto rp ON gr.rep_Num = rp.rep_Num
-				LEFT OUTER JOIN reviewReply rr ON gr.rep_Num = rr.rep_Num
-				LEFT OUTER JOIN member1 m1 ON gr.m1_Num = m1.m1_Num
-				WHERE gr.g1_Num = #{g1_Num} AND gr.rep_Enable = 1
-	</select> -->
 	<select id="listReview" parameterType="Integer" resultType="com.sp.jumun.Review">
 		SELECT gr.rep_Num, rep_Star, rep_Content, rep_Created, gr.m1_Num, gr.g1_Num, jumun_Num,
 			rphoto_SaveFilename, rphoto_OriginalFilename, m1_Nickname
@@ -145,4 +135,9 @@
 	<select id="likeGiup" parameterType="map" resultType="Integer">
 		SELECT NVL(COUNT(*), 0) FROM likeGiup WHERE g1_Num = #{g1_Num} AND m1_Num = #{m1_Num}
 	</select>
+	
+	<insert id="insertRefund" parameterType="map">
+		INSERT INTO refund (jumun_Num, refund_Memo)
+		VALUES (#{jumun_Num}, #{refund_Memo})
+	</insert>
 </mapper>

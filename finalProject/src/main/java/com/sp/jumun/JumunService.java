@@ -18,6 +18,7 @@ public interface JumunService {
 	public int likeGiup(Map<String, Object> map) throws Exception;
 	public int insertLikeGiup(Map<String, Object> map) throws Exception;
 	public int deleteLikeGiup(Map<String, Object> map) throws Exception;
+	public void insertRefund(Map<String, Object> map) throws Exception;
 	
 	/*
 	 * ---------- Member - 주문내역 가져오기

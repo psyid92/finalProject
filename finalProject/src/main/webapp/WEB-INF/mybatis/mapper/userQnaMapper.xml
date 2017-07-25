@@ -98,4 +98,23 @@
    </delete>
    
    
+   
+   
+   <!-- Member  -->
+   <select id="listMyQna" parameterType="Integer" resultType="com.sp.userQna.UserQna">
+     SELECT * FROM(
+       SELECT ROWNUM rnum, tb.* FROM(
+         SELECT uq_Num, q.m1_Num, m1_nickname, uq_Title, 
+         TO_CHAR(uq_Created, 'YYYY-MM-DD')uq_Created, uq_SaveFilename, uq_originalFilename
+         FROM userQna q JOIN member1 m1 ON q.m1_Num=m1.m1_Num
+	     <where>
+		     q.m1_Num= #{m1_Num} 
+	     </where>
+     ORDER BY uq_Num DESC
+     <![CDATA[
+       ) tb 
+     ) WHERE rnum = 1
+     ]]>
+   </select>
+   
 </mapper>

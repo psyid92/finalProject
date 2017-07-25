@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Map;
 
 import com.sp.giupReview.giupReview;
+import com.sp.jumun.JumunMember;
+import com.sp.userQna.UserQna;
 
 public interface MemberDAO {
 	
@@ -33,5 +35,11 @@ public interface MemberDAO {
 	
 //	리뷰
 	public int getNumReview(Map<String, Object> map) throws Exception;
+	public List<giupReview> getReviewList(int m1_num) throws Exception;
+	
+//	QNA
+	public List<UserQna> memberQNAList(int m1_num) throws Exception;
 
+//	주문
+	public List<JumunMember> getMemberOneList(int m1_num) throws Exception;
 }

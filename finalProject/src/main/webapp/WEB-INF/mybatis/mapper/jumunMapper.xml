@@ -125,6 +125,16 @@
 ]]>
 	</select>
 	
+	<!-- <select id="listReview" parameterType="map" resultType="com.sp.jumun.Review">
+				SELECT gr.rep_Num, rep_Star, rep_Content, rep_Created, gr.m1_Num, gr.g1_Num, jumun_Num,
+					rphoto_SaveFilename, rphoto_OriginalFilename,
+					rrep_Num, rrep_Content, rrep_Created, m1_Nickname, rrep_Enable
+				FROM giupReview gr
+				LEFT OUTER JOIN reviewPhoto rp ON gr.rep_Num = rp.rep_Num
+				LEFT OUTER JOIN reviewReply rr ON gr.rep_Num = rr.rep_Num
+				LEFT OUTER JOIN member1 m1 ON gr.m1_Num = m1.m1_Num
+				WHERE gr.g1_Num = #{g1_Num} AND gr.rep_Enable = 1
+	</select> -->
 	<select id="listReview" parameterType="Integer" resultType="com.sp.jumun.Review">
 		SELECT gr.rep_Num, rep_Star, rep_Content, rep_Created, gr.m1_Num, gr.g1_Num, jumun_Num,
 			rphoto_SaveFilename, rphoto_OriginalFilename, m1_Nickname
@@ -157,4 +167,35 @@
 		INSERT INTO refund (jumun_Num, refund_Memo)
 		VALUES (#{jumun_Num}, #{refund_Memo})
 	</insert>
+	
+	<select id="listRefund" parameterType="map" resultType="com.sp.jumun.Refund">
+		SELECT * FROM (
+			SELECT ROWNUM rnum, tb.* FROM(
+				SELECT rf.jumun_Num, refund_Created, refund_Memo, refund_State,
+					jumun_Pay, pay_Pay, jumun_Created, jumun_Tel, m1_Num 
+				FROM refund rf
+				LEFT OUTER JOIN pay p ON rf.jumun_Num = p.jumun_Num
+				LEFT OUTER JOIN jumun jm ON rf.jumun_Num = jm.jumun_Num
+				<where>
+					<if test="refund_State != null and refund_State != ''">
+						refund_State = #{refund_State}
+					</if>
+					<!-- search 수정해야함 -->
+				</where>
+				ORDER BY refund_Created DESC
+<![CDATA[
+			) tb WHERE ROWNUM <= #{end}
+		) WHERE rownum >= #{start}
+]]>
+	</select>
+	
+	<select id="countRefund" resultType="Integer">
+		SELECT NVL(COUNT(*),0) FROM refund
+		<where>
+			<if test="refund_State != null and refund_State != ''">
+				refund_State = #{refund_State}
+			</if>	
+			<!-- search 수정해야함 -->	
+		</where>
+	</select>
 </mapper>

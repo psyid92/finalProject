@@ -102,7 +102,7 @@ li{
 
 <div class="tab-content">
   <div role="tabpanel" class="tab-pane active" id="userQna">
-    <div class="bodyFrame2">
+    <div class="bodyFrame2"  style="margin-top: 50px;">
     <div class="body-title">
         <h3><span class="glyphicon glyphicon-pencil"></span> 우리끼리 소담소담 </h3>
     </div>

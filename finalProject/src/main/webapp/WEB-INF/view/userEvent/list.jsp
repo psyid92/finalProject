@@ -160,9 +160,7 @@ dl, ul, ol, menu, li {
 							</dl>
 					</a></li>
 				</ul>
-				 <button type="button" class="btn btn-primary btn-sm bbtn" onclick="javascript:location.href='<%=cp%>/userEvent/game';"><span class="glyphicon glyphicon glyphicon-pencil"></span> 게임</button>
 
-				
 				<div class="paging"
 					style="text-align: center; min-height: 50px; line-height: 50px;">
 					<c:if test="${dataCount==0 }">

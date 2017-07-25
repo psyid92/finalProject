@@ -32,7 +32,11 @@ body{
  width: 100%
 }
 
-
+#headerMember{
+ width: 1000px;
+ text-align: right;
+ margin: auto;
+}
 
 .table th, .table td {
     font-weight: normal;

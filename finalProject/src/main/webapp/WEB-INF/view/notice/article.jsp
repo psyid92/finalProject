@@ -65,10 +65,10 @@ $('#myTab li:eq(2) a').tab('show') // Select third tab (0-indexed)
 <div role="tabpanel">
 
   <!-- Nav tabs -->
-  <ul class="nav nav-tabs" role="tablist">
+  <ul class="nav nav-tabs" role="tablist" style="margin-top: 50px;">
     <li role="presentation" class="active"><a href="<%=cp%>/notice/list" aria-controls="notice" role="tab" data-toggle="tab">공지사항</a></li>
     <li role="presentation"><a href="<%=cp%>/userEvent/list" aria-controls="userEvent" role="tab" data-toggle="tab">이벤트</a></li>
-    <li role="presentation"><a href="<%=cp%>/userFap/list" aria-controls="userFaq" role="tab" data-toggle="tab">자주찾는 질문</a></li>
+    <li role="presentation"><a href="<%=cp%>/userFaq/list" aria-controls="userFaq" role="tab" data-toggle="tab">자주찾는 질문</a></li>
     <li role="presentation"><a href="<%=cp%>/userQna/created" aria-controls="userQna" role="tab" data-toggle="tab">1대1 문의</a></li>
     <li role="presentation"><a href="<%=cp%>/userBbs/list" aria-controls="userBbs" role="tab" data-toggle="tab">우리끼리소담소담</a></li>
     
@@ -76,10 +76,10 @@ $('#myTab li:eq(2) a').tab('show') // Select third tab (0-indexed)
 </div>
 
 
-<div class="tab-content">
+<div class="tab-content" style="margin-top: 20px;">
  <div role="tabpanel" class="tab-pane active" id="notice">
 
-  <div class="bodyFrame2">
+  <div class="bodyFrame2" style="margin-top: 50px;">
     <div class="body-title">
           <h3><span class="glyphicon glyphicon-tasks"></span> 공지사항 </h3>
     </div>

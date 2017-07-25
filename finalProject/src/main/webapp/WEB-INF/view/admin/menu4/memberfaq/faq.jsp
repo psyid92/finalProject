@@ -25,6 +25,8 @@
     color: #000;
 }
 
+
+
 </style>
 
 <script type="text/javascript">
@@ -96,21 +98,17 @@ function searchList() {
 </script>
 
     
-    <div class="bodyFrame2">
+    <div class="adminBodyFrame2">
     <div class="body-title">
           <h3><span class="glyphicon glyphicon-tasks"></span> 자주찾는 질문 </h3>
     </div>
            
-    <div class="alert alert-info">
-        <i class="glyphicon glyphicon-saved"></i> 회원님들께서 많이 궁금해하는 질문을 정리해보았습니다. 자세한 문의는 1대1문의를 해주세요
-    </div>
- 
         <div>
 	    <div role="tabpanel">
 			  <ul class="nav nav-tabs" role="tablist">
-			      <li role="presentation" class="active"><a href="#tabContent0" aria-controls="0" role="tab" data-toggle="tab">전체</a></li>
+			      <li style="width: 20%; text-align: center;" role="presentation" class="active"><a href="#tabContent0" aria-controls="0" role="tab" data-toggle="tab">전체</a></li>
 		          <c:forEach var="dto" items="${listUserFaqCategory}">
-			          <li role="presentation"><a href="#tabContent${dto.ca_Num}" aria-controls="${dto.ca_Num}" role="tab" data-toggle="tab">${dto.ca_class}</a></li>
+			          <li style="width: 20%; text-align: center;" role="presentation"><a href="#tabContent${dto.ca_Num}" aria-controls="${dto.ca_Num}" role="tab" data-toggle="tab">${dto.ca_class}</a></li>
 			      </c:forEach>
 			  </ul>
 			

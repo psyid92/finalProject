@@ -228,7 +228,7 @@
  }
 </script>
 
-<div class="bodyFrame2">
+<div class="adminBodyFrame2">
     <div class="body-title">
           <h3><span class="glyphicon glyphicon-question-sign"></span> 자주하는 질문 </h3>
     </div>

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.sp.common.dao.CommonDAO;
 import com.sp.giupReview.giupReview;
 import com.sp.jumun.JumunMember;
+import com.sp.mileage.Mileage;
 import com.sp.userQna.UserQna;
 
 @Service("member.memberService")
@@ -275,6 +276,31 @@ public class MemberImpl implements MemberDAO {
 		List<giupReview> list = null;
 		try {
 			list = dao.getListData("giupreview.getReviewList", m1_num);
+			
+			if(! list.isEmpty()){
+				for (giupReview rev : list) {
+					String myStar = "";
+					int star = rev.getRep_star();
+					for(int a=0; a<5; a++){
+						if(a < star){
+							myStar += "★";
+						} else {
+							myStar += "☆";
+						}
+						rev.setMyStar(myStar);
+					}
+				}
+			}
+		} catch (Exception e) {
+		}
+		return list;
+	}
+
+	@Override
+	public List<Mileage> getMileageOneList(int m1_num) throws Exception {
+		List<Mileage> list = null;
+		try {
+			list = dao.getListData("mileage.getMileageOneList", m1_num);
 		} catch (Exception e) {
 		}
 		return list;

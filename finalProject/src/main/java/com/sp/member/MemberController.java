@@ -211,6 +211,9 @@ public class MemberController {
 			
 			List<giupReview> reviewList = dao.getReviewList(info.getM1_Num());
 			model.addAttribute("reviewList", reviewList);
+			
+			List<Mileage> mileageList = dao.getMileageOneList(info.getM1_Num());
+			model.addAttribute("mileageList", mileageList);
 		} catch (Exception e) {
 		}
 		return ".mymem.mypage";

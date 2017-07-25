@@ -34,6 +34,10 @@ h4 {
 	border: solid 1px black;
 }
 
+table {
+width: 100%;
+}
+
 td {
 	font-weight: bold;
 	height: 20px;
@@ -155,22 +159,22 @@ tr {
 			<h4>최근 마일리지 내역</h4>
 			<hr id="showHR">
 
-			<c:if test="${qnaList eq null }">
+			<c:if test="${mileageList eq null }">
 				<table>
 					<tr>
 						<td>내역이 없습니다.</td>
 					</tr>
 				</table>
 			</c:if>
-			<c:forEach items="${qnaList}" var="qna">
+			<c:forEach items="${mileageList}" var="mileage">
 				<table>
 					<tr style="color: #727ebf;">
-						<th width="*">제목</th>
-						<th width="40%;">문의 날짜</th>
+						<th width="*">포인트</th>
+						<th width="50%;">날짜</th>
 					</tr>
 					<tr>
-						<td width="*">${qna.uq_Title }</td>
-						<td width="40%;">${qna.uq_Created }</td>
+						<td width="*">${mileage.mil_point } &nbsp; ${mileage.mil_state }</td>
+						<td width="50%;">${mileage.mil_created }</td>
 					</tr>
 				</table>
 			</c:forEach>

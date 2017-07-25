@@ -192,7 +192,7 @@ public class JumunController {
 	}
 	
 	@RequestMapping(value="/jumun/refund", method=RequestMethod.GET)
-	public String JumunRefund(int jumun_Num, Model model, HttpSession session) throws Exception {
+	public String JumunRefundForm(int jumun_Num, Model model, HttpSession session) throws Exception {
 		SessionInfo info = (SessionInfo) session.getAttribute("member");
 		JumunMember dto = new JumunMember();
 		List<JumunMember> list = new ArrayList<>();
@@ -206,5 +206,22 @@ public class JumunController {
 		model.addAttribute("dto",dto);
 		model.addAttribute("jumun_Num",jumun_Num);
 		return ".mymem.refund";
+	}
+	
+	@RequestMapping(value="/jumun/refund", method=RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> JumunRefundSubmit(int jumun_Num, String refund_Memo) throws Exception {
+		Map<String, Object> map = new HashMap<>();
+		map.put("jumun_Num", jumun_Num);
+		map.put("refund_Memo", refund_Memo);
+		String state = "fail";
+		try {
+			service.insertRefund(map);
+		} catch (Exception e) {
+			state = "success";
+		}
+		Map<String, Object> model = new HashMap<>();
+		model.put("state", state);
+		return model;
 	}
 }

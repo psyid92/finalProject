@@ -4,77 +4,81 @@
 <mapper namespace="mileage">
 
 
-<!-- 마일리지  -->
+	<!-- 마일리지 -->
 
 
-<!-- 마일리지 테스트를 위한 쿼리
+	<!-- 마일리지 삽입 -->
+	<!-- mil_state : 적립, 적립 취소, 사용, 사용 취소 -->
+	<!-- 사용 -> Trigger 있음 : 포인트가 사용하려는 것보다 적으면 사용 불가 -->
+	<insert id="insertMileage" parameterType="com.sp.mileage.Mileage">
+		insert into mileage(mil_num, mil_point, mil_state, m1_num, jumun_num)
+		values(mil_seq.nextVal, #{mil_point}, #{mil_state}, #{m1_num},
+		#{jumun_num})
+	</insert>
 
-insert into orders values(orders_seq.nextVal, '주문중');
-insert into jumun(jumun_num, jumun_pay, jumun_addr, jumun_tel, jumun_memo, m1_num, orders_num)
-values(jumun_seq.nextVal, 21000, '주소 주소 주소 주소를 적어주세요', '01011234456','빨리 갖다 주세요, 치킨무 많이', 41, 2);
-
- -->
- 
- <!-- trigger 테스트를 위한 쿼리
- 
-update memberMileage set mm_point=40 where m1_num=41;
-select * from memberMileage;
-update mileage set mil_state='적립 취소' where mil_num=2;
-
- -->
-
-
-
-<!-- 마일리지 삽입 -->
-<!-- mil_state : 적립, 적립  취소, 사용, 사용 취소 -->
-<!-- 사용 -> Trigger 있음 : 포인트가 사용하려는 것보다 적으면 사용 불가 -->
-<insert id="insertMileage" parameterType="com.sp.mileage.Mileage">
-	insert into mileage(mil_num, mil_point, mil_state, m1_num, jumun_num) 
-		values(mil_seq.nextVal, #{mil_point}, #{mil_state}, #{m1_num}, #{jumun_num})
-</insert>
-
-<!-- 마일리지 삽입 -> 마일리지 포인트 변화 -->
-<update id="updatePlusMemberMileage" parameterType="com.sp.mileage.Mileage">
-	update memberMileage set mil_point = mil_point + #{mm_point} where m1_num = ${m1_num}
-</update>
-<update id="updateMinusMemberMileage" parameterType="com.sp.mileage.Mileage">
-	update memberMileage set mil_point = mil_point - #{mm_point} where m1_num = ${m1_num}
-</update>
+	<!-- 마일리지 삽입 -> 마일리지 포인트 변화 -->
+	<update id="updatePlusMemberMileage" parameterType="com.sp.mileage.Mileage">
+		update memberMileage set mil_point = mil_point + #{mm_point} where m1_num =
+		${m1_num}
+	</update>
+	<update id="updateMinusMemberMileage" parameterType="com.sp.mileage.Mileage">
+		update memberMileage set mil_point = mil_point - #{mm_point} where m1_num =
+		${m1_num}
+	</update>
 
 
-<!-- 마일리지 적립 상태 수정 -->
-<update id="updateMileageState" parameterType="com.sp.mileage.Mileage">
-	update mileage set mil_state = #{mil_state} where mil_num=#{mil_num}
-</update>
+	<!-- 마일리지 적립 상태 수정 -->
+	<update id="updateMileageState" parameterType="com.sp.mileage.Mileage">
+		update mileage set mil_state = #{mil_state} where mil_num=#{mil_num}
+	</update>
 
 
 
-<!-- 회원 마일리지 변경 -->
-<update id="addMemberMileage">
-	update memberMileage set mm_Point = mm_Point + #{mm_point} where m1_num = #{m1_num}
-</update>
+	<!-- 회원 마일리지 변경 -->
+	<update id="addMemberMileage">
+		update memberMileage set mm_Point = mm_Point + #{mm_point} where m1_num =
+		#{m1_num}
+	</update>
 
-<update id="minusMemberMileage">
-	update memberMileage set mm_Point = mm_Point - #{mm_point} where m1_num = #{m1_num}
-</update>
+	<update id="minusMemberMileage">
+		update memberMileage set mm_Point = mm_Point - #{mm_point} where m1_num =
+		#{m1_num}
+	</update>
 
 
 
-<!-- 마일리지 보기 -->
-<select id="getMemberMileage" parameterType="String" resultType="Integer">
-	select mm_point from memberMileage where m1_num=(select m1_num from member1 where m1_email=#{m1_email})
-</select>
+	<!-- 마일리지 보기 -->
+	<select id="getMemberMileage" parameterType="String" resultType="Integer">
+		select mm_point from memberMileage where m1_num=(select m1_num from
+		member1 where m1_email=#{m1_email})
+	</select>
 
-<!-- 마일리지 리스트 -->
-<select id="listMileage" parameterType="map" resultType="com.sp.mileage.Mileage">
-	select mil_num, to_char(mil_created, 'YYYY.MM.DD hh:mm') mil_created, mil_point, mil_state, m1_num, jumun_num
-	from mileage
-	where m1_num=#{m1_num}
-</select>
+	<!-- 마일리지 리스트 -->
+	<select id="listMileage" parameterType="map" resultType="com.sp.mileage.Mileage">
+		select mil_num, to_char(mil_created, 'YYYY.MM.DD hh:mm') mil_created,
+		mil_point, mil_state, m1_num, jumun_num
+		from mileage
+		where m1_num=#{m1_num}
+	</select>
 
-<!-- 적립 마일리지 내역 삭제 -->
-<delete id="deleteMileage" parameterType="com.sp.mileage.Mileage">
-	delete mileage where mil_num=#{mil_num} and m1_num = #{m1_num}
-</delete>
+	<!-- 적립 마일리지 내역 삭제 -->
+	<delete id="deleteMileage" parameterType="com.sp.mileage.Mileage">
+		delete mileage where mil_num=#{mil_num} and m1_num = #{m1_num}
+	</delete>
+
+
+
+
+	<select id="getMileageOneList" parameterType="Integer"
+		resultType="com.sp.mileage.Mileage">
+		select * from (
+		select rownum rnum, tb.* from(
+		select mil_num, to_char(mil_created, 'YYYY.MM.DD hh:mm') mil_created,
+		mil_point, mil_state, m1_num, jumun_num
+		from mileage
+		where m1_num=#{m1_num}
+		) tb
+		) where rnum=1
+	</select>
 
 </mapper>

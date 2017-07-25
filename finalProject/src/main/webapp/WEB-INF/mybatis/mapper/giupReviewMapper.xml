@@ -121,4 +121,23 @@
 </select>
       
       
+      
+      
+ <!-- 마이페이지 -->
+ <select id="getReviewList" resultType="com.sp.giupReview.giupReview" parameterType="Integer">
+  SELECT * FROM (
+  	SELECT ROWNUM rnum, tb.* FROM (	
+		select r.rep_num, g.g1_name, rep_star, rep_created, rep_content, r.m1_num, m1_email, g.g1_num, jumun_num, rp.rphoto_OriginalFilename, rp.rphoto_SaveFilename from giupReview r
+			left outer join reviewphoto rp on rp.rep_num = r.rep_num 
+	    	left outer join giup1 g on g.g1_num = r.g1_num
+	    	left outer join member1 m1 on r.m1_num= m1.m1_num
+	    	where r.m1_num=#{m1_num}
+      order by r.rep_num desc
+       <![CDATA[
+	        ) tb
+        ) WHERE rnum =1    
+      ]]>
+      
+</select>
+      
 </mapper>

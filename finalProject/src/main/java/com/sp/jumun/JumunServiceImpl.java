@@ -214,4 +214,35 @@ public class JumunServiceImpl implements JumunService {
 		}
 		return result;
 	}
+
+	@Override
+	public void insertRefund(Map<String, Object> map) throws Exception {
+		try {
+			dao.insertData("jumun.insertRefund", map);
+		} catch (Exception e) {
+			throw e;
+		}
+	}
+
+	@Override
+	public List<Refund> listRefund(Map<String, Object> map) throws Exception {
+		List<Refund> list = new ArrayList<>();
+		try {
+			list = dao.getListData("jumun.listRefund", map);
+		} catch (Exception e) {
+			throw e;
+		}
+		return list;
+	}
+
+	@Override
+	public int countRefund(Map<String, Object> map) throws Exception {
+		int result = 0;
+		try {
+			result = dao.getIntValue("jumun.countRefund",map);
+		} catch (Exception e) {
+			throw e;
+		}
+		return result;
+	}
 }

@@ -70,6 +70,23 @@
 			order by jumun_num desc
 	</select>
 	
+	<select id="getMemberOneList" parameterType="Integer" resultType="com.sp.jumun.JumunMember">
+	select * from(
+		select rownum rnum, tb.* from (
+			select distinct j.jumun_num, jumun_pay, jumun_created, jumun_addr, jumun_tel, jumun_memo, m1_num, j.orders_num, orders_state, p.pay_pay , g1_name, g2_tel from jumun j
+			join maingoods mg on mg.jumun_num = j.jumun_num
+			join mainmenu mm on mm.mainmenu_num = mg.mainmenu_num
+			join menucate mc on mc.menuct_num = mm.menuct_num
+			join giup1 g on mc.g1_num = g.g1_num
+			join giup2 g2 on g.g1_num = g2.g2_num
+			join orders o on o.orders_num = j.orders_num
+			left outer join pay p on j.jumun_num = p.jumun_num
+			where m1_num=#{m1_num}
+			order by jumun_num desc
+		) tb
+	) where rnum=1
+	</select>
+	
 	<!-- member 주문상세 가져오기 쿼리 -->
 	<select id="getMemberPayDetail" parameterType="map" resultType="com.sp.jumun.JumunMember">
 		select distinct j.jumun_num, jumun_pay, jumun_created, jumun_addr, jumun_tel, jumun_memo, m1_num, orders_num,
@@ -144,5 +161,41 @@
 
 	<select id="likeGiup" parameterType="map" resultType="Integer">
 		SELECT NVL(COUNT(*), 0) FROM likeGiup WHERE g1_Num = #{g1_Num} AND m1_Num = #{m1_Num}
+	</select>
+	
+	<insert id="insertRefund" parameterType="map">
+		INSERT INTO refund (jumun_Num, refund_Memo)
+		VALUES (#{jumun_Num}, #{refund_Memo})
+	</insert>
+	
+	<select id="listRefund" parameterType="map" resultType="com.sp.jumun.Refund">
+		SELECT * FROM (
+			SELECT ROWNUM rnum, tb.* FROM(
+				SELECT rf.jumun_Num, refund_Created, refund_Memo, refund_State,
+					jumun_Pay, pay_Pay, jumun_Created, jumun_Tel, m1_Num 
+				FROM refund rf
+				LEFT OUTER JOIN pay p ON rf.jumun_Num = p.jumun_Num
+				LEFT OUTER JOIN jumun jm ON rf.jumun_Num = jm.jumun_Num
+				<where>
+					<if test="refund_State != null and refund_State != ''">
+						refund_State = #{refund_State}
+					</if>
+					<!-- search 수정해야함 -->
+				</where>
+				ORDER BY refund_Created DESC
+<![CDATA[
+			) tb WHERE ROWNUM <= #{end}
+		) WHERE rownum >= #{start}
+]]>
+	</select>
+	
+	<select id="countRefund" resultType="Integer">
+		SELECT NVL(COUNT(*),0) FROM refund
+		<where>
+			<if test="refund_State != null and refund_State != ''">
+				refund_State = #{refund_State}
+			</if>	
+			<!-- search 수정해야함 -->	
+		</where>
 	</select>
 </mapper>

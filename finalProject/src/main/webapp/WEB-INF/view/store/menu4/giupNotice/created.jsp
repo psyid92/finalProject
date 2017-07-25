@@ -48,12 +48,14 @@ function check() {
 	var f = document.noticeForm;   //form name이 noticeform인것 호출
 	var str = f.noti_Title.value;  // noti_Title의 값 호출
 	 
-	if(! str) {  // str에 값을 입력하지 않으며, 
+	if(! str) {  // str에 값을 입력하지 않으면, 
 		f.noti_Title.focus();  // onfocus가 noti_Title 영역으로 이동
 		return false; // check() function에서 빠져나옴.. 
 	}
 	
 	str = f.noti_Content.value;   // str에 값이 ~~ 된다.. 
+	
+	if(! str || str=="<p>&nbsp;</p>"){	
 		f.noti_Content.focus();  // onfocus가 noti_Content 영역으로 이동
 		return false; // check() function에서 빠져나옴.. 
 	}

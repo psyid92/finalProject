@@ -98,7 +98,6 @@ function memberOk() {
     if(mode=="created") {
     	f.action = "<%=cp%>/store/complete";
     } else if(mode=="update") {
-    	alert(mode);
     	f.action = "<%=cp%>/store/updatecomplete";
 		}
 

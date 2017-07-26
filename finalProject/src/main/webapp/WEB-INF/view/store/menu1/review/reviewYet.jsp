@@ -51,6 +51,7 @@ function printReply(data){
 			var rep_Created = data.reviewlistYet[i].rep_Created;
 			var m1_Nickname = data.reviewlistYet[i].m1_Nickname;
 			var g1_Name = data.reviewlistYet[i].g1_Name;
+			var rphoto_Savefilename = data.reviewlistYet[i].rphoto_Savefilename;
 			var star ="";
 			
 			for(a=0; a<rep_Star; a++){
@@ -64,7 +65,13 @@ function printReply(data){
 			s += " 		<div style='float: left;'><span>"+rep_Created+"</span><br><span style='color:gray; font-size:10px;'>"+g1_Name+"</span></div>";
 			s += " 		<div style='float: left; margin-left: 50px; width: 500px;'>";
 			s += "			<div style='font-size:20px;'><span style='color:#3DB7CC;'>"+star+"</span>";
-			s += "    		&nbsp;&nbsp;<span style='font-weight:bold;'>"+m1_Nickname+"</span><br><span style='font-weight:100;'>"+rep_Content+"</span></div>";
+			s += "    		&nbsp;&nbsp;<span style='font-weight:bold;'>"+m1_Nickname+"</span><br><span style='font-weight:100;'>"+rep_Content+"</span>";
+			if(rphoto_Savefilename != null){
+				s += "<br><img src='<%=cp%>/uploads/photo/"+rphoto_Savefilename+"'></div>";
+			}
+			else{
+				s+= "</div>";
+			}
 			s += "  	<div>" 
 			s += " 			<div id='reviewreply"+rep_Num+"'>";
 			s += " 		</div>";

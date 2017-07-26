@@ -69,13 +69,17 @@ dl, ul, ol, menu, li {
 }
 
 .total-pay {
-	color: black;
+	color: #555;
 	font-size: 16px;
 	font-weight:900;
 	width: 100%;
 	text-align: right;
 }
 
+.jumun-addr {
+	color: black;
+	margin: 10px 0px 0px 0px;
+}
 
 </style>
 
@@ -136,12 +140,15 @@ function storeCTRlist(){
 			//console.log(jumunNum + ':' +list[i].jumun_num);
 			if (i<list.length-1 && jumunNum == list[i].jumun_num
 				&& list[i].jumun_num != list[i+1].jumun_num) {
+				s += "<dd class='jumun-addr'><span>주소 : "+ list[i].jumun_addr + "</span></dd>";
 				s += "<br><span class='total-pay'>총액 : "+ totalPay.toLocaleString() + "원</span></a></li>";
 				totalPay=0;
 			} else if (i<list.length-1 && list[i].jumun_num != list[i+1].jumun_num) {
+				s += "<dd class='jumun-addr'><span>주소 : "+ list[i].jumun_addr + "</span></dd>";
 				s += "<br><span class='total-pay'>총액 : "+ totalPay.toLocaleString() + "원</span></a></li>";
 				totalPay=0;	
-			} else if (i==list.length-1 && jumunNum != list[i].jumun_num) {
+			} else if (i==list.length-1) {
+				s += "<dd class='jumun-addr'><span>주소 : "+ list[i].jumun_addr + "</span></dd>";
 				s += "<br><span class='total-pay'>총액 : "+ totalPay.toLocaleString() + "원</span></a></li>";
 				totalPay=0;	
 			}
@@ -154,11 +161,9 @@ function storeCTRlist(){
 	
 	function updateList(listNum){
 		$(function(){
-			//처음 들어왔을때 월 선택 쿼리
 			var url = "<%=cp%>/store/jumunStateUpdate";
-			var listUrl = "<%=cp%>/store/jumunControllList";
 			var orders_num=4;
-			var data = {listUrl:listUrl, listNum:listNum, orders_num:orders_num};
+			var data = {listNum:listNum, orders_num:orders_num};
 				$.ajax({
 					type : "post",
 					url : url,
@@ -174,6 +179,63 @@ function storeCTRlist(){
 				});
 			});
 	}
+	
+	function modalAjax(url,listNum,mode) {
+		$.ajax({
+			type : "post",
+			url : url,
+			dataType : "json",
+			success : function(data) {
+				/* var dto=data.dto;
+				
+				$("#cur_giupName").val(dto.g1_name);
+				$("#cur_giupId").val(dto.g1_id);
+				$("#cur_giupCatCode").val(dto.cat_code);
+				$("#cur_giupCreated").val(dto.g1_created);
+				$("#cur_giupAddr1").val(dto.g3_addr2);
+				$("#cur_giupAddr2").val(dto.g3_addr3);
+				$("#cur_giupAdTerm").val(dto.giupAd_Term);
+				
+				
+				$("#cur_giupSleep").val(dto.g1_sleep);
+				$("#cur_giupEnabled").val(dto.g1_enabled);
+				if (dto.giupAd_State == 0)
+					$("#cur_giupAdNum").val("일반");
+				if (dto.giupAd_State >= 1)
+					$("#cur_giupAdNum").val("광고");
+				
+				//현재 보고있는 글의 listNum
+				$("#cur_listNum").val(listNum);
+				
+				if(mode=="article"){
+					$(".giup_arti_input").attr( 'readonly', true ).css('background','#eeeeee');
+					$(".giup_arti_select").attr('disabled', true ); 
+
+				} else if (mode=="update") {
+					$(".text_write").attr( 'readonly', false ).css('background', '#ffffff');
+					$(".giup_arti_select").attr('disabled', false ).css('background', '#ffffff');
+				} */
+			},
+			error : function(e) {
+				console.log(e);
+			}
+		});
+	}
+
+	//td 클릭했을때 해당 번호로 들어가기
+	$(function() {
+		$("#giup_list").children().click(function() {
+			var giupNum=$(this).find("td:first").text();
+			
+			//input hidden 리스트 넘버 받아오기
+			var listNum=$(this).next().val();
+
+			var url = $('#articleUrl').val() + '&num=' + giupNum;
+			
+			var mode="article";
+			modalAjax(url,listNum,mode);
+		});
+	});
 </script>
 
 <div class="storeBodyFrame2">
@@ -209,5 +271,58 @@ function storeCTRlist(){
 			<div role="tabpanel" class="tab-pane" id="jumunTotal">주문전체</div>
 		</div>
 
+	</div>
+	
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+		aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<h4 class="modal-title" id="myModalLabel">기업상세</h4>
+				</div>
+				<div id="article" class="modal-body giup_arti">
+					<span class="giup_arti_sp">기업명 </span><input class="giup_arti_input" type="text" id="cur_giupName" value="">
+					<span class="giup_arti_sp">아이디 </span><input class="giup_arti_input" type="text" id="cur_giupId" value=""><br>
+					
+					<!-- <span class="giup_arti_sp">운영상태 </span>
+					<select name="cur_giupSleep" id="cur_giupSleep" class="giup_arti_input giup_arti_select">
+						<option value="1">운영중</option>
+						<option value="0">쉬는중</option>
+					</select>
+					<span class="giup_arti_sp">휴면상태 </span>
+					<select name="cur_giupEnabled" id="cur_giupEnabled" class="giup_arti_input giup_arti_select">
+						<option value="1">활동</option>
+						<option value="0">휴면</option>
+					</select>
+					<span class="giup_arti_sp">카테고리 </span>
+					<select name="cur_giupCatCode" id="cur_giupCatCode" class="giup_arti_input giup_arti_select">
+						<option value="chicken">치킨</option>
+						<option value="china">중국집</option>
+						<option value="pizza">피자</option>
+						<option value="bunsik">분식</option>
+						<option value="bossam">족발,보쌈</option>
+						<option value="ya">야식</option>
+						<option value="zzim">찜,탕</option>
+						<option value="don">돈까스</option>
+					</select>
+					<span class="giup_arti_sp">가입시간 </span><input class="giup_arti_input" type="text" id="cur_giupCreated" value=""><br>
+					<span class="giup_arti_sp">주소1 </span><input class="giup_arti_input" type="text" id="cur_giupAddr1" value="">
+					<span class="giup_arti_sp">주소2 </span><input class="giup_arti_input" type="text" id="cur_giupAddr2" value=""><br>
+					<span class="giup_arti_sp">광고상태 </span><input class="giup_arti_input" type="text" id="cur_giupAdNum" value="">
+					<span class="giup_arti_sp">광고일수 </span><input class="giup_arti_input text_write" type="text" id="cur_giupAdTerm" value=""><br>
+					<input type="hidden" id="cur_listNum"> -->
+				</div> 
+				<div class="modal-footer">
+					<div id="article_left" class="giup_arti_left img_button"><img src="<%=cp%>/resource/img/button_left.png" class="img_button"/></div>
+					<div id="article_right" class="giup_arti_right img_button"><img src="<%=cp%>/resource/img/button_right.png" class="img_button"/></div>
+					<button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
+					<button id="article_update" type="button" class="btn btn-primary" value="update">수정하기</button>
+				</div>
+			</div> 
+		</div>
 	</div>
 </div>

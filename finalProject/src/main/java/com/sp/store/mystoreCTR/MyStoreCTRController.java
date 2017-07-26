@@ -55,13 +55,15 @@ public class MyStoreCTRController {
 	@RequestMapping(value = "/store/jumunStateUpdate")
 	@ResponseBody
 	public Map<String, Object> jumunUpdateList(
-			@RequestParam(value="orders_num", defaultValue="3")int orders_num
+			@RequestParam(value="orders_num", defaultValue="3") int orders_num,
+			@RequestParam(value="listNum", defaultValue="0") int listNum
 			){
 		
 		
 		List<MyStoreCTR> list=new ArrayList<>();
 		MyStoreCTR dto = new MyStoreCTR();
 		dto.setOrders_num(orders_num);
+		dto.setG1_num(listNum);
 		try {
 			//업데이트로 변경
 			//list = service.jumunList(dto);

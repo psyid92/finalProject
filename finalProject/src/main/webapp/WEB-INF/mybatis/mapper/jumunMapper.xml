@@ -171,11 +171,14 @@
 	<select id="listRefund" parameterType="map" resultType="com.sp.jumun.Refund">
 		SELECT * FROM (
 			SELECT ROWNUM rnum, tb.* FROM(
-				SELECT rf.jumun_Num, refund_Created, refund_Memo, refund_State,
-					jumun_Pay, pay_Pay, jumun_Created, jumun_Tel, m1_Num 
+				SELECT rf.jumun_Num, refund_State,
+					jumun_Pay, pay_Pay, jm.m1_Num, m1_Email,
+					TO_CHAR(refund_Created,'YYYY-MM-DD') refund_Created,
+					TO_CHAR(pay_Created,'YYYY-MM-DD') pay_Created
 				FROM refund rf
 				LEFT OUTER JOIN pay p ON rf.jumun_Num = p.jumun_Num
 				LEFT OUTER JOIN jumun jm ON rf.jumun_Num = jm.jumun_Num
+				LEFT OUTER JOIN member1 m1 ON jm.m1_Num = m1.m1_Num
 				<where>
 					<if test="refund_State != null and refund_State != ''">
 						refund_State = #{refund_State}
@@ -198,4 +201,25 @@
 			<!-- search 수정해야함 -->	
 		</where>
 	</select>
+	
+	<select id="readRefund" parameterType="Integer" resultType="com.sp.jumun.Refund">
+		SELECT rf.jumun_Num, refund_State,
+			jumun_Pay, pay_Pay, jm.m1_Num, m1_Email,
+			TO_CHAR(refund_Created,'YYYY-MM-DD') refund_Created,
+			TO_CHAR(pay_Created,'YYYY-MM-DD') pay_Created,
+			refund_Memo
+		FROM refund rf
+		LEFT OUTER JOIN pay p ON rf.jumun_Num = p.jumun_Num
+		LEFT OUTER JOIN jumun jm ON rf.jumun_Num = jm.jumun_Num
+		LEFT OUTER JOIN member1 m1 ON jm.m1_Num = m1.m1_Num
+		WHERE rf.jumun_Num = #{jumun_Num}
+	</select>
+	
+	<update id="updateRefundJumun" parameterType="Integer">
+		UPDATE jumun SET orders_Num = 5 WHERE jumun_Num = #{jumun_Num}
+	</update>
+	
+	<update id="updateRefund" parameterType="Integer">
+		UPDATE refund SET refund_State = 1 WHERE jumun_Num = #{jumun_Num}
+	</update>
 </mapper>

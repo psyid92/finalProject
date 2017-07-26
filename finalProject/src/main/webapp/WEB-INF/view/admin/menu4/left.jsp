@@ -21,4 +21,5 @@ $(function(){
        <a href="<%=cp%>/admin/giupnotice" class="list-group-item">공지사항(판매자)</a>
        <a href="<%=cp%>/auserfaq/faq" class="list-group-item">자주하는 질문(회원)</a>
        <a href="<%=cp%>/admin/giupqna" class="list-group-item">자주하는 질문(판매자)</a>
+       <a href="<%=cp%>/admin/refund" class="list-group-item">환불</a>
 </div>

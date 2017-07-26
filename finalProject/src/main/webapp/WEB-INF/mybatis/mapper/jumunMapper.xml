@@ -173,7 +173,7 @@
 			SELECT ROWNUM rnum, tb.* FROM(
 				SELECT rf.jumun_Num, refund_State,
 					jumun_Pay, pay_Pay, jm.m1_Num, m1_Email,
-					TO_CHAR(refund_Created,'YYYY-MM-DD') refund_Created,
+					refund_Created,
 					TO_CHAR(pay_Created,'YYYY-MM-DD') pay_Created
 				FROM refund rf
 				LEFT OUTER JOIN pay p ON rf.jumun_Num = p.jumun_Num
@@ -205,9 +205,7 @@
 	<select id="readRefund" parameterType="Integer" resultType="com.sp.jumun.Refund">
 		SELECT rf.jumun_Num, refund_State,
 			jumun_Pay, pay_Pay, jm.m1_Num, m1_Email,
-			TO_CHAR(refund_Created,'YYYY-MM-DD') refund_Created,
-			TO_CHAR(pay_Created,'YYYY-MM-DD') pay_Created,
-			refund_Memo
+			refund_Created, pay_Created, refund_Memo
 		FROM refund rf
 		LEFT OUTER JOIN pay p ON rf.jumun_Num = p.jumun_Num
 		LEFT OUTER JOIN jumun jm ON rf.jumun_Num = jm.jumun_Num

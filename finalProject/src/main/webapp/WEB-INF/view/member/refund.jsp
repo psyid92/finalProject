@@ -21,8 +21,13 @@
 			,url:url
 			,data:query
 			,success:function(data) {
-				alert("환불 신청에 성공하셨습니다.\n메인 페이지로 돌아갑니다.");
-				location.href="<%=cp%>/main";
+				var state = data.state;
+				if (state == "success") {
+					alert("환불 신청에 성공하셨습니다.\n메인 페이지로 돌아갑니다.");
+					location.href="<%=cp%>/main";
+				} else if (state == "fail") {
+					alert("이미 환불을 신청했습니다.")
+				}
 			}
 			,error:function(e) {
 				console.log(e.responseText);

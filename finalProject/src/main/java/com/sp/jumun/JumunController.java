@@ -217,8 +217,8 @@ public class JumunController {
 		String state = "fail";
 		try {
 			service.insertRefund(map);
-		} catch (Exception e) {
 			state = "success";
+		} catch (Exception e) {
 		}
 		Map<String, Object> model = new HashMap<>();
 		model.put("state", state);

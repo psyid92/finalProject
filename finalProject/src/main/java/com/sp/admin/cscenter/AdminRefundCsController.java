@@ -1,5 +1,7 @@
 package com.sp.admin.cscenter;
 
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -28,7 +30,7 @@ public class AdminRefundCsController {
 	
 	@RequestMapping(value="/admin/refund")
 	public String listRefund(
-			@RequestParam(value="searchKey", defaultValue="m1_Id") String searchKey,
+			@RequestParam(value="searchKey", defaultValue="m1_Email") String searchKey,
 			@RequestParam(value="searchValue", defaultValue="") String searchValue,
 			@RequestParam(value="refund_State", defaultValue="") String refund_State,
 			@RequestParam(value="page", defaultValue="1") int current_page,
@@ -37,6 +39,10 @@ public class AdminRefundCsController {
 		int rows = 10;
 		int total_page = 0;
 		int dataCount = 0;
+		
+		if (req.getMethod().equalsIgnoreCase("GET")) {
+			searchValue = URLDecoder.decode(searchValue, "utf-8");
+		}
 		
 		Map<String, Object> map = new HashMap<>();
 		map.put("searchKey", searchKey);
@@ -68,15 +74,50 @@ public class AdminRefundCsController {
 		}
 		
 		String cp = req.getContextPath();
-		String paging = myUtil.paging(current_page, total_page, cp+"/admin/refund");
+		String query = "";
+		String listUrl = cp + "/admin/refund";
+		String articleUrl = cp + "/admin/refundArticle?page="+current_page;
+		if (searchValue.length() != 0) {
+			query = "searchKey=" + searchKey + "&searchValue="+URLEncoder.encode(searchValue,"utf-8");
+		}
+		
+		if (query.length() != 0) {
+			listUrl = cp + "/admin/refund?" + query;
+			articleUrl = cp + "/admin/refundArticle?page="+current_page + "&"+query;
+		}
+		String paging = myUtil.paging(current_page, total_page, listUrl);
 		
 		model.addAttribute("list",list);
+		model.addAttribute("articleUrl",articleUrl);
 		model.addAttribute("page",current_page);
 		model.addAttribute("dataCount",dataCount);
 		model.addAttribute("total_page",total_page);
 		model.addAttribute("paging",paging);
+		model.addAttribute("refund_State",refund_State);
 		model.addAttribute("mainMenu", "3");
 		model.addAttribute("subMenu", "5");
 		return ".admin4.menu4.refund.list";
+	}
+	
+	@RequestMapping(value="/admin/refundArticle")
+	public String refundArticle (int jumun_Num, Model model) throws Exception {
+		
+		Refund dto = new Refund();
+		dto = service.readRefund(jumun_Num);
+		model.addAttribute("dto",dto);
+		model.addAttribute("jumun_Num",jumun_Num);
+		model.addAttribute("mainMenu", "3");
+		model.addAttribute("subMenu", "5");
+		return ".admin4.menu4.refund.article";
+	}
+	
+	@RequestMapping(value="/admin/refund_ok") 
+	public String refund_ok (int jumun_Num) throws Exception {
+		try {
+			service.updateRefundJumun(jumun_Num);
+			service.updateRefund(jumun_Num);
+		} catch (Exception e) {
+		}
+		return "redirect:/admin/refund";
 	}
 }

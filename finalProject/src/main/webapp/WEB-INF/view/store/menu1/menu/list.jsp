@@ -63,7 +63,7 @@ function layout1(list, menu_on, menuct_Num, path) {
 		s += "<div class='content'>"+list[i].mainmenu_Content + "</div>";
 		if(list[i].mainmenu_Photo!=null)
 		   s += "<img src='<%=cp%>/uploads/photo/"+list[i].mainmenu_Photo+"' style='width:70%; height:70%;'>";
-		s += "<div class='pay'>"+list[i].mainmenu_Pay + "</div>"; 
+		s += "<div class='pay'>"+list[i].mainmenu_Pay.toLocaleString() + "원 </div>"; 
 		s += "<input type='text' id='submenu_Title"+list[i].mainmenu_Num+"' class='boxTF' style='width:190px;' placeholder='서브메뉴 이름'>&nbsp;"
 		s += "<input type='text' id='submenu_Pay"+list[i].mainmenu_Num+"' class='boxTF' style='width:190px;' placeholder='서브메뉴 가격'>&nbsp;"
 		s += "<button type='button' onclick='insertSubMenu("+list[i].mainmenu_Num+")' class='btn btn-primary'>서브메뉴 </button><br><div id='addSubMenu"+list[i].mainmenu_Num+"'></div></div></div>";
@@ -96,10 +96,10 @@ function insertMenuct() {
 		
 		var s = "";
 		
-		s += '<div id="cate'+menuct_Num+'" class="cateMenu" style="cursor: pointer; width: 75%; height: 50px; margin-bottom:20px; margin-right:7px; background-color: #cccccc; float: left;">';
-		s += menuct_Title;  
-		s += '<br>'+menuct_Info+'</div>';
-		s += '<button id="btn'+menuct_Num+'" class="btn btn-default" onclick="updatemenuct('+menuct_Num+')" style="height: 50px;">삭제</button>';
+		s += '<div id="cate'+menuct_Num+'" class="cateMenu" style="cursor: pointer; width: 75%; height: 50px; margin-bottom:20px; margin-right:7px; border-bottom:1px solid #bbb; float: left;">';
+		s += "<span style='font-weight: bold; font-size: 18px;'>" + menuct_Title+"</span><br>";
+		s += "<span style='font-size: 13px;'>"+ menuct_Info + "<span></div>";
+		s += '<button id="btn'+menuct_Num+'" class="btn btn-default" onclick="updatemenuct('+menuct_Num+')" style="height: 50px; line-height: 10px; margin-bottom:15px;">삭제</button>';
 		s += '<div id="main'+menuct_Num+'" class="mainMenu" style="margin-bottom: 20px; cursor: pointer; width:75%;"></div>';
 		s += "<div style='margin: 10px 3px;'>";
 		s += "</div>"; 
@@ -163,14 +163,14 @@ function insertMainmenu(menuct_Num) {
 				s += "<div id='mainmenu"+list[i].mainmenu_Num+"'>";
 				s += "<div onclick='submenu("+list[i].mainmenu_Num+")' style='width:550px; height: 30px;  line-height: 30px; background-color: #EAEAEA; float:left; margin-bottom:15px; margin-right:15px;'>";
 				s += "<span style='float: left;'>" + list[i].mainmenu_Title+"</span>";
-				s += "<span style='float: right;'>"+list[i].mainmenu_Pay + "<span></div></div>";
+				s += "<span style='float: right;'>"+list[i].mainmenu_Pay + " <span></div></div>";
 				s += "<button class='btn btn-default' id=main"+list[i].mainmenu_Num+" onclick='updateMainMenu("+list[i].mainmenu_Num+")' style='height: 30px; line-height: 10px; margin-bottom:15px;'>삭제</button><div>";
 				s += "<div id='sub"+list[i].mainmenu_Num+"' style='width:550px; background-color: white; display: none;'>"
 				s += "<div class='title'>" + list[i].mainmenu_Title + "</div>";
 				s += "<div class='content'>"+list[i].mainmenu_Content + "</div>";
 				if(list[i].mainmenu_Photo!=null)
 				   s += "<img src='<%=cp%>/uploads/photo/"+list[i].mainmenu_Photo+"' style='width:70%; height:70%;'>";
-				s += "<div class='pay'>"+list[i].mainmenu_Pay + "</div>"; 
+				s += "<div class='pay'>"+list[i].mainmenu_Pay.toLocaleString() + "원 </div>"; 
 				s += "<input type='text' id='submenu_Title"+list[i].mainmenu_Num+"' class='boxTF' style='width:190px;' placeholder='서브메뉴 이름'>&nbsp;"
 				s += "<input type='text' id='submenu_Pay"+list[i].mainmenu_Num+"' class='boxTF' style='width:190px;' placeholder='서브메뉴 가격'>&nbsp;"
 				s += "<button type='button' onclick='insertSubMenu("+list[i].mainmenu_Num+")' class='btn btn-primary'>서브메뉴 추가</button><br><div id='addSubMenu"+list[i].mainmenu_Num+"'></div></div></div>";
@@ -191,7 +191,7 @@ function submenu(mainmenu_Num) {
 		
 		var s = "";
 		for (var i = 0; i < list.length; i++) {
-			s += "<div id=submen"+list[i].submenu_Num+" style='margin-bottom:10px;'><div style='float:left;'>"+list[i].submenu_Title+"</div><div style='float:left; margin-right:10px;'>("+list[i].submenu_Pay+"원 추가)</div>";
+			s += "<div id=submen"+list[i].submenu_Num+" style='margin-bottom:10px;'><div style='float:left;'>"+list[i].submenu_Title+"</div><div style='float:left; margin-right:10px;'>("+list[i].submenu_Pay.toLocaleString()+"원 )</div>";
 			s += "<button class='btn btn-default' type='button' onclick='updateSubMenu("+list[i].submenu_Num+")' style='height:25px; line-height:5px;'>삭제</button></div>";
 		}
 		$("#addSubMenu"+mainmenu_Num).html(s);

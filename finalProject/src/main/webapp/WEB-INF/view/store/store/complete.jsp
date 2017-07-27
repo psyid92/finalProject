@@ -15,11 +15,11 @@
         </div>
         
         <div class="messageBox">
-            <div style="line-height: 150%; padding-top: 35px;">
+            <div style="line-height: 150%; padding-top: 35px; text-align: center;">
                        ${message}            
             </div>
-            <div style="margin-top: 20px;">
-                     <button type="button" onclick="javascript:location.href='<%=cp%>/store/login';" class="btnConfirm">메인화면으로 이동</button>
+            <div style="margin-top: 20px; text-align: center;">
+                     <button type="button" onclick="javascript:location.href='<%=cp%>/store/login';" class="btn btn-primary">메인화면으로 이동</button>
                 </div>
         </div>
      </div>   

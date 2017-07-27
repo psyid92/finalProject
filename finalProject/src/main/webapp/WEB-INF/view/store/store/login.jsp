@@ -71,7 +71,9 @@ html, body {
        				<a href="<%=cp%>/store/findPwd">비밀번호 찾기</a>
        				&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
        				<a href="<%=cp%>/store/join">회원가입</a></div>
+       				<div style="text-align: center;">
        				<span style="color: red;">${message}</span>
+       				</div>
        			</nav>
     		</form>
 		</div>

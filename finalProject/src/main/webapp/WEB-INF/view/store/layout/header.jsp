@@ -134,7 +134,7 @@ function bgLabel(ob, id) {
 			<ul class="nav navbar-nav"> 
 				<li class="list-menu"><a href="<%=cp%>/store/jumunControll">업체관리</a></li>
 				<li class="list-menu"><a href="<%=cp%>/store/jumunAdvertise">광고관리</a></li>
-				<li class="list-menu"><a href="<%=cp%>/store/event1">이벤트</a></li> 
+				<li class="list-menu"><a href="<%=cp%>/memberevent/list">이벤트</a></li> 
 				<li class="list-menu"><a href="<%=cp%>/giupNotice/list">고객센터</a></li>
 			</ul>
 			<div  id="navbar" class="navbar-collapse collapse"  style="float: right; margin-top: 7px; margin-left: 30px;">

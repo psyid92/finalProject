@@ -55,7 +55,7 @@ public class StoreContorller {
 		info.setG1_Num(store.getG1_Num());
 		session.setAttribute("store", info);
 
-		return "redirect:/store/mystore";
+		return "redirect:/store/jumunControll";
 	}
 
 	@RequestMapping(value = "/store/logout")

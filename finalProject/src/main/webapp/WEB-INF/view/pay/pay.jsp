@@ -279,6 +279,8 @@ function sample6_execDaumPostcode() {
 			return;
 		}
 		if (isNaN($("#tel").val())) {
+			$("#addr3").css("border","1px solid #cccccc");
+			$("#name").css("border","1px solid #cccccc");
 			$("#tel").css("border","1px solid #ff0000");
 			$("#tel").val("");
 			$("#tel").focus();
@@ -327,12 +329,6 @@ function sample6_execDaumPostcode() {
 			}
 		}
 		
-		if (pay_Pay == 0) {
-			
-		}
-		
-		
-		
 		var IMP = window.IMP; // 생략가능
 		IMP.init('${IMP_init}'); // 'iamport' 대신 부여받은 "가맹점 식별코드"를 사용
 		
@@ -358,10 +354,10 @@ function sample6_execDaumPostcode() {
 					,url:url
 					,data:query
 					,success:function(data) {
-						var ss="<div style='width: 100%; height: 500px;'>";
-						ss += "<div align='center' style='line-height: 500px;'>결제가 완료되었습니다.";
-						ss += "<a href='<%=cp%>/main'>메인페이지로 돌아가기</a>";
-						ss += "</div>";
+						var ss = "<div style='width: 100%; height: 500px; border: 1px solid black; border-radius: 5px; margin:50px 0;'>";
+						ss += "<div align='center'>";
+						ss += "<div><br><br><br><br><br><br><br><br>결제가 완료되었습니다.<br><a href='<%=cp%>/main' style='font-size: 30px;'>메인페이지로 돌아가기</a></div>";
+						ss += "</div></div>"
 						$("#containar").html(ss);
 					}
 					,error:function(e) {

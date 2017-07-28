@@ -13,7 +13,7 @@ import com.sp.common.dao.CommonDAO;
 public class JumunServiceImpl implements JumunService {
 	@Autowired
 	private CommonDAO dao;
-	
+
 	@Override
 	public List<Jumun> listGiup(Map<String, Object> map) throws Exception {
 		List<Jumun> list = new ArrayList<>();
@@ -24,7 +24,7 @@ public class JumunServiceImpl implements JumunService {
 		}
 		return list;
 	}
-	
+
 	@Override
 	public List<Jumun> readMenuCategory(int g1_Num) throws Exception {
 		List<Jumun> list = new ArrayList<>();
@@ -87,7 +87,7 @@ public class JumunServiceImpl implements JumunService {
 		}
 		return list;
 	}
-	
+
 	@Override
 	public List<Jumun> listPayMethod() throws Exception {
 		List<Jumun> list = new ArrayList<>();
@@ -98,12 +98,11 @@ public class JumunServiceImpl implements JumunService {
 		}
 		return list;
 	}
-	
+
 	/*
-	 * -------------------------------------------------
-	 * 			MEMBER : GetList
+	 * ------------------------------------------------- MEMBER : GetList
 	 */
-	//회원 - 
+	// 회원 -
 	@Override
 	public JumunMember readmyPayJumunNum(int jumun_Num) throws Exception {
 		JumunMember dto = new JumunMember();
@@ -114,7 +113,7 @@ public class JumunServiceImpl implements JumunService {
 		}
 		return dto;
 	}
-	
+
 	@Override
 	public List<JumunMember> listmyPay(int m1_num) throws Exception {
 		List<JumunMember> list = new ArrayList<>();
@@ -135,8 +134,7 @@ public class JumunServiceImpl implements JumunService {
 		}
 		return list;
 	}
-	
-	
+
 	// 마일리지
 	@Override
 	public int readMileage(String m1_Email) throws Exception {
@@ -170,7 +168,7 @@ public class JumunServiceImpl implements JumunService {
 		}
 		return list;
 	}
-	
+
 	@Override
 	public List<Review> listGiupReview(int g1_Num) throws Exception {
 		List<Review> list = new ArrayList<>();
@@ -181,7 +179,7 @@ public class JumunServiceImpl implements JumunService {
 		}
 		return list;
 	}
-	
+
 	@Override
 	public int likeGiup(Map<String, Object> map) throws Exception {
 		int result = 0;
@@ -239,10 +237,39 @@ public class JumunServiceImpl implements JumunService {
 	public int countRefund(Map<String, Object> map) throws Exception {
 		int result = 0;
 		try {
-			result = dao.getIntValue("jumun.countRefund",map);
+			result = dao.getIntValue("jumun.countRefund", map);
 		} catch (Exception e) {
 			throw e;
 		}
 		return result;
+	}
+
+	@Override
+	public Refund readRefund(int jumun_Num) throws Exception {
+		Refund dto = new Refund();
+		try {
+			dto = dao.getReadData("jumun.readRefund", jumun_Num);
+		} catch (Exception e) {
+			throw e;
+		}
+		return dto;
+	}
+
+	@Override
+	public void updateRefundJumun(int jumun_Num) throws Exception {
+		try {
+			dao.updateData("jumun.updateRefundJumun", jumun_Num);
+		} catch (Exception e) {
+			throw e;
+		}
+	}
+
+	@Override
+	public void updateRefund(int jumun_Num) throws Exception {
+		try {
+			dao.updateData("jumun.updateRefund", jumun_Num);
+		} catch (Exception e) {
+			throw e;
+		}
 	}
 }

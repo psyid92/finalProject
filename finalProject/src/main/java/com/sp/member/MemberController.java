@@ -24,6 +24,8 @@ import com.sp.jumun.JumunMember;
 import com.sp.jumun.JumunService;
 import com.sp.mileage.Mileage;
 import com.sp.mileage.MileageDAO;
+import com.sp.userQna.UserQna;
+import com.sp.userQna.UserQnaService;
 
 import ch.qos.logback.core.net.SyslogOutputStream;
 
@@ -42,7 +44,6 @@ public class MemberController {
 	@Autowired
 	private giupReviewService review;
 
-	
 	// 로그인 폼
 	@RequestMapping(value = "/member/login", method = RequestMethod.GET)
 	public String loginForm() {
@@ -201,6 +202,18 @@ public class MemberController {
 		try {
 			mileage = midao.getMemberMileage(info.getUserId());
 			model.addAttribute("mileage", mileage);
+			
+			List<UserQna> qnaList =dao.memberQNAList(info.getM1_Num());
+			model.addAttribute("qnaList", qnaList);
+			
+			List<JumunMember> jumunList = dao.getMemberOneList(info.getM1_Num());
+			model.addAttribute("jumunList",jumunList);
+			
+			List<giupReview> reviewList = dao.getReviewList(info.getM1_Num());
+			model.addAttribute("reviewList", reviewList);
+			
+			List<Mileage> mileageList = dao.getMileageOneList(info.getM1_Num());
+			model.addAttribute("mileageList", mileageList);
 		} catch (Exception e) {
 		}
 		return ".mymem.mypage";
@@ -625,5 +638,6 @@ public class MemberController {
 		return ".mymem.giupReview.seeReview";
 	}
 	
-			
+	
+
 }

@@ -98,7 +98,6 @@ function memberOk() {
     if(mode=="created") {
     	f.action = "<%=cp%>/store/complete";
     } else if(mode=="update") {
-    	alert(mode);
     	f.action = "<%=cp%>/store/updatecomplete";
 		}
 
@@ -224,15 +223,15 @@ function memberOk() {
 			<table style="width: 100%; margin: 0px auto; border-spacing: 0px;">
 				<tr height="45">
 					<td align="center">
-						<button type="button" id="sendButton" name="sendButton" class="btn"
+						<button type="button" id="sendButton" name="sendButton" class="btn btn-primary"
 							onclick="memberOk();">${mode=="created"?"회원가입":"정보수정"}</button>
-						<button type="reset" class="btn">다시입력</button>
-						<button type="button" class="btn" onclick="javascript:location.href='<%=cp%>/store/join'">이전단계</button>
+						<button type="reset" class="btn btn-default">다시입력</button>
+						<button type="button" class="btn btn-default" onclick="javascript:location.href='<%=cp%>/store/join'">이전단계</button>
 						<c:if test="${mode=='created'}">
-						<button type="button" class="btn"onclick="javascript:location.href='<%=cp%>/store/logout';">가입취소</button>
+						<button type="button" class="btn btn-default"onclick="javascript:location.href='<%=cp%>/store/logout';">가입취소</button>
 						</c:if>
 						<c:if test="${mode=='update'}">
-						<button type="button" class="btn"onclick="javascript:location.href='<%=cp%>/store/mypage';">수정취소</button>
+						<button type="button" class="btn btn-default"onclick="javascript:location.href='<%=cp%>/store/mypage';">수정취소</button>
 						</c:if>
 					</td>
 				</tr>

@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="giupFaq">
+	<!-- faq 카테고리 : 신규, 리스트, 개수, 삭제-->
+		<insert id="insertFCate" parameterType="com.sp.giupFaq.Faq">
+			INSERT INTO giupFaqCate(fCate_Num, fCate_Name) 
+			VALUES(giupFaqCate_seq.NEXTVAL, #{fCate_Name})
+		</insert>
+		
+		<select id="dataCountFCate" resultType="Integer" parameterType="String">
+			SELECT NVL(COUNT(fCate_Num), 0) FROM giupFaqCate
+		</select>
+		
+		<select id="listFCate" resultType="com.sp.giupFaq.Faq" parameterType="String">
+			SELECT fCate_Num, fCate_Name FROM giupFaqCate ORDER BY fCate_Num DESC
+		</select>
+		
+		<delete id="deleteFCate" parameterType="Integer">
+			DELETE FROM giupFaqCate WHERE fCate_Num = #{fCate_Num}
+		</delete>
+	
+	<!-- 신규 -->
+	<insert id="insertFaq" parameterType="com.sp.giupFaq.Faq"> 
+		INSERT INTO giupFaq(f_Num, fCate_Num, f_Title, f_Content, admin_Id, f_HitCount)
+		VALUES(giupFaq_seq.NEXTVAL, #{fCate_Num}, #{f_Title}, #{f_Content}, #{admin_Id}, #{f_HitCount})	
+	</insert>
+	
+	<!-- 글리스트, 개수 : para~ 들어오는 것, result ~  나가는 것..  -->
+	<select id="listFaq" parameterType="map" resultType="com.sp.giupFaq.Faq"> 
+		SELECT * FROM (
+			SELECT ROWNUM rnum, tb.* FROM(
+				SELECT f_Num, gf.fCate_Num, fCate_Name, f_Title, f_Content, gf.admin_Id, f_HitCount				
+				FROM giupFaq gf
+				JOIN giupFaqCate gfc ON gf.fCate_Num= gfc.fCate_Num
+				JOIN admin a ON gf.admin_Id = a.admin_Id				
+			<where>
+				<if test="fCate_Num !=0">
+					gf.fCate_Num = #{fCate_Num}
+				</if>
+				<if test="searchValue !=null and searchValue !='' ">
+					AND (f_Title LIKE '%' || #{searchValue} || '%' OR
+					DBMS_LOB.INSTR(f_Content, #{searchValue}) &gt; 0)
+				</if>			
+			</where>					
+				ORDER BY f_Num DESC		
+	<![CDATA[
+			) tb WHERE ROWNUM <= #{end}
+		) WHERE rnum >= #{start}
+	]]>		
+	</select>
+	
+	<select id="dataCount" parameterType="map" resultType="Integer" >
+		SELECT NVL(COUNT(*),0) FROM giupFaq gf
+		JOIN giupFaqCate gfc ON gf.fCate_Num=gfc.fCate_Num
+		<where>
+			<if test="fCate_Num !=0">
+				gf.fCate_Num=#{fCate_Num}
+			</if>
+			<if test="searchValue!=null and searchValue!='' ">
+				AND (f_Title LIKE '%' || #{searchValue} || '%' OR 
+				DBMS_LOB.INSTR(f_Content,#{searchValue}) &gt; 0)
+			</if>		
+		</where>
+	</select>
+	
+	<!-- FAQ에 등록된 카데고리 리스트 -->
+	<select id="listedFCate" resultType="com.sp.giupFaq.Faq">
+		SELECT DISTINCT gf.fCate_Num, fCate_Name
+		FROM giupFaq gf
+		JOIN giupFaqCate gfc ON gf.fCate_Num= gfc.fCate_Num
+		ORDER BY fCate_Num DESC
+	</select>
+	
+	
+	
+	<!-- 상세, 조회수 증가 -->
+	<select id="readFaq" parameterType="Integer" resultType="com.sp.giupFaq.Faq">
+		SELECT f_Num, gf.fCate_Num, fCate_Name, f_Title, f_Content, admin_Id, f_HitCount
+		FROM giupFaq gf
+		JOIN giupFaqCate gfc ON gf.fCate_Num=gfc.fCate_Num
+		WHERE f_Num= #{f_Num} 
+	</select>
+	
+	<update id="updateHitCount" parameterType="Integer">
+		UPDATE giupFaq SET f_HitCount=f_HitCount+1 WHERE f_Num= #{f_Num}
+	</update>
+	
+	<!-- 수정, 삭제  -->
+	<update id="updateFaq" parameterType="com.sp.giupFaq.Faq">
+		UPDATE giupFaq SET f_Title=#{f_Title}, f_Content=#{f_Content}, fCate_Num=#{fCate_Num} WHERE f_Num= #{f_Num}
+	</update>
+	
+	<delete id="deleteFaq" parameterType="Integer">
+		DELETE FROM giupFaq WHERE f_Num= #{f_Num}
+	</delete>
+	
+</mapper>

@@ -9,7 +9,7 @@
 <select id="reviewlistAll" resultType="com.sp.store.mystore.MyStoreReview" parameterType="map">
 	SELECT * FROM (
 	    SELECT ROWNUM rnum, tb.* FROM (
-			SELECT g.rep_Num, rep_Created, rep_star, rep_content, m1_Nickname, g.g1_num, g1_Name
+			SELECT g.rep_Num, rep_Created, rep_star, rep_content, m1_Nickname, g.g1_num, g1_Name, rphoto_Savefilename
 		    FROM giupreview g
 			LEFT OUTER JOIN reviewphoto r ON g.rep_Num = r.rep_Num
 		    LEFT OUTER JOIN member1 m ON  g.m1_NUm = m.m1_Num
@@ -30,7 +30,7 @@
 <select id="reviewlistYet" resultType="com.sp.store.mystore.MyStoreReview" parameterType="map">
 	SELECT * FROM (
   		SELECT ROWNUM rnum, tb.* FROM (
-			SELECT g.rep_Num, rep_Created, rep_star, rep_content, m1_Nickname, g.g1_num, g1_Name
+			SELECT g.rep_Num, rep_Created, rep_star, rep_content, m1_Nickname, g.g1_num, g1_Name, rphoto_Savefilename
 		    FROM giupreview g
 			LEFT OUTER JOIN reviewphoto r ON g.rep_Num = r.rep_Num
 		    LEFT OUTER JOIN member1 m ON  g.m1_NUm = m.m1_Num

@@ -7,71 +7,76 @@
 %>
 <style type="text/css">
 /* event:list */
-.event_list {
-	margin: 0 0 30px;
+div.clear
+{
+    clear: both;
 }
 
-.event_list li {
-	padding: 25px 0;
-	border-bottom: 1px solid #e0e0e0;
+div.product-chooser{
+    
 }
 
-.event_list li .info {
-	position: relative;
-	padding-left: 240px;
-	/* height: 100px; */
-}
+    div.product-chooser.disabled div.product-chooser-item
+	{
+		zoom: 1;
+		filter: alpha(opacity=60);
+		opacity: 0.6;
+		cursor: default;
+	}
 
-.event_list li .info dt {
-	padding: 10px 0 10px;
-	font-size: 16px;
-	color: #333;
-}
-
-.event_list li .info dd {
-	margin: 0 0 3px;
-	color: #898989;
-	font-size: 14px;
-}
-
-.event_list li .info dd span {
-	display: inline-block;
-	width: 65px;
-}
-
-.event_list li .ic_tag {
-	position: absolute;
-	right: 0px;
-	top: 30px;
-	width: 110px;
-	height: 40px;
-	line-height: 40px;
-	font-size: 14px;
-	background: #ccc;
-	text-align: center;
-	color: white;
-}
-
-.event_list li .thumb {
-	position: absolute;
-	left: 0;
-	top: 0;
-	display: block;
-	width: 217px;
-	height: 98px;
-	border: 1px solid #e0e0e0;
-}
-
-.event_list li .thumb img {
-	width: 217px;
-	height: 98px;
-}
-
-dl, ul, ol, menu, li {
-	list-style: none;
-}
+	div.product-chooser div.product-chooser-item{
+		padding: 11px;
+		border-radius: 6px;
+		cursor: pointer;
+		position: relative;
+		border: 1px solid #efefef;
+		margin-bottom: 10px;
+       
+	}
+	
+	div.product-chooser div.product-chooser-item.selected{
+		border: 2px solid #bbb;
+		background: white;
+		padding: 8px;
+		filter: alpha(opacity=100);
+		opacity: 1;
+	}
+	
+		div.product-chooser div.product-chooser-item img{
+			padding: 0;
+		}
+		
+		div.product-chooser div.product-chooser-item span.title{
+			display: block;
+			
+			font-weight: bold;
+			font-size: 12px;
+		}
+		
+		div.product-chooser div.product-chooser-item span.description{
+			font-size: 20px;
+		}
+		
+		div.product-chooser div.product-chooser-item input{
+			position: absolute;
+			left: 0;
+			top: 0;
+			visibility:hidden;
+		}
 </style>
 
+<script type="text/javascript">
+
+$(function(){
+	$('div.product-chooser').not('.disabled').find('div.product-chooser-item').on('click', function(){
+		$(this).parent().parent().find('div.product-chooser-item').removeClass('selected');
+		$(this).addClass('selected');
+		$(this).find('input[type="radio"]').prop("checked", true);
+		
+	});
+});
+
+</script>
 <div style="margin-top: 50px;">
 
 	<!-- Nav tabs -->
@@ -93,84 +98,95 @@ dl, ul, ol, menu, li {
 
 
 
-<div class="storeBodyFrame2">
-	<div class="body-title">
-		<h3>
-			<span class="glyphicon glyphicon-tower"></span> 진행중 이벤트
-		</h3>
+<div class="bodyFrame2" style="margin-right: 0px; margin-left: 0px; padding: 0px;">
+    <div class="body-title" style="margin-top: 50px;">
+		<h3><span class="glyphicon glyphicon-thumbs-up"></span> 대박이야! 이벤트 </h3>
 	</div>
 
-	<div>
-		<div class="content">
+    <div class="alert alert-info">
+        <i class="fa fa-hand-peace-o"></i> 대박 찬스!! 이벤트!!
+    </div>
 
-			<!-- <div class="pagetitle">
-				<p class="h_dsc">사장님만을 위한 특별한 혜택! 지금 이벤트에 참여해보세요</p>
-			</div> -->
-
-			<div class="contents">
-				<ul class="event_list">
-					<li><a style="text-decoration: none;" href="#">
-							<dl class="info">
-								<dt>
-									7월 배달행 이벤트<span class="ic_tag end">상태</span>
-								</dt>
-								<dd>
-									<span>응모기간:</span>2017-07-13 ~ 2017-07-18
-								</dd>
-								<dd>
-									<span>발표일:</span>2017-07-19
-								</dd>
-								<dd class="thumb">
-									<img src="" alt="">
-								</dd>
-							</dl>
-					</a></li>
-
-					<li><a style="text-decoration: none;" href="#">
-							<dl class="info">
-								<dt>
-									7월 배달행 이벤트<span class="ic_tag end">상태</span>
-								</dt>
-								<dd>
-									<span>응모기간:</span>2017-07-13 ~ 2017-07-18
-								</dd>
-								<dd>
-									<span>발표일:</span>2017-07-19
-								</dd>
-								<dd class="thumb">
-									<img src="" alt="">
-								</dd>
-							</dl>
-					</a></li>
-
-					<li><a style="text-decoration: none;" href="#">
-							<dl class="info">
-								<dt>
-									7월 배달행 이벤트<span class="ic_tag end">상태</span>
-								</dt>
-								<dd>
-									<span>응모기간:</span>2017-07-13 ~ 2017-07-18
-								</dd>
-								<dd>
-									<span>발표일:</span>2017-07-19
-								</dd>
-								<dd class="thumb">
-									<img src="" alt="">
-								</dd>
-							</dl>
-					</a></li>
-				</ul>
-
-				<div class="paging"
-					style="text-align: center; min-height: 50px; line-height: 50px;">
-					<c:if test="${dataCount==0 }">
-           등록된 문의가 없습니다.
-       </c:if>
-					<c:if test="${dataCount!=0 }">
-           ${paging}
-       </c:if>
-				</div>
-			</div>
-		</div>
-	</div>
+    <div class="row form-group product-chooser" style="margin: 0px;">
+    
+    	<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4" style="width: 48%; padding: 0px; margin-right: 10px;">
+    		<div class="product-chooser-item selected">
+    			<img src="<%=cp%>/resource/img/hhh.jpg" class="img-rounded col-xs-4 col-sm-4 col-md-12 col-lg-12" alt="Mobile and Desktop" style="height: 170px; padding-top: 15px;">
+                <div class="col-xs-8 col-sm-8 col-md-12 col-lg-12">
+                    <br>
+    				<span class="description" style="font-size: 35px;">배달행 할인파워!<br>지금 받아라!</span><br>
+    				<span class="description">**기간**</span><br>
+    				<span class="description">2017/07/01 ~ 10/20</span>
+    				<input type="radio" name="product" value="mobile_desktop" checked="checked">
+    			</div>
+    			<div class="clear"></div>
+    		</div>
+    	</div>
+    	<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4" style="width: 48%; padding: 0px; float: right;">
+    		<div class="product-chooser-item selected" >
+    			<img src="<%=cp%>/resource/img/cool.jpg" class="img-rounded col-xs-4 col-sm-4 col-md-12 col-lg-12" alt="Mobile and Desktop" style="height: 170px; padding-top: 15px;">
+                <div class="col-xs-8 col-sm-8 col-md-12 col-lg-12">
+                    <br>
+    				<span class="description" style="font-size: 35px;">여름 쿨~~한 이벤트<br>당첨자는??!!</span><br>
+    				<span class="description">**기간**</span><br>
+    				<span class="description">2017/07/15 ~ 08/31</span>
+    				<input type="radio" name="product" value="mobile_desktop" checked="checked">
+    			</div>
+    			<div class="clear"></div>
+    		</div>
+    	</div>
+    	<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4" style="width: 48%; padding: 0px; ">
+    		<div class="product-chooser-item selected">
+    			<img src="<%=cp%>/resource/img/bhc1.jpg" class="img-rounded col-xs-4 col-sm-4 col-md-12 col-lg-12" alt="Mobile and Desktop" style="height: 170px; padding-top: 15px;">
+                <div class="col-xs-8 col-sm-8 col-md-12 col-lg-12">
+                    <br>
+    				<span class="description" style="font-size: 35px;">BHC가 쏜다<br> 치킨먹자!!</span><br>
+    				<span class="description">**기간**</span><br>
+    				<span class="description">2017/07/15 ~ 07/20</span>
+    				<input type="radio" name="product" value="mobile_desktop" checked="checked">
+    			</div>
+    			<div class="clear"></div>
+    		</div>
+    	</div>
+    	<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4" style="width: 48%; padding: 0px; float: right;">
+    		<div class="product-chooser-item selected">
+    			<img src="<%=cp%>/resource/img/qwe.png" class="img-rounded col-xs-4 col-sm-4 col-md-12 col-lg-12" alt="Mobile and Desktop" style="height: 170px; padding-top: 15px;">
+                <div class="col-xs-8 col-sm-8 col-md-12 col-lg-12">
+                    <br>
+    				<span class="description" style="font-size: 35px;">첫 주문시! <br>이천원 할인?!</span><br>
+    				<span class="description">**기간**</span><br>
+    				<span class="description">2017/01/15 ~ 12/31</span>
+    				<input type="radio" name="product" value="mobile_desktop" checked="checked">
+    			</div>
+    			<div class="clear"></div>
+    		</div>
+    	</div>
+    	<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4" style="width: 48%; padding: 0px; margin-right: 10px;">
+    		<div class="product-chooser-item selected">
+    			<img src="<%=cp%>/resource/img/end.jpg" class="img-rounded col-xs-4 col-sm-4 col-md-12 col-lg-12" alt="Mobile and Desktop" style="height: 170px; padding-top: 15px;">
+                <div class="col-xs-8 col-sm-8 col-md-12 col-lg-12">
+                    <br>
+    				<span class="description" style="font-size: 35px;">6월 국군장병 차렷!!<br> 치킨나눔!</span><br>
+    				<span class="description">**기간**</span><br>
+    				<span class="description">2017/07/15 ~ 07/20</span>
+    				<input type="radio" name="product" value="mobile_desktop" checked="checked">
+    			</div>
+    			<div class="clear"></div>
+    		</div>
+    	</div>
+    	<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4" style="width: 48%; padding: 0px; float: right;">
+    		<div class="product-chooser-item selected">
+    			<img src="<%=cp%>/resource/img/end.jpg" class="img-rounded col-xs-4 col-sm-4 col-md-12 col-lg-12" alt="Mobile and Desktop" style="height: 170px; padding-top: 15px;">
+                <div class="col-xs-8 col-sm-8 col-md-12 col-lg-12">
+                    <br>
+    				<span class="description" style="font-size: 35px;">5월 어버이날 어머니!! 밥하지마셔요!!!!!!!!</span><br>
+    				<span class="description">**기간**</span><br>
+    				<span class="description">2017/05/01 ~ 05/10</span>
+    				<input type="radio" name="product" value="mobile_desktop" checked="checked">
+    			</div>
+    			<div class="clear"></div>
+    		</div>
+    	</div>
+    	
+    </div>
 </div>

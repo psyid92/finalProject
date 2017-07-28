@@ -56,7 +56,7 @@ public class BbsController {
 			
 			String cp=req.getContextPath();
 			
-			int rows=5;
+			int rows=10;
 			int total_page =0;
 			int dataCount=0;
 			

@@ -28,25 +28,25 @@ function changePass(){
 }
 
 function removeAccount(){
+	if(!str) {
+		alert("패스워드를 입력하세요. ");
+		f.m1_pwd.focus();
+		return;
+	} else {
 	if(confirm("정말로 탈퇴하시겠습니까?") == true){
 		alert("계정은 30일간 보관된 후 삭제됩니다.");
 		var f = document.memberForm;
 		
 		var str = f.m1_pwd.value;
 		str = str.trim();
-		if(!str) {
-			alert("패스워드를 입력하세요. ");
-			f.m1_pwd.focus();
-			return;
-		} else {
 			
 		f.action = "<%=cp%>/member/remove";
 			f.submit();
-		}
-		
 		
 	} else {
 		return;
+	}
+		
 	}
 	}
 </script>
